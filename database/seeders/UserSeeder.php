@@ -12,12 +12,12 @@ class UserSeeder extends Seeder
     {
         $admin = User::create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@app.com',
             'password' => bcrypt('password'),
             'role' => 'Admin',
         ]);
 
         $adminRole = Role::where('name', 'Admin')->first();
-        $admin->roles()->attach($adminRole);
+        $admin->roles()->attach($adminRole->id);
     }
 }

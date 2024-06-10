@@ -24,11 +24,14 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
 
         foreach ($roles as $roleName) {
-            $role = Role::create(['name' => $roleName]);
+            $role = Role::firstOrCreate(['name' => $roleName]);
 
             foreach ($permissions as $permissionName) {
                 $permission = Permission::firstOrCreate(['name' => $permissionName]);
-                $role->permissions()->attach($permission);
+                
+                if (!$role->permissions()->where('permissions.id', $permission->id)->exists()) {
+                    $role->permissions()->attach($permission->id);
+                }
             }
         }
     }
