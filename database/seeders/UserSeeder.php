@@ -18,6 +18,6 @@ class UserSeeder extends Seeder
         ]);
 
         $adminRole = Role::where('name', 'Admin')->first();
-        $admin->roles()->attach($adminRole->id);
+        $admin->roles()->attach($adminRole);
     }
 }

@@ -30,7 +30,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 $permission = Permission::firstOrCreate(['name' => $permissionName]);
                 
                 if (!$role->permissions()->where('permissions.id', $permission->id)->exists()) {
-                    $role->permissions()->attach($permission->id);
+                    $role->permissions()->attach($permission);
                 }
             }
         }
