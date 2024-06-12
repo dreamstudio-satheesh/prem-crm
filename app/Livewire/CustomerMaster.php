@@ -12,9 +12,7 @@ class CustomerMaster extends Component
 
     public $customer_id;
     public $customer_name, $mobile_number, $email_id, $company_name, $tally_no, $tally_version, $contact_info;
-    public $city, $address, $designation, $type_of_call, $lat, $lng, $tss_status, $tss_expiry;
-    public $auto_cloud_backup_tdl_module = false, $whatsapp_telegram_group = false;
-    public $call_start_time, $call_end_time, $total_hours_spent, $status_of_the_call, $service_charges;
+    public $city, $address, $designation,  $lat, $lng, $whatsapp_telegram_group = false;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
@@ -30,18 +28,9 @@ class CustomerMaster extends Component
         'city' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:1000',
         'designation' => 'nullable|in:Owner,Accounts Manager,Accountant,Auditor,TAX Consultant',
-        'type_of_call' => 'nullable|string|max:255',
         'lat' => 'nullable',
         'lng' => 'nullable',
-        'tss_status' => 'required|in:Active,Not Active',
-        'tss_expiry' => 'nullable|date',
-        'auto_cloud_backup_tdl_module' => 'boolean',
         'whatsapp_telegram_group' => 'boolean',
-        'call_start_time' => 'nullable|date',
-        'call_end_time' => 'nullable|date',
-        'total_hours_spent' => 'nullable|numeric',
-        'status_of_the_call' => 'required|in:Pending,Completed,Cancelled',
-        'service_charges' => 'nullable|numeric',
     ];
 
     public function render()
@@ -66,18 +55,9 @@ class CustomerMaster extends Component
         $this->city = '';
         $this->address = '';
         $this->designation = '';
-        $this->type_of_call = '';
         $this->lat = '';
         $this->lng = '';
-        $this->tss_status = 'Active';
-        $this->tss_expiry = null;
-        $this->auto_cloud_backup_tdl_module = false;
         $this->whatsapp_telegram_group = false;
-        $this->call_start_time = null;
-        $this->call_end_time = null;
-        $this->total_hours_spent = null;
-        $this->status_of_the_call = 'Pending';
-        $this->service_charges = null;
     }
 
     public function store()
@@ -95,18 +75,9 @@ class CustomerMaster extends Component
             'city' => $this->city,
             'address' => $this->address,
             'designation' => $this->designation,
-            'type_of_call' => $this->type_of_call,
             'lat' => $this->lat,
             'lng' => $this->lng,
-            'tss_status' => $this->tss_status,
-            'tss_expiry' => $this->tss_expiry,
-            'auto_cloud_backup_tdl_module' => $this->auto_cloud_backup_tdl_module,
             'whatsapp_telegram_group' => $this->whatsapp_telegram_group,
-            'call_start_time' => $this->call_start_time,
-            'call_end_time' => $this->call_end_time,
-            'total_hours_spent' => $this->total_hours_spent,
-            'status_of_the_call' => $this->status_of_the_call,
-            'service_charges' => $this->service_charges,
         ]);
 
         session()->flash('success', 'Customer '.($this->customer_id ? 'Updated' : 'Created').' Successfully.');
@@ -129,18 +100,9 @@ class CustomerMaster extends Component
         $this->city = $customer->city;
         $this->address = $customer->address;
         $this->designation = $customer->designation;
-        $this->type_of_call = $customer->type_of_call;
         $this->lat = $customer->lat;
         $this->lng = $customer->lng;
-        $this->tss_status = $customer->tss_status;
-        $this->tss_expiry = $customer->tss_expiry;
-        $this->auto_cloud_backup_tdl_module = $customer->auto_cloud_backup_tdl_module;
         $this->whatsapp_telegram_group = $customer->whatsapp_telegram_group;
-        $this->call_start_time = $customer->call_start_time;
-        $this->call_end_time = $customer->call_end_time;
-        $this->total_hours_spent = $customer->total_hours_spent;
-        $this->status_of_the_call = $customer->status_of_the_call;
-        $this->service_charges = $customer->service_charges;
     }
 
     public function delete($id)

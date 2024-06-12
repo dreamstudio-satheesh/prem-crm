@@ -153,47 +153,8 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="type_of_call">Type Of Call</label>
-                            <input type="text" class="form-control" placeholder="Enter type of call" wire:model="type_of_call">
-                            @error('type_of_call')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="map_location">Map Location</label>
-                            <input type="text" class="form-control" placeholder="Enter map location" wire:model="map_location">
-                            @error('map_location')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="tss_status">TSS Status</label>
-                            <select class="form-control" wire:model="tss_status">
-                                <option value="Active">Active</option>
-                                <option value="Not Active">Not Active</option>
-                            </select>
-                            @error('tss_status')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="tss_expiry">TSS Expiry</label>
-                            <input type="date" class="form-control" placeholder="Enter tss expiry" wire:model="tss_expiry">
-                            @error('tss_expiry')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="auto_cloud_backup_tdl_module">Auto / Cloud Backup TDL Module</label>
-                            <select class="form-control" wire:model="auto_cloud_backup_tdl_module">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
-                            @error('auto_cloud_backup_tdl_module')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                       
+                     
                         <div class="form-group">
                             <label for="whatsapp_telegram_group">WhatsApp / Telegram Group</label>
                             <select class="form-control" wire:model="whatsapp_telegram_group">
@@ -204,45 +165,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="call_start_time">Call Start Time</label>
-                            <input type="datetime-local" class="form-control" wire:model="call_start_time">
-                            @error('call_start_time')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="call_end_time">Call End Time</label>
-                            <input type="datetime-local" class="form-control" wire:model="call_end_time">
-                            @error('call_end_time')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="total_hours_spent">Total Hours Spent</label>
-                            <input type="number" step="0.01" class="form-control" placeholder="Enter total hours spent" wire:model="total_hours_spent">
-                            @error('total_hours_spent')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="status_of_the_call">Status Of The Call</label>
-                            <select class="form-control" wire:model="status_of_the_call">
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
-                            @error('status_of_the_call')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="service_charges">Service Charges / Amount</label>
-                            <input type="number" step="0.01" class="form-control" placeholder="Enter service charges / amount" wire:model="service_charges">
-                            @error('service_charges')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                     
                         <div class="form-group gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" wire:click="create" class="btn btn-secondary">Cancel</button>
