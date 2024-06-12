@@ -13,6 +13,7 @@ class CreateContactsTable extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('email')->nullable();
+            $table->json('contact_info')->nullable();
             $table->timestamps();
         });
     }

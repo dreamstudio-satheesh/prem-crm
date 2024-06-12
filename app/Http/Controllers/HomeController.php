@@ -31,6 +31,11 @@ class HomeController extends Controller
         return view('company');
     }
 
+    public function customer()
+    {
+        return view('customer');
+    }
+
 
 
     

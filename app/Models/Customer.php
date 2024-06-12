@@ -9,7 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'contact_info', 'address'];
+    protected $guarded = ['customer_id'];
 
     public function contacts()
     {
