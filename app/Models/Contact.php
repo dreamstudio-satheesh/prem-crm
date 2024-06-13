@@ -9,6 +9,8 @@ class Contact extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'contact_id';
+
     protected $fillable = [
         'name', 'phone', 'email', 'address', 'company', 'notes', 'user_id'
     ];

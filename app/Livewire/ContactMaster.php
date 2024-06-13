@@ -5,6 +5,9 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Contact;
+use App\Models\Customer;
+use App\Models\CustomerContact;
+use Illuminate\Support\Facades\Hash;
 
 class ContactMaster extends Component
 {
@@ -12,6 +15,7 @@ class ContactMaster extends Component
 
     public $contact_id;
     public $name, $phone, $email, $address, $company, $notes, $user_id;
+    public $selected_customers = [];
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
@@ -28,12 +32,14 @@ class ContactMaster extends Component
 
     public function render()
     {
-        $contacts = Contact::where('name', 'like', '%'.$this->search.'%')
-            ->orWhere('phone', 'like', '%'.$this->search.'%')
+        $contacts = Contact::where('name', 'like', '%' . $this->search . '%')
+            ->orWhere('phone', 'like', '%' . $this->search . '%')
             ->orderBy('contact_id', 'desc')
             ->paginate(10);
 
-        return view('livewire.contact-master', compact('contacts'));
+        $customers = Customer::all();
+
+        return view('livewire.contact-master', compact('contacts', 'customers'));
     }
 
     public function resetInputFields()
@@ -46,25 +52,46 @@ class ContactMaster extends Component
         $this->company = '';
         $this->notes = '';
         $this->user_id = null;
+        $this->selected_customers = [];
     }
 
     public function store()
     {
         $this->validate();
 
-        Contact::updateOrCreate(['contact_id' => $this->contact_id], [
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'email' => $this->email,
-            'address' => $this->address,
-            'company' => $this->company,
-            'notes' => $this->notes,
-            'user_id' => $this->user_id,
-        ]);
+        $contact = Contact::updateOrCreate(
+            ['contact_id' => $this->contact_id],
+            [
+                'name' => $this->name,
+                'phone' => $this->phone,
+                'email' => $this->email,
+                'address' => $this->address,
+                'company' => $this->company,
+                'notes' => $this->notes,
+                'user_id' => $this->user_id,
+            ]
+        );
+
+        // Clear previous assignments if editing
+        if ($this->contact_id) {
+            CustomerContact::where('contact_id', $contact->contact_id)->delete();
+        }
+
+        // Assign contact to selected customers
+        if (!empty($this->selected_customers)) {
+            foreach ($this->selected_customers as $customer_id) {
+                CustomerContact::create([
+                    'contact_id' => $contact->contact_id,
+                    'customer_id' => $customer_id,
+                    'role' => '' // Assign role as needed
+                ]);
+            }
+        }
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Contact '.($this->contact_id ? 'Updated' : 'Created').' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Contact ' . ($this->contact_id ? 'Updated' : 'Created') . ' Successfully.']);
     }
+
 
     public function edit($id)
     {
@@ -77,11 +104,13 @@ class ContactMaster extends Component
         $this->company = $contact->company;
         $this->notes = $contact->notes;
         $this->user_id = $contact->user_id;
+        $this->selected_customers = CustomerContact::where('contact_id', $id)->pluck('customer_id')->toArray();
     }
 
     public function delete($id)
     {
         Contact::findOrFail($id)->delete();
+        CustomerContact::where('contact_id', $id)->delete();
         $this->dispatch('show-toastr', ['message' => 'Contact Deleted Successfully.']);
     }
 

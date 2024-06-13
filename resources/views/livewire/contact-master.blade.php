@@ -108,6 +108,17 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="selected_customers">Assign to Customers</label>
+                            <select multiple class="form-control" wire:model="selected_customers">
+                                @foreach($customers as $customer)
+                                    <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('selected_customers')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="form-group gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" wire:click="create" class="btn btn-secondary">Cancel</button>
