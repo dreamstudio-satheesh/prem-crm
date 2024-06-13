@@ -31,4 +31,6 @@ Auth::routes([
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');      
+Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
+
+Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customer'])->name('customer');    

@@ -26,9 +26,14 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function company2()
+    public function company()
     {
-        return view('company2');
+        return view('company');
+    }
+
+    public function customer()
+    {
+        return view('customer');
     }
 
 
