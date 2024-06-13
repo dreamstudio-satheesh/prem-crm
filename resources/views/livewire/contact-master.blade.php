@@ -109,6 +109,21 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="designation">Designation</label>
+                            <select class="form-control" wire:model="designation">
+                                <option value="">Select Designation</option>
+                                <option value="MD">MD</option>
+                                <option value="Auditor">Auditor</option>
+                                <option value="GSTP / Tax Consultant">GSTP / Tax Consultant</option>
+                                <option value="Computer Service">Computer Service</option>
+                                <option value="Company Staff">Company Staff</option>
+                                <option value="others">Others</option>
+                            </select>
+                            @error('designation')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="selected_customers">Assign to Customers</label>
                             <select multiple class="form-control" wire:model="selected_customers">
                                 @foreach($customers as $customer)

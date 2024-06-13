@@ -12,7 +12,7 @@ class Contact extends Model
     protected $primaryKey = 'contact_id';
 
     protected $fillable = [
-        'name', 'phone', 'email', 'address', 'company', 'notes', 'user_id'
+        'name', 'phone', 'email', 'address', 'company', 'designation', 'notes', 'user_id'
     ];
 
     public function customers()

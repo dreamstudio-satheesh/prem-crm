@@ -14,7 +14,7 @@ class ContactMaster extends Component
     use WithPagination;
 
     public $contact_id;
-    public $name, $phone, $email, $address, $company, $notes, $user_id;
+    public $name, $phone, $email, $address, $company, $notes, $designation, $user_id;
     public $selected_customers = [];
     public $search = '';
 
@@ -27,13 +27,14 @@ class ContactMaster extends Component
         'address' => 'nullable|string|max:255',
         'company' => 'nullable|string|max:255',
         'notes' => 'nullable|string',
+        'designation' => 'nullable|in:MD,Auditor,GSTP / Tax Consultant,Computer Service,Company Staff,others',
         'user_id' => 'nullable|exists:users,id',
     ];
 
     public function render()
     {
-        $contacts = Contact::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('phone', 'like', '%' . $this->search . '%')
+        $contacts = Contact::where('name', 'like', '%'.$this->search.'%')
+            ->orWhere('phone', 'like', '%'.$this->search.'%')
             ->orderBy('contact_id', 'desc')
             ->paginate(10);
 
@@ -51,6 +52,7 @@ class ContactMaster extends Component
         $this->address = '';
         $this->company = '';
         $this->notes = '';
+        $this->designation = '';
         $this->user_id = null;
         $this->selected_customers = [];
     }
@@ -68,6 +70,7 @@ class ContactMaster extends Component
                 'address' => $this->address,
                 'company' => $this->company,
                 'notes' => $this->notes,
+                'designation' => $this->designation,
                 'user_id' => $this->user_id,
             ]
         );
@@ -77,7 +80,7 @@ class ContactMaster extends Component
             CustomerContact::where('contact_id', $contact->contact_id)->delete();
         }
 
-        // Assign contact to selected customerss
+        // Assign contact to selected customers
         if (!empty($this->selected_customers)) {
             foreach ($this->selected_customers as $customer_id) {
                 CustomerContact::create([
@@ -89,9 +92,8 @@ class ContactMaster extends Component
         }
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Contact ' . ($this->contact_id ? 'Updated' : 'Created') . ' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Contact '.($this->contact_id ? 'Updated' : 'Created').' Successfully.']);
     }
-
 
     public function edit($id)
     {
@@ -103,6 +105,7 @@ class ContactMaster extends Component
         $this->address = $contact->address;
         $this->company = $contact->company;
         $this->notes = $contact->notes;
+        $this->designation = $contact->designation;
         $this->user_id = $contact->user_id;
         $this->selected_customers = CustomerContact::where('contact_id', $id)->pluck('customer_id')->toArray();
     }
