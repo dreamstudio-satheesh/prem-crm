@@ -77,7 +77,7 @@ class ContactMaster extends Component
             CustomerContact::where('contact_id', $contact->contact_id)->delete();
         }
 
-        // Assign contact to selected customers
+        // Assign contact to selected customerss
         if (!empty($this->selected_customers)) {
             foreach ($this->selected_customers as $customer_id) {
                 CustomerContact::create([
