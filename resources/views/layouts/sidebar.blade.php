@@ -55,6 +55,12 @@
                             <div class="collapse menu-dropdown" id="sidebarApps">
                                 <ul class="nav nav-sm flex-column">
 
+                                <li class="nav-item">
+                                        <a href="{{ url('user') }}" class="nav-link" data-key="t-calendar">
+                                            Staffs
+                                        </a>
+                                    </li>
+
                                     <li class="nav-item">
                                         <a href="{{ url('customer') }}" class="nav-link" data-key="t-calendar">
                                             Customer
