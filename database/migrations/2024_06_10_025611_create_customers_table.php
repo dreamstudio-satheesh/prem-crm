@@ -19,7 +19,6 @@ class CreateCustomersTable extends Migration
             $table->json('contact_info')->nullable();
             $table->string('city')->nullable();
             $table->text('address')->nullable();
-            $table->enum('designation', ['Owner', 'Accounts Manager', 'Accountant', 'Auditor', 'TAX Consultant'])->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->boolean('whatsapp_telegram_group')->default(false); 

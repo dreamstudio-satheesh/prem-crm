@@ -137,20 +137,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="designation">Designation</label>
-                            <select class="form-control" wire:model="designation">
-                                <option value="">Select Designation</option>
-                                <option value="Owner">Owner</option>
-                                <option value="Accounts Manager">Accounts Manager</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Auditor">Auditor</option>
-                                <option value="TAX Consultant">TAX Consultant</option>
-                            </select>
-                            @error('designation')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                       
                        
                      
                         <div class="form-group">

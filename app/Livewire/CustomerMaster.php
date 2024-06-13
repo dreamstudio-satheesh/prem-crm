@@ -12,7 +12,7 @@ class CustomerMaster extends Component
 
     public $customer_id;
     public $customer_name, $mobile_number, $email_id, $company_name, $tally_no, $tally_version, $contact_info;
-    public $city, $address, $designation, $lat, $lng, $whatsapp_telegram_group = false;
+    public $city, $address, $lat, $lng, $whatsapp_telegram_group = false;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
@@ -27,7 +27,6 @@ class CustomerMaster extends Component
         'contact_info' => 'nullable|json',
         'city' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:1000',
-        'designation' => 'nullable|in:Owner,Accounts Manager,Accountant,Auditor,TAX Consultant',
         'lat' => 'nullable|numeric',
         'lng' => 'nullable|numeric',
         'whatsapp_telegram_group' => 'boolean',
@@ -54,7 +53,6 @@ class CustomerMaster extends Component
         $this->contact_info = '';
         $this->city = '';
         $this->address = '';
-        $this->designation = '';
         $this->lat = '';
         $this->lng = '';
         $this->whatsapp_telegram_group = false;
@@ -74,7 +72,6 @@ class CustomerMaster extends Component
             'contact_info' => $this->contact_info,
             'city' => $this->city,
             'address' => $this->address,
-            'designation' => $this->designation,
             'lat' => $this->lat,
             'lng' => $this->lng,
             'whatsapp_telegram_group' => $this->whatsapp_telegram_group,
@@ -99,7 +96,6 @@ class CustomerMaster extends Component
         $this->contact_info = $customer->contact_info;
         $this->city = $customer->city;
         $this->address = $customer->address;
-        $this->designation = $customer->designation;
         $this->lat = $customer->lat;
         $this->lng = $customer->lng;
         $this->whatsapp_telegram_group = $customer->whatsapp_telegram_group;
