@@ -13,8 +13,14 @@ class CreateContactsTable extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('email')->nullable();
-            $table->json('contact_info')->nullable();
+            $table->string('address')->nullable();
+            $table->string('company')->nullable();
+            $table->text('notes')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable(); //  users table
             $table->timestamps();
+            
+            // Foreign key constraint  users table
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

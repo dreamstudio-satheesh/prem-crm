@@ -42,6 +42,10 @@ class HomeController extends Controller
         return view('user');
     }
 
+    public function contacts()
+    {
+        return view('contact');
+    }
 
 
     

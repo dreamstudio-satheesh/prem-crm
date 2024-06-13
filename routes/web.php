@@ -37,3 +37,5 @@ Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])-
 Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customer'])->name('customer');  
 
 Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
+
+Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts');   
