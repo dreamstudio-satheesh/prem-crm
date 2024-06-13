@@ -23,6 +23,8 @@
     <!-- custom Css-->
     <link href="{{ assets('/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
     <livewire:styles />
 
     @stack('styles')
@@ -869,8 +871,9 @@
     <script src="{{ assets('/assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ assets('/assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ assets('/assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
-    {{-- <script src="{{ assets('/assets/js/plugins.js') }}"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
     <!-- App js -->
     <script src="{{ assets('/assets/js/app.js') }}"></script>

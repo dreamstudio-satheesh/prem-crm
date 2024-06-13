@@ -11,6 +11,9 @@ class Customer extends Model
 
     protected $guarded = ['customer_id'];
 
+    protected $primaryKey = 'customer_id';
+
+
     public function contacts()
     {
         return $this->belongsToMany(Contact::class, 'customer_contacts')

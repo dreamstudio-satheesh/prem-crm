@@ -23,7 +23,6 @@
                                     <th>Mobile Number</th>
                                     <th>Email ID</th>
                                     <th>Company Name</th>
-                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -35,7 +34,6 @@
                                     <td>{{ $customer->mobile_number }}</td>
                                     <td>{{ $customer->email_id }}</td>
                                     <td>{{ $customer->company_name }}</td>
-                                    <td>{{ $customer->status_of_the_call }}</td>
                                     <td>
                                         <button wire:click="edit({{ $customer->customer_id }})" class="btn btn-primary btn-sm">Edit</button>
                                         <button x-data="{ unitId: {{ $customer->customer_id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
@@ -45,7 +43,7 @@
                             </tbody>
                             @else
                             <tr>
-                                <td colspan="7">
+                                <td colspan="6">
                                     <h5>No customers found</h5>
                                 </td>
                             </tr>
@@ -201,16 +199,16 @@
                     closeButton: true,
                     positionClass: "toast-top-right",
                 };
-                toastr.success(event.detail[0].message);
+                toastr.success(event.detail.message);
             });
 
-            hotkeys('alt+i', function(event, handler) {
+          /*   hotkeys('alt+i', function(event, handler) {
                 event.preventDefault();
                 let customerName = document.getElementById('customer_name');
                 if (document.activeElement !== customerName) {
                     customerName.focus();
                 }
-            });
+            }); */
         });
     </script>
     @endpush

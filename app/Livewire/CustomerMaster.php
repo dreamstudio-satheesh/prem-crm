@@ -12,7 +12,7 @@ class CustomerMaster extends Component
 
     public $customer_id;
     public $customer_name, $mobile_number, $email_id, $company_name, $tally_no, $tally_version, $contact_info;
-    public $city, $address, $designation,  $lat, $lng, $whatsapp_telegram_group = false;
+    public $city, $address, $designation, $lat, $lng, $whatsapp_telegram_group = false;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
@@ -28,8 +28,8 @@ class CustomerMaster extends Component
         'city' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:1000',
         'designation' => 'nullable|in:Owner,Accounts Manager,Accountant,Auditor,TAX Consultant',
-        'lat' => 'nullable',
-        'lng' => 'nullable',
+        'lat' => 'nullable|numeric',
+        'lng' => 'nullable|numeric',
         'whatsapp_telegram_group' => 'boolean',
     ];
 
@@ -63,7 +63,7 @@ class CustomerMaster extends Component
     public function store()
     {
         $this->validate();
-        
+
         Customer::updateOrCreate(['customer_id' => $this->customer_id], [
             'customer_name' => $this->customer_name,
             'mobile_number' => $this->mobile_number,
@@ -80,7 +80,7 @@ class CustomerMaster extends Component
             'whatsapp_telegram_group' => $this->whatsapp_telegram_group,
         ]);
 
-        session()->flash('success', 'Customer '.($this->customer_id ? 'Updated' : 'Created').' Successfully.');
+       // session()->flash('success', 'Customer '.($this->customer_id ? 'Updated' : 'Created').' Successfully.');
 
         $this->resetInputFields();
         $this->dispatch('show-toastr', ['message' => 'Customer '.($this->customer_id ? 'Updated' : 'Created').' Successfully.']);
@@ -88,7 +88,7 @@ class CustomerMaster extends Component
 
     public function edit($id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::where('customer_id', $id)->firstOrFail();
         $this->customer_id = $customer->customer_id;
         $this->customer_name = $customer->customer_name;
         $this->mobile_number = $customer->mobile_number;
@@ -107,7 +107,7 @@ class CustomerMaster extends Component
 
     public function delete($id)
     {
-        Customer::findOrFail($id)->delete();
+        Customer::where('customer_id', $id)->delete();
         session()->flash('success', 'Customer Deleted Successfully.');
     }
 
