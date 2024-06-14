@@ -74,7 +74,13 @@
 
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
-                                            Roles
+                                            Designation
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('products') }}" class="nav-link" data-key="t-master">
+                                            Products
                                         </a>
                                     </li>
                          
