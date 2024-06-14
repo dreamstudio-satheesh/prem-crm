@@ -71,12 +71,7 @@
                                              Contacts
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('contacts') }}" class="nav-link" data-key="t-calendar">
-                                             Leads
-                                        </a>
-                                    </li>
-
+                         
 
                                 </ul>
                             </div>
@@ -87,7 +82,56 @@
                         
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Opportunities</span>
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Pre Sales</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column">
+                                  <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Leads
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Opportunities
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Email Campaign
+                                        </a>
+                                    </li>
+ 
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Quote
+                                        </a>
+                                    </li> 
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Multiple Quote
+                                        </a>
+                                    </li> 
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Price Discount & Approval
+                                        </a>
+                                    </li>
+
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Terms & Conditions
+                                        </a>
+                                    </li>
+ 
+
+
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Sales</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarApps">
                                 <ul class="nav nav-sm flex-column"> 
@@ -97,7 +141,79 @@
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Quotations</span>
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Services</span>
+                            </a> 
+
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column">  
+                                <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> AMC  </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> TDL  </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Renewal  </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Online Calls  </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Onsite Calls  </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Calls Closing  </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                         
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Training</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">User Permissions  </span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Messages</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Contracts</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
+                                </ul>
+                            </div>
+                        </li>
+                         
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Products</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
+                                </ul>
+                            </div>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Tickets</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarApps">
                                 <ul class="nav nav-sm flex-column"> 
