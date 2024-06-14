@@ -9,7 +9,11 @@ class Contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'phone'];
+    protected $primaryKey = 'contact_id';
+
+    protected $fillable = [
+        'name', 'phone', 'email', 'address', 'company', 'designation', 'notes', 'user_id'
+    ];
 
     public function customers()
     {

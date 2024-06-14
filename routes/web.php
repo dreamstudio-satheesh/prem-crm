@@ -5,6 +5,7 @@ use App\Livewire\Garments;
 use App\Livewire\Checkpoints;
 use App\Livewire\AssignBundle;
 use App\Livewire\GarmentTracking;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,4 +34,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
 
-Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customer'])->name('customer');    
+Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customer'])->name('customer');  
+
+Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
+
+Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts');   

@@ -16,7 +16,10 @@ class CreateCustomersTable extends Migration
             $table->string('company_name')->nullable();
             $table->string('tally_no')->nullable();
             $table->string('tally_version')->nullable();
+<<<<<<< HEAD
           //  $table->json('contact_info')->nullable();
+=======
+>>>>>>> bcc8f649c0bc8c72793fee1f0c1e13cdcd23f6f3
             $table->string('city')->nullable();
             $table->text('address')->nullable();
             $table->double('lat')->nullable();

@@ -55,6 +55,12 @@
                             <div class="collapse menu-dropdown" id="sidebarApps">
                                 <ul class="nav nav-sm flex-column">
 
+                                <li class="nav-item">
+                                        <a href="{{ url('user') }}" class="nav-link" data-key="t-calendar">
+                                            Staffs
+                                        </a>
+                                    </li>
+
                                     <li class="nav-item">
                                         <a href="{{ url('customer') }}" class="nav-link" data-key="t-calendar">
                                             Customer
@@ -65,8 +71,36 @@
                                              Contacts
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('contacts') }}" class="nav-link" data-key="t-calendar">
+                                             Leads
+                                        </a>
+                                    </li>
 
 
+                                </ul>
+                            </div>
+                        </li>
+                       
+
+                        
+                        
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Opportunities</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Quotations</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarApps">
+                                <ul class="nav nav-sm flex-column"> 
                                 </ul>
                             </div>
                         </li>
@@ -81,10 +115,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Hourly
                                         </a>
-                                    </li>
-
-
-
+                                    </li> 
                                 </ul>
                             </div>
                         </li>
