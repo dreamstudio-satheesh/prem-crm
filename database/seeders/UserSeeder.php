@@ -16,8 +16,5 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'role_id' => 1,
         ]);
-
-        $adminRole = Role::where('name', 'Admin')->first();
-        $admin->roles()->attach($adminRole);
     }
 }
