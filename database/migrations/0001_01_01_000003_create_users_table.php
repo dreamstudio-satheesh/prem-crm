@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('role_id'); // Add this line to include the 'role_id' column
+            $table->unsignedBigInteger('role_id'); // Make sure this is an unsignedBigInteger
             $table->rememberToken();
             $table->timestamps();
 
