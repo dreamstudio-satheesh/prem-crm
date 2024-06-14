@@ -3,14 +3,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ScanController;
+use App\Http\Controllers\Api\Auth\LoginController;
 
 
 
-Route::post('/scan', [ScanController::class, 'store']);
-Route::get('/scan/last', [ScanController::class, 'getLastScan']);
-
-Route::apiResource('companies', CompanyApiController::class);
+Route::post('login', [LoginController::class, 'login']);
 
 
 
