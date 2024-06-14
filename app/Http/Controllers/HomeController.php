@@ -48,5 +48,12 @@ class HomeController extends Controller
     }
 
 
+    public function role()
+    {
+        return view('role');
+    }
+
+
+
     
 }

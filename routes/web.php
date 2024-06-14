@@ -38,4 +38,6 @@ Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customer']
 
 Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
 
+Route::get('/role', [App\Http\Controllers\HomeController::class, 'role'])->name('role');  
+
 Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts');   

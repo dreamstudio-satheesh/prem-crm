@@ -71,6 +71,12 @@
                                              Contacts
                                         </a>
                                     </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
+                                            Roles
+                                        </a>
+                                    </li>
                          
 
                                 </ul>
