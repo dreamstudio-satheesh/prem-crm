@@ -2,9 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Role;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserMaster extends Component
@@ -12,7 +13,7 @@ class UserMaster extends Component
     use WithPagination;
 
     public $user_id;
-    public $name, $email, $role, $password, $password_confirmation;
+    public $name, $email, $role_id, $password, $password_confirmation;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
@@ -20,7 +21,7 @@ class UserMaster extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255|unique:users,email',
-        'role' => 'required|in:Admin,Sales,Support',
+        'role_id' => 'required|exists:roles,id',
         'password' => 'required|string|min:8|confirmed',
     ];
 
@@ -31,7 +32,9 @@ class UserMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.user-master', compact('users'));
+            $roles = Role::all();
+
+        return view('livewire.user-master', compact('users', 'roles'));
     }
 
     public function resetInputFields()
@@ -51,7 +54,7 @@ class UserMaster extends Component
         $data = [
             'name' => $this->name,
             'email' => $this->email,
-            'role' => $this->role,
+            'role_id' => $this->role_id,
             'password' => Hash::make($this->password),
         ];
 
@@ -67,7 +70,7 @@ class UserMaster extends Component
         $this->user_id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
-        $this->role = $user->role;
+        $this->role_id = $user->role_id;
     }
 
     public function delete($id)

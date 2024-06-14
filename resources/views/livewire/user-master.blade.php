@@ -32,7 +32,7 @@
                                     <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
+                                    <td>{{ $user->roles->name }}</td>
                                     <td>
                                         <button wire:click="edit({{ $user->id }})" class="btn btn-primary btn-sm">Edit</button>
                                         <button x-data="{ unitId: {{ $user->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
@@ -79,17 +79,18 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="role">Role*</label>
-                            <select class="form-control" wire:model="role">
+                            <label for="role_id">Role*</label>
+                            <select class="form-control" wire:model="role_id">
                                 <option value="">Select Role</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Sales">Sales</option>
-                                <option value="Support">Support</option>
+                                @foreach($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
                             </select>
-                            @error('role')
+                            @error('role_id')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="password">Password*</label>
                             <input type="password" class="form-control" placeholder="Enter password" wire:model="password">
