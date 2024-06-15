@@ -28,7 +28,7 @@ return new class extends Migration
             $table->enum('lead_source', ['WEBSITE', 'PARTNER', 'WALK IN', 'REFERENCE', 'JUST DIAL'])->nullable();
             $table->enum('industry', ['OTHERS'])->nullable();
           //  $table->enum('hierarchy', ['OTHERS'])->nullable();//$table->enum('hierarchy', ['OTHERS'])->nullable();
-            $table->unsingnedBitInteger('hierarchy_id')->nullable(); 
+            $table->unsignedBigInteger('hierarchy_id')->nullable(); 
              //  $table->foreign('hierarchy_id')->references('id')->on('role_permissions')->onDelete('cascade');
             $table->unsignedBigInteger('industry_id')->default(0); // Changed to unsignedBigInteger
             $table->timestamps();
