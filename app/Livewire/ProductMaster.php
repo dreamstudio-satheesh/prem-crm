@@ -17,6 +17,7 @@ class ProductMaster extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
+     
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'price' => 'required|numeric',

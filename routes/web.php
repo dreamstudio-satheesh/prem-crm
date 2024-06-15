@@ -43,3 +43,4 @@ Route::get('/role', [App\Http\Controllers\HomeController::class, 'role'])->name(
 Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts');   
 
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');  
+Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry');  

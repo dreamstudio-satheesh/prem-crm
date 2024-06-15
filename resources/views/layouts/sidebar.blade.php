@@ -83,6 +83,12 @@
                                             Products
                                         </a>
                                     </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">
+                                            Industry
+                                        </a>
+                                    </li>
                          
 
                                 </ul>

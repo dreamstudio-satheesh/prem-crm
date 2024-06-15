@@ -21,9 +21,15 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->text('comments')->nullable();
             $table->enum('product_category', ['SALES', 'AMC', 'SERVICE', 'TDL', 'OTHERS'])->nullable();
+
+            $table->unsignedBigInteger('product_id')->nullable(); //  users table
+          //  $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+
             $table->enum('lead_source', ['WEBSITE', 'PARTNER', 'WALK IN', 'REFERENCE', 'JUST DIAL'])->nullable();
             $table->enum('industry', ['OTHERS'])->nullable();
-            $table->enum('hierarchy', ['OTHERS'])->nullable();
+          //  $table->enum('hierarchy', ['OTHERS'])->nullable();//$table->enum('hierarchy', ['OTHERS'])->nullable();
+            $table->unsingnedBitInteger('hierarchy_id')->nullable(); 
+             //  $table->foreign('hierarchy_id')->references('id')->on('role_permissions')->onDelete('cascade');
             $table->unsignedBigInteger('industry_id')->default(0); // Changed to unsignedBigInteger
             $table->timestamps();
         });

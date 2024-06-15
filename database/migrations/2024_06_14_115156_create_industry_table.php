@@ -8,19 +8,16 @@ return new class extends Migration
 {
 
     protected $guarded = [];  
-
+   
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('industry', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->decimal('price', 8, 2);
-            $table->integer('quantity')->nullable(); // Make quantity nullable
-            $table->enum('type', ['product', 'service']); // Add a type field
+            $table->text('description')->nullable();         
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('industry');
     }
 };
