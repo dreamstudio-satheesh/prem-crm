@@ -41,7 +41,7 @@ class IndustryMaster extends Component
     {
         $this->validate();
 
-        Product::updateOrCreate(['id' => $this->product_id], [
+        Industry::updateOrCreate(['id' => $this->industry_id], [
             'name' => $this->name,
             'description' => $this->description, 
         ]);
@@ -52,10 +52,10 @@ class IndustryMaster extends Component
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $this->product_id = $product->id;
-        $this->name = $product->name;
-        $this->description = $product->description;
+        $industry = Industry::findOrFail($id);
+        $this->industry_id = $industry->id;
+        $this->name = $industry->name;
+        $this->description = $industry->description;
         
     }
 
