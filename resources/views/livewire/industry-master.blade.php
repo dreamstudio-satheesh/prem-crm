@@ -20,7 +20,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
->                                   <th>Description</th>                                  
+                                    <th>Description</th>                                  
                                     <th>Actions</th>
                                 </tr>
                             </thead>
