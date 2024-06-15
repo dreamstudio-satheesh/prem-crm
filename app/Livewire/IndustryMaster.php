@@ -10,7 +10,7 @@ class IndustryMaster extends Component
 {
     use WithPagination;
 
-    public $product_id;
+    public $industry_id;
     public $name, $description;
     public $search = '';
 
@@ -33,7 +33,7 @@ class IndustryMaster extends Component
 
     public function resetInputFields()
     {
-        $this->product_id = null;
+        $this->industry_id = null;
         $this->name = ''; 
     }
 
@@ -41,21 +41,21 @@ class IndustryMaster extends Component
     {
         $this->validate();
 
-        Product::updateOrCreate(['id' => $this->product_id], [
+        Industry::updateOrCreate(['id' => $this->industry_id], [
             'name' => $this->name,
             'description' => $this->description, 
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Product '.($this->industry_id ? 'Updated' : 'Created').' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Industry '.($this->industry_id ? 'Updated' : 'Created').' Successfully.']);
     }
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $this->product_id = $product->id;
-        $this->name = $product->name;
-        $this->description = $product->description;
+        $industry = Industry::findOrFail($id);
+        $this->industry_id = $industry->id;
+        $this->name = $industry->name;
+        $this->description = $industry->description;
         
     }
 

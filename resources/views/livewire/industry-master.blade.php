@@ -58,7 +58,7 @@
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
                     <h5>{{ $industry_id ? 'Edit Industry' : 'Create Industry' }}</h5>
-                </div>
+                </div> 
                 <div class="card-body" style="padding-top: 10px">
                     <form wire:submit.prevent="store">
                         <div class="form-group">
