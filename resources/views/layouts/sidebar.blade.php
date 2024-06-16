@@ -46,6 +46,20 @@
                             </div>
                         </li> <!-- end Dashboard Menu -->
 
+                        
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#companies" >
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>companies</span>
+                            </a>
+                           
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#Contacts" >
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>Contacts</span>
+                            </a>
+                           
+                        </li>
 
 
                         <li class="nav-item">
@@ -61,16 +75,6 @@
                                         </a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a href="{{ url('customer') }}" class="nav-link" data-key="t-master">
-                                            Customer
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('contacts') }}" class="nav-link" data-key="t-master">
-                                             Contacts
-                                        </a>
-                                    </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
@@ -158,6 +162,13 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="#Contracts" >
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>Contracts</span>
+                            </a>
+                           
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link menu-link" href="#Services" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Services">
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-services">Services</span>
                             </a> 
@@ -207,15 +218,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#Contracts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Contracts">
-                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Contracts</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="Contracts">
-                                <ul class="nav nav-sm flex-column"> 
-                                </ul>
-                            </div>
-                        </li>
+                        
                          
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">

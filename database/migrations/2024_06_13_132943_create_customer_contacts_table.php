@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('customer_contact_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('contact_id');
-            $table->string('role')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');

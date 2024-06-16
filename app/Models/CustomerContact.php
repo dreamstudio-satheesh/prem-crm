@@ -3,27 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class CustomerContact extends Model
+class CustomerContact extends Pivot
 {
     use HasFactory;
-
-    protected $table = 'customer_contacts';
 
     protected $primaryKey = 'customer_contact_id';
 
     protected $fillable = [
-        'customer_id', 'contact_id', 'role'
+        'customer_id',
+        'contact_id',
     ];
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
-    }
-
-    public function contact()
-    {
-        return $this->belongsTo(Contact::class, 'contact_id', 'contact_id');
-    }
 }

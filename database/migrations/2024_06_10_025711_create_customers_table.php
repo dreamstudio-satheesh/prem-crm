@@ -11,7 +11,7 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id('customer_id');
             $table->string('customer_name');
-            $table->string('mobile_number');
+            $table->unsignedBigInteger('primary_contact_id');
             $table->string('email_id')->nullable();
             $table->string('company_name')->nullable();
             $table->string('tally_no')->nullable();
@@ -20,10 +20,12 @@ class CreateCustomersTable extends Migration
             $table->text('address')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
-            $table->boolean('whatsapp_telegram_group')->default(false); 
+            $table->boolean('whatsapp_telegram_group')->default(false);
             $table->timestamps();
+
+            // Foreign key constraint to contacts table
+            $table->foreign('primary_contact_id')->references('contact_id')->on('contacts')->onDelete('cascade');
         });
-        
     }
 
     public function down()
