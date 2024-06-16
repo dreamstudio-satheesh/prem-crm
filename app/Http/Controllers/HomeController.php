@@ -51,7 +51,8 @@ class HomeController extends Controller
     {
         return view('contact');
     }
-
+   
+    
     public function products()
     {
         return view('products');
