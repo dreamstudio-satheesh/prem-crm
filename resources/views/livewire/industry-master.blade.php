@@ -98,7 +98,8 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.call('delete', unitId);
+                    //@this.call('delete', unitId);
+                    Livewire.emit('delete', unitId); // Using Livewire's JavaScript API
                     Swal.fire('Deleted!', 'Industry Deleted Successfully.', 'success');
                 }
             });
