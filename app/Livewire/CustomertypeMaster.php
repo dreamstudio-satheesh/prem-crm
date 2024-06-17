@@ -10,7 +10,7 @@ class CustomertypeMaster extends Component
 {
     use WithPagination;
 
-    public $customertype_id;
+    public $id;
     public $name, $description;
     public $search = '';
 
@@ -24,7 +24,7 @@ class CustomertypeMaster extends Component
 
     public function render()
     {
-        $acustomertype = Customertype::where('name', 'like', '%'.$this->search.'%')
+        $customertype = Customertype::where('name', 'like', '%'.$this->search.'%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
@@ -33,7 +33,7 @@ class CustomertypeMaster extends Component
 
     public function resetInputFields()
     {
-        $this->customertype_id = null;
+        $this->id = null;
         $this->name = '';
         $this->description = ''; 
     }
@@ -42,19 +42,19 @@ class CustomertypeMaster extends Component
     {
         $this->validate();
 
-        Customertype::updateOrCreate(['id' => $this->customertype_id], [
+        Customertype::updateOrCreate(['id' => $this->id], [
             'name' => $this->name,
             'description' => $this->description,           
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Customer Type '.($this->customertype_id ? 'Updated' : 'Created').' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Customer Type '.($this->id ? 'Updated' : 'Created').' Successfully.']);
     }
 
     public function edit($id)
     {
         $customertype = Customertype::findOrFail($id);
-        $this->pcustomertype_id = $customertype->id;
+        $this->id = $customertype->id;
         $this->name = $customertype->name;
         $this->description = $customertype->description;
          

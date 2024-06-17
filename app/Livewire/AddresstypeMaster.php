@@ -33,7 +33,7 @@ class AddresstypeMaster extends Component
 
     public function resetInputFields()
     {
-        $this->addresstype_id = null;
+        $this->id = null;
         $this->name = '';
         $this->description = '';     
         
