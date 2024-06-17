@@ -31,9 +31,9 @@ class HomeController extends Controller
         return view('company');
     }
 
-    public function customer()
+    public function customers()
     {
-        return view('customer');
+        return view('customers');
     }
 
     public function industry()

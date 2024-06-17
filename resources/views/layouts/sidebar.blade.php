@@ -48,14 +48,14 @@
 
                         
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#companies" >
+                            <a class="nav-link menu-link" href="{{ url('customers') }}" >
                                 <i class="mdi mdi-sticker-text-outline"></i> <span>companies</span>
                             </a>
                            
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#Contacts" >
+                            <a class="nav-link menu-link" href="{{ url('contacts') }}" >
                                 <i class="mdi mdi-sticker-text-outline"></i> <span>Contacts</span>
                             </a>
                            

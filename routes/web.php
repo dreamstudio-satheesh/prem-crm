@@ -34,7 +34,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
 
-Route::get('/customer', [App\Http\Controllers\HomeController::class, 'customer'])->name('customer');  
+Route::get('/customers', [App\Http\Controllers\HomeController::class, 'customers'])->name('customers');  
 
 Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
 
