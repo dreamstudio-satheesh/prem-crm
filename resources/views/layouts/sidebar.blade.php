@@ -50,8 +50,7 @@
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ url('customers') }}" >
                                 <i class="mdi mdi-sticker-text-outline"></i> <span>companies</span>
-                            </a>
-                           
+                            </a> 
                         </li>
 
                         <li class="nav-item">
@@ -69,22 +68,42 @@
                             <div class="collapse menu-dropdown" id="Master">
                                 <ul class="nav nav-sm flex-column">
 
-                                <li class="nav-item">
-                                        <a href="{{ url('user') }}" class="nav-link" data-key="t-master">
-                                            Staffs
-                                        </a>
-                                    </li>
-
+                                    
 
                                     <li class="nav-item">
-                                        <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
-                                            Designation
+                                        <a href="{{ url('addresstype') }}" class="nav-link" data-key="t-master">
+                                            Address Type
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('products') }}" class="nav-link" data-key="t-master">
-                                            Products
+                                           Tally Product
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
+                                           Customer Type
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
+                                            Exceutive
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('user') }}" class="nav-link" data-key="t-master">
+                                            Desigination
+                                        </a>
+                                    </li>
+ 
+                                    
+                                    <li class="nav-item">
+                                        <a href="{{ url('address book') }}" class="nav-link" data-key="t-master">
+                                            Address Book
                                         </a>
                                     </li>
 

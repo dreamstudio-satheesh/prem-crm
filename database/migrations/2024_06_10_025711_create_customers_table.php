@@ -8,6 +8,10 @@ class CreateCustomersTable extends Migration
 {
     public function up()
     {
+       // Schema::dropIfExists('customers');
+     //  php artisan migrate   :fresh
+        if(Schema::hasTable('customers')) return;
+
         Schema::create('customers', function (Blueprint $table) {
             $table->id('customer_id');
             $table->string('customer_name');

@@ -47,6 +47,9 @@ Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts']
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');  
 Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry');  
 
+Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
+Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
+
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
 

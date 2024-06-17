@@ -35,6 +35,16 @@ class HomeController extends Controller
     {
         return view('customers');
     }
+   
+    public function addresstype()
+    {
+        return view('addresstype');
+    }
+
+    public function customertype()
+    {
+        return view('customertype');
+    }
 
     public function industry()
     {
