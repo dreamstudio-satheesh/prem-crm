@@ -5,40 +5,34 @@
                 <div class="card-header">
                     <div class="row" style="padding-top: 20px; padding-left:20px;">
                         <div class="col-md-8">
-                            <h2>Product/Service Master</h2>
+                            <h2>Customer Type Master</h2>
                         </div>
                         <div class="col-md-4 text-right">
-                            <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Products/Services...">
+                            <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Customer Type...">
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div style="padding-top: 10px">
                         <table class="table table-bordered mt-5">
-                            @if ($products->count() > 0)
+                            @if ($customertype->count() > 0)
                             <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Type</th>
+                                    <th>Description</th> 
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $product)
+                                @foreach ($customertype as $rscustomertype)
                                 <tr>
-                                    <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->index + 1 }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->description }}</td>
-                                    <td>{{ $product->price }}</td>
-                                    <td>{{ $product->quantity }}</td>
-                                    <td>{{ ucfirst($product->type) }}</td>
+                                    <td>{{ ($customertype->currentPage() - 1) * $customertype->perPage() + $loop->index + 1 }}</td>
+                                    <td>{{ $rscustomertype->name }}</td>
+                                    <td>{{ $rscustomertype->description }}</td> 
                                     <td>
-                                        <button wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Edit</button>
-                                        <button x-data="{ unitId: {{ $product->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
+                                        <button wire:click="edit({{ $rscustomertype->id }})" class="btn btn-primary btn-sm">Edit</button>
+                                        <button x-data="{ unitId: {{ $rscustomertype->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -46,14 +40,14 @@
                             @else
                             <tr>
                                 <td colspan="7">
-                                    <h5>No products/services found</h5>
+                                    <h5>No Customer Type found</h5>
                                 </td>
                             </tr>
                             @endif
                         </table>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>{{ $products->links() }}</div>
-                            <div class="text-right">Total: {{ $products->total() }}</div>
+                            <div>{{ $customertype->links() }}</div>
+                            <div class="text-right">Total: {{ $customertype->total() }}</div>
                         </div>
                     </div>
                 </div>
@@ -63,13 +57,13 @@
         <div class="col-md-4 col-xs-12">
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h5>{{ $product_id ? 'Edit Product/Service' : 'Create Product/Service' }}</h5>
+                    <h5>{{ $id ? 'Edit Customer Type' : 'Create Customer Type' }}</h5>
                 </div>
                 <div class="card-body" style="padding-top: 10px">
                     <form wire:submit.prevent="store">
                         <div class="form-group">
                             <label for="name">Name*</label>
-                            <input type="text" class="form-control" id="name" autofocus placeholder="Enter product/service name" wire:model="name">
+                            <input type="text" class="form-control" id="name" autofocus placeholder="Enter Customer Type" wire:model="name">
                             @error('name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -81,31 +75,9 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="price">Price*</label>
-                            <input type="number" class="form-control" placeholder="Enter price" wire:model="price">
-                            @error('price')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group" x-show="type === 'product'">
-                            <label for="quantity">Quantity*</label>
-                            <input type="number" class="form-control" placeholder="Enter quantity" wire:model="quantity">
-                            @error('quantity')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Type*</label>
-                            <select class="form-control" wire:model="type">
-                                <option value="">Select Type</option>
-                                <option value="product">Product</option>
-                                <option value="service">Service</option>
-                            </select>
-                            @error('type')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                       
+                         
+                      
                         <div class="form-group gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" wire:click="create" class="btn btn-secondary">Cancel</button>
@@ -130,7 +102,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     @this.call('delete', unitId);
-                    Swal.fire('Deleted!', 'Product/Service Deleted Successfully.', 'success');
+                    Swal.fire('Deleted!', 'Customer Type Deleted Successfully.', 'success');
                 }
             });
         }

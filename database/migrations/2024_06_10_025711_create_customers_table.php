@@ -10,7 +10,13 @@ class CreateCustomersTable extends Migration
     {
        // Schema::dropIfExists('customers');
      //  php artisan migrate   :fresh
-        if(Schema::hasTable('customers')) return;
+
+    // php artisan tinker
+ //2. Schema::drop('your_table_name')
+ //3. php artisan migrate
+
+     // php artisan db:seed 
+       if(Schema::hasTable('customers')) return;
 
         Schema::create('customers', function (Blueprint $table) {
             $table->id('customer_id');

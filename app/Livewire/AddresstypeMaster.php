@@ -10,7 +10,7 @@ class AddresstypeMaster extends Component
 {
     use WithPagination;
 
-    public $product_id;
+    public $id;
     public $name, $description;
     public $search = '';
 
@@ -43,7 +43,7 @@ class AddresstypeMaster extends Component
     {
         $this->validate();
 
-        Product::updateOrCreate(['id' => $this->addresstype_id], [
+        Addresstype::updateOrCreate(['id' => $this->addresstype_id], [
             'name' => $this->name,
             'description' => $this->description,            
              
@@ -55,10 +55,10 @@ class AddresstypeMaster extends Component
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $this->product_id = $product->id;
-        $this->name = $product->name;
-        $this->description = $product->description;
+        $addresstype = Addresstype::findOrFail($id);
+        $this->id = $addresstype->id;
+        $this->name = $addresstype->name;
+        $this->description = $addresstype->description;
      
     }
 
