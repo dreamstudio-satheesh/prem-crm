@@ -49,7 +49,7 @@
                         
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ url('customers') }}" >
-                                <i class="mdi mdi-sticker-text-outline"></i> <span>companies</span>
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>Customers</span>
                             </a>
                            
                         </li>
