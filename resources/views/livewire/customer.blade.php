@@ -86,12 +86,12 @@
                                     <td>
                                         <ul class="list-inline hstack gap-2 mb-0">
                                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                                <a href="#showModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" wire:click="edit({{ $customer->id }})">
+                                                <a href="#showModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" wire:click="edit({{ $customer->customer_id }})">
                                                     <i class="ri-pencil-fill fs-16"></i>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                                <a class="text-danger d-inline-block remove-item-btn" wire:click="confirmDelete({{ $customer->id }})">
+                                                <a class="text-danger d-inline-block remove-item-btn" wire:click="confirmDelete({{ $customer->customer_id }})">
                                                     <i class="ri-delete-bin-5-fill fs-16"></i>
                                                 </a>
                                             </li>
@@ -100,6 +100,7 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+
                         </table>
                         <div class="noresult" style="display: none">
                             <div class="text-center">
@@ -113,7 +114,7 @@
                         {{ $customers->links() }}
                     </div>
                 </div>
-                <div class="modal fade" id="showModal" tabindex="-1" aria-hidden="true" style="display: none;">
+                <div class="modal fade" id="showModal" tabindex="-1" aria-hidden="true" wire:ignore.self>
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header bg-light p-3">
@@ -123,6 +124,27 @@
                             <form class="tablelist-form" wire:submit.prevent="{{ $editMode ? 'update' : 'store' }}" autocomplete="off">
                                 <div class="modal-body">
                                     <input type="hidden" id="id-field" wire:model="customerId">
+
+                                    <div class="text-center">
+                                                                    <div class="position-relative d-inline-block">
+                                                                        <div class="position-absolute bottom-0 end-0">
+                                                                            <label for="company-logo-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Image">
+                                                                                <div class="avatar-xs cursor-pointer">
+                                                                                    <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                                                        <i class="ri-image-fill"></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </label>
+                                                                            <input class="form-control d-none" value="" id="company-logo-input" type="file" accept="image/png, image/gif, image/jpeg">
+                                                                        </div>
+                                                                        <div class="avatar-lg p-1">
+                                                                            <div class="avatar-title bg-light rounded-circle">
+                                                                                <img src="http://localhost:8000/themes/material/assets/images/users/multi-user.jpg" id="companylogo-img" class="avatar-md rounded-circle object-cover" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h5 class="fs-13 mt-3">Company Logo</h5>
+                                                                </div>
 
                                     <div class="mb-3">
                                         <label for="customername-field" class="form-label">Customer Name</label>
@@ -169,6 +191,7 @@
                     </div>
                 </div>
 
+
                 <div class="modal fade zoomIn" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -196,10 +219,47 @@
     </div>
 </div>
 
+
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    document.addEventListener('livewire:load', function () {
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('closeModal', () => {
+            var myModalEl = document.getElementById('showModal');
+            var modal = bootstrap.Modal.getInstance(myModalEl);
+            modal.hide();
+
+            var backdrop = document.querySelector('.modal-backdrop.fade.show');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+        });
+
+        Livewire.on('showDeleteModal', () => {
+            var myModalEl = document.getElementById('deleteRecordModal');
+            var modal = new bootstrap.Modal(myModalEl);
+            modal.show();
+        });
+
+        Livewire.on('closeDeleteModal', () => {
+            var myModalEl = document.getElementById('deleteRecordModal');
+            var modal = bootstrap.Modal.getInstance(myModalEl);
+            modal.hide();
+
+            var backdrop = document.querySelector('.modal-backdrop.fade.show');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+        });
+
         Livewire.hook('message.processed', (message, component) => {
             flatpickr('#company-field');
         });
     });
 </script>
+@endpush

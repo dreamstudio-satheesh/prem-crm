@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
             $table->boolean('whatsapp_telegram_group')->default(false);
+            $table->enum('status', ['active', 'block'])->default('active');
             $table->timestamps();
 
             // Foreign key constraint to contacts table

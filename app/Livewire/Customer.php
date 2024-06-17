@@ -12,6 +12,8 @@ class Customer extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public $customerId, $customer_name, $email_id, $phone, $company_name, $status, $primary_contact_id;
     public $editMode = false;
     public $selected = [];
@@ -75,7 +77,7 @@ class Customer extends Component
         ]);
 
         $this->resetForm();
-        $this->dispatch('close-modal');
+        $this->dispatch('closeModal');
     }
 
     public function edit($id)
@@ -89,6 +91,8 @@ class Customer extends Component
         $this->company_name = $customer->company_name;
         $this->status = $customer->status;
         $this->primary_contact_id = $customer->primary_contact_id;
+
+        $this->dispatch('showModal');
     }
 
     public function update()
@@ -130,13 +134,13 @@ class Customer extends Component
         ]);
 
         $this->resetForm();
-        $this->dispatch('close-modal');
+        $this->dispatch('closeModal');
     }
 
     public function confirmDelete($id)
     {
         $this->customerId = $id;
-        $this->dispatch('show-delete-modal');
+        $this->dispatch('showDeleteModal');
     }
 
     public function delete()
@@ -146,7 +150,7 @@ class Customer extends Component
         Contact::findOrFail($customer->primary_contact_id)->delete();
 
         $this->resetForm();
-        $this->dispatch('close-delete-modal');
+        $this->dispatch('closeDeleteModal');
     }
 
     public function deleteSelected()

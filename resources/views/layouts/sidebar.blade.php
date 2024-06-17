@@ -163,7 +163,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Contracts" >
-                                <i class="mdi mdi-sticker-text-outline"></i> <span>Contracts</span>
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>Service Contracts</span>
                             </a>
                            
                         </li>
