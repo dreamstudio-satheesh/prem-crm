@@ -9,6 +9,8 @@ class CustomerContact extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'customer_contacts'; 
+
     protected $primaryKey = 'customer_contact_id';
 
     protected $fillable = [

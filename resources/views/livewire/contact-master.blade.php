@@ -1,4 +1,3 @@
-<!-- resources/views/livewire/contact-master.blade.php -->
 <div>
     <div class="row">
         <div style="padding-left:30px;" class="col-md-8 col-xs-12">
@@ -21,7 +20,6 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
-                                    <th>Phone</th>
                                     <th>Email</th>
                                     <th>Company</th>
                                     <th>Actions</th>
@@ -32,7 +30,6 @@
                                 <tr>
                                     <td>{{ ($contacts->currentPage() - 1) * $contacts->perPage() + $loop->index + 1 }}</td>
                                     <td>{{ $contact->name }}</td>
-                                    <td>{{ $contact->phone }}</td>
                                     <td>{{ $contact->email }}</td>
                                     <td>{{ $contact->company }}</td>
                                     <td>
@@ -74,13 +71,6 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone*</label>
-                            <input type="text" class="form-control" placeholder="Enter phone number" wire:model="phone">
-                            @error('phone')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" placeholder="Enter email" wire:model="email">
                             @error('email')
@@ -109,17 +99,14 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="designation">Designation</label>
-                            <select class="form-control" wire:model="designation">
-                                <option value="">Select Designation</option>
-                                <option value="MD">MD</option>
-                                <option value="Auditor">Auditor</option>
-                                <option value="GSTP / Tax Consultant">GSTP / Tax Consultant</option>
-                                <option value="Computer Service">Computer Service</option>
-                                <option value="Company Staff">Company Staff</option>
-                                <option value="others">Others</option>
+                            <label for="position_id">Position</label>
+                            <select class="form-control" wire:model="position_id">
+                                <option value="">Select Position</option>
+                                @foreach($positions as $position)
+                                    <option value="{{ $position->position_id }}">{{ $position->position_name }}</option>
+                                @endforeach
                             </select>
-                            @error('designation')
+                            @error('position_id')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -131,6 +118,23 @@
                                 @endforeach
                             </select>
                             @error('selected_customers')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_numbers">Phone Numbers</label>
+                            @foreach($phone_numbers as $index => $phone)
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" placeholder="Phone Number" wire:model="phone_numbers.{{ $index }}.number">
+                                    <select class="form-control" wire:model="phone_numbers.{{ $index }}.type">
+                                        <option value="mobile">Mobile</option>
+                                        <option value="phone">Phone</option>
+                                    </select>
+                                    <button type="button" class="btn btn-danger" wire:click="removePhoneNumber({{ $index }})">Remove</button>
+                                </div>
+                            @endforeach
+                            <button type="button" class="btn btn-primary" wire:click="addPhoneNumber">Add Phone Number</button>
+                            @error('phone_numbers')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

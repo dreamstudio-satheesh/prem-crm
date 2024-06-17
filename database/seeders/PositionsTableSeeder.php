@@ -18,6 +18,7 @@ class PositionsTableSeeder extends Seeder
             ['position_name' => 'Primary Contact'],
             ['position_name' => 'MD'],
             ['position_name' => 'Auditor'],
+            ['position_name' => 'GSTP / Tax Consultant'],
             ['position_name' => 'Computer Services'],
             ['position_name' => 'Accountant'],
             ['position_name' => 'Staff'],

@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Customer as CustomerModel;
 use App\Models\Contact;
 use App\Models\ContactPhone;
+use App\Models\CustomerContact;
 
 class Customer extends Component
 {
@@ -68,12 +69,19 @@ class Customer extends Component
         ]);
 
         // Create Customer
-        CustomerModel::create([
+        $customer = CustomerModel::create([
             'customer_name' => $this->customer_name,
             'primary_contact_id' => $contact->contact_id,
             'email_id' => $this->email_id,
             'company_name' => $this->company_name,
             'status' => $this->status
+        ]);
+
+        // Assign customer to customer_contacts
+        CustomerContact::create([
+            'customer_id' => $customer->customer_id,
+            'contact_id' => $contact->contact_id,
+            'role' => 'primary' // Or any role you wish to assign
         ]);
 
         $this->resetForm();
@@ -132,6 +140,12 @@ class Customer extends Component
             'company_name' => $this->company_name,
             'status' => $this->status
         ]);
+
+        // Ensure the customer_contact record exists
+        CustomerContact::updateOrCreate(
+            ['customer_id' => $customer->customer_id, 'contact_id' => $contact->contact_id],
+            ['role' => 'primary'] // Update or set role as needed
+        );
 
         $this->resetForm();
         $this->dispatch('closeModal');
