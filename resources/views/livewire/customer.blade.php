@@ -139,7 +139,7 @@
                                                                         </div>
                                                                         <div class="avatar-lg p-1">
                                                                             <div class="avatar-title bg-light rounded-circle">
-                                                                                <img src="http://localhost:8000/themes/material/assets/images/users/multi-user.jpg" id="companylogo-img" class="avatar-md rounded-circle object-cover" />
+                                                                                <img src="{{ url('/themes/material/assets/images/users/multi-user.jpg') }}" id="companylogo-img" class="avatar-md rounded-circle object-cover" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
