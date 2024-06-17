@@ -133,7 +133,7 @@
                                     <button type="button" class="btn btn-danger" wire:click="removePhoneNumber({{ $index }})">Remove</button>
                                 </div>
                             @endforeach
-                            <button type="button" class="btn btn-primary" wire:click="addPhoneNumber">Add Phone Number</button>
+                            <button type="button" class="btn btn-sm btn-info" wire:click="addPhoneNumber">Add Phone Number</button>
                             @error('phone_numbers')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
