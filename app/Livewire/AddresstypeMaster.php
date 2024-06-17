@@ -43,7 +43,7 @@ class AddresstypeMaster extends Component
     {
         $this->validate();
 
-        Addresstype::updateOrCreate(['id' => $this->addresstype_id], [
+        Addresstype::updateOrCreate(['id' => $this->id], [
             'name' => $this->name,
             'description' => $this->description,            
              
