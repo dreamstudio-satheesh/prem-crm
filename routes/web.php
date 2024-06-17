@@ -7,6 +7,8 @@ use App\Livewire\AssignBundle;
 use App\Livewire\GarmentTracking;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Transactions\OnsiteEntryController; 
+;
 
 Route::get('/', function () {
     return redirect('home');
@@ -44,3 +46,14 @@ Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts']
 
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');  
 Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry');  
+
+Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
+
+
+//Route::get('transactions/trnenquiry', [Transactions\TrnEnquiryController::class, 'index']);  
+//Route::get('transactions/trnenquiry/create', [Transactions\TrnEnquiryController::class, 'create']);  
+//Route::post('transactions/trnenquiry/store', [Transactions\TrnEnquiryController::class, 'store']);  
+//::get('transactions/trnenquiry/edit/{number?}', [Transactions\TrnEnquiryController::class, 'edit']);  
+
+//Route::post('transactions/trnenquiry/update', [Transactions\TrnEnquiryController::class, 'update']);  
+//Route::get('transactions/trnenquiry/delete/{number?}', [Transactions\TrnEnquiryController::class, 'delete']);  //
