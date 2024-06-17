@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Addresstype extends Model
 {
     use HasFactory;
+   
+    protected $table = 'addresstype'; 
 
     protected $primaryKey = 'id';
 
