@@ -47,18 +47,9 @@
                         </li> <!-- end Dashboard Menu -->
 
                         
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ url('customers') }}" >
-                                <i class="mdi mdi-sticker-text-outline"></i> <span>companies</span>
-                            </a> 
-                        </li>
+                      
 
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ url('contacts') }}" >
-                                <i class="mdi mdi-sticker-text-outline"></i> <span>Contacts</span>
-                            </a>
-                           
-                        </li>
+                
 
 
                         <li class="nav-item">
@@ -68,7 +59,19 @@
                             <div class="collapse menu-dropdown" id="Master">
                                 <ul class="nav nav-sm flex-column">
 
-                                    
+                                <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ url('customers') }}" >
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
+                            </a> 
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ url('contacts') }}" >
+                                <i class="mdi mdi-sticker-text-outline"></i> <span>Address Book</span>
+                            </a>
+                           
+                        </li>
+
 
                                     <li class="nav-item">
                                         <a href="{{ url('addresstype') }}" class="nav-link" data-key="t-master">

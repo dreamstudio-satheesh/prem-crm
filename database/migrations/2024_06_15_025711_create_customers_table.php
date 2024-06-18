@@ -16,6 +16,7 @@ class CreateCustomersTable extends Migration
  //3. php artisan migrate
 
      // php artisan db:seed 
+    // DB::statement('ALTER TABLE customers CHANGE company_name description bigint(20) ');
        if(Schema::hasTable('customers')) return;
 
         Schema::create('customers', function (Blueprint $table) {
@@ -37,6 +38,8 @@ class CreateCustomersTable extends Migration
             // Foreign key constraint to contacts table
             $table->foreign('primary_contact_id')->references('contact_id')->on('contacts')->onDelete('cascade');
         });
+
+       
     }
 
     public function down()
