@@ -22,7 +22,7 @@
 
               
                 <div class="card-body" style="padding-top: 10px">
-                <form  name="customeraddition" action="{{ url('submit.form') }}"
+                <form  name="customeraddition" action="{{ url('/master/customer/store') }}"
                            method="post" class="form-horizontal form-bordered"> 
                     
                         <div class="form-group">
@@ -64,7 +64,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
- 
  
 @endpush
 @endsection
