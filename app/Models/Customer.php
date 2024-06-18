@@ -13,27 +13,9 @@ class Customer extends Model
 
     protected $primaryKey = 'customer_id';
 
-   /*  protected $fillable = [
-        'customer_name',
-        'primary_contact_id',
-        'email_id',
-        'company_name',
-        'tally_no',
-        'tally_version',
-        'city',
-        'address',
-        'lat',
-        'lng',
-        'whatsapp_telegram_group',
-    ]; */
+     protected $fillable = [
+        'customer_name', 
+    ];  
 
-    public function primaryContact()
-    {
-        return $this->belongsTo(Contact::class, 'primary_contact_id', 'contact_id');
-    }
-
-    public function contacts()
-    {
-        return $this->belongsToMany(Contact::class, 'customer_contacts', 'customer_id', 'contact_id');
-    }
+    
 }

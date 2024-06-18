@@ -30,11 +30,7 @@ class HomeController extends Controller
     {
         return view('company');
     }
-
-    public function customers()
-    {
-        return view('customers');
-    }
+ 
    
     public function addresstype()
     {

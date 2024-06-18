@@ -16,6 +16,13 @@ class CreateContactsTable extends Migration
 
         Schema::create('contacts', function (Blueprint $table) {
             $table->id('contact_id');
+
+             // $table->string('email_id')->nullable();
+           // $table->string('city')->nullable();
+            //$table->text('address')->nullable();
+            //$table->double('lat')->nullable();
+           // $table->double('lng')->nullable();
+
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('address')->nullable();
@@ -24,7 +31,7 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('position_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
-
+            $table->enum('designation', ['MD', 'Auditor', 'GSTP / Tax Consultant', 'Computer Service', 'Company Staff', 'others'])->nullable()->after('notes');
             // Foreign key constraints
             $table->foreign('position_id')->references('position_id')->on('positions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

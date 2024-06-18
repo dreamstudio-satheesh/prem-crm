@@ -45,13 +45,7 @@
                                 </ul>
                             </div>
                         </li> <!-- end Dashboard Menu -->
-
-                        
-                      
-
-                
-
-
+  
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Master" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Master">
                                 <i class="mdi mdi-view-grid-plus-outline"></i> <span data-key="t-master">Master</span>
@@ -60,7 +54,7 @@
                                 <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ url('customers') }}" >
+                            <a class="nav-link menu-link" href="{{ url('/master/customers') }}" >
                                 <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
                             </a> 
                             </li>

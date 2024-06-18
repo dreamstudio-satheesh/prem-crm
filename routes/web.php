@@ -8,6 +8,7 @@ use App\Livewire\GarmentTracking;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transactions\OnsiteEntryController; 
+use App\Http\Controllers\Master; 
 ;
 
 Route::get('/', function () {
@@ -36,7 +37,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
 
-Route::get('/customers', [App\Http\Controllers\HomeController::class, 'customers'])->name('customers');  
+ 
 
 Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
 
@@ -50,6 +51,7 @@ Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry']
 Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
 Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
 
+Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers');  
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
 
