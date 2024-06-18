@@ -99,9 +99,9 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="position_id">Address Type</label>
+                            <label for="position_id">Contact Type</label>
                             <select class="form-control" wire:model="position_id">
-                                <option value="">Select Address Type</option>
+                                <option value="">Select Contact Type</option>
                                 @foreach($positions as $position)
                                     <option value="{{ $position->position_id }}">{{ $position->position_name }}</option>
                                 @endforeach
