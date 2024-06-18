@@ -53,7 +53,7 @@ Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'custom
 Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
 
 Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
-Route::post('/master/customer/store', [App\Http\Controllers\Master\CustomerController::class, 'store']);  
+Route::post('/master/customer/store', [App\Http\Controllers\Master\CustomerController::class, 'store'])->name('customers.store');  
 
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
