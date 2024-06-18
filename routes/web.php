@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transactions\OnsiteEntryController; 
 use App\Http\Controllers\Master; 
-;
+use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return redirect('home');
@@ -51,7 +52,9 @@ Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry']
 Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
 Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
 
-Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers');  
+Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
+Route::post('/master/customer/store', [App\Http\Controllers\Master\CustomerController::class, 'store']);  
+
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
 

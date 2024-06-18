@@ -19,8 +19,12 @@
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
                     <h5> Add Customer</h5>
                 </div>
+
+              
                 <div class="card-body" style="padding-top: 10px">
-                    <form wire:submit.prevent="store">
+                <form  name="customeraddition" action="{{ url('submit.form') }}"
+                           method="post" class="form-horizontal form-bordered"> 
+                    
                         <div class="form-group">
                             <label for="name">Customer Name*</label>
                             <input type="text" class="form-control" id="name" autofocus placeholder="Enter Customer Name"  >
@@ -31,7 +35,7 @@
                        
                         <div class="form-group gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" wire:click="create" class="btn btn-secondary">Cancel</button>
+                            <button type="button" click="create" class="btn btn-secondary">Cancel</button>
                         </div>
                     </form>
 

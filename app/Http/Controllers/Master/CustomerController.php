@@ -25,6 +25,10 @@ class CustomerController extends Controller
         $query = Customer::query();
         return view('master.customer.add',['customers' => $query->paginate(10)]);
     }
- 
+   
+    public function store(Request $request)
+    {
+        echo 'hi';
+    }
     
 }
