@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 
-@section('pagetitle','On Site Entry')
-
- 
-
-
-     
+@section('pagetitle','On Site Entry') 
 
 @section('content')               
         <div class="row">

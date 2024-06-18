@@ -4,6 +4,9 @@
      
 
 @section('content') 
+ 
+
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -121,7 +124,83 @@
                         {{ $customers->links() }}
                     </div>
                 </div>
- 
+                {{ $editMode="True"}}
+                <div class="modal fade" id="showModal" tabindex="-1" aria-hidden="true" wire:ignore.self>
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light p-3">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ $editMode ? 'Edit Customer' : 'Add Customer' }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form class="tablelist-form" wire:submit.prevent="{{ $editMode ? 'update' : 'store' }}" autocomplete="off">
+                                <div class="modal-body">
+                                    <input type="hidden" id="id-field" wire:model="customerId">
+
+                                    <div class="text-center">
+                                                                    <div class="position-relative d-inline-block">
+                                                                        <div class="position-absolute bottom-0 end-0">
+                                                                            <label for="company-logo-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Image">
+                                                                                <div class="avatar-xs cursor-pointer">
+                                                                                    <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                                                        <i class="ri-image-fill"></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </label>
+                                                                            <input class="form-control d-none" value="" id="company-logo-input" type="file" accept="image/png, image/gif, image/jpeg">
+                                                                        </div>
+                                                                        <div class="avatar-lg p-1">
+                                                                            <div class="avatar-title bg-light rounded-circle">
+                                                                                <img src="{{ url('/themes/material/assets/images/users/multi-user.jpg') }}" id="companylogo-img" class="avatar-md rounded-circle object-cover" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h5 class="fs-13 mt-3">Company Logo</h5>
+                                                                </div>
+
+                                    <div class="mb-3">
+                                        <label for="customername-field" class="form-label">Customer Name</label>
+                                        <input type="text" id="customername-field" class="form-control" placeholder="Enter name" wire:model="customer_name" required>
+                                        @error('customer_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="email-field" class="form-label">Email</label>
+                                        <input type="email" id="email-field" class="form-control" placeholder="Enter email" wire:model="email_id" required>
+                                        @error('email_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="phone-field" class="form-label">Phone</label>
+                                        <input type="text" id="phone-field" class="form-control" placeholder="Enter phone no." wire:model="phone" required>
+                                        @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="company-field" class="form-label">Company Name</label>
+                                        <input type="text" id="company-field" class="form-control" placeholder="Enter company name" wire:model="company_name" required>
+                                        @error('company_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <div>
+                                        <label for="status-field" class="form-label">Status</label>
+                                        <select class="form-control" id="status-field" wire:model="status" required>
+                                            <option value="">Status</option>
+                                            <option value="active">Active</option>
+                                            <option value="block">Block</option>
+                                        </select>
+                                        @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="display: block;">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">{{ $editMode ? 'Update' : 'Add' }} Customer</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="modal fade zoomIn" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
@@ -147,10 +226,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>
@@ -198,4 +273,5 @@
         });
     });
 </script>
+@endpush
 @endsection
