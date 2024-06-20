@@ -54,6 +54,7 @@ Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'address
 
 Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
 Route::get('/master/customer/add', [App\Http\Controllers\Master\CustomerController::class, 'add'])->name('customers.add');  
+Route::get('/master/customer/editaddress', [App\Http\Controllers\Master\CustomerController::class, 'editaddress'])->name('customers.editaddress');  
 Route::post('/master/customer/store', [App\Http\Controllers\Master\CustomerController::class, 'store'])->name('customers.store');  
 Route::get('/master/customer/edit', [App\Http\Controllers\Master\CustomerController::class, 'edit'])->name('customers.edit');  
 Route::post('/master/customer/update', [App\Http\Controllers\Master\CustomerController::class, 'update'])->name('customers.update');

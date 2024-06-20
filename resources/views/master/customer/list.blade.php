@@ -131,7 +131,7 @@
                                     
                                     <td> 
                                     <button type="button"
-                              onclick="location.href='{{ route('customers.add') }}'"
+                              onclick="location.href='{{ route('customers.editaddress') }}'"
                             
                             class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i>Edit Address Book</button>
                                         </ul>

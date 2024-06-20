@@ -22,7 +22,12 @@ class CustomerController extends Controller
         $query = Customer::getall();
         return view('master.customer.list',['customers' => $query]);
     }
-
+    
+    public function editaddress()
+    {  
+      
+        return view('master.customer.editaddress'); 
+    }
     public function add()
     { 
        
