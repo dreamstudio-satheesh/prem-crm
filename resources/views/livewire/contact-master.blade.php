@@ -98,6 +98,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label for="position_id">Position</label>
                             <select class="form-control" wire:model="position_id">
@@ -110,6 +111,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="selected_customers">Assign to Customers</label>
                             <select multiple class="form-control" wire:model="selected_customers">

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
-
+use DB;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory;
@@ -40,6 +40,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    protected function getall()
+    {
+        return DB::table('users')            
+                ->select('id','name')  
+                ->orderBy('name', 'asc')             
+               ->get();    
+      }
 
     public function contacts()
     {

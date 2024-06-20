@@ -19,9 +19,12 @@
                         </div>
                     </div>
                     <div class="col-sm-auto">
-                        <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add Customer</button>
+                        <div class="d-flex flex-wrap align-items-start gap-2"> 
                             <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                            <button type="button"
+                              onclick="location.href='{{ route('customers.add') }}'"
+                            
+                            class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Add New Customer</button>
                         </div>
                     </div>
                 </div>
@@ -61,6 +64,8 @@
                     </div>
                 </form>
             </div>
+
+
             <div class="card-body">
                 <div>
                     <div class="table-responsive table-card mb-1">
