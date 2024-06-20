@@ -56,7 +56,8 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div>
-                                        <button type="button" class="btn btn-primary w-100" wire:click="filterData"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                        <button type="button" class="btn btn-primary w-100" wire:click="filterData"> 
+                                            <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
                                     </div>
                                 </div>
                             </div>
@@ -93,42 +94,46 @@
                                         <div class="form-check">
                                             <input class="form-check-input"  
                                             type="checkbox" name="chk_child" 
-                                            value="{{ $customer->id }}" >
+                                            value="{{ $customer->customer_id }}" >
                                         </div>
                                     </th>
-                                    <td class="customer_name">{{ $customer->customer_name }}</td>
+                                    <td class="customer_name">
+                                    <span class=" text-uppercase">{{ $customer->customer_name }}</span></td>
                             
         <td class="AMC"><span class="badge badge-soft-{{ $customer->amc == 'yes' ? 'success' : 'danger' }} text-uppercase">
         {{ $customer->amc }}</span></td>
         <td class="TSS"><span class="badge badge-soft-{{ $customer->tss_status == 'active' ? 'success' : 'danger' }} text-uppercase">
                                         {{ $customer->tss_status }}</span></td>
-                                    <td class="Executive">{{ $customer->customer_name }}</td>
+                                    <td class="Executive">{{ $customer->staffname }}</td>
                                     <td class="Remarks"> <span class="badge badge-soft text-uppercase"{{ $customer->remarks }}</td> 
 
 
                                     <td>
                                         <ul class="list-inline hstack gap-2 mb-0">
                                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                                <a href="#showModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" wire:click="edit({{ $customer->customer_id }})">
+                                 
+                                            
+                                            <a href="#showModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" 
+                                                 onclick="location.href='{{ route('customers.add') }}'"
+                                                wire:click="edit({{ $customer->customer_id }})">
                                                     <i class="ri-pencil-fill fs-16"></i>
                                                 </a>
                                             </li>
+                                             
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                                <a class="text-danger d-inline-block remove-item-btn" wire:click="confirmDelete({{ $customer->customer_id }})">
+                                                <a class="text-danger d-inline-block remove-item-btn" 
+                                                 onclick="location.href='{{ route('customers.add') }}'" >
                                                     <i class="ri-delete-bin-5-fill fs-16"></i>
                                                 </a>
                                             </li>
                                         </ul>
                                     </td>
                                     
-                                    <td>
-                                       
-                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                                                data-bs-placement="top" title="Remove">
-                                                <a class="text-success d-inline-block  " >
-                                                    <i class="fs-16">Edit Address Book</i>
-                                                </a>
-                                            </li>
+                                    <td> 
+                                    <button type="button"
+                              onclick="location.href='{{ route('customers.add') }}'"
+                            
+                            class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i>Edit Address Book</button>
                                         </ul>
                                     </td>
 

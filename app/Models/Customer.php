@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class Customer extends Model
 {
     use HasFactory;
@@ -16,6 +16,15 @@ class Customer extends Model
      protected $fillable = [
         'customer_name', 
     ];  
+   
 
+    protected function getall()
+    {
+        return DB::table('customers')            
+                ->LeftJoin('users', 'users.id', '=', 'customers.staff_id')
+                ->select('customer_id','customer_name','amc','tss_status','remarks','users.name as staffname')  
+                ->orderBy('customer_name', 'asc')             
+                 ->paginate(10);   
+      }
     
 }

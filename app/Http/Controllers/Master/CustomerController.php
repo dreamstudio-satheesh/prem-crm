@@ -19,8 +19,8 @@ class CustomerController extends Controller
     public function index()
     { 
         
-        $query = Customer::query();
-        return view('master.customer.list',['customers' => $query->paginate(10)]);
+        $query = Customer::getall();
+        return view('master.customer.list',['customers' => $query]);
     }
 
     public function add()
