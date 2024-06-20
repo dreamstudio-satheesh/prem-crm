@@ -35,17 +35,19 @@ class CustomerController extends Controller
     {
          
         $id= $this->getmax(); 
-        $name =$request->name;$product_id =$request->product_id;$amc =$request->amc;
+        $name =$request->name;$product_id =$request->product_id;
+        
+        $amc =$request->amc;
         $tssdate =$request->tssdate;// $enq_date =date("Y-m-d", strtotime($request->tssdate));
         $tssadminemail=$request->tssadminemail;$profilestatus=$request->profilestatus;
         $user_id=$request->executive_id  ;
         $remarks=$request->remarks  ;
         
         customer::create(['id'=>$id,
-        'name'=>$name, 
+        'customer_name'=>$name, 
         'product_id'=>$product_id,                                  
         'amc'=>$amc,
-        'tss_status'=>$tssstatus, 
+        'tss_status'=>$request->tssstatus, 
         'tss_expirydate'=>$tssdate, 
         'tss_adminemail'=>$tssadminemail, 
         'profilestatus'=>$profilestatus,  

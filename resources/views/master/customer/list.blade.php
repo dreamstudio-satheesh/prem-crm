@@ -78,11 +78,12 @@
                                         </div>
                                     </th>
                                     <th class="sort" data-sort="customer_name">Customer</th>
-                                    <th class="sort" data-sort="email">Email</th>
-                                    <th class="sort" data-sort="phone">Phone</th>
-                                    <th class="sort" data-sort="company_name">Company Name</th>
-                                    <th class="sort" data-sort="status">Status</th>
-                                    <th class="sort" data-sort="action">Action</th>
+                                    <th class="sort" data-sort="AMC">A.M.C</th>
+                                    <th class="sort" data-sort="TSS">T.S.S</th>
+                                    <th class="sort" data-sort="Executive">Executive</th>
+                                    <th class="sort" data-sort="Remarks">Remarks</th>
+                                    <th>Action</th>
+                                    <th>Edit Address</th>
                                 </tr>
                             </thead>
                             <tbody class="list form-check-all">
@@ -90,14 +91,21 @@
                                 <tr>
                                     <th scope="row">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="chk_child" value="{{ $customer->id }}" wire:model="selected">
+                                            <input class="form-check-input"  
+                                            type="checkbox" name="chk_child" 
+                                            value="{{ $customer->id }}" >
                                         </div>
                                     </th>
                                     <td class="customer_name">{{ $customer->customer_name }}</td>
-                                    <td class="email">{{ $customer->email_id }}</td>
-                                    <td class="phone">{{ $customer->primaryContact->phones->first()->phone_number ?? '' }}</td>
-                                    <td class="company_name">{{ $customer->company_name }}</td>
-                                    <td class="status"><span class="badge badge-soft-{{ $customer->status == 'active' ? 'success' : 'danger' }} text-uppercase">{{ $customer->status }}</span></td>
+                            
+        <td class="AMC"><span class="badge badge-soft-{{ $customer->amc == 'yes' ? 'success' : 'danger' }} text-uppercase">
+        {{ $customer->amc }}</span></td>
+        <td class="TSS"><span class="badge badge-soft-{{ $customer->tss_status == 'active' ? 'success' : 'danger' }} text-uppercase">
+                                        {{ $customer->tss_status }}</span></td>
+                                    <td class="Executive">{{ $customer->customer_name }}</td>
+                                    <td class="Remarks"> <span class="badge badge-soft text-uppercase"{{ $customer->remarks }}</td> 
+
+
                                     <td>
                                         <ul class="list-inline hstack gap-2 mb-0">
                                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
@@ -112,6 +120,20 @@
                                             </li>
                                         </ul>
                                     </td>
+                                    
+                                    <td>
+                                       
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                                data-bs-placement="top" title="Remove">
+                                                <a class="text-success d-inline-block  " >
+                                                    <i class="fs-16">Edit Address Book</i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+
+
+
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -129,107 +151,10 @@
                         {{ $customers->links() }}
                     </div>
                 </div>
-                {{ $editMode="True"}}
-                <div class="modal fade" id="showModal" tabindex="-1" aria-hidden="true" wire:ignore.self>
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header bg-light p-3">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ $editMode ? 'Edit Customer' : 'Add Customer' }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form class="tablelist-form" wire:submit.prevent="{{ $editMode ? 'update' : 'store' }}" autocomplete="off">
-                                <div class="modal-body">
-                                    <input type="hidden" id="id-field" wire:model="customerId">
-
-                                    <div class="text-center">
-                                                                    <div class="position-relative d-inline-block">
-                                                                        <div class="position-absolute bottom-0 end-0">
-                                                                            <label for="company-logo-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Image">
-                                                                                <div class="avatar-xs cursor-pointer">
-                                                                                    <div class="avatar-title bg-light border rounded-circle text-muted">
-                                                                                        <i class="ri-image-fill"></i>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </label>
-                                                                            <input class="form-control d-none" value="" id="company-logo-input" type="file" accept="image/png, image/gif, image/jpeg">
-                                                                        </div>
-                                                                        <div class="avatar-lg p-1">
-                                                                            <div class="avatar-title bg-light rounded-circle">
-                                                                                <img src="{{ url('/themes/material/assets/images/users/multi-user.jpg') }}" id="companylogo-img" class="avatar-md rounded-circle object-cover" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h5 class="fs-13 mt-3">Company Logo</h5>
-                                                                </div>
-
-                                    <div class="mb-3">
-                                        <label for="customername-field" class="form-label">Customer Name</label>
-                                        <input type="text" id="customername-field" class="form-control" placeholder="Enter name" wire:model="customer_name" required>
-                                        @error('customer_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="email-field" class="form-label">Email</label>
-                                        <input type="email" id="email-field" class="form-control" placeholder="Enter email" wire:model="email_id" required>
-                                        @error('email_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="phone-field" class="form-label">Phone</label>
-                                        <input type="text" id="phone-field" class="form-control" placeholder="Enter phone no." wire:model="phone" required>
-                                        @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="company-field" class="form-label">Company Name</label>
-                                        <input type="text" id="company-field" class="form-control" placeholder="Enter company name" wire:model="company_name" required>
-                                        @error('company_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-
-                                    <div>
-                                        <label for="status-field" class="form-label">Status</label>
-                                        <select class="form-control" id="status-field" wire:model="status" required>
-                                            <option value="">Status</option>
-                                            <option value="active">Active</option>
-                                            <option value="block">Block</option>
-                                        </select>
-                                        @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-                                </div>
-                                <div class="modal-footer" style="display: block;">
-                                    <div class="hstack gap-2 justify-content-end">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success">{{ $editMode ? 'Update' : 'Add' }} Customer</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
 
 
-                <div class="modal fade zoomIn" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mt-2 text-center">
-                                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                                    <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                                        <h4>Are you sure ?</h4>
-                                        <p class="text-muted mx-4 mb-0">Are you sure you want to remove this record ?</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn w-sm btn-danger" wire:click="delete">Yes, Delete It!</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
         </div>
     </div>
