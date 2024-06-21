@@ -139,7 +139,7 @@
 
                             <div class="form-group gap-2 mt-3">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" click="create" class="btn btn-secondary">Cancel</button>
+                                <button  href="{{ url('/master/customers') }}" type="button" click="create" class="btn btn-secondary">Cancel</button>
                             </div>
                         </form>
 
