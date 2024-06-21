@@ -62,8 +62,8 @@
                             <div class="form-group"> 
                                  <label for ="amc" class="form-label">T.S.S. Status </label>
                                  <select class="form-control" id="tssstatus" name="tssstatus"  >
-                                     <option value="1">ACTIVE</option>
-                                     <option value="0">IN ACTIVE</option>
+                                     <option value="active">ACTIVE</option>
+                                     <option value="inactive">IN ACTIVE</option>
                                  </select>
                                  @error('amc') 
                                  <span class="text-danger">{{ $message }}</span>
@@ -90,8 +90,8 @@
                             <div class="form-group">
                                 <label for="profilestatus">Profile Status</label>
                                 <select class="form-control" id="profilestatus"   name="profilestatus">
-                                     <option value="1">FOLLOW UP</option>
-                                     <option value="2">OTHERS</option>
+                                     <option value="Followup">FOLLOW UP</option>
+                                     <option value="Others">OTHERS</option>
                                  </select>
                                 @error('profilestatus')
                                 <span class="text-danger">{{ $message }}</span>

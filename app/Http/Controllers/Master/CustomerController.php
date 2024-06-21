@@ -73,7 +73,7 @@ class CustomerController extends Controller
        
        $rscustomer = DB::table('customers')    
         ->select('customers.customer_id','customer_name','tss_expirydate','product_id','amc',
-        'tss_status',
+        'tss_status','staff_id','profile_status',
         'remarks','tss_adminemail')               
         ->where('customers.customer_id',$id)  
         ->get();  
@@ -84,7 +84,33 @@ class CustomerController extends Controller
         return view('master.customer.editcustomer',['products'=>$product,
                          'user'=>$user,'rscustomer'=>$rscustomer]); 
     }
+    public function savecustomer(Request $request)
+    {
+         
+        $id= $request->id; 
+        $name =$request->name;$product_id =$request->product_id;
+     //  echo $request->tssstatus;exit();
+        $amc =$request->amc;
+        $tssdate =$request->tssdate;// $enq_date =date("Y-m-d", strtotime($request->tssdate));
+        $tssadminemail=$request->tssadminemail;$profilestatus=$request->profilestatus;
+        $user_id=$request->executive_id  ;
+        $remarks=$request->remarks  ;
+        
+        Customer::where('customer_id',$id)->update([  
+        'customer_name'=>$name, 
+        'product_id'=>$product_id,                                  
+        'amc'=>$amc,
+        'tss_status'=>$request->tssstatus, 
+        'tss_expirydate'=>$tssdate, 
+        'tss_adminemail'=>$tssadminemail, 
+        'profile_status'=>$profilestatus,  
+        'staff_id'=>$request->executive_id,   
+        'remarks'=>$request->remarks]);
 
+        $msg = [
+            'message' => 'Customer Updated created successfully!' ];
+          return  redirect('/master/customers')->with($msg); 
+    }
 
 
     public function editaddress($id)
@@ -183,7 +209,7 @@ class CustomerController extends Controller
         'tss_status'=>$request->tssstatus, 
         'tss_expirydate'=>$tssdate, 
         'tss_adminemail'=>$tssadminemail, 
-        'profilestatus'=>$profilestatus,  
+        'profile_status'=>$profilestatus,  
         'staff_id'=>$request->executive_id,   
         'remarks'=>$request->remarks]);
 

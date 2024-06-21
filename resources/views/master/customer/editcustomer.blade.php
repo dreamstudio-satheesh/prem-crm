@@ -34,6 +34,9 @@
                                 <label for="name">Customer Name*</label>
                                 <input type="text" class="form-control" id="name" 
                                  name="name"   value='{{ $customer->customer_name }}' placeholder="Enter Customer Name">
+
+                                 <input type="hidden" class="form-control" id="id" 
+                                 name="id"   value='{{ $customer->customer_id }}' readonly>
                                 @error('name') 
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -59,8 +62,8 @@
                             <div class="form-group"> 
                                  <label for ="amc" class="form-label">A.M.C. </label>
                                  <select class="form-control" id="amc" name="amc"  >
-                                     <option value="YES" >YES</option>
-                                     <option value="NO">NO</option>
+                                     <option value="yes"  {{ $customer->amc =="yes" ? 'selected' : ''}}>YES</option>
+                                     <option value="no"   {{ $customer->amc =="no" ? 'selected' : ''}}>NO</option>
                                  </select>
                                  @error('amc') 
                                  <span class="text-danger">{{ $message }}</span>
@@ -70,8 +73,8 @@
                             <div class="form-group"> 
                                  <label for ="amc" class="form-label">T.S.S. Status </label>
                                  <select class="form-control" id="tssstatus" name="tssstatus"  >
-                                     <option value="1">ACTIVE</option>
-                                     <option value="0">IN ACTIVE</option>
+                                     <option value="active"  {{ $customer->tss_status =="active" ? 'selected' : ''}}>ACTIVE</option>
+                                     <option value="inactive"  {{ $customer->tss_status =="inactive" ? 'selected' : ''}}>IN ACTIVE</option>
                                  </select>
                                  @error('amc') 
                                  <span class="text-danger">{{ $message }}</span>
@@ -101,8 +104,8 @@
                             <div class="form-group">
                                 <label for="profilestatus">Profile Status</label>
                                 <select class="form-control" id="profilestatus"   name="profilestatus">
-                                     <option value="1">FOLLOW UP</option>
-                                     <option value="2">OTHERS</option>
+                                     <option value="Followup" {{ $customer->profile_status =="Followup" ? 'selected' : ''}}>FOLLOW UP</option>
+                                     <option value="Others" {{ $customer->profile_status =="Others" ? 'selected' : ''}}>OTHERS</option>
                                  </select>
                                 @error('profilestatus')
                                 <span class="text-danger">{{ $message }}</span>
@@ -115,7 +118,9 @@
                                 <select class="form-control" id="executive_id"  name="executive_id">
                                 <option value="">Select Executive</option>
                                 @foreach($user as $rsuser) 
-                                    <option value="{{ $rsuser->id }}">{{ $rsuser->name }}</option>
+                                    <option value="{{ $rsuser->id }}"
+                                    {{ $rsuser->id== $customer->staff_id ? 'selected' : ''}}>
+                                    {{ $rsuser->name }}</option>
                                 @endforeach
                             </select>
                                 @error('executive_id')
