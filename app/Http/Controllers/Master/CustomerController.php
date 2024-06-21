@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use DB;
 class CustomerController extends Controller
 {
    
@@ -23,11 +23,31 @@ class CustomerController extends Controller
         return view('master.customer.list',['customers' => $query]);
     }
     
-    public function editaddress()
-    {  
+    public function editaddress($id)
+    {   
+     
+        $addresstype= DB::table('addresstype')            
+                ->select('id','name')  
+                ->orderBy('name', 'asc')             
+               ->get();    
       
-        return view('master.customer.editaddress'); 
+      
+        return view('master.customer.editaddress',['addresstype'=>$addresstype]); 
     }
+    public function fetchaddresstype()
+    {   
+       $addresstype= DB::table('addresstype')            
+                ->select('id','name')  
+                ->orderBy('name', 'asc')             
+               ->get();    
+               $output ='';
+         foreach($addresstype as $row)
+               {
+                   $output .='<option value='.$row->id.'>'.$row->name.'</option>';
+               }         
+                echo $output;
+    } 
+ 
     public function add()
     { 
        
@@ -36,6 +56,25 @@ class CustomerController extends Controller
         return view('master.customer.add',['products' => $product,'user'=>$user]); 
     }
    
+    
+    public function saveaddress(Request $request)
+    {
+        $i=0;
+        $id= $this->getmax(); 
+        foreach($request->seladdresstype as $arritem)
+        {
+            addressbook::create(['id'=>$id, 
+                                  'indx'=>$i+1,
+                                  'customer_code'=>$request->customer_code,              
+                                  'addresstype'=>$arritem,
+                                   'contactperson'=>$request->contactperson[$i],                                       
+                                   'mobileno'=>$request->mobileno[$i],                                      
+                                   'phoneno'=>$request->phoneno[$i],
+                                   'email'=>$request->email[$i]  ]);
+        $i=$i+1;
+        }         
+    } 
+
     public function store(Request $request)
     {
          

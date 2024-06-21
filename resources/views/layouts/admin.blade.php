@@ -24,7 +24,7 @@
     <link href="{{ assets('/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <livewire:styles />
 
     @stack('styles')
