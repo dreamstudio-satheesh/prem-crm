@@ -23,15 +23,13 @@ class CustomerController extends Controller
         return view('master.customer.list',['customers' => $query]);
     }
     
-    public function editaddress($id)
+    public function editaddressnew($id)
     {   
-     
-       // echo $id;exit();
-
-       $rscustomer = DB::table('customers')    
-       ->select('customer_id','customer_name' )               
-        ->where('customer_id',$id)
-        ->get();  
+       
+        $rscustomer = DB::table('customers')   
+        ->select('customer_id','customer_name' )               
+        ->where('customer_id',$id) 
+        ->get();   
 
         $addresstype= DB::table('addresstype')            
                 ->select('id','name')  
@@ -39,8 +37,108 @@ class CustomerController extends Controller
                ->get();    
       
       
-        return view('master.customer.editaddress',['addresstype'=>$addresstype,'rscustomer'=>$rscustomer]); 
+        return view('master.customer.editaddressnew',['addresstype'=>$addresstype,'rscustomer'=>$rscustomer]); 
     }
+    public function saveaddressnew(Request $request)
+    {
+       
+       // customeraddress_id
+
+        $i=0;
+        $id= $this->getmaxaddress(); 
+        foreach($request->seladdresstype as $arritem)
+        {
+            Addressbook::create(['id'=>$id, 
+                                  'indx'=>$i+1,
+                                  'customer_code'=>$request->customer_code,              
+                                  'addresstype'=>$arritem,
+                                  'contact_person'=>$request->contactperson[$i],                                       
+                                  'mobileno'=>$request->mobileno[$i],                                      
+                                  'phoneno'=>$request->phoneno[$i],
+                                  'email'=>$request->email[$i]  ]);
+            $i=$i+1;
+        }   
+
+        Customer::where('customer_id',$request->customer_code)->update([ 
+            'customeraddress_id'=>$id    
+            ]); 
+
+        $msg = [
+            'message' => 'Customer Address  created successfully!' ];
+          return  redirect('/master/customers')->with($msg); 
+    } 
+    
+    public function editcustomer($id)
+    {   
+       
+       $rscustomer = DB::table('customers')    
+        ->select('customers.customer_id','customer_name','tss_expirydate','product_id','amc',
+        'tss_status',
+        'remarks','tss_adminemail')               
+        ->where('customers.customer_id',$id)  
+        ->get();  
+        
+        $product =  Product::getall();  
+        $user =  User::getall();  
+      
+        return view('master.customer.editcustomer',['products'=>$product,
+                         'user'=>$user,'rscustomer'=>$rscustomer]); 
+    }
+
+
+
+    public function editaddress($id)
+    {   
+       
+       $rscustomer = DB::table('customers')   
+        ->Join('addressbook', 'addressbook.customer_code', '=', 'customers.customer_id')
+        ->select('customers.customer_id','customer_name','addressbook.id' )               
+        ->where('addressbook.id',$id) 
+        ->distinct()
+        ->get();  
+        
+
+        $rsaddressbook = DB::table('addressbook')    
+        ->select('id','indx','customer_code','addresstype','contact_person',
+        'mobileno','phoneno','email' )               
+         ->where('id',$id)
+         ->get();
+
+        $addresstype= DB::table('addresstype')            
+                ->select('id','name')  
+                ->orderBy('name', 'asc')             
+               ->get();    
+      
+      
+        return view('master.customer.editaddress',['addresstype'=>$addresstype,'rscustomer'=>$rscustomer,'rsaddressbook'=>$rsaddressbook]); 
+    }
+    public function saveaddress(Request $request)
+    {  
+        $i=0;
+        DB::table('addressbook')->where('id',$request->id)->delete();
+      
+        foreach($request->seladdresstype as $arritem)
+        {
+            Addressbook::create(['id'=>$request->id,
+                                  'indx'=>$i+1,
+                                  'customer_code'=>$request->customer_code,              
+                                  'addresstype'=>$arritem,
+                                  'contact_person'=>$request->contactperson[$i],                                       
+                                  'mobileno'=>$request->mobileno[$i],                                      
+                                  'phoneno'=>$request->phoneno[$i],
+                                  'email'=>$request->email[$i]  ]);
+            $i=$i+1;
+        }   
+
+        Customer::where('customer_id',$request->customer_code)->update([ 
+            'customeraddress_id'=>$request->id   
+            ]); 
+
+        $msg = [
+            'message' => 'Customer Address Updated successfully!' ];
+          return  redirect('/master/customers')->with($msg); 
+    } 
+   
 
     public function fetchaddresstype()
     {   
@@ -65,29 +163,7 @@ class CustomerController extends Controller
     }
    
     
-    public function saveaddress(Request $request)
-    {
-
-        $i=0;
-        $id= $this->getmaxaddress(); 
-        foreach($request->seladdresstype as $arritem)
-        {
-            Addressbook::create(['id'=>$id, 
-                                  'indx'=>$i+1,
-                                  'customer_code'=>$request->customer_code,              
-                                  'addresstype'=>$arritem,
-                                  'contact_person'=>$request->contactperson[$i],                                       
-                                  'mobileno'=>$request->mobileno[$i],                                      
-                                  'phoneno'=>$request->phoneno[$i],
-                                  'email'=>$request->email[$i]  ]);
-            $i=$i+1;
-        }   
-
-        $msg = [
-            'message' => 'Customer Address Create created successfully!' ];
-          return  redirect('/master/customers')->with($msg); 
-    } 
-
+   
     public function store(Request $request)
     {
          

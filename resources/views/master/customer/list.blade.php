@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2"> 
-                            <button type="button" class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                            
                             <button type="button"
                               onclick="location.href='{{ route('customers.add') }}'"
                             
@@ -32,34 +32,10 @@
             <div class="card-body border-bottom-dashed border-bottom">
                 <form>
                     <div class="row g-3">
-                        <div class="col-xl-6">
-                            <div class="search-box">
-                                <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something..." wire:model="search">
-                                <i class="ri-search-line search-icon"></i>
-                            </div>
-                        </div>
+                      
                         <div class="col-xl-6">
                             <div class="row g-3">
-                                <div class="col-sm-4">
-                                    <div class="">
-                                        <input type="text" class="form-control flatpickr-input" id="datepicker-range" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Select date" readonly="readonly">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div>
-                                        <select class="form-control" wire:model="status">
-                                            <option value="all">All</option>
-                                            <option value="active">Active</option>
-                                            <option value="block">Block</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div>
-                                        <button type="button" class="btn btn-primary w-100" wire:click="filterData"> 
-                                            <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
-                                    </div>
-                                </div>
+                             
                             </div>
                         </div>
                     </div>
@@ -108,35 +84,30 @@
                                     <td class="Remarks"> <span class="badge badge-soft text-uppercase"{{ $customer->remarks }}</td> 
 
 
-                                    <td>
-                                        <ul class="list-inline hstack gap-2 mb-0">
-                                            <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                 
-                                            
-                                            <a href="#showModal" data-bs-toggle="modal" class="text-primary d-inline-block edit-item-btn" 
-                                                 onclick="location.href='{{ route('customers.add') }}'"
-                                                wire:click="edit({{ $customer->customer_id }})">
-                                                    <i class="ri-pencil-fill fs-16"></i>
-                                                </a>
-                                            </li>
-                                             
-                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                                <a class="text-danger d-inline-block remove-item-btn" 
-                                                 onclick="location.href='{{ route('customers.add') }}'" >
-                                                    <i class="ri-delete-bin-5-fill fs-16"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                    <td>  
+                                        <button type="button"  
+                                          onclick="location.href='{{ url('/master/customer/editcustomer') }}/{{$customer->customer_id}}'" 
+                                          class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i> >
+                                          Edit Customer</button>
                                     </td>
                                     
                                     <td> 
-
-                                     
+                                         
+                                    <?php   if($customer->customeraddress_id>0) {   ?>
                                     <button type="button"
-                              onclick="location.href='{{ url('/master/customer/editaddress') }}/{{$customer->customer_id}}'" 
-                            class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i>Edit Address Book</button>
-                                        </ul>
+                                     onclick="location.href='{{ url('/master/customer/editaddress') }}/{{$customer->customeraddress_id}}'" 
+                                     class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i>Edit Address Book</button>
+                                     <?php } else { ?>
+                                        
+                            <button type="button"
+                              onclick="location.href='{{ url('/master/customer/editaddressnew') }}/{{$customer->customer_id}}'" 
+                            class="btn btn-info"><i class="ri-file-download-line align-bottom me-1"></i>Create Address Book</button>
+                            <?php }  ?>        
+                           </ul>
+                                   
                                     </td>
+
+
 
 
 

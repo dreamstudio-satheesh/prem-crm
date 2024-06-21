@@ -22,7 +22,7 @@ class Customer extends Model
     {
         return DB::table('customers')            
                 ->LeftJoin('users', 'users.id', '=', 'customers.staff_id')
-                ->select('customer_id','customer_name','amc','tss_status','remarks','users.name as staffname')  
+                ->select('customeraddress_id','customer_id','customer_name','amc','tss_status','remarks','users.name as staffname')  
                 ->orderBy('customer_name', 'asc')             
                  ->paginate(10);   
       }

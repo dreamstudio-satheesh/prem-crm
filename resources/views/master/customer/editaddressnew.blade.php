@@ -14,10 +14,10 @@
             <div class="col-md-12 col-lg-10">
                 <div class="card" style="height: 80vh; overflow-y: auto;">
                     <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                        <h5>  Edit Customer Address Book</h5>
+                        <h5> Add Customer Address Book</h5>
                     </div>
 
-                    <form action="{{ route('customers.saveaddress') }}"
+                    <form action="{{ route('customers.saveaddressnew') }}"
                             name="registration"
                             method="post" onkeydown="return event.key != 'Enter';" class="form-horizontal form-bordered">
                             <div class="form-body">
@@ -33,9 +33,6 @@
                                  @foreach($rscustomer as $customer)                        
                                         <input type="text" class="form-control" id="customer_name" 
                                          name="customer_name" readonly   value= '{{$customer->customer_name}}'>
-
-                                         <input type="hidden" class="form-control" id="id" 
-                                         name="id" readonly   value= '{{$customer->id}}'>
 
                                          <input type="hidden" class="form-control" id="customer_code" 
                                          name="customer_code"  value= '{{$customer->customer_id}}'>
@@ -57,44 +54,38 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                  <?php $i=1;?>
-                                      @foreach ($rsaddressbook as $details)
-                                     
+                                  <?php $i=1;?> 
                                       <tr>
                                         <th><input class="case" type="checkbox"/></th>
-                                        <th> <INPUT class="form-control" type='text' readonly  id='sno_{{$i}}'	value='{{$details->indx}}'  size='4'  
+                                        <th> <INPUT class="form-control" type='text' readonly  id='sno_1'	 value='1'  size='4'  
                                              readonly name='sno[]'/> </th>
                                      
                                         <td> 
-                                            <select style="width:300px;"  class="form-control jssingle"   
-                                                    id='seladdresstype{{$i}}' name='seladdresstype[]'>
+                                            <select style="width:300px;"  class="form-control jssingle"    id='seladdresstype1' name='seladdresstype[]'>
                                                 <option value='0'>-- Select Address Type --</option>
                                                   @foreach($addresstype as $rsaddresstype)                                                
-                                                <option value='{{ $rsaddresstype->id }}'
-                                                {{ $rsaddresstype->id== $details->addresstype ? 'selected' : ''}}>
-                                                {{ $rsaddresstype->name }}</option>                                              
+                                                <option value='{{ $rsaddresstype->id }}'>{{ $rsaddresstype->name }}</option>                                              
                                                 @endforeach
                                             </select>
                                         </td>                                        
                                         
                                         <td>
-                                            <input type="text"   name="contactperson[]" id="contactperson_{{$i}}" class="form-control" 
-                                            value='{{$details->contact_person}}'     >
+                                            <input type="text" value="" name="contactperson[]" id="contactperson_1" class="form-control" 
+                                              autocomplete="off"   >
                                           </td>
                                         
                                         <td>
-                                            <input type="text"   name="mobileno[]" id="mobileno_{{$i}}" class="form-control" 
-                                            value='{{$details->mobileno}}'  >
+                                            <input type="text" value="" name="mobileno[]" id="mobileno_1" class="form-control" 
+                                              autocomplete="off"   >
                                                    </td>
                                         
                                         <td>
-                                              <input type="text" value='{{$details->phoneno}}'   name="phoneno[]" id="phoneno_{{$i}}" class="form-control">
+                                              <input type="text"    name="phoneno[]" id="phoneno_1" class="form-control">
                                         </td>
                                         <td>
-                                              <input type="text"  value='{{$details->email}}'   name="email[]" id="email_{{$i}}" class="form-control">
+                                              <input type="text"    name="email[]" id="email_1" class="form-control">
                                         </td>
                                         </tr>
-                                        @endforeach
                                        </tbody>
                                    
                              </table>   
