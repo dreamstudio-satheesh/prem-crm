@@ -25,17 +25,21 @@
                             <input type="hidden" name="_method" value="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             
+                                                    
+
                             <div style="margin-left: 0px;" class="form-group row">
                                 <label for='Pty_Code' class="control-label text-left col-md-2"> Customer </label>
                                  <div class="col-md-4">
+                                 @foreach($rscustomer as $customer)                        
                                         <input type="text" class="form-control" id="customer_name" 
-                                         name="customer_name" readonly    >
+                                         name="customer_name" readonly   value= '{{$customer->customer_name}}'>
 
                                          <input type="hidden" class="form-control" id="customer_code" 
-                                         name="customer_code" readonly    >
+                                         name="customer_code"  value= '{{$customer->customer_id}}'>
+                                         @endforeach       
                                   </div> 
                             </div>
-
+                          <br>
                            <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                             <table  border="1" class="table">
                                   <thead>
@@ -56,7 +60,7 @@
                                              readonly name='sno[]'/> </th>
                                      
                                         <td> 
-                                            <select style="width:300px;" class="jssingle" id='seladdresstype1' name='seladdresstype[]'>
+                                            <select style="width:300px;"  class="form-control jssingle"    id='seladdresstype1' name='seladdresstype[]'>
                                                 <option value='0'>-- Select Address Type --</option>
                                                   @foreach($addresstype as $rsaddresstype)                                                
                                                 <option value='{{ $rsaddresstype->id }}'>{{ $rsaddresstype->name }}</option>                                              
@@ -75,10 +79,10 @@
                                                    </td>
                                         
                                         <td>
-                                              <input type="number"  readonly name="phoneno[]" id="phoneno_1" class="form-control">
+                                              <input type="text"    name="phoneno[]" id="phoneno_1" class="form-control">
                                         </td>
                                         <td>
-                                              <input type="number"  readonly name="email[]" id="email_1" class="form-control">
+                                              <input type="text"    name="email[]" id="email_1" class="form-control">
                                         </td>
                                         </tr>
                                        </tbody>
@@ -132,8 +136,8 @@
             
             html += '<td><input type="text"  autocomplete="off" name="contactperson[]"  id="contactperson_'+i+'" class="form-control " ondrop="return false;"   onpaste="return false;"></td>';           
             html += '<td><input type="text"  autocomplete="off" name="mobileno[]" id="mobileno_'+i+'"  class="form-control" ondrop="return false;"  onpaste="return false;"><br>';
-            html += '<td><input type="number" readonly name="phoneno[]" id="phoneno_'+i+'" class="form-control"   ></td>';
-            html += '<td><input type="number" readonly name="email[]" id="email_'+i+'" class="form-control"   ></td>';
+            html += '<td><input type="text"   name="phoneno[]" id="phoneno_'+i+'" class="form-control"   ></td>';
+            html += '<td><input type="text"   name="email[]" id="email_'+i+'" class="form-control"   ></td>';
             html += '</tr>';
            
             updateitems('seladdresstype'+i);

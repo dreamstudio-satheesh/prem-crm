@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 
 use App\Models\Customer;
+use App\Models\Addressbook;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,8 +18,7 @@ class CustomerController extends Controller
     }
  
     public function index()
-    { 
-        
+    {  
         $query = Customer::getall();
         return view('master.customer.list',['customers' => $query]);
     }
@@ -26,14 +26,22 @@ class CustomerController extends Controller
     public function editaddress($id)
     {   
      
+       // echo $id;exit();
+
+       $rscustomer = DB::table('customers')    
+       ->select('customer_id','customer_name' )               
+        ->where('customer_id',$id)
+        ->get();  
+
         $addresstype= DB::table('addresstype')            
                 ->select('id','name')  
                 ->orderBy('name', 'asc')             
                ->get();    
       
       
-        return view('master.customer.editaddress',['addresstype'=>$addresstype]); 
+        return view('master.customer.editaddress',['addresstype'=>$addresstype,'rscustomer'=>$rscustomer]); 
     }
+
     public function fetchaddresstype()
     {   
        $addresstype= DB::table('addresstype')            
@@ -59,20 +67,25 @@ class CustomerController extends Controller
     
     public function saveaddress(Request $request)
     {
+
         $i=0;
-        $id= $this->getmax(); 
+        $id= $this->getmaxaddress(); 
         foreach($request->seladdresstype as $arritem)
         {
-            addressbook::create(['id'=>$id, 
+            Addressbook::create(['id'=>$id, 
                                   'indx'=>$i+1,
                                   'customer_code'=>$request->customer_code,              
                                   'addresstype'=>$arritem,
-                                   'contactperson'=>$request->contactperson[$i],                                       
-                                   'mobileno'=>$request->mobileno[$i],                                      
-                                   'phoneno'=>$request->phoneno[$i],
-                                   'email'=>$request->email[$i]  ]);
-        $i=$i+1;
-        }         
+                                  'contact_person'=>$request->contactperson[$i],                                       
+                                  'mobileno'=>$request->mobileno[$i],                                      
+                                  'phoneno'=>$request->phoneno[$i],
+                                  'email'=>$request->email[$i]  ]);
+            $i=$i+1;
+        }   
+
+        $msg = [
+            'message' => 'Customer Address Create created successfully!' ];
+          return  redirect('/master/customers')->with($msg); 
     } 
 
     public function store(Request $request)
@@ -102,6 +115,21 @@ class CustomerController extends Controller
             'message' => 'Customer Create created successfully!' ];
           return  redirect('/master/customers')->with($msg); 
     }
+    
+    private  function getmaxaddress()
+    {
+        $retvalue=   DB::table('addressbook')->max('id')   ;
+        if ($retvalue === null)
+        {
+            $retvalue=1;
+        }
+        elseif ($retvalue >=1)
+        {
+            $retvalue=$retvalue+1;
+        }
+        return $retvalue;
+    }
+   
 
     private  function getmax()
     {
