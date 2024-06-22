@@ -57,17 +57,8 @@
                             <a class="nav-link menu-link" href="{{ url('/master/customers') }}" >
                                 <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
                             </a> 
-                            </li>
-
+                            </li> 
                             <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ url('contacts') }}" >
-                                <i class="mdi mdi-sticker-text-outline"></i> <span>Address Book</span>
-                            </a>
-                           
-                        </li>
-
-
-                                    <li class="nav-item">
                                         <a href="{{ url('addresstype') }}" class="nav-link" data-key="t-master">
                                             Address Type
                                         </a>
@@ -77,14 +68,7 @@
                                         <a href="{{ url('products') }}" class="nav-link" data-key="t-master">
                                            Tally Product
                                         </a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
-                                           Customer Type
-                                        </a>
-                                    </li>
-
+                                    </li> 
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
                                             Exceutive
@@ -95,15 +79,7 @@
                                         <a href="{{ url('user') }}" class="nav-link" data-key="t-master">
                                             Desigination
                                         </a>
-                                    </li>
- 
-                                    
-                                    <li class="nav-item">
-                                        <a href="{{ url('address book') }}" class="nav-link" data-key="t-master">
-                                            Address Book
-                                        </a>
-                                    </li>
-
+                                    </li> 
                                     <li class="nav-item">
                                         <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">
                                             Industry
