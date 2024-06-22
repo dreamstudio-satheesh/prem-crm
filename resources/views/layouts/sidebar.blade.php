@@ -71,13 +71,13 @@
                                     </li> 
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
-                                            Exceutive
+                                        Desigination
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('user') }}" class="nav-link" data-key="t-master">
-                                            Desigination
+                                         Exceutive
                                         </a>
                                     </li> 
                                     <li class="nav-item">
