@@ -17,7 +17,7 @@
             <div class="col-md-12 col-lg-10">
                 <div class="card" style="height: 80vh; overflow-y: auto;">
                     <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                        <h5> Add Customer</h5>
+                        <h5> Edit Customer</h5>
                     </div>
 
 
