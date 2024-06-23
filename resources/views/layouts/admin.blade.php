@@ -19,7 +19,7 @@
     <!-- Icons Css -->
     <link href="{{ assets('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="{{ assets('/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ assets('/assets/css/app.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ assets('/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
