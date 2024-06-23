@@ -48,7 +48,7 @@ File: Main Css File
   --vz-vertical-menu-sub-item-hover-color: #4b38b3;
   --vz-vertical-menu-sub-item-active-color: #4b38b3;
   --vz-vertical-menu-title-color: #919da9;
-  --vz-vertical-menu-bg-dark: #151529;
+  --vz-vertical-menu-bg-dark: #4a309d;
   --vz-vertical-menu-item-color-dark: #a3a6b7;
   --vz-vertical-menu-item-hover-color-dark: #fff;
   --vz-vertical-menu-item-active-color-dark: #fff;
@@ -65,10 +65,10 @@ File: Main Css File
   --vz-topbar-user-bg-dark: #2A2A50;
   --vz-footer-bg: #fff;
   --vz-footer-color: #98a6ad;
-  --vz-topnav-bg: #fff;
-  --vz-topnav-item-color: #6d7080;
-  --vz-topnav-item-color-active: #4b38b3;
-  --vz-twocolumn-menu-iconview-bg: #fff;
+  --vz-topnav-bg: #4a309d;
+  --vz-topnav-item-color: #d0d5f0;
+  --vz-topnav-item-color-active: #fff;
+  --vz-twocolumn-menu-iconview-bg: #c9c9f2;
   --vz-twocolumn-menu-bg: #fff;
   --vz-twocolumn-menu-iconview-bg-dark: var(--vz-vertical-menu-bg-dark);
   --vz-twocolumn-menu-bg-dark: #1C1C36;
@@ -116,7 +116,7 @@ File: Main Css File
   --vz-body-bg-rgb: 26, 29, 33;
   --vz-body-color: #ced4da;
   --vz-body-color-rgb: 206, 212, 218;
-  --vz-vertical-menu-bg: #fff;
+  --vz-vertical-menu-bg: #4a309d;
   --vz-vertical-menu-item-color: #5f6270;
   --vz-vertical-menu-item-hover-color: #4b38b3;
   --vz-vertical-menu-item-active-color: #4b38b3;
@@ -141,7 +141,7 @@ File: Main Css File
   --vz-topbar-user-bg-dark: #2f343a;
   --vz-footer-bg: #23282c;
   --vz-footer-color: #878a99;
-  --vz-topnav-bg: #272b30;
+  --vz-topnav-bg: #4a309d;
   --vz-topnav-item-color: #878a99;
   --vz-topnav-item-color-active: #fff;
   --vz-twocolumn-menu-iconview-bg: #fff;
