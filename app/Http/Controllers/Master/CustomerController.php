@@ -29,7 +29,9 @@ class CustomerController extends Controller
         $rscustomer = DB::table('customers')   
         ->select('customer_id','customer_name' )               
         ->where('customer_id',$id) 
-        ->get();   
+        ->get(); 
+        
+        
 
         $addresstype= DB::table('addresstype')            
                 ->select('id','name')  
