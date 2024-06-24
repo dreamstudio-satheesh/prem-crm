@@ -51,7 +51,8 @@ Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry']
 
 Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
 Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
-Route::post('/addresstype/saveprimarycategory', [App\Http\Controllers\Master\CustomerController::class, 'saveprimarycategory'])->name('addresstype.saveprimarycategory'); 
+
+Route::post('/addresstype/saveprimarycategory', [App\Http\Controllers\Master\HomeController::class, 'saveprimarycategory'])->name('addresstype.saveprimarycategory'); 
 
 
 Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 

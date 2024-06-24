@@ -25,33 +25,31 @@ class AddresstypeMaster extends Component
    
     public function saveprimarycategory()
     {
-        //addresstypeprimary
-       // primaryid
-       // secondaryid
-  
+        echo 'Customer Category Updated Successfully!'; 
          DB::table('addresstypeprimary')::where('id',1)->update([  
-        'primaryid'=>$name ]);
+        'primaryid'=>$primary ,'secondaryid'=>$secondary]);
 
-       echo  $msg =  'Customer Category Updated Successfully!'; 
+       echo 'Customer Category Updated Successfully!'; 
     
     }
 
 
     public function render()
     {
-        $addresstype1 =  Addresstype::where('name', 'like', '%'.$this->search.'%')
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-       
-         $addresstype2 =  DB::table('addresstypeprimary')    
-         ->select('primaryid','secondaryid')   
-          ->get();  
-
         $addresstype = Addresstype::where('name', 'like', '%'.$this->search.'%')
             ->orderBy('id', 'desc')
-            ->paginate(10);  
+            ->paginate(10); 
+         
+        $addresstype1 =  DB::table('addresstype')    
+        ->select('id','name') 
+        ->orderBy('name', 'asc')  
+         ->get();   
+  
 
-    
+        $addresstype2 =  DB::table('addresstypeprimary')    
+        ->select('primaryid','secondaryid')   
+         ->get();   
+ 
         return view('livewire.addresstype-master', compact('addresstype','addresstype1', 'addresstype2'));
     }
 

@@ -2,30 +2,31 @@
     <div class="row">
         <div style="padding-left:30px;" class="col-md-8 col-xs-12">
             <div class="card" style="height: 80vh; overflow-y: auto;">
-               
-            
+          
             <div class="card-header">
                     <div class="row" style="padding-top: 20px; padding-left:20px;">
                         <div class="col-md-8">
                             <h2> Customer Categories </h2>
-                        </div>
-                        @foreach($addresstype2 as $rsaddresstype2) 
-                                     $primaryid=$rsaddresstype2->primaryid;
-                                     $secondaryid=$rsaddresstype2->secondaryid;
+                        </div> 
+                        <form action="" 
+                        name="yarndeliverydentry"
+                        method="post" class="form-horizontal form-bordered">
+                        @csrf
+                        @method('POST')
+
+                        @foreach($addresstype2 as $rsaddresstype2)   
                         @endforeach
                         <div class="col-md-8">
                              <div class="col-md-4"> 
                                <div class="form-group">
                             <label for="product_id">Primary Category</label>
-                           <?php
-                              $primary=1;
-                           ?>
-                            <select  wire:model="primary_id"
-                            onBlur="saveToDatabase(this,'remarks','<?php  echo $primary ?>','<?php  $primary ?>')"
+                           
+                            <select  
+                            onBlur="saveToDatabase()"
                             class="form-control" id="" name="primary_id"> 
-                                @foreach($addresstype` as $rsaddresstype1) 
+                                @foreach($addresstype1  as $rsaddresstype1) 
                                     <option value="{{ $rsaddresstype1->id }}"
-                                    {{ $rsaddresstype1->id== $primaryid ? 'selected' : ''}}>    
+                                    {{ $rsaddresstype1->id== $rsaddresstype2->primaryid ? 'selected' : ''}}>    
                                     {{ $rsaddresstype1->name }}</option>
                                 @endforeach
                             </select>
@@ -38,15 +39,13 @@
                             <div class="col-md-4">
                             <h6> Secondary Category </h6>
                             <div class="form-group"> 
-                           <?php
-                              $primary=1;
-                           ?>
-                            <select wire:model="secondary_id"
-                            onBlur="saveToDatabase(this,'remarks','<?php  echo $primary ?>','<?php  $primary ?>')"
+                           
+                            <select 
+                            onBlur="saveToDatabase()"
                             class="form-control" id="secondary_id" name="secondary_id"> 
                                 @foreach($addresstype1 as $rsaddresstype1) 
                                     <option value="{{ $rsaddresstype1->id }}"
-                                  >
+                                    {{ $rsaddresstype1->id== $rsaddresstype2->secondaryid ? 'selected' : ''}}>    
                                     {{ $rsaddresstype1->name }}</option>
                                 @endforeach
                             </select>
@@ -54,10 +53,10 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                            </div>
-
+                            </div> 
                         </div>
-
+                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+</form>
 
                         <div class="col-md-4 text-right">
                             <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control"
@@ -141,22 +140,65 @@
 
     @push('scripts')
 
+
     <script>
-function saveToDatabase() { 
+function  saveToDatabase(){
+    var _token = $('input[name="_token"]').val();
+   
+              primary=($('#primary_id').val()); 
+    secondary=($('#secondary_id').val()); 
+   // alert(secondary);
+   // exit();
+    
+              var _token = $('input[name="_token"]').val();
+                     ///////////////////////////////////
+                     $.ajax({
+                     url:"{{ route('addresstype.saveprimarycategory') }}",
+                     method:"POST", 
+                     data:{_token:_token,primary:primary,secondary:secondary} ,
+                     success: function(response){                   
+                   
+                   alert(response);
+                     },//sucess
+                     error: function (jqXHR, exception) {
+                  var msg = '';
+                  if (jqXHR.status === 0) {
+                      msg = 'Not connect.\n Verify Network.';
+                  } else if (jqXHR.status == 404) {
+                      msg = 'Requested page not found. [404]';
+                  } else if (jqXHR.status == 500) {
+                      msg = 'Internal Server Error [500].';
+                  } else if (exception === 'parsererror') {
+                      msg = 'Requested JSON parse failed.';
+                  } else if (exception === 'timeout') {
+                      msg = 'Time out error.';
+                  } else if (exception === 'abort') {
+                      msg = 'Ajax request aborted.';
+                  } else {
+                      msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                  }
+                   alert(msg);
+                 },
+                 
+                  headers: {
+                  'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                  } 
+                });
+          }             
+</script>
+
+    <script>
+function saveToDatabasee() { 
      
     primary=($('#primary_id').val()); 
-    secondary=($('#primary_id').val()); 
+    secondary=($('#secondary_id').val()); 
     
-    $.ajax({
-       
+    $.ajax({ 
         url:"{{ route('addresstype.saveprimarycategory') }}", 
 		type: "POST",
 		data:'primary='+primary+'&secondary='+secondary,
 		success: function(data){
-		 alert(data);
-			 //$("#loaderIcon").hide();
-			// $("#txtmessage").val(acname+' Remarks Sucessfully Updated !!!');
-			//$(editableObj).css("background","pink");
+		 alert(data); 
 		}        
    });
 }
