@@ -4,51 +4,40 @@
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header">
                     <div class="row" style="padding-top: 20px; padding-left:20px;">
-                        <div class="row">
-
-                            <div class="col-md-8">
-                                <h2> Customer Categories </h2>
+                        <div class="row w-100">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="primary_id">Primary Category</label>
+                                    <select class="form-control" id="primary_id" wire:model.live="primary_id">
+                                        @foreach($addresstypeList as $rsaddresstype1)
+                                        <option value="{{ $rsaddresstype1->id }}">
+                                            {{ $rsaddresstype1->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('primary_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             </div>
-                            <div class="col-md-4 text-right">
-                                <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Customer Category...">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="secondary_id">Secondary Category</label>
+                                    <select class="form-control" id="secondary_id" wire:model.live="secondary_id">
+                                        @foreach($addresstypeList as $rsaddresstype2)
+                                        <option value="{{ $rsaddresstype2->id }}">
+                                            {{ $rsaddresstype2->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('secondary_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             </div>
                         </div>
-
-                        <br>
-
-                        <form wire:submit.prevent="savePrimaryCategory" class="form-horizontal form-bordered w-100">
-                            <div class="row w-100">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="primary_id">Primary Category</label>
-                                        <select class="form-control" id="primary_id" wire:model="primary_id">
-                                            @foreach($addresstypeList as $rsaddresstype1)
-                                            <option value="{{ $rsaddresstype1->id }}" {{ $rsaddresstype1->id == $primaryCategory->primaryid ? 'selected' : '' }}>
-                                                {{ $rsaddresstype1->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @error('primary_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="secondary_id">Secondary Category</label>
-                                        <select class="form-control" id="secondary_id" wire:model="secondary_id">
-                                            @foreach($addresstypeList as $rsaddresstype1)
-                                            <option value="{{ $rsaddresstype1->id }}" {{ $rsaddresstype1->id == $primaryCategory->secondaryid ? 'selected' : '' }}>
-                                                {{ $rsaddresstype1->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @error('secondary_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-4 d-flex align-items-end">
-                                    <button type="submit" class="btn btn-primary">Save Categories</button>
-                                </div>
-                            </div>
-                        </form>
+                        <div class="col-md-8">
+                            <h2> Customer Categories </h2>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Customer Category...">
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">

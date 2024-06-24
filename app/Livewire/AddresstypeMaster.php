@@ -25,12 +25,33 @@ class AddresstypeMaster extends Component
         'secondary_id' => 'required|integer',
     ];
 
-    public function savePrimaryCategory()
+    public function mount()
+    {
+        $primaryCategory = DB::table('addresstypeprimary')->first();
+        if ($primaryCategory) {
+            $this->primary_id = $primaryCategory->primaryid;
+            $this->secondary_id = $primaryCategory->secondaryid;
+        }
+    }
+
+    public function updatedPrimaryId()
+    {
+        $this->updatePrimaryCategory();
+    }
+
+    public function updatedSecondaryId()
+    {
+        $this->updatePrimaryCategory();
+    }
+
+    public function updatePrimaryCategory()
     {
         DB::table('addresstypeprimary')->where('id', 1)->update([
             'primaryid' => $this->primary_id,
             'secondaryid' => $this->secondary_id,
         ]);
+
+        $this->dispatch('show-toastr', ['message' => 'Categories Updated Successfully.']);
     }
 
     public function render()
@@ -44,11 +65,7 @@ class AddresstypeMaster extends Component
             ->orderBy('name', 'asc')
             ->get();
 
-        $primaryCategory = DB::table('addresstypeprimary')
-            ->select('primaryid', 'secondaryid')
-            ->first();
-
-        return view('livewire.addresstype-master', compact('addresstypes', 'addresstypeList', 'primaryCategory'));
+        return view('livewire.addresstype-master', compact('addresstypes', 'addresstypeList'));
     }
 
     public function resetInputFields()
