@@ -11,82 +11,79 @@ class AddresstypeMaster extends Component
 {
     use WithPagination;
 
-    public $id;
+    public $addresstype_id;
     public $name, $description;
     public $search = '';
+    public $primary_id, $secondary_id;
 
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-     
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string', 
+        'description' => 'nullable|string',
+        'primary_id' => 'required|integer',
+        'secondary_id' => 'required|integer',
     ];
-   
-    public function saveprimarycategory()
+
+    public function savePrimaryCategory()
     {
-        echo 'Customer Category Updated Successfully!'; 
-         DB::table('addresstypeprimary')::where('id',1)->update([  
-        'primaryid'=>$primary ,'secondaryid'=>$secondary]);
-
-       echo 'Customer Category Updated Successfully!'; 
-    
+        DB::table('addresstypeprimary')->where('id', 1)->update([
+            'primaryid' => $this->primary_id,
+            'secondaryid' => $this->secondary_id,
+        ]);
     }
-
 
     public function render()
     {
-        $addresstype = Addresstype::where('name', 'like', '%'.$this->search.'%')
+        $addresstypes = Addresstype::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
-            ->paginate(10); 
-         
-        $addresstype1 =  DB::table('addresstype')    
-        ->select('id','name') 
-        ->orderBy('name', 'asc')  
-         ->get();   
-  
+            ->paginate(10);
 
-        $addresstype2 =  DB::table('addresstypeprimary')    
-        ->select('primaryid','secondaryid')   
-         ->get();   
- 
-        return view('livewire.addresstype-master', compact('addresstype','addresstype1', 'addresstype2'));
+        $addresstypeList = DB::table('addresstype')
+            ->select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $primaryCategory = DB::table('addresstypeprimary')
+            ->select('primaryid', 'secondaryid')
+            ->first();
+
+        return view('livewire.addresstype-master', compact('addresstypes', 'addresstypeList', 'primaryCategory'));
     }
 
     public function resetInputFields()
     {
-        $this->id = null;
+        $this->addresstype_id = null;
         $this->name = '';
-        $this->description = '';     
-        
+        $this->description = '';
+        $this->primary_id = null;
+        $this->secondary_id = null;
     }
 
     public function store()
     {
         $this->validate();
 
-        Addresstype::updateOrCreate(['id' => $this->id], [
+        Addresstype::updateOrCreate(['id' => $this->addresstype_id], [
             'name' => $this->name,
-            'description' => $this->description,            
-             
+            'description' => $this->description,
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Address Type '.($this->addresstype_id ? 'Updated' : 'Created').' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Address Type ' . ($this->addresstype_id ? 'Updated' : 'Created') . ' Successfully.']);
     }
 
     public function edit($id)
     {
         $addresstype = Addresstype::findOrFail($id);
-        $this->id = $addresstype->id;
+        $this->addresstype_id = $addresstype->id;
         $this->name = $addresstype->name;
         $this->description = $addresstype->description;
-     
     }
 
     public function delete($id)
     {
-      //  Addresstype::findOrFail($id)->delete();
+        Addresstype::findOrFail($id)->delete();
         session()->flash('success', 'Address Type Deleted Successfully.');
     }
 
