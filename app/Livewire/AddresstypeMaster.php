@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Addresstype;
+use DB;
 
 class AddresstypeMaster extends Component
 {
@@ -21,14 +22,35 @@ class AddresstypeMaster extends Component
         'name' => 'required|string|max:255',
         'description' => 'nullable|string', 
     ];
+   
+    public function saveprimarycategory()
+    {
+        echo 'Customer Category Updated Successfully!'; 
+         DB::table('addresstypeprimary')::where('id',1)->update([  
+        'primaryid'=>$primary ,'secondaryid'=>$secondary]);
+
+       echo 'Customer Category Updated Successfully!'; 
+    
+    }
+
 
     public function render()
     {
         $addresstype = Addresstype::where('name', 'like', '%'.$this->search.'%')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(10); 
+         
+        $addresstype1 =  DB::table('addresstype')    
+        ->select('id','name') 
+        ->orderBy('name', 'asc')  
+         ->get();   
+  
 
-        return view('livewire.addresstype-master', compact('addresstype'));
+        $addresstype2 =  DB::table('addresstypeprimary')    
+        ->select('primaryid','secondaryid')   
+         ->get();   
+ 
+        return view('livewire.addresstype-master', compact('addresstype','addresstype1', 'addresstype2'));
     }
 
     public function resetInputFields()

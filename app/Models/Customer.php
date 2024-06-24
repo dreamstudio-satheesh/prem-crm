@@ -17,7 +17,7 @@ class Customer extends Model
         'customer_name', 
     ];  
    
-
+  
     protected function getall()
     {
         return DB::table('customers')            

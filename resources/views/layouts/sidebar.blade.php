@@ -60,7 +60,7 @@
                             </li> 
                             <li class="nav-item">
                                         <a href="{{ url('addresstype') }}" class="nav-link" data-key="t-master">
-                                            Address Type
+                                           Customer Categories
                                         </a>
                                     </li>
 
@@ -80,13 +80,6 @@
                                          Exceutive
                                         </a>
                                     </li> 
-                                    <li class="nav-item">
-                                        <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">
-                                            Industry
-                                        </a>
-                                    </li>
-                         
-
                                 </ul>
                             </div>
                         </li>
