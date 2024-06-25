@@ -52,7 +52,8 @@ Route::post('/addresstype/saveprimarycategory', [App\Http\Controllers\Master\Hom
 
 
 
-Route::resource('master/customers', CustomerController::class);
+//Route::resource('master/customers', CustomerController::class);
+Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
 Route::get('master/customers/edit-address-new/{id}', [CustomerController::class, 'editAddressNew'])->name('customers.editAddressNew');
 Route::post('master/customers/save-address-new', [CustomerController::class, 'saveAddressNew'])->name('customers.saveAddressNew');
 Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'editCustomer'])->name('customers.editCustomer');
@@ -63,8 +64,8 @@ Route::get('master/customers/add', [CustomerController::class, 'add'])->name('cu
 Route::post('master/customers/store', [CustomerController::class, 'store'])->name('customers.store');
 Route::get('master/customers/fetch-address-types', [CustomerController::class, 'fetchAddressTypes'])->name('customers.fetchAddressTypes');
 
+
 /* 
-Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
 Route::get('/master/customer/add', [App\Http\Controllers\Master\CustomerController::class, 'add'])->name('customers.add');  
 Route::get('/master/customer/editcustomer/{number?}', [App\Http\Controllers\Master\CustomerController::class, 'editcustomer'])->name('customers.editcustomer');  
 Route::post('/master/customer/savecustomer', [App\Http\Controllers\Master\CustomerController::class, 'savecustomer'])->name('customers.savecustomer');  
