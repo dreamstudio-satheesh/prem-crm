@@ -1,264 +1,195 @@
 <?php
 
 namespace App\Http\Controllers\Master;
+
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\AddressBook;
+use App\Models\Addresstype;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Customer;
-use App\Models\Addressbook;
-use App\Models\Product;
-use App\Models\User;
-use Illuminate\Http\Request;
-use DB;
 class CustomerController extends Controller
 {
-   
     public function __construct()
     {
         $this->middleware('auth');
     }
- 
+
     public function index()
-    {  
-        $query = Customer::getall();
-        return view('master.customer.list',['customers' => $query]);
-    }
-    
-    public function editaddressnew($id)
-    {   
-       
-        $rscustomer = DB::table('customers')   
-        ->select('customer_id','customer_name' )               
-        ->where('customer_id',$id) 
-        ->get(); 
-        
-        
-
-        $addresstype= DB::table('addresstype')            
-                ->select('id','name')  
-                ->orderBy('name', 'asc')             
-               ->get();    
-      
-      
-        return view('master.customer.editaddressnew',['addresstype'=>$addresstype,'rscustomer'=>$rscustomer]); 
-    }
-    public function saveaddressnew(Request $request)
     {
-       
-       // customeraddress_id
-
-        $i=0;
-        $id= $this->getmaxaddress(); 
-        foreach($request->seladdresstype as $arritem)
-        {
-            Addressbook::create(['id'=>$id, 
-                                  'indx'=>$i+1,
-                                  'customer_code'=>$request->customer_code,              
-                                  'addresstype'=>$arritem,
-                                  'contact_person'=>$request->contactperson[$i],                                       
-                                  'mobileno'=>$request->mobileno[$i],                                      
-                                  'phoneno'=>$request->phoneno[$i],
-                                  'email'=>$request->email[$i]  ]);
-            $i=$i+1;
-        }   
-
-        Customer::where('customer_id',$request->customer_code)->update([ 
-            'customeraddress_id'=>$id    
-            ]); 
-
-        $msg = [
-            'message' => 'Customer Address  created successfully!' ];
-          return  redirect('/master/customers')->with($msg); 
-    } 
-    
-    public function editcustomer($id)
-    {   
-       
-       $rscustomer = DB::table('customers')    
-        ->select('customers.customer_id','customer_name','tss_expirydate','product_id','amc',
-        'tss_status','staff_id','profile_status',
-        'remarks','tss_adminemail')               
-        ->where('customers.customer_id',$id)  
-        ->get();  
-        
-        $product =  Product::getall();  
-        $user =  User::getall();  
-      
-        return view('master.customer.editcustomer',['products'=>$product,
-                         'user'=>$user,'rscustomer'=>$rscustomer]); 
+        $customers = Customer::getAll();
+        return view('master.customer.list', ['customers' => $customers]);
     }
-    public function savecustomer(Request $request)
+
+    public function editAddressNew($id)
     {
-         
-        $id= $request->id; 
-        $name =$request->name;$product_id =$request->product_id;
-     //  echo $request->tssstatus;exit();
-        $amc =$request->amc;
-        $tssdate =$request->tssdate;// $enq_date =date("Y-m-d", strtotime($request->tssdate));
-        $tssadminemail=$request->tssadminemail;$profilestatus=$request->profilestatus;
-        $user_id=$request->executive_id  ;
-        $remarks=$request->remarks  ;
-        
-        Customer::where('customer_id',$id)->update([  
-        'customer_name'=>$name, 
-        'product_id'=>$product_id,                                  
-        'amc'=>$amc,
-        'tss_status'=>$request->tssstatus, 
-        'tss_expirydate'=>$tssdate, 
-        'tss_adminemail'=>$tssadminemail, 
-        'profile_status'=>$profilestatus,  
-        'staff_id'=>$request->executive_id,   
-        'remarks'=>$request->remarks]);
+        $customer = Customer::select('customer_id', 'customer_name')
+            ->where('customer_id', $id)
+            ->first();
 
-        $msg = [
-            'message' => 'Customer Updated created successfully!' ];
-          return  redirect('/master/customers')->with($msg); 
+        $addressTypes = Addresstype::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('master.customer.edit_address_new', ['addressTypes' => $addressTypes, 'customer' => $customer]);
     }
 
+    public function saveAddressNew(Request $request)
+    {
+        $id = $this->getMaxAddressId();
+        foreach ($request->seladdresstype as $index => $addressType) {
+            AddressBook::create([
+                'address_id' => $id,
+                'index' => $index + 1,
+                'customer_id' => $request->customer_code,
+                'address_type_id' => $addressType,
+                'contact_person' => $request->contactperson[$index],
+                'mobile_no' => $request->mobileno[$index],
+                'phone_no' => $request->phoneno[$index],
+                'email' => $request->email[$index]
+            ]);
+        }
 
-    public function editaddress($id)
-    {   
-       
-       $rscustomer = DB::table('customers')   
-        ->Join('addressbook', 'addressbook.customer_code', '=', 'customers.customer_id')
-        ->select('customers.customer_id','customer_name','addressbook.id' )               
-        ->where('addressbook.id',$id) 
-        ->distinct()
-        ->get();  
-        
+        Customer::where('customer_id', $request->customer_code)
+            ->update(['customer_address_id' => $id]);
 
-        $rsaddressbook = DB::table('addressbook')    
-        ->select('id','indx','customer_code','addresstype','contact_person',
-        'mobileno','phoneno','email' )               
-         ->where('id',$id)
-         ->get();
-
-        $addresstype= DB::table('addresstype')            
-                ->select('id','name')  
-                ->orderBy('name', 'asc')             
-               ->get();    
-      
-      
-        return view('master.customer.editaddress',['addresstype'=>$addresstype,'rscustomer'=>$rscustomer,'rsaddressbook'=>$rsaddressbook]); 
+        return redirect('/master/customers')->with('message', 'Customer Address created successfully!');
     }
-    public function saveaddress(Request $request)
-    {  
-        $i=0;
-        DB::table('addressbook')->where('id',$request->id)->delete();
-      
-        foreach($request->seladdresstype as $arritem)
-        {
-            Addressbook::create(['id'=>$request->id,
-                                  'indx'=>$i+1,
-                                  'customer_code'=>$request->customer_code,              
-                                  'addresstype'=>$arritem,
-                                  'contact_person'=>$request->contactperson[$i],                                       
-                                  'mobileno'=>$request->mobileno[$i],                                      
-                                  'phoneno'=>$request->phoneno[$i],
-                                  'email'=>$request->email[$i]  ]);
-            $i=$i+1;
-        }   
 
-        Customer::where('customer_id',$request->customer_code)->update([ 
-            'customeraddress_id'=>$request->id   
-            ]); 
+    public function editCustomer($id)
+    {
+        $customer = Customer::select('customer_id', 'customer_name', 'tss_expirydate', 'product_id', 'amc', 'tss_status', 'staff_id', 'profile_status', 'remarks', 'tss_adminemail')
+            ->where('customer_id', $id)
+            ->first();
 
-        $msg = [
-            'message' => 'Customer Address Updated successfully!' ];
-          return  redirect('/master/customers')->with($msg); 
-    } 
-   
+        $products = Product::all();
+        $users = User::all();
 
-    public function fetchaddresstype()
-    {   
-       $addresstype= DB::table('addresstype')            
-                ->select('id','name')  
-                ->orderBy('name', 'asc')             
-               ->get();    
-               $output ='';
-         foreach($addresstype as $row)
-               {
-                   $output .='<option value='.$row->id.'>'.$row->name.'</option>';
-               }         
-                echo $output;
-    } 
- 
+        return view('master.customer.edit_customer', ['products' => $products, 'users' => $users, 'customer' => $customer]);
+    }
+
+    public function saveCustomer(Request $request)
+    {
+        Customer::where('customer_id', $request->id)
+            ->update([
+                'customer_name' => $request->name,
+                'product_id' => $request->product_id,
+                'amc' => $request->amc,
+                'tss_status' => $request->tssstatus,
+                'tss_expirydate' => $request->tssdate,
+                'tss_adminemail' => $request->tssadminemail,
+                'profile_status' => $request->profilestatus,
+                'staff_id' => $request->executive_id,
+                'remarks' => $request->remarks
+            ]);
+
+        return redirect('/master/customers')->with('message', 'Customer updated successfully!');
+    }
+
+    public function editAddress($id)
+    {
+        $customer = Customer::join('address_books', 'address_books.customer_id', '=', 'customers.customer_id')
+            ->select('customers.customer_id', 'customer_name', 'address_books.address_id')
+            ->where('address_books.address_id', $id)
+            ->distinct()
+            ->first();
+
+        $addressBook = AddressBook::select('address_id', 'index', 'customer_id', 'address_type_id', 'contact_person', 'mobile_no', 'phone_no', 'email')
+            ->where('address_id', $id)
+            ->get();
+
+        $addressTypes = Addresstype::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('master.customer.edit_address', ['addressTypes' => $addressTypes, 'customer' => $customer, 'addressBook' => $addressBook]);
+    }
+
+    public function saveAddress(Request $request)
+    {
+        AddressBook::where('address_id', $request->id)->delete();
+
+        foreach ($request->seladdresstype as $index => $addressType) {
+            AddressBook::create([
+                'address_id' => $request->id,
+                'index' => $index + 1,
+                'customer_id' => $request->customer_code,
+                'address_type_id' => $addressType,
+                'contact_person' => $request->contactperson[$index],
+                'mobile_no' => $request->mobileno[$index],
+                'phone_no' => $request->phoneno[$index],
+                'email' => $request->email[$index]
+            ]);
+        }
+
+        Customer::where('customer_id', $request->customer_code)
+            ->update(['customer_address_id' => $request->id]);
+
+        return redirect('/master/customers')->with('message', 'Customer Address updated successfully!');
+    }
+
+    public function fetchAddressTypes()
+    {
+        $addressTypes = Addresstype::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $output = '';
+        foreach ($addressTypes as $row) {
+            $output .= '<option value=' . $row->id . '>' . $row->name . '</option>';
+        }
+
+        return response($output);
+    }
+
     public function add()
-    { 
-       
-        $product =  Product::getall();  
-        $user =  User::getall();  
-        return view('master.customer.add',['products' => $product,'user'=>$user]); 
+    {
+        $products = Product::all();
+        $users = User::all();
+        return view('master.customer.add', ['products' => $products, 'users' => $users]);
     }
-   
-    
-   
+
     public function store(Request $request)
     {
-         
-        $id= $this->getmax(); 
-        $name =$request->name;$product_id =$request->product_id;
-        
-        $amc =$request->amc;
-        $tssdate =$request->tssdate;// $enq_date =date("Y-m-d", strtotime($request->tssdate));
-        $tssadminemail=$request->tssadminemail;$profilestatus=$request->profilestatus;
-        $user_id=$request->executive_id  ;
-        $remarks=$request->remarks  ;
-        
-        customer::create(['id'=>$id,
-        'customer_name'=>$name, 
-        'product_id'=>$product_id,                                  
-        'amc'=>$amc,
-        'tss_status'=>$request->tssstatus, 
-        'tss_expirydate'=>$tssdate, 
-        'tss_adminemail'=>$tssadminemail, 
-        'profile_status'=>$profilestatus,  
-        'staff_id'=>$request->executive_id,   
-        'remarks'=>$request->remarks]);
+        $id = $this->getMaxCustomerId();
 
-        $msg = [
-            'message' => 'Customer Create created successfully!' ];
-          return  redirect('/master/customers')->with($msg); 
+        Customer::create([
+            'customer_id' => $id,
+            'customer_name' => $request->name,
+            'product_id' => $request->product_id,
+            'amc' => $request->amc,
+            'tss_status' => $request->tssstatus,
+            'tss_expirydate' => $request->tssdate,
+            'tss_adminemail' => $request->tssadminemail,
+            'profile_status' => $request->profilestatus,
+            'staff_id' => $request->executive_id,
+            'remarks' => $request->remarks
+        ]);
+
+        return redirect('/master/customers')->with('message', 'Customer created successfully!');
     }
-    
-    private  function getmaxaddress()
+
+    private function getMaxAddressId()
     {
-        $retvalue=   DB::table('addressbook')->max('id')   ;
-        if ($retvalue === null)
-        {
-            $retvalue=1;
-        }
-        elseif ($retvalue >=1)
-        {
-            $retvalue=$retvalue+1;
-        }
-        return $retvalue;
+        $maxId = AddressBook::max('address_id');
+        return $maxId ? $maxId + 1 : 1;
     }
-   
 
-    private  function getmax()
+    private function getMaxCustomerId()
     {
-        $retvalue=Customer::max('customer_id');
-        if ($retvalue === null)
-        {
-            $retvalue=1;
-        }
-        elseif ($retvalue >=1)
-        {
-            $retvalue=$retvalue+1;
-        }
-        return $retvalue;
+        $maxId = Customer::max('customer_id');
+        return $maxId ? $maxId + 1 : 1;
     }
-   
 
-
-    public function edit(Request $requset)
+    public function edit(Request $request)
     {
-        echo 'hi';
+        // Implementation needed
     }
 
     public function update(Request $request)
     {
-        echo 'hi';
+        // Implementation needed
     }
-    
 }

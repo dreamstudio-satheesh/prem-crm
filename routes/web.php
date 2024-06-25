@@ -1,15 +1,10 @@
 <?php
 
-use App\Livewire\Bundles;
-use App\Livewire\Garments;
-use App\Livewire\Checkpoints;
-use App\Livewire\AssignBundle;
-use App\Livewire\GarmentTracking;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Transactions\OnsiteEntryController; 
-use App\Http\Controllers\Master; 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Master\CustomerController;
+
 
 
 Route::get('/', function () {
@@ -55,6 +50,20 @@ Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'address
 Route::post('/addresstype/saveprimarycategory', [App\Http\Controllers\Master\HomeController::class, 'saveprimarycategory'])->name('addresstype.saveprimarycategory'); 
 
 
+
+
+Route::resource('master/customers', CustomerController::class);
+Route::get('master/customers/edit-address-new/{id}', [CustomerController::class, 'editAddressNew'])->name('customers.editAddressNew');
+Route::post('master/customers/save-address-new', [CustomerController::class, 'saveAddressNew'])->name('customers.saveAddressNew');
+Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'editCustomer'])->name('customers.editCustomer');
+Route::post('master/customers/save-customer', [CustomerController::class, 'saveCustomer'])->name('customers.saveCustomer');
+Route::get('master/customers/edit-address/{id}', [CustomerController::class, 'editAddress'])->name('customers.editAddress');
+Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
+Route::get('master/customers/add', [CustomerController::class, 'add'])->name('customers.add');
+Route::post('master/customers/store', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('master/customers/fetch-address-types', [CustomerController::class, 'fetchAddressTypes'])->name('customers.fetchAddressTypes');
+
+/* 
 Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
 Route::get('/master/customer/add', [App\Http\Controllers\Master\CustomerController::class, 'add'])->name('customers.add');  
 Route::get('/master/customer/editcustomer/{number?}', [App\Http\Controllers\Master\CustomerController::class, 'editcustomer'])->name('customers.editcustomer');  
@@ -72,7 +81,7 @@ Route::post('/master/customer/store', [App\Http\Controllers\Master\CustomerContr
 Route::get('/master/customer/edit', [App\Http\Controllers\Master\CustomerController::class, 'edit'])->name('customers.edit');  
 Route::post('/master/customer/update', [App\Http\Controllers\Master\CustomerController::class, 'update'])->name('customers.update');
 
-Route::post('/master/customer/fetchaddresstype', [App\Http\Controllers\Master\CustomerController::class, 'fetchaddresstype'])->name('fetchaddresstype');
+Route::post('/master/customer/fetchaddresstype', [App\Http\Controllers\Master\CustomerController::class, 'fetchaddresstype'])->name('fetchaddresstype'); */
 
 
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
