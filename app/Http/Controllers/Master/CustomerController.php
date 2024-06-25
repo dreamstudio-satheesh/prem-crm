@@ -160,10 +160,10 @@ class CustomerController extends Controller
             'customer_name' => $request->name,
             'product_id' => $request->product_id,
             'amc' => $request->amc,
-            'tss_status' => $request->tssstatus,
-            'tss_expirydate' => $request->tssdate,
-            'tss_adminemail' => $request->tssadminemail,
-            'profile_status' => $request->profilestatus,
+            'tss_status' => $request->tss_status,
+            'tss_expirydate' => $request->tss_expirydate,
+            'tss_adminemail' => $request->tss_adminemail,
+            'profile_status' => $request->profile_status,
             'staff_id' => $request->executive_id,
             'remarks' => $request->remarks
         ]);
