@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use DB;
+
 class Addresstype extends Model
 {
     use HasFactory;
    
-    protected $table = 'addresstype'; 
+    protected $table = 'addresstypes'; // Updated table name to plural
 
     protected $primaryKey = 'id';
 
@@ -19,14 +19,13 @@ class Addresstype extends Model
 
     public function contacts()
     {
-        return $this->hasMany(Contact::class, 'id', 'id');
+        return $this->hasMany(Contact::class, 'addresstype_id', 'id'); // Updated relationship keys
     }
-    protected function getall()
+
+    public static function getAll()
     {
-        return DB::table('addresstype')          
-                ->select('id','name')  
-                ->orderBy('name', 'asc')             
-                ->get();   
-      }
-    
+        return self::select('id', 'name')
+            ->orderBy('name', 'asc')
+            ->get();
+    }
 }

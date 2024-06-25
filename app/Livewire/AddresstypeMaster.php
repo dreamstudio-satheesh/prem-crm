@@ -21,8 +21,8 @@ class AddresstypeMaster extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'primary_id' => 'required|integer',
-        'secondary_id' => 'required|integer',
+        'primary_id' => 'nullable|integer',
+        'secondary_id' => 'nullable|integer',
     ];
 
     public function mount()
