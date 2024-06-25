@@ -27,10 +27,10 @@ class AddresstypeMaster extends Component
 
     public function mount()
     {
-        $primaryCategory = DB::table('addresstypeprimary')->first();
+        $primaryCategory = DB::table('primary_address_types')->first();
         if ($primaryCategory) {
-            $this->primary_id = $primaryCategory->primaryid;
-            $this->secondary_id = $primaryCategory->secondaryid;
+            $this->primary_id = $primaryCategory->primary_id;
+            $this->secondary_id = $primaryCategory->secondary_id;
         }
     }
 
@@ -46,9 +46,9 @@ class AddresstypeMaster extends Component
 
     public function updatePrimaryCategory()
     {
-        DB::table('addresstypeprimary')->where('id', 1)->update([
-            'primaryid' => $this->primary_id,
-            'secondaryid' => $this->secondary_id,
+        DB::table('primary_address_types')->where('id', 1)->update([
+            'primary_id' => $this->primary_id,
+            'secondary_id' => $this->secondary_id,
         ]);
 
         $this->dispatch('show-toastr', ['message' => 'Categories Updated Successfully.']);
@@ -60,7 +60,7 @@ class AddresstypeMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        $addresstypeList = DB::table('addresstype')
+        $addresstypeList = DB::table('addresstypes')
             ->select('id', 'name')
             ->orderBy('name', 'asc')
             ->get();

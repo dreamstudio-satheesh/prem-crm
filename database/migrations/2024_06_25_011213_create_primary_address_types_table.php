@@ -6,19 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
-    protected $guarded = [];  
-   
-   
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('addresstypes', function (Blueprint $table) {
+        Schema::create('primary_address_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();         
+            $table->integer('primary_id')->nullable();
+            $table->integer('secondary_id')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('addresstype');
+        Schema::dropIfExists('primary_address_types');
     }
 };
