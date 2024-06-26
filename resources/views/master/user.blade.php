@@ -2,7 +2,7 @@
 
 @section('content')
 
-@livewire('company-master')
+@livewire('master.user-master')
 
     
 @endsection

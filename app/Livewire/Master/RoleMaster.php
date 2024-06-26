@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -26,7 +26,7 @@ class RoleMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.role-master', compact('roles'));
+        return view('livewire.master.role-master', compact('roles'));
     }
 
     public function resetInputFields()

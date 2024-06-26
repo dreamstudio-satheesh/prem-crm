@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,7 +31,7 @@ class ProductMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.product-master', compact('products'));
+        return view('livewire.master.product-master', compact('products'));
     }
 
     public function resetInputFields()

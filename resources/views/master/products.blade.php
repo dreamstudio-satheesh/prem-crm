@@ -2,7 +2,7 @@
 
 @section('content')
 
-@livewire('role-master')
+@livewire('master.product-master')
 
     
 @endsection

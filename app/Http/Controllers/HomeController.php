@@ -26,11 +26,32 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function company()
+    public function industry()
     {
-        return view('company');
+        return view('master.industry');
+    } 
+   
+    
+    public function products()
+    {
+        return view('master.products');
     }
- 
+
+    
+
+    public function user()
+    {
+        return view('master.user');
+    }
+
+   
+
+    public function role()
+    {
+        return view('master.role');
+    }
+
+
    
     public function addresstype()
     {
@@ -42,33 +63,7 @@ class HomeController extends Controller
         return view('customertype');
     }
 
-    public function industry()
-    {
-        return view('industry');
-    }
-
-
-    public function user()
-    {
-        return view('user');
-    }
-
-    public function contacts()
-    {
-        return view('contact');
-    }
-   
-    
-    public function products()
-    {
-        return view('products');
-    }
-
-
-    public function role()
-    {
-        return view('role');
-    }
+  
 
 
 

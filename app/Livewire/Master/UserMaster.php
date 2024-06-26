@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Master;
 
 use App\Models\Role;
 use App\Models\User;
@@ -34,7 +34,7 @@ class UserMaster extends Component
 
             $roles = Role::all();
 
-        return view('livewire.user-master', compact('users', 'roles'));
+        return view('livewire.master.user-master', compact('users', 'roles'));
     }
 
     public function resetInputFields()
