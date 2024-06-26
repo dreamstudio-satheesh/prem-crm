@@ -52,15 +52,9 @@ class HomeController extends Controller
     }
 
 
-   
-    public function addresstype()
-    {
-        return view('addresstype');
-    }
-
     public function customertype()
     {
-        return view('customertype');
+        return view('master.customertype');
     }
 
   

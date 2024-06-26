@@ -2,7 +2,7 @@
 
 @section('content')
 
-@livewire('addresstype-master')
+@livewire('master.customertype-master')
 
     
 @endsection

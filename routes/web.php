@@ -32,13 +32,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
 Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
 Route::get('/role', [App\Http\Controllers\HomeController::class, 'role'])->name('role');  
-Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts'); 
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');  
 Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry'); 
 Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
-Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
-
-Route::post('/addresstype/saveprimarycategory', [App\Http\Controllers\Master\HomeController::class, 'saveprimarycategory'])->name('addresstype.saveprimarycategory'); 
 
 
 Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 

@@ -59,7 +59,7 @@
                             </a> 
                             </li> 
                             <li class="nav-item">
-                                        <a href="{{ url('addresstype') }}" class="nav-link" data-key="t-master">
+                                        <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
                                            Customer Type
                                         </a>
                                     </li>

@@ -10,13 +10,10 @@ class Customertype extends Model
     use HasFactory;
 
     protected $primaryKey = 'id';
-    protected $table = 'customertype'; 
+    protected $table = 'customer_types'; 
     protected $fillable = [
         'name',
     ];
 
-    public function contacts()
-    {
-        return $this->hasMany(Contact::class, 'id', 'id');
-    }
+   
 }
