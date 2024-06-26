@@ -41,7 +41,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>
                                             <select class="form-control" wire:model="addresses.{{ $index }}.address_type_id">
-                                                <option value="">-- Select Address Type --</option>
+                                                <option value="">-- Select Customer Type --</option>
                                                 @foreach($addressTypes as $type)
                                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                                                 @endforeach

@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\AddressBook;
-use App\Models\Addresstype;
+use App\Models\Customertype;
 use App\Models\Customer;
 
 class AddAddress extends Component
@@ -27,7 +27,7 @@ class AddAddress extends Component
         $this->customer_id = $customerId;
         $customer = Customer::find($customerId);
         $this->customer_name = $customer->customer_name;
-        $this->addressTypes = Addresstype::orderBy('name', 'asc')->get();
+        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
         $this->addresses[] = $this->getEmptyAddress();
     }
 
