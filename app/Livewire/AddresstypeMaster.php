@@ -14,7 +14,6 @@ class AddresstypeMaster extends Component
     public $addresstype_id;
     public $name, $description;
     public $search = '';
-    public $primary_id, $secondary_id;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -28,31 +27,9 @@ class AddresstypeMaster extends Component
     public function mount()
     {
         $primaryCategory = DB::table('primary_address_types')->first();
-        if ($primaryCategory) {
-            $this->primary_id = $primaryCategory->primary_id;
-            $this->secondary_id = $primaryCategory->secondary_id;
-        }
+       
     }
 
-    public function updatedPrimaryId()
-    {
-        $this->updatePrimaryCategory();
-    }
-
-    public function updatedSecondaryId()
-    {
-        $this->updatePrimaryCategory();
-    }
-
-    public function updatePrimaryCategory()
-    {
-        DB::table('primary_address_types')->where('id', 1)->update([
-            'primary_id' => $this->primary_id,
-            'secondary_id' => $this->secondary_id,
-        ]);
-
-        $this->dispatch('show-toastr', ['message' => 'Categories Updated Successfully.']);
-    }
 
     public function render()
     {
@@ -73,8 +50,6 @@ class AddresstypeMaster extends Component
         $this->addresstype_id = null;
         $this->name = '';
         $this->description = '';
-        $this->primary_id = null;
-        $this->secondary_id = null;
     }
 
     public function store()

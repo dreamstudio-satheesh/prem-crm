@@ -29,33 +29,21 @@ Auth::routes([
   Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
 Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
-
- 
-
 Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
-
 Route::get('/role', [App\Http\Controllers\HomeController::class, 'role'])->name('role');  
-
-Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts');   
-
+Route::get('/contacts', [App\Http\Controllers\HomeController::class, 'contacts'])->name('contacts'); 
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');  
-Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry');  
-
+Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry'); 
 Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
 Route::get('/addresstype', [App\Http\Controllers\HomeController::class, 'addresstype'])->name('addresstype');  
 
 Route::post('/addresstype/saveprimarycategory', [App\Http\Controllers\Master\HomeController::class, 'saveprimarycategory'])->name('addresstype.saveprimarycategory'); 
 
 
-
-
-//Route::resource('master/customers', CustomerController::class);
 Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
-Route::get('master/customers/edit-address-new/{id}', [CustomerController::class, 'editAddressNew'])->name('customers.editAddressNew');
-Route::post('master/customers/save-address-new', [CustomerController::class, 'saveAddressNew'])->name('customers.saveAddressNew');
+Route::get('master/customers/add-address/{id}', [CustomerController::class, 'AddAddress'])->name('customers.AddAddress');
+Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
 Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'editCustomer'])->name('customers.editCustomer');
 Route::post('master/customers/save-customer', [CustomerController::class, 'saveCustomer'])->name('customers.saveCustomer');
 Route::get('master/customers/edit-address/{id}', [CustomerController::class, 'editAddress'])->name('customers.editAddress');
@@ -63,26 +51,6 @@ Route::post('master/customers/save-address', [CustomerController::class, 'saveAd
 Route::get('master/customers/add', [CustomerController::class, 'add'])->name('customers.add');
 Route::post('master/customers/store', [CustomerController::class, 'store'])->name('customers.store');
 Route::get('master/customers/fetch-address-types', [CustomerController::class, 'fetchAddressTypes'])->name('customers.fetchAddressTypes');
-
-
-/* 
-Route::get('/master/customer/add', [App\Http\Controllers\Master\CustomerController::class, 'add'])->name('customers.add');  
-Route::get('/master/customer/editcustomer/{number?}', [App\Http\Controllers\Master\CustomerController::class, 'editcustomer'])->name('customers.editcustomer');  
-Route::post('/master/customer/savecustomer', [App\Http\Controllers\Master\CustomerController::class, 'savecustomer'])->name('customers.savecustomer');  
-
-Route::get('/master/customer/editaddressnew/{number?}', [App\Http\Controllers\Master\CustomerController::class, 'editaddressnew'])->name('customers.editaddressnew');  
-Route::get('/master/customer/editaddress/{number?}', [App\Http\Controllers\Master\CustomerController::class, 'editaddress'])->name('customers.editaddress');  
-
-
-Route::post('/master/customer/saveaddressnew', [App\Http\Controllers\Master\CustomerController::class, 'saveaddressnew'])->name('customers.saveaddressnew');  
-Route::post('/master/customer/saveaddress', [App\Http\Controllers\Master\CustomerController::class, 'saveaddress'])->name('customers.saveaddress');  
-
-
-Route::post('/master/customer/store', [App\Http\Controllers\Master\CustomerController::class, 'store'])->name('customers.store');  
-Route::get('/master/customer/edit', [App\Http\Controllers\Master\CustomerController::class, 'edit'])->name('customers.edit');  
-Route::post('/master/customer/update', [App\Http\Controllers\Master\CustomerController::class, 'update'])->name('customers.update');
-
-Route::post('/master/customer/fetchaddresstype', [App\Http\Controllers\Master\CustomerController::class, 'fetchaddresstype'])->name('fetchaddresstype'); */
 
 
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 

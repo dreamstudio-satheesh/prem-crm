@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Addressbook extends Model
+class AddressBook extends Model
 {
     use HasFactory;
    
-    protected $table = 'addressbook'; 
+    protected $table = 'address_books'; 
 
-    protected $primaryKey = 'idd';
- 
+    protected $primaryKey = 'address_id'; // Primary key should match the primary key column name in the table
+
     protected $fillable = [
-        'id', 'idd', 'customer_code', 'addresstype', 'indx', 
-        'contact_person', 'mobileno', 'phoneno', 'email' 
+        'customer_id', 'customer_code', 'address_type_id', 'index', 
+        'contact_person', 'mobile_no', 'phone_no', 'email'
     ];
 }

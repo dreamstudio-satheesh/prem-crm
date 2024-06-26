@@ -15,7 +15,8 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('customer_id');
-            $table->unsignedInteger('customeraddress_id')->nullable();
+            $table->unsignedInteger('primary_address_id')->nullable();
+            $table->unsignedBigInteger('default_address_type_id');
             $table->string('customer_name', 191)->unique();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->enum('amc', ['yes', 'no'])->default('yes');

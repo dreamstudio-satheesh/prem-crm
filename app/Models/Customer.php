@@ -21,19 +21,26 @@ class Customer extends Model
         'profile_status',
         'staff_id',
         'remarks',
-        'customer_address_id'
+        'primary_address_id',
+        'default_address_type_id'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($customer) {
+            if (!$customer->default_address_type_id) {
+                // Assuming '1' is the ID for the 'owner' address type in addresstypes table
+                $customer->default_address_type_id = 1;
+            }
+        });
+    }
 
     public function staff()
     {
         return $this->belongsTo(User::class, 'staff_id');
     }
 
-    public static function getAll()
-    {
-        return self::leftJoin('users', 'users.id', '=', 'customers.staff_id')
-            ->select('customeraddress_id', 'customer_id', 'customer_name', 'amc', 'tss_status', 'remarks', 'users.name as staffname')
-            ->orderBy('customer_name', 'asc')
-            ->paginate(10);
-    }
+
 }
