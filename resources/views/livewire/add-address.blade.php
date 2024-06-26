@@ -40,13 +40,13 @@
                                         <td><input class="case" type="checkbox" /></td>
                                         <td>{{ $index + 1 }}</td>
                                         <td>
-                                            <select class="form-control" wire:model="addresses.{{ $index }}.address_type_id">
+                                            <select class="form-control" wire:model="addresses.{{ $index }}.customer_type_id">
                                                 <option value="">-- Select Customer Type --</option>
                                                 @foreach($addressTypes as $type)
                                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error("addresses.$index.address_type_id") <span class="text-danger">{{ $message }}</span> @enderror
+                                            @error("addresses.$index.customer_type_id") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
                                         <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.contact_person"></td>
                                         <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no"></td>

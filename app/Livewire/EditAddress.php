@@ -38,7 +38,7 @@ class EditAddress extends Component
     public function addAddress()
     {
         $this->addresses[] = [
-            'address_type_id' => null,
+            'customer_type_id' => null,
             'contact_person' => '',
             'mobile_no' => '',
             'phone_no' => '',

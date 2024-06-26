@@ -15,7 +15,7 @@ class AddAddress extends Component
     public $addressTypes;
 
     protected $rules = [
-        'addresses.*.address_type_id' => 'required',
+        'addresses.*.customer_type_id' => 'required',
         'addresses.*.contact_person' => 'required|string|max:255',
         'addresses.*.mobile_no' => 'required|numeric',
         'addresses.*.phone_no' => 'nullable|numeric',
@@ -34,7 +34,7 @@ class AddAddress extends Component
     public function getEmptyAddress()
     {
         return [
-            'address_type_id' => '',
+            'customer_type_id' => '',
             'contact_person' => '',
             'mobile_no' => '',
             'phone_no' => '',
@@ -61,7 +61,7 @@ class AddAddress extends Component
             AddressBook::create([
                 'index' => $index + 1,
                 'customer_id' => $this->customer_id, // Ensure customer_id is set
-                'address_type_id' => $address['address_type_id'],
+                'customer_type_id' => $address['customer_type_id'],
                 'contact_person' => $address['contact_person'],
                 'mobile_no' => $address['mobile_no'],
                 'phone_no' => $address['phone_no'],
