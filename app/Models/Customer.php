@@ -37,6 +37,11 @@ class Customer extends Model
         });
     }
 
+    public function addressBooks()
+    {
+        return $this->hasMany(AddressBook::class, 'customer_id', 'customer_id');
+    }
+
     public function staff()
     {
         return $this->belongsTo(User::class, 'staff_id');

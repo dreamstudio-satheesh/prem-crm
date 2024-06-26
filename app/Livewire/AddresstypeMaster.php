@@ -20,14 +20,10 @@ class AddresstypeMaster extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'primary_id' => 'nullable|integer',
-        'secondary_id' => 'nullable|integer',
     ];
 
     public function mount()
     {
-        $primaryCategory = DB::table('primary_address_types')->first();
-       
     }
 
 

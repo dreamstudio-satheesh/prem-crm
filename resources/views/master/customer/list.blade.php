@@ -78,14 +78,17 @@
                                     </a>
                                 </td>
                                 <td>
-                                    @if($customer->customeraddress_id > 0)
-                                    <a href="{{ url('/master/customers/editaddress', $customer->customeraddress_id) }}" class="btn btn-info">
-                                        <i class="ri-edit-line align-bottom me-1"></i> Edit Address Book
-                                    </a>
-                                    @else
+                                    @if($customer->address_books_count == 0)
+
                                     <a href="{{ url('/master/customers/add-address', $customer->customer_id) }}" class="btn btn-info">
                                         <i class="ri-add-line align-bottom me-1"></i> Create Address Book
                                     </a>
+
+                                    @else
+                                    <a href="{{ url('/master/customers/edit-address', $customer->customer_id) }}" class="btn btn-info">
+                                        <i class="ri-edit-line align-bottom me-1"></i> Edit Address Book
+                                    </a>
+
                                     @endif
                                 </td>
                             </tr>
@@ -112,8 +115,8 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('checkAll').addEventListener('click', function (event) {
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('checkAll').addEventListener('click', function(event) {
             let checkboxes = document.querySelectorAll('input[name="chk_child"]');
             checkboxes.forEach(checkbox => {
                 checkbox.checked = event.target.checked;

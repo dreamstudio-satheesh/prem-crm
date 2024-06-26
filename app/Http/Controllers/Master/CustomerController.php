@@ -19,13 +19,18 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::withCount('addressBooks')->paginate(10);
         return view('master.customer.list', ['customers' => $customers]);
     }
 
     public function AddAddress($id)
     {
         return view('master.customer.address-add', ['customerId' => $id]);
+    }
+
+    public function editAddress($id)
+    {
+        return view('master.customer.address-edit', ['customerId' => $id]);
     }
 
    
@@ -41,28 +46,6 @@ class CustomerController extends Controller
 
         return view('master.customer.edit_customer', ['products' => $products, 'users' => $users, 'customer' => $customer]);
     }
-
-
-    public function editAddress($id)
-    {
-        $customer = Customer::join('address_books', 'address_books.customer_id', '=', 'customers.customer_id')
-            ->select('customers.customer_id', 'customer_name', 'address_books.address_id')
-            ->where('address_books.address_id', $id)
-            ->distinct()
-            ->first();
-
-        $addressBook = AddressBook::select('address_id', 'index', 'customer_id', 'address_type_id', 'contact_person', 'mobile_no', 'phone_no', 'email')
-            ->where('address_id', $id)
-            ->get();
-
-        $addressTypes = Addresstype::select('id', 'name')
-            ->orderBy('name', 'asc')
-            ->get();
-
-        return view('master.customer.edit_address', ['addressTypes' => $addressTypes, 'customer' => $customer, 'addressBook' => $addressBook]);
-    }
-
-  
 
 
     public function add()
@@ -90,6 +73,12 @@ class CustomerController extends Controller
         ]);
 
         return redirect('/master/customers')->with('message', 'Customer created successfully!');
+    }
+
+    private function getMaxCustomerId()
+    {
+        $maxId = Customer::max('customer_id');
+        return $maxId ? $maxId + 1 : 1;
     }
 
     

@@ -17,4 +17,10 @@ class AddressBook extends Model
         'customer_id', 'customer_code', 'address_type_id', 'index', 
         'contact_person', 'mobile_no', 'phone_no', 'email'
     ];
+
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
+    }
 }
