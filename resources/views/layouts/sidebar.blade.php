@@ -80,6 +80,19 @@
                                          Exceutive
                                         </a>
                                     </li> 
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">
+                                         Industry
+                                        </a>
+                                    </li> 
+
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('location') }}" class="nav-link" data-key="t-master">
+                                         Customer Area 
+                                        </a>
+                                    </li> 
                                 </ul>
                             </div>
                         </li>

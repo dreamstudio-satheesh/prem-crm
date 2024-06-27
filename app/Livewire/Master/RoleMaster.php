@@ -22,11 +22,11 @@ class RoleMaster extends Component
 
     public function render()
     {
-        $roles = Role::where('name', 'like', '%'.$this->search.'%')
+        $roles = Role::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.role-master', compact('roles'));
+        return view('livewire.master.role-master', compact('roles'))->layout('layouts.admin');
     }
 
     public function resetInputFields()
@@ -44,7 +44,7 @@ class RoleMaster extends Component
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Role '.($this->role_id ? 'Updated' : 'Created').' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Role ' . ($this->role_id ? 'Updated' : 'Created') . ' Successfully.']);
     }
 
     public function edit($id)

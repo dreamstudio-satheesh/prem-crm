@@ -31,10 +31,11 @@ class UserMaster extends Component
             ->orWhere('email', 'like', '%'.$this->search.'%')
             ->orderBy('id', 'desc')
             ->paginate(10);
-
-            $roles = Role::all();
-
-        return view('livewire.master.user-master', compact('users', 'roles'));
+    
+        $roles = Role::all();
+    
+        return view('livewire.master.user-master', compact('users', 'roles'))
+            ->layout('layouts.admin'); 
     }
 
     public function resetInputFields()

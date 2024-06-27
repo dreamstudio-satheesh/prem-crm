@@ -1,20 +1,21 @@
 <?php
 
 
+use App\Livewire\Master\RoleMaster;
+use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Master\ProductMaster;
+use App\Livewire\Master\IndustryMaster;
+use App\Http\Controllers\HomeController;
+use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\Master\CustomerController;
-
-
 
 Route::get('/', function () {
     return redirect('home');
 });
 
-Route::get('/companies', function () {
-    
-    return view('company-master');
-});
+
 
 Auth::routes([
 
@@ -28,16 +29,16 @@ Auth::routes([
   
   Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/company', [App\Http\Controllers\HomeController::class, 'company'])->name('company');  
-Route::get('/user', [App\Http\Controllers\HomeController::class, 'user'])->name('user');   
-Route::get('/role', [App\Http\Controllers\HomeController::class, 'role'])->name('role');  
-Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');  
-Route::get('/industry', [App\Http\Controllers\HomeController::class, 'industry'])->name('industry'); 
-Route::get('/customertype', [App\Http\Controllers\HomeController::class, 'customertype'])->name('customertype');  
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/user', UserMaster::class);  
+Route::get('/role', RoleMaster::class); 
+Route::get('/products', ProductMaster::class);    
+Route::get('/industry', IndustryMaster::class); 
+Route::get('/customertype', CustomertypeMaster::class); 
 
 
-Route::get('/master/customers', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('customers'); 
+
+Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers'); 
 Route::get('master/customers/add-address/{id}', [CustomerController::class, 'AddAddress'])->name('customers.AddAddress');
 Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
 Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'editCustomer'])->name('customers.editCustomer');

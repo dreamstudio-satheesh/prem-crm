@@ -17,25 +17,26 @@ class CustomertypeMaster extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-     
+
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string',        
+        'description' => 'nullable|string',
     ];
 
     public function render()
     {
-        $customertype = Customertype::where('name', 'like', '%'.$this->search.'%')
+        $customertype = Customertype::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.customertype-master', compact('customertype'));
+        return view('livewire.master.customertype-master', compact('customertype'))
+            ->layout('layouts.admin');
     }
 
     public function resetInputFields()
     {
         $this->id = null;
         $this->name = '';
-        $this->description = ''; 
+        $this->description = '';
     }
 
     public function store()
@@ -44,11 +45,11 @@ class CustomertypeMaster extends Component
 
         Customertype::updateOrCreate(['id' => $this->id], [
             'name' => $this->name,
-            'description' => $this->description,           
+            'description' => $this->description,
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Customer Type '.($this->id ? 'Updated' : 'Created').' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Customer Type ' . ($this->id ? 'Updated' : 'Created') . ' Successfully.']);
     }
 
     public function edit($id)
@@ -57,7 +58,6 @@ class CustomertypeMaster extends Component
         $this->id = $customertype->id;
         $this->name = $customertype->name;
         $this->description = $customertype->description;
-         
     }
 
     public function delete($id)
