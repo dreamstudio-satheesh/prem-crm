@@ -65,7 +65,7 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{ url('products') }}" class="nav-link" data-key="t-master">
+                                        <a href="{{ url('product') }}" class="nav-link" data-key="t-master">
                                            Tally Product
                                         </a>
                                     </li> 

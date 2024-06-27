@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
+use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\Master\CustomerController;
@@ -32,9 +33,10 @@ Auth::routes([
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/user', UserMaster::class);  
 Route::get('/role', RoleMaster::class); 
-Route::get('/products', ProductMaster::class);    
+Route::get('/product', ProductMaster::class);    
 Route::get('/industry', IndustryMaster::class); 
 Route::get('/customertype', CustomertypeMaster::class); 
+Route::get('/location', LocationMaster::class); 
 
 
 

@@ -33,9 +33,11 @@ class UserMaster extends Component
             ->paginate(10);
     
         $roles = Role::all();
+
+       
     
         return view('livewire.master.user-master', compact('users', 'roles'))
-            ->layout('layouts.admin'); 
+            ->extends('layouts.admin'); 
     }
 
     public function resetInputFields()

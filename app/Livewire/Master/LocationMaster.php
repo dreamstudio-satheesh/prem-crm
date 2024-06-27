@@ -4,37 +4,35 @@ namespace App\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Customertype;
+use App\Models\Location;
 
-class CustomertypeMaster extends Component
+class LocationMaster extends Component
 {
     use WithPagination;
 
-    public $id;
+    public $location_id;
     public $name, $description;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
     ];
 
     public function render()
     {
-        $customertype = Customertype::where('name', 'like', '%' . $this->search . '%')
+        $locations = Location::where('name', 'like', '%'.$this->search.'%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.customertype-master', compact('customertype'))
-            ->extends('layouts.admin');
+        return view('livewire.master.location-master', compact('locations'))->extends('layouts.admin');
     }
 
     public function resetInputFields()
     {
-        $this->id = null;
+        $this->location_id = null;
         $this->name = '';
         $this->description = '';
     }
@@ -43,27 +41,27 @@ class CustomertypeMaster extends Component
     {
         $this->validate();
 
-        Customertype::updateOrCreate(['id' => $this->id], [
+        Location::updateOrCreate(['id' => $this->location_id], [
             'name' => $this->name,
             'description' => $this->description,
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Customer Type ' . ($this->id ? 'Updated' : 'Created') . ' Successfully.']);
+        $this->dispatch('show-toastr', ['message' => 'Location '.($this->location_id ? 'Updated' : 'Created').' Successfully.']);
     }
 
     public function edit($id)
     {
-        $customertype = Customertype::findOrFail($id);
-        $this->id = $customertype->id;
-        $this->name = $customertype->name;
-        $this->description = $customertype->description;
+        $location = Location::findOrFail($id);
+        $this->location_id = $location->id;
+        $this->name = $location->name;
+        $this->description = $location->description;
     }
 
     public function delete($id)
     {
-        //Customertype::findOrFail($id)->delete();
-        session()->flash('success', 'Customer Type Deleted Successfully.');
+        Location::findOrFail($id)->delete();
+        session()->flash('success', 'Location Deleted Successfully.');
     }
 
     public function create()
