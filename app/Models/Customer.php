@@ -13,6 +13,7 @@ class Customer extends Model
 
     protected $fillable = [
         'customer_name',
+        'amc_id',
         'product_id',
         'amc',
         'tss_status',
@@ -22,7 +23,7 @@ class Customer extends Model
         'staff_id',
         'remarks',
         'primary_address_id',
-        'default_address_type_id'
+        'default_customer_type_id'
     ];
 
     public static function boot()
@@ -30,11 +31,16 @@ class Customer extends Model
         parent::boot();
 
         static::creating(function ($customer) {
-            if (!$customer->default_address_type_id) {
+            if (!$customer->default_customer_type_id) {
                 // Assuming '1' is the ID for the 'owner' address type in addresstypes table
-                $customer->default_address_type_id = 1;
+                $customer->default_customer_type_id = 1;
             }
         });
+    }
+
+    public function primaryAddress()
+    {
+        return $this->belongsTo(AddressBook::class, 'primary_address_id', 'address_id');
     }
 
     public function addressBooks()
@@ -45,6 +51,12 @@ class Customer extends Model
     public function staff()
     {
         return $this->belongsTo(User::class, 'staff_id');
+    }
+
+
+    public function amc()
+    {
+        return $this->hasOne(Amc::class);
     }
 
 

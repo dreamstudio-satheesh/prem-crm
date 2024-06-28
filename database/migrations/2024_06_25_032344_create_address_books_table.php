@@ -23,7 +23,14 @@ class CreateAddressBooksTable extends Migration
             $table->string('mobile_no', 250)->nullable(); // Changed from mobileno to mobile_no
             $table->string('phone_no', 250)->nullable(); // Changed from phoneno to phone_no
             $table->string('email', 250)->nullable();
+            $table->string('address', 250)->nullable(); 
+            $table->string('pin_code', 20)->nullable(); 
+            $table->string('state', 150)->nullable(); 
+            $table->string('country', 150)->nullable(); 
             $table->timestamps();
+
+
+            $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');
         });
     }
 

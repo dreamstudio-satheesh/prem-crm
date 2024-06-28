@@ -14,8 +14,18 @@ class AddressBook extends Model
     protected $primaryKey = 'address_id'; // Primary key should match the primary key column name in the table
 
     protected $fillable = [
-        'customer_id', 'customer_code', 'customer_type_id', 'index', 
-        'contact_person', 'mobile_no', 'phone_no', 'email'
+        'customer_id', 
+        'index', 
+        'customer_code', 
+        'customer_type_id', 
+        'contact_person', 
+        'mobile_no', 
+        'phone_no', 
+        'email', 
+        'address', 
+        'pin_code', 
+        'state', 
+        'country'
     ];
 
 

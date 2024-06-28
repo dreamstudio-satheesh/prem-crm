@@ -11,6 +11,7 @@ use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\Master\CustomerController;
+use App\Livewire\AddCustomer;
 
 Route::get('/', function () {
     return redirect('home');
@@ -39,6 +40,9 @@ Route::get('/customertype', CustomertypeMaster::class);
 Route::get('/location', LocationMaster::class); 
 
 
+Route::get('master/customers/add', AddCustomer::class);
+
+
 
 Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers'); 
 Route::get('master/customers/add-address/{id}', [CustomerController::class, 'AddAddress'])->name('customers.AddAddress');
@@ -47,7 +51,6 @@ Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'e
 Route::post('master/customers/save-customer', [CustomerController::class, 'saveCustomer'])->name('customers.saveCustomer');
 Route::get('master/customers/edit-address/{id}', [CustomerController::class, 'editAddress'])->name('customers.editAddress');
 Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
-Route::get('master/customers/add', [CustomerController::class, 'add'])->name('customers.add');
 Route::post('master/customers/store', [CustomerController::class, 'store'])->name('customers.store');
 Route::get('master/customers/fetch-address-types', [CustomerController::class, 'fetchAddressTypes'])->name('customers.fetchAddressTypes');
 
