@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Master;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\AddressBook;
-use App\Models\Addresstype;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
