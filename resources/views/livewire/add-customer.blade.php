@@ -4,17 +4,7 @@
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Add Customer</h4>
-                    <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <select class="form-control" id="location_id" wire:model="location_id">
-                                        <option value="">Select Customer Area</option>
-                                        @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('location_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
+
                 </div><!-- end card header -->
                 <div class="card-body">
                     <form wire:submit.prevent="save" class="form-horizontal form-bordered">
@@ -34,7 +24,13 @@
                                     @error('tally_serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            
+                            <div class="col-xxl-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="licence_editon">Licence Edition</label>
+                                    <input type="text" class="form-control" id="licence_editon" wire:model="licence_editon" placeholder="Enter Licence Edition">
+                                    @error('licence_editon') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="product_id">Product</label>
@@ -47,99 +43,25 @@
                                     @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="licence_editon">Licence Edition</label>
-                                    <input type="text" class="form-control" id="licence_editon" wire:model="licence_editon" placeholder="Enter Licence Edition">
-                                    @error('licence_editon') <span class="text-danger">{{ $message }}</span> @enderror
+                                    <label for="primary_address_id">Primary Address</label>
+                                    <input type="text" class="form-control" id="primary_address_id" wire:model="primary_address_id" placeholder="Enter Primary Address">
+                                    @error('primary_address_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="amc" class="form-label">A.M.C.</label>
-                                    <select class="form-control" id="amc" wire:model.live="amc">
-                                        <option value="yes">YES</option>
-                                        <option value="no">NO</option>
+                                    <label for="remarks">Customer Location</label>
+                                    <select class="form-control" id="location_id" wire:model="location_id">
+                                        <option value="">Select Customer Area</option>
+                                        @foreach($locations as $location)
+                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('amc') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('location_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
-                            @if ($amc === 'yes')
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="amc_from_date">A.M.C. From Date</label>
-                                    <input type="date" class="form-control" id="amc_from_date" wire:model="amc_from_date" placeholder="Enter A.M.C. From Date">
-                                    @error('amc_from_date') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="amc_to_date">A.M.C. To Date</label>
-                                    <input type="date" class="form-control" id="amc_to_date" wire:model="amc_to_date" placeholder="Enter A.M.C. To Date">
-                                    @error('amc_to_date') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="amc_renewal_date">A.M.C. Renewal Date</label>
-                                    <input type="date" class="form-control" id="amc_renewal_date" wire:model="amc_renewal_date" placeholder="Enter A.M.C. Renewal Date">
-                                    @error('amc_renewal_date') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="no_of_visits">No. of Visits</label>
-                                    <input type="number" class="form-control" id="no_of_visits" wire:model="no_of_visits" placeholder="Enter No. of Visits">
-                                    @error('no_of_visits') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="amc_amount">A.M.C. Amount</label>
-                                    <input type="number" step="0.01" class="form-control" id="amc_amount" wire:model="amc_amount" placeholder="Enter A.M.C. Amount">
-                                    @error('amc_amount') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="amc_last_year_amount">A.M.C. Last Year Amount</label>
-                                    <input type="number" step="0.01" class="form-control" id="amc_last_year_amount" wire:model="amc_last_year_amount" placeholder="Enter A.M.C. Last Year Amount">
-                                    @error('amc_last_year_amount') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            @endif
-
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="tss_status" class="form-label">T.S.S. Status</label>
-                                    <select class="form-control" id="tss_status" wire:model.live="tss_status">
-                                        <option value="active">ACTIVE</option>
-                                        <option value="inactive">INACTIVE</option>
-                                    </select>
-                                    @error('tss_status') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            @if ($tss_status === 'active')
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="tss_expirydate">T.S.S. Expiry Date</label>
-                                    <input type="date" class="form-control" id="tss_expirydate" wire:model="tss_expirydate" placeholder="Enter T.S.S. Expiry Date">
-                                    @error('tss_expirydate') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="tss_adminemail">T.S.S. Admin E-Mail</label>
-                                    <input type="email" class="form-control" id="tss_adminemail" wire:model="tss_adminemail" placeholder="Enter T.S.S Admin Email">
-                                    @error('tss_adminemail') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            @endif
-
-
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="profile_status">Profile Status</label>
@@ -176,7 +98,20 @@
                                     @error('map_location') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                          
+                            <div class="col-xxl-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="latitude">Latitude</label>
+                                    <input type="text" class="form-control" id="latitude" wire:model="latitude" placeholder="Enter Latitude">
+                                    @error('latitude') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="longitude">Longitude</label>
+                                    <input type="text" class="form-control" id="longitude" wire:model="longitude" placeholder="Enter Longitude">
+                                    @error('longitude') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="gst_no">GST No</label>
@@ -191,53 +126,185 @@
                                     @error('tdl_addons') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="whatsapp_telegram_group">WhatsApp/Telegram Group</label>
-                                    <input type="checkbox" id="whatsapp_telegram_group" wire:model="whatsapp_telegram_group">
-                                    @error('whatsapp_telegram_group') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="auto_backup">Auto Backup</label>
-                                    <input type="checkbox" id="auto_backup" wire:model="auto_backup">
-                                    @error('auto_backup') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="cloud_user">Cloud User</label>
-                                    <input type="checkbox" id="cloud_user" wire:model="cloud_user">
-                                    @error('cloud_user') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="mobile_app">Mobile App</label>
-                                    <input type="checkbox" id="mobile_app" wire:model="mobile_app">
-                                    @error('mobile_app') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group gap-2 mt-3">
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                    <button type="button" onclick="window.history.back()" class="btn btn-secondary">Cancel</button>
-                                </div>
-                            </div>
+
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <!--end col-->
     </div>
+
+    <!-- T.S.S. Status Card -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">T.S.S. Status</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div class="row gy-4">
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="tss_status" class="form-label">T.S.S. Status</label>
+                                <select class="form-control" id="tss_status" wire:model.live="tss_status">
+                                    <option value="active">ACTIVE</option>
+                                    <option value="inactive">INACTIVE</option>
+                                </select>
+                                @error('tss_status') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        @if ($tss_status === 'active')
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="tss_expirydate">T.S.S. Expiry Date</label>
+                                <input type="date" class="form-control" id="tss_expirydate" wire:model="tss_expirydate" placeholder="Enter T.S.S. Expiry Date">
+                                @error('tss_expirydate') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="tss_adminemail">T.S.S. Admin E-Mail</label>
+                                <input type="email" class="form-control" id="tss_adminemail" wire:model="tss_adminemail" placeholder="Enter T.S.S Admin Email">
+                                @error('tss_adminemail') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- A.M.C. Status Card -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">A.M.C. Status</h4>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div class="row gy-4">
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="amc" class="form-label">A.M.C.</label>
+                                <select class="form-control" id="amc" wire:model.live="amc">
+                                    <option value="yes">YES</option>
+                                    <option value="no">NO</option>
+                                </select>
+                                @error('amc') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        @if ($amc === 'yes')
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="amc_from_date">A.M.C. From Date</label>
+                                <input type="date" class="form-control" id="amc_from_date" wire:model="amc_from_date" placeholder="Enter A.M.C. From Date">
+                                @error('amc_from_date') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="amc_to_date">A.M.C. To Date</label>
+                                <input type="date" class="form-control" id="amc_to_date" wire:model="amc_to_date" placeholder="Enter A.M.C. To Date">
+                                @error('amc_to_date') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="amc_renewal_date">A.M.C. Renewal Date</label>
+                                <input type="date" class="form-control" id="amc_renewal_date" wire:model="amc_renewal_date" placeholder="Enter A.M.C. Renewal Date">
+                                @error('amc_renewal_date') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="no_of_visits">No. of Visits</label>
+                                <input type="number" class="form-control" id="no_of_visits" wire:model="no_of_visits" placeholder="Enter No. of Visits">
+                                @error('no_of_visits') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="amc_amount">A.M.C. Amount</label>
+                                <input type="number" step="0.01" class="form-control" id="amc_amount" wire:model="amc_amount" placeholder="Enter A.M.C. Amount">
+                                @error('amc_amount') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <label for="amc_last_year_amount">A.M.C. Last Year Amount</label>
+                                <input type="number" step="0.01" class="form-control" id="amc_last_year_amount" wire:model="amc_last_year_amount" placeholder="Enter A.M.C. Last Year Amount">
+                                @error('amc_last_year_amount') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="row gy-4">
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <div class="form-check form-switch form-switch-lg" dir="ltr">
+                                    <label for="whatsapp_telegram_group">WhatsApp/Telegram Group</label>
+                                    <input type="checkbox" class="form-check-input" id="whatsapp_telegram_group" wire:model="whatsapp_telegram_group">
+                                    @error('whatsapp_telegram_group') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <div class="form-check form-switch form-switch-lg" dir="ltr">
+                                    <label for="auto_backup">Auto Backup</label>
+                                    <input type="checkbox" class="form-check-input" id="auto_backup" wire:model="auto_backup">
+                                    @error('auto_backup') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <div class="form-check form-switch form-switch-lg" dir="ltr">
+                                    <label for="cloud_user">Cloud User</label>
+                                    <input type="checkbox" class="form-check-input" id="cloud_user" wire:model="cloud_user">
+                                    @error('cloud_user') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group">
+                                <div class="form-check form-switch form-switch-lg" dir="ltr">
+                                    <label for="mobile_app">Mobile App</label>
+                                    <input type="checkbox" class="form-check-input" id="mobile_app" wire:model="mobile_app">
+                                    @error('mobile_app') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6">
+                            <div class="form-group gap-2 mt-3">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" onclick="window.history.back()" class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+
+                        <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush
-
 </div>
