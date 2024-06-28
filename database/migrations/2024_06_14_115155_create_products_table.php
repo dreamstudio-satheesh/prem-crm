@@ -18,9 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('price', 8, 2);
-            $table->integer('quantity')->nullable(); // Make quantity nullable
-            $table->enum('type', ['product', 'service']); // Add a type field
+            $table->decimal('price', 8, 2)->nullable();
             $table->timestamps();
         });
     }

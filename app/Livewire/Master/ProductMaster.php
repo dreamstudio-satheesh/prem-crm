@@ -11,7 +11,7 @@ class ProductMaster extends Component
     use WithPagination;
 
     public $product_id;
-    public $name, $description, $price, $quantity, $type;
+    public $name, $description, $price;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
@@ -20,9 +20,7 @@ class ProductMaster extends Component
      
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'price' => 'required|numeric',
-        'quantity' => 'nullable|integer', // Make quantity nullable
-        'type' => 'required|in:product,service', // Add type validation
+        'price' => 'nullable|numeric',
     ];
 
     public function render()
@@ -39,9 +37,7 @@ class ProductMaster extends Component
         $this->product_id = null;
         $this->name = '';
         $this->description = '';
-        $this->price = '';
-        $this->quantity = null;
-        $this->type = 'product'; // Default to product
+        $this->price = null;
     }
 
     public function store()
@@ -52,8 +48,6 @@ class ProductMaster extends Component
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
-            'quantity' => $this->type === 'product' ? $this->quantity : null, // Set quantity only for products
-            'type' => $this->type,
         ]);
 
         $this->resetInputFields();
@@ -67,8 +61,6 @@ class ProductMaster extends Component
         $this->name = $product->name;
         $this->description = $product->description;
         $this->price = $product->price;
-        $this->quantity = $product->quantity;
-        $this->type = $product->type;
     }
 
     public function delete($id)

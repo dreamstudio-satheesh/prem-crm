@@ -22,8 +22,6 @@
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Type</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -34,8 +32,6 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->price }}</td>
-                                    <td>{{ $product->quantity }}</td>
-                                    <td>{{ ucfirst($product->type) }}</td>
                                     <td>
                                         <button wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Edit</button>
                                         <button x-data="{ unitId: {{ $product->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
@@ -88,24 +84,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group" x-show="type === 'product'">
-                            <label for="quantity">Quantity*</label>
-                            <input type="number" class="form-control" placeholder="Enter quantity" wire:model="quantity">
-                            @error('quantity')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Type*</label>
-                            <select class="form-control" wire:model="type">
-                                <option value="">Select Type</option>
-                                <option value="product">Product</option>
-                                <option value="service">Service</option>
-                            </select>
-                            @error('type')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                      
                         <div class="form-group gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" wire:click="create" class="btn btn-secondary">Cancel</button>
