@@ -78,7 +78,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="price">Price*</label>
+                            <label for="price">Price</label>
                             <input type="number" class="form-control" placeholder="Enter price" wire:model="price">
                             @error('price')
                             <span class="text-danger">{{ $message }}</span>
