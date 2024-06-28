@@ -98,7 +98,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emit('delete', unitId);
+                    @this.call('delete', unitId);
                     Swal.fire('Deleted!', 'Location Deleted Successfully.', 'success');
                 }
             });
