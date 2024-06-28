@@ -4,6 +4,17 @@
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Add Customer</h4>
+                    <div class="col-xxl-3 col-md-6">
+                                <div class="form-group">
+                                    <select class="form-control" id="location_id" wire:model="location_id">
+                                        <option value="">Select Customer Area</option>
+                                        @foreach($locations as $location)
+                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('location_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <form wire:submit.prevent="save" class="form-horizontal form-bordered">
@@ -26,14 +37,22 @@
                             
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="product_id">Licence Edition</label>
+                                    <label for="product_id">Product</label>
                                     <select class="form-control" id="product_id" wire:model="product_id">
-                                        <option value="">Select Licence Edition</option>
+                                        <option value="">Select Product</option>
                                         @foreach($products as $product)
                                         <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="licence_editon">Licence Edition</label>
+                                    <input type="text" class="form-control" id="licence_editon" wire:model="licence_editon" placeholder="Enter Licence Edition">
+                                    @error('licence_editon') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-xxl-3 col-md-6">

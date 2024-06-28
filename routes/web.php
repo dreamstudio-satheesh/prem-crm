@@ -40,7 +40,7 @@ Route::get('/customertype', CustomertypeMaster::class);
 Route::get('/location', LocationMaster::class); 
 
 
-Route::get('master/customers/add', AddCustomer::class);
+Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 
 
 
 

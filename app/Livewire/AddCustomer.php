@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Customer;
+use App\Models\Location;
 use App\Models\Product;
 use App\Models\User;
 
@@ -44,7 +45,7 @@ class AddCustomer extends Component
         'tally_serial_no' => 'nullable|string|max:191',
         'licence_editon' => 'nullable|string|max:191',
         'primary_address_id' => 'nullable|exists:address_books,address_id',
-        'default_customer_type_id' => 'required|exists:customer_types,id',
+       // 'default_customer_type_id' => 'required|exists:customer_types,id',
         'product_id' => 'nullable|exists:products,id',
         'locations_id' => 'nullable|exists:locations,id',
         'staff_id' => 'nullable|exists:users,id',
@@ -117,6 +118,7 @@ class AddCustomer extends Component
     {
         return view('livewire.add-customer', [
             'products' => Product::all(),
+            'locations' => Location::all(),
             'users' => User::all(),
         ])->extends('layouts.admin')->section('content');
     }
