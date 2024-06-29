@@ -10,7 +10,7 @@
                                 </span>
                                 <span class="logo-lg">
                                     <img src="{{ assets('/assets/images/prem-infotech.svg') }}" alt=""
-                                        height="64">
+                                        height="48">
                                 </span>
                             </a>
 
