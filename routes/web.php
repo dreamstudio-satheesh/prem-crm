@@ -13,6 +13,7 @@ use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\Master\CustomerController;
+use App\Livewire\CustomerList;
 
 Route::get('/', function () {
     return redirect('home');
@@ -44,7 +45,7 @@ Route::get('master/customers/add', AddCustomer::class)->name('customers.add');
 Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
 
 
-Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers.index'); 
+Route::get('/master/customers', CustomerList::class)->name('customers.index'); 
 Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
 Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddress::class)->name('customers.editAddress');
 
