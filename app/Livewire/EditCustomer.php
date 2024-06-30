@@ -169,6 +169,7 @@ class EditCustomer extends Component
         $this->customer->addresses()->delete();
         foreach ($this->addresses as $address) {
             if (!empty($address['customer_type_id'])) {
+                $address['customer_id'] = $this->customer->customer_id;
                 $this->customer->addresses()->create($address);
             }
         }
