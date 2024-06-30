@@ -12,6 +12,11 @@ use App\Models\Customertype;
 
 class AddCustomer extends Component
 {
+    public $products;
+    public $locations;
+    public $licences;
+    public $users;
+
     public $customer_name;
     public $tally_serial_no;
     public $licence_editon;
@@ -148,18 +153,18 @@ class AddCustomer extends Component
         $this->addresses = array_values($this->addresses);
     }
 
+    public function mount()
+    {
+        $this->products = Product::all();
+        $this->locations = Location::all();
+        $this->licences = Licence::all();
+        $this->users = User::all();
+        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
+        $this->addAddress();
+    }
+
     public function render()
     {
-        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
-
-        $this->addAddress();
-
-        return view('livewire.add-customer', [
-            'products' => Product::all(),
-            'locations' => Location::all(),
-            'licences' => Licence::all(),
-            'users' => User::all(),
-            'addressTypes' => $this->addressTypes,
-        ])->extends('layouts.admin')->section('content');
+        return view('livewire.add-customer')->extends('layouts.admin')->section('content');
     }
 }
