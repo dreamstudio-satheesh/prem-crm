@@ -24,7 +24,7 @@
                                     @error('tally_serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                           
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="product_id">Product</label>
@@ -53,13 +53,6 @@
 
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="primary_address_id">Primary Address</label>
-                                    <input type="text" class="form-control" id="primary_address_id" wire:model="primary_address_id" placeholder="Enter Primary Address">
-                                    @error('primary_address_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
                                     <label for="remarks">Customer Location</label>
                                     <select class="form-control" id="location_id" wire:model="location_id">
                                         <option value="">Select Customer Area</option>
@@ -70,6 +63,7 @@
                                     @error('location_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="profile_status">Profile Status</label>
@@ -80,6 +74,7 @@
                                     @error('profile_status') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="executive_id">Followup Executive</label>
@@ -92,13 +87,7 @@
                                     @error('executive_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="remarks">Remarks</label>
-                                    <input type="text" class="form-control" id="remarks" wire:model="remarks" placeholder="Enter Remarks">
-                                    @error('remarks') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="map_location">Map Location</label>
@@ -106,6 +95,7 @@
                                     @error('map_location') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="latitude">Latitude</label>
@@ -113,6 +103,7 @@
                                     @error('latitude') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="longitude">Longitude</label>
@@ -120,6 +111,7 @@
                                     @error('longitude') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="gst_no">GST No</label>
@@ -127,11 +119,20 @@
                                     @error('gst_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="tdl_addons">TDL & Addons</label>
                                     <input type="text" class="form-control" id="tdl_addons" wire:model="tdl_addons" placeholder="Enter TDL & Addons">
                                     @error('tdl_addons') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-text">Remarks</span>
+                                    <textarea class="form-control" id="remarks" wire:model="remarks" aria-label="remarks" rows="2"></textarea>
+                                    @error('remarks') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
 
