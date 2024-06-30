@@ -43,9 +43,9 @@ class Customer extends Model
         return $this->belongsTo(AddressBook::class, 'primary_address_id', 'address_id');
     }
 
-    public function addressBooks()
+    public function AddressBooks()
     {
-        return $this->hasMany(Addressbook::class, 'customer_id', 'customer_id');
+        return $this->hasMany(AddressBook::class, 'customer_id', 'customer_id');
     }
 
     public function staff()
