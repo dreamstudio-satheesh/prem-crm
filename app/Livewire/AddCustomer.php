@@ -2,12 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
+use App\Models\Licence;
+use App\Models\Product;
 use Livewire\Component;
 use App\Models\Customer;
-use App\Models\Licence;
 use App\Models\Location;
-use App\Models\Product;
-use App\Models\User;
+use App\Models\Customertype;
 
 class AddCustomer extends Component
 {
@@ -33,20 +34,23 @@ class AddCustomer extends Component
     public $gst_no;
     public $map_location;
 
-     // AMC fields
-     public $amc_from_date;
-     public $amc_to_date;
-     public $amc_renewal_date;
-     public $no_of_visits;
-     public $amc_amount;
-     public $amc_last_year_amount;
+    public $addresses = [];
+    public $addressTypes;
+
+    // AMC fields
+    public $amc_from_date;
+    public $amc_to_date;
+    public $amc_renewal_date;
+    public $no_of_visits;
+    public $amc_amount;
+    public $amc_last_year_amount;
 
     protected $rules = [
         'customer_name' => 'required|string|max:191',
         'tally_serial_no' => 'nullable|string|max:191',
         'licence_editon' => 'nullable|string|max:191',
         'primary_address_id' => 'nullable|exists:address_books,address_id',
-       // 'default_customer_type_id' => 'required|exists:customer_types,id',
+        // 'default_customer_type_id' => 'required|exists:customer_types,id',
         'product_id' => 'nullable|exists:products,id',
         'locations_id' => 'nullable|exists:locations,id',
         'staff_id' => 'nullable|exists:users,id',
@@ -77,7 +81,13 @@ class AddCustomer extends Component
     {
         $this->validate();
 
-        $customer=Customer::create([
+        // Filter out empty addresses
+        $this->addresses = array_filter($this->addresses, function ($address) {
+            return !empty($address['customer_type_id']);
+        });
+
+
+        $customer = Customer::create([
             'customer_name' => $this->customer_name,
             'tally_serial_no' => $this->tally_serial_no,
             'primary_address_id' => $this->primary_address_id,
@@ -111,17 +121,45 @@ class AddCustomer extends Component
             ]);
         }
 
+        if ($this->addresses) {
+            foreach ($this->addresses as $address) {
+                $customer->addresses()->create($address);
+            }
+        }
+
         session()->flash('message', 'Customer added successfully.');
         return redirect()->route('customers.index');
     }
 
+    public function addAddress()
+    {
+        $this->addresses[] = [
+            'customer_type_id' => '',
+            'contact_person' => '',
+            'mobile_no' => '',
+            'phone_no' => '',
+            'email' => '',
+        ];
+    }
+
+    public function removeAddress($index)
+    {
+        unset($this->addresses[$index]);
+        $this->addresses = array_values($this->addresses);
+    }
+
     public function render()
     {
+        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
+
+        $this->addAddress();
+
         return view('livewire.add-customer', [
             'products' => Product::all(),
             'locations' => Location::all(),
             'licences' => Licence::all(),
             'users' => User::all(),
+            'addressTypes' => $this->addressTypes,
         ])->extends('layouts.admin')->section('content');
     }
 }
