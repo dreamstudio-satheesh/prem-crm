@@ -117,6 +117,7 @@ class AddCustomer extends Component
 
         if ($this->amc === 'yes') {
             $customer->amc()->create([
+                'customer_id' =>  $customer->customer_id,
                 'amc_from_date' => $this->amc_from_date,
                 'amc_to_date' => $this->amc_to_date,
                 'amc_renewal_date' => $this->amc_renewal_date,
@@ -128,6 +129,7 @@ class AddCustomer extends Component
 
         if ($this->addresses) {
             foreach ($this->addresses as $address) {
+                $address['customer_id'] = $customer->customer_id;
                 $customer->addresses()->create($address);
             }
         }

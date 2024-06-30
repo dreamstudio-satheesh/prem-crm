@@ -70,7 +70,7 @@ class AddAddress extends Component
         }
 
         session()->flash('message', 'Customer Address created successfully!');
-        return redirect()->route('customers');
+        return redirect()->route('customers.index');
     }
 
 

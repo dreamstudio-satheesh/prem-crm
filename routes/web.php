@@ -52,7 +52,7 @@ Route::get('/licence', LicenceMaster::class);
 
 Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 
 
-Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers'); 
+Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers.index'); 
 Route::get('master/customers/add-address/{id}', [CustomerController::class, 'AddAddress'])->name('customers.AddAddress');
 Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
 Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'editCustomer'])->name('customers.editCustomer');

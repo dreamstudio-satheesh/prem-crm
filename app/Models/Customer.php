@@ -56,7 +56,12 @@ class Customer extends Model
 
     public function amc()
     {
-        return $this->hasOne(Amc::class);
+        return $this->hasOne(Amc::class, 'customer_id', 'customer_id');
+    }
+
+    public function addresses()
+    {
+        return $this->belongsTo(AddressBook::class, 'customer_id', 'customer_id');
     }
 
 
