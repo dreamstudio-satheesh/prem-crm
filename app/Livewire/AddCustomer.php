@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Customer;
+use App\Models\Licence;
 use App\Models\Location;
 use App\Models\Product;
 use App\Models\User;
@@ -119,6 +120,7 @@ class AddCustomer extends Component
         return view('livewire.add-customer', [
             'products' => Product::all(),
             'locations' => Location::all(),
+            'licences' => Licence::all(),
             'users' => User::all(),
         ])->extends('layouts.admin')->section('content');
     }

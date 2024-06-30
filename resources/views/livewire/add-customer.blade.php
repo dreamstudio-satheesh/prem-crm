@@ -24,13 +24,7 @@
                                     @error('tally_serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="col-xxl-3 col-md-6">
-                                <div class="form-group">
-                                    <label for="licence_editon">Licence Edition</label>
-                                    <input type="text" class="form-control" id="licence_editon" wire:model="licence_editon" placeholder="Enter Licence Edition">
-                                    @error('licence_editon') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
+                           
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="product_id">Product</label>
@@ -43,6 +37,20 @@
                                     @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
+                            <div class="col-xxl-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="licence_editon">Licence Edition</label>
+                                    <select class="form-control" id="licence_editon" wire:model="licence_editon">
+                                        <option value="">Select Licence Edition</option>
+                                        @foreach($licences as $licence)
+                                        <option value="{{ $licence->id }}">{{ $licence->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('licence_editon') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="primary_address_id">Primary Address</label>
