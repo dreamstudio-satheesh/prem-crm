@@ -20,8 +20,8 @@ class CreateCustomersTable extends Migration
             $table->string('licence_editon', 191)->nullable();
             $table->unsignedInteger('primary_address_id')->nullable();
             $table->unsignedBigInteger('default_customer_type_id');
-            $table->unsignedBigInteger('products_id')->nullable();
-            $table->unsignedBigInteger('locations_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->unsignedBigInteger('amc_id')->nullable();
             $table->enum('amc', ['yes', 'no'])->default('yes');

@@ -79,14 +79,14 @@
 
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="executive_id">Followup Executive</label>
-                                    <select class="form-control" id="executive_id" wire:model="executive_id">
+                                    <label for="staff_id">Followup Executive</label>
+                                    <select class="form-control" id="staff_id" wire:model="staff_id">
                                         <option value="">Select Executive</option>
                                         @foreach($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('executive_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
 

@@ -26,19 +26,9 @@ Route::get('/customer-page2', function () {
   return view('customer-page2');
 });
 
-
-
-Auth::routes([
-
-    'register' => false, // Register Routes...
+Auth::routes([  'register' => false,  'reset' => false, 'verify' => false,  ]);
   
-    'reset' => false, // Reset Password Routes...
-  
-    'verify' => false, // Email Verification Routes...
-  
-  ]);
-  
-  Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout']);
+Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/user', UserMaster::class);  
@@ -51,16 +41,12 @@ Route::get('/licence', LicenceMaster::class);
 
 
 Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 
+Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
+
 
 Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers.index'); 
-Route::get('master/customers/add-address/{id}', [CustomerController::class, 'AddAddress'])->name('customers.AddAddress');
-Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
-Route::get('master/customers/edit-customer/{id}', [CustomerController::class, 'editCustomer'])->name('customers.editCustomer');
-Route::post('master/customers/save-customer', [CustomerController::class, 'saveCustomer'])->name('customers.saveCustomer');
-Route::get('master/customers/edit-address/{id}', [CustomerController::class, 'editAddress'])->name('customers.editAddress');
-Route::post('master/customers/save-address', [CustomerController::class, 'saveAddress'])->name('customers.saveAddress');
-Route::post('master/customers/store', [CustomerController::class, 'store'])->name('customers.store');
-Route::get('master/customers/fetch-address-types', [CustomerController::class, 'fetchAddressTypes'])->name('customers.fetchAddressTypes');
+Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
+Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddress::class)->name('customers.editAddress');
 
 
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 

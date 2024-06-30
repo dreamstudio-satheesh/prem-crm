@@ -5,18 +5,20 @@ namespace App\Livewire;
 use App\Models\User;
 use App\Models\Licence;
 use App\Models\Product;
-use Livewire\Component;
 use App\Models\Customer;
 use App\Models\Location;
 use App\Models\Customertype;
+use Livewire\Component;
 
-class AddCustomer extends Component
+class EditCustomer extends Component
 {
+    public $customer;
     public $products;
     public $locations;
     public $licences;
     public $users;
 
+    // Customer properties
     public $customer_name;
     public $tally_serial_no;
     public $licence_editon;
@@ -25,17 +27,17 @@ class AddCustomer extends Component
     public $product_id;
     public $location_id;
     public $staff_id;
-    public $amc = 'no';
-    public $tss_status = 'inactive';
+    public $amc;
+    public $tss_status;
     public $tss_adminemail;
     public $tss_expirydate;
     public $profile_status;
     public $remarks;
     public $whatsapp_telegram_group;
     public $tdl_addons;
-    public $auto_backup = false;
-    public $cloud_user = false;
-    public $mobile_app = false;
+    public $auto_backup;
+    public $cloud_user;
+    public $mobile_app;
     public $gst_no;
     public $map_location;
 
@@ -54,7 +56,6 @@ class AddCustomer extends Component
         'customer_name' => 'required|string|max:191',
         'tally_serial_no' => 'nullable|string|max:191',
         'primary_address_id' => 'nullable|exists:address_books,address_id',
-        // 'default_customer_type_id' => 'required|exists:customer_types,id',
         'licence_editon' => 'nullable|exists:licences,id',
         'product_id' => 'nullable|exists:products,id',
         'location_id' => 'nullable|exists:locations,id',
@@ -72,8 +73,6 @@ class AddCustomer extends Component
         'mobile_app' => 'nullable|boolean',
         'gst_no' => 'nullable|string|max:191',
         'map_location' => 'nullable|string|max:191',
-
-        // AMC validation rules
         'amc_from_date' => 'nullable|date',
         'amc_to_date' => 'nullable|date',
         'amc_renewal_date' => 'nullable|date',
@@ -82,20 +81,54 @@ class AddCustomer extends Component
         'amc_last_year_amount' => 'nullable|numeric',
     ];
 
+    public function mount(Customer $customer)
+    {
+        $this->customer = $customer;
+        $this->customer_name = $customer->customer_name;
+        $this->tally_serial_no = $customer->tally_serial_no;
+        $this->licence_editon = $customer->licence_editon;
+        $this->primary_address_id = $customer->primary_address_id;
+        $this->default_customer_type_id = $customer->default_customer_type_id;
+        $this->product_id = $customer->product_id;
+        $this->location_id = $customer->location_id;
+        $this->staff_id = $customer->staff_id;
+        $this->amc = $customer->amc;
+        $this->tss_status = $customer->tss_status;
+        $this->tss_adminemail = $customer->tss_adminemail;
+        $this->tss_expirydate = $customer->tss_expirydate;
+        $this->profile_status = $customer->profile_status;
+        $this->remarks = $customer->remarks;
+        $this->whatsapp_telegram_group = $customer->whatsapp_telegram_group;
+        $this->tdl_addons = $customer->tdl_addons;
+        $this->auto_backup = $customer->auto_backup;
+        $this->cloud_user = $customer->cloud_user;
+        $this->mobile_app = $customer->mobile_app;
+        $this->gst_no = $customer->gst_no;
+        $this->map_location = $customer->map_location;
+        $this->addresses = $customer->addresses()->get()->toArray();
+        $this->amc_from_date = $customer->amc_from_date;
+        $this->amc_to_date = $customer->amc_to_date;
+        $this->amc_renewal_date = $customer->amc_renewal_date;
+        $this->no_of_visits = $customer->no_of_visits;
+        $this->amc_amount = $customer->amc_amount;
+        $this->amc_last_year_amount = $customer->amc_last_year_amount;
+
+        $this->products = Product::all();
+        $this->locations = Location::all();
+        $this->licences = Licence::all();
+        $this->users = User::all();
+        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
+    }
+
     public function save()
     {
         $this->validate();
 
-        // Filter out empty addresses
-        $this->addresses = array_filter($this->addresses, function ($address) {
-            return !empty($address['customer_type_id']);
-        });
-
-
-        $customer = Customer::create([
+        // Update customer details
+        $this->customer->update([
             'customer_name' => $this->customer_name,
             'tally_serial_no' => $this->tally_serial_no,
-          //  'primary_address_id' => $this->primary_address_id,
+            'primary_address_id' => $this->primary_address_id,
             'default_customer_type_id' => $this->default_customer_type_id,
             'product_id' => $this->product_id,
             'location_id' => $this->location_id,
@@ -115,26 +148,32 @@ class AddCustomer extends Component
             'map_location' => $this->map_location,
         ]);
 
+        // Update AMC details
         if ($this->amc === 'yes') {
-            $customer->amc()->create([
-                'customer_id' =>  $customer->customer_id,
-                'amc_from_date' => $this->amc_from_date,
-                'amc_to_date' => $this->amc_to_date,
-                'amc_renewal_date' => $this->amc_renewal_date,
-                'no_of_visits' => $this->no_of_visits,
-                'amc_amount' => $this->amc_amount,
-                'amc_last_year_amount' => $this->amc_last_year_amount,
-            ]);
+            $this->customer->amc()->updateOrCreate(
+                ['customer_id' => $this->customer->customer_id],
+                [
+                    'amc_from_date' => $this->amc_from_date,
+                    'amc_to_date' => $this->amc_to_date,
+                    'amc_renewal_date' => $this->amc_renewal_date,
+                    'no_of_visits' => $this->no_of_visits,
+                    'amc_amount' => $this->amc_amount,
+                    'amc_last_year_amount' => $this->amc_last_year_amount,
+                ]
+            );
+        } else {
+            $this->customer->amc()->delete();
         }
 
-        if ($this->addresses) {
-            foreach ($this->addresses as $address) {
-                $address['customer_id'] = $customer->customer_id;
-                $customer->addresses()->create($address);
+        // Update addresses
+        $this->customer->addresses()->delete();
+        foreach ($this->addresses as $address) {
+            if (!empty($address['customer_type_id'])) {
+                $this->customer->addresses()->create($address);
             }
         }
 
-        session()->flash('message', 'Customer added successfully.');
+        session()->flash('message', 'Customer updated successfully.');
         return redirect()->route('customers.index');
     }
 
@@ -155,18 +194,9 @@ class AddCustomer extends Component
         $this->addresses = array_values($this->addresses);
     }
 
-    public function mount()
-    {
-        $this->products = Product::all();
-        $this->locations = Location::all();
-        $this->licences = Licence::all();
-        $this->users = User::all();
-        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
-        $this->addAddress();
-    }
-
     public function render()
     {
-        return view('livewire.add-customer')->extends('layouts.admin')->section('content');
+        return view('livewire.edit-customer')->extends('layouts.admin')->section('content');
     }
 }
+
