@@ -17,6 +17,14 @@ Route::get('/', function () {
     return redirect('home');
 });
 
+Route::get('/customer-page', function () {
+  return view('customer-page');
+});
+
+Route::get('/customer-page2', function () {
+  return view('customer-page2');
+});
+
 
 
 Auth::routes([
