@@ -43,7 +43,7 @@ class CreateCustomersTable extends Migration
 
             //$table->foreign('amc_id')->references('id')->on('amc')->onDelete('set null');
            // $table->foreign('primary_address_id')->references('address_id')->on('address_books')->onDelete('set null'); 
-            $table->foreign('products_id')->references('id')->on('products')->onDelete('set null'); 
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('set null'); 
             $table->foreign('staff_id')->references('id')->on('users')->onDelete('set null'); 
         });
     }

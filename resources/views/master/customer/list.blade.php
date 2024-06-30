@@ -73,7 +73,7 @@
                                     <span class="badge badge-soft text-uppercase">{{ $customer->remarks }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ url('/master/customers/editcustomer', $customer->customer_id) }}" class="btn btn-info">
+                                    <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-info">
                                         <i class="ri-edit-line align-bottom me-1"></i> Edit Customer
                                     </a>
                                 </td>
