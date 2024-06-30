@@ -167,6 +167,6 @@ class AddCustomer extends Component
 
     public function render()
     {
-        return view('livewire.add-customer')->extends('layouts.admin')->section('content');
+        return view('livewire.add-customer');
     }
 }

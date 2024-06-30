@@ -36,8 +36,7 @@ class UserMaster extends Component
 
        
     
-        return view('livewire.master.user-master', compact('users', 'roles'))
-            ->extends('layouts.admin'); 
+        return view('livewire.master.user-master', compact('users', 'roles')); 
     }
 
     public function resetInputFields()

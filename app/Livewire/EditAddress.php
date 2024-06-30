@@ -65,6 +65,6 @@ class EditAddress extends Component
         return view('livewire.edit-address', [
             'addresses' => $this->addresses,
             'addressTypes' => $this->addressTypes,
-        ])->extends('layouts.admin')->section('content');
+        ]);
     }
 }

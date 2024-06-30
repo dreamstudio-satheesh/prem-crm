@@ -28,7 +28,7 @@ class IndustryMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.industry-master', compact('industry'))->extends('layouts.admin');
+        return view('livewire.master.industry-master', compact('industry'));
     }
 
     public function resetInputFields()

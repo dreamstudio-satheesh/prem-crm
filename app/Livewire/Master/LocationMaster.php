@@ -27,7 +27,7 @@ class LocationMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.location-master', compact('locations'))->extends('layouts.admin');
+        return view('livewire.master.location-master', compact('locations'));
     }
 
     public function resetInputFields()

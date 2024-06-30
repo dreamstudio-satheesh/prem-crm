@@ -27,7 +27,7 @@ class LicenceMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.licence-master', compact('licences'))->extends('layouts.admin');
+        return view('livewire.master.licence-master', compact('licences'));
     }
 
     public function resetInputFields()

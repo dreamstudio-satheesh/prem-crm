@@ -197,7 +197,7 @@ class EditCustomer extends Component
 
     public function render()
     {
-        return view('livewire.edit-customer')->extends('layouts.admin')->section('content');
+        return view('livewire.edit-customer');
     }
 }
 

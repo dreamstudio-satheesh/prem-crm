@@ -77,6 +77,6 @@ class AddAddress extends Component
 
     public function render()
     {
-        return view('livewire.add-address')->extends('layouts.admin')->section('content');
+        return view('livewire.add-address');
     }
 }

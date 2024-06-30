@@ -26,7 +26,7 @@ class RoleMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.role-master', compact('roles'))->extends('layouts.admin');
+        return view('livewire.master.role-master', compact('roles'));
     }
 
     public function resetInputFields()

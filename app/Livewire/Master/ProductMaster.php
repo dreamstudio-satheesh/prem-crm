@@ -29,7 +29,7 @@ class ProductMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.product-master', compact('products'))->extends('layouts.admin');
+        return view('livewire.master.product-master', compact('products'));
     }
 
     public function resetInputFields()

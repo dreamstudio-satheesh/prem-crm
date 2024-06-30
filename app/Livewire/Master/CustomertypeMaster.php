@@ -28,8 +28,7 @@ class CustomertypeMaster extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.customertype-master', compact('customertype'))
-            ->extends('layouts.admin');
+        return view('livewire.master.customertype-master', compact('customertype'));
     }
 
     public function resetInputFields()
