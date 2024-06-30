@@ -1,17 +1,18 @@
 <?php
 
 
+use App\Livewire\AddCustomer;
 use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Master\LicenceMaster;
 use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
 use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\Master\CustomerController;
-use App\Livewire\AddCustomer;
 
 Route::get('/', function () {
     return redirect('home');
@@ -46,11 +47,10 @@ Route::get('/product', ProductMaster::class);
 Route::get('/industry', IndustryMaster::class); 
 Route::get('/customertype', CustomertypeMaster::class); 
 Route::get('/location', LocationMaster::class); 
+Route::get('/licence', LicenceMaster::class); 
 
 
 Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 
-
-
 
 Route::get('/master/customers', [CustomerController::class, 'index'])->name('customers'); 
 Route::get('master/customers/add-address/{id}', [CustomerController::class, 'AddAddress'])->name('customers.AddAddress');

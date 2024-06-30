@@ -45,7 +45,7 @@
                                 </ul>
                             </div>
                         </li> <!-- end Dashboard Menu -->
-  
+
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Master" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Master">
                                 <i class="mdi mdi-view-grid-plus-outline"></i> <span data-key="t-master">Master</span>
@@ -53,64 +53,73 @@
                             <div class="collapse menu-dropdown" id="Master">
                                 <ul class="nav nav-sm flex-column">
 
-                                <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ url('/master/customers') }}" >
-                                <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
-                            </a> 
-                            </li> 
-                            <li class="nav-item">
+                                    <li class="nav-item">
+                                        <a class="nav-link menu-link" href="{{ url('/master/customers') }}">
+                                            <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('licence') }}" class="nav-link" data-key="t-master">
+                                            Licence Edition
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
                                         <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
-                                           Customer Type
+                                            Customer Type
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('product') }}" class="nav-link" data-key="t-master">
-                                           Tally Product
+                                            Tally Product
                                         </a>
-                                    </li> 
+                                    </li>
+
+
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
-                                        Desigination
+                                            Desigination
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('user') }}" class="nav-link" data-key="t-master">
-                                         Exceutive
+                                            Exceutive
                                         </a>
-                                    </li> 
+                                    </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">
-                                         Industry
+                                            Industry
                                         </a>
-                                    </li> 
+                                    </li>
 
 
                                     <li class="nav-item">
                                         <a href="{{ url('location') }}" class="nav-link" data-key="t-master">
-                                         Customer Area 
+                                            Area
                                         </a>
-                                    </li> 
+                                    </li>
                                 </ul>
                             </div>
                         </li>
-                       
 
-                        
-                        
+
+
+
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#PreSales" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="PreSales">
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-presales">Pre Sales</span>
                             </a>
                             <div class="collapse menu-dropdown" id="PreSales">
                                 <ul class="nav nav-sm flex-column">
-                                  <li class="nav-item">
+                                    <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Leads
                                         </a>
                                     </li>
-                                    
+
                                     <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Opportunities
                                         </a>
@@ -119,17 +128,17 @@
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Email Campaign
                                         </a>
                                     </li>
- 
+
 
                                     <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Quote
                                         </a>
-                                    </li> 
+                                    </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Multiple Quote
                                         </a>
-                                    </li> 
+                                    </li>
 
                                     <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Price Discount & Approval
@@ -141,7 +150,7 @@
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Terms & Conditions
                                         </a>
                                     </li>
- 
+
 
 
                                 </ul>
@@ -154,54 +163,54 @@
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Sales</span>
                             </a>
                             <div class="collapse menu-dropdown" id="Sales">
-                                <ul class="nav nav-sm flex-column"> 
+                                <ul class="nav nav-sm flex-column">
                                 </ul>
                             </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#Contracts" >
+                            <a class="nav-link menu-link" href="#Contracts">
                                 <i class="mdi mdi-sticker-text-outline"></i> <span>Service Contracts</span>
                             </a>
-                           
+
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Services" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Services">
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-services">Services</span>
-                            </a> 
+                            </a>
 
                             <div class="collapse menu-dropdown" id="Services">
-                                <ul class="nav nav-sm flex-column">  
-                                <li class="nav-item">
-                                        <a href="{{ url('transactions/onsiteentry') }}" class="nav-link" data-key="t-services"> On-Site Visit  </a>
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC  </a>
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL  </a>
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Renewal  </a>
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Online Calls  </a> 
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Calls Closing  </a>
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{ url('transactions/onsiteentry') }}" class="nav-link" data-key="t-services"> On-Site Visit </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Renewal </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Online Calls </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Calls Closing </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
 
-                         
+
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Traning" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Traning">
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Training</span>
                             </a>
                             <div class="collapse menu-dropdown" id="Traning">
-                                <ul class="nav nav-sm flex-column"> 
+                                <ul class="nav nav-sm flex-column">
                                 </ul>
                             </div>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#UserPermission" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="UserPermission">
-                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">User Permissions  </span>
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">User Permissions </span>
                             </a>
                             <div class="collapse menu-dropdown" id="UserPermission">
-                                <ul class="nav nav-sm flex-column"> 
+                                <ul class="nav nav-sm flex-column">
                                 </ul>
                             </div>
                         </li>
@@ -212,18 +221,18 @@
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Messages</span>
                             </a>
                             <div class="collapse menu-dropdown" id="Messages">
-                                <ul class="nav nav-sm flex-column"> 
+                                <ul class="nav nav-sm flex-column">
                                 </ul>
                             </div>
                         </li>
-                        
-                         
+
+
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Products</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarApps">
-                                <ul class="nav nav-sm flex-column"> 
+                                <ul class="nav nav-sm flex-column">
                                 </ul>
                             </div>
                         </li>
@@ -235,7 +244,7 @@
                                 <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Tickets</span>
                             </a>
                             <div class="collapse menu-dropdown" id="Tickets">
-                                <ul class="nav nav-sm flex-column"> 
+                                <ul class="nav nav-sm flex-column">
                                 </ul>
                             </div>
                         </li>
@@ -250,7 +259,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> Hourly
                                         </a>
-                                    </li> 
+                                    </li>
                                 </ul>
                             </div>
                         </li>
