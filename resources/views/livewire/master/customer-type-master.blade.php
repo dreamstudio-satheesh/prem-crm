@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="row d-flex align-items-center" style="padding-top: 20px; padding-left:20px;">
                         <div class="col-md-4">
-                            <h2>Customer Type </h2>
+                            <h2>Desigination </h2>
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
@@ -64,7 +64,7 @@
         <div class="col-md-4 col-xs-12">
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h5>{{ $customer_type_id ? 'Edit Customer Type' : 'Create Customer Type' }}</h5>
+                    <h5>{{ $customer_type_id ? 'Edit Desigination' : 'Create Desigination' }}</h5>
                     <button type="button" class="btn btn-sm btn-info ml-2" data-bs-toggle="modal" data-bs-target="#importModal"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
                 </div>
                 <div class="card-body" style="padding-top: 10px">
