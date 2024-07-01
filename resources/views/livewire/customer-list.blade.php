@@ -8,8 +8,14 @@
                             <h5 class="card-title mb-0">Customer List</h5>
                         </div>
                         <div class="col-sm-auto">
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#importModal">
+                                <i class="ri-file-download-line align-bottom me-1"></i> Import Customers
+                            </button>
+                            <button wire:click="export" class="btn btn-success">
+                                <i class="ri-file-upload-line align-bottom me-1"></i> Export Customers
+                            </button>
                             <a href="{{ route('customers.add') }}" class="btn btn-info">
-                                <i class="ri-file-download-line align-bottom me-1"></i> Add New Customer
+                                <i class="ri-file-add-line align-bottom me-1"></i> Add New Customer
                             </a>
                         </div>
                     </div>
@@ -84,4 +90,51 @@
             </div>
         </div>
     </div>
+
+    <!-- Import Modal -->
+    <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import Customers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="importForm" wire:submit.prevent="import">
+                        <div class="form-group">
+                            <label for="file">Upload CSV File</label>
+                            <input type="file" class="form-control" id="file" wire:model="upload_file">
+                            @error('upload_file')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('close-modal', event => {
+            var modal = $('#importModal');
+            modal.modal('hide');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('show-toastr', event => {
+                toastr.options = {
+                    closeButton: true,
+                    positionClass: "toast-top-right",
+                };
+                const detail = event.detail[0];
+                if (detail && detail.message) {
+                    toastr.success(detail.message);
+                }
+            });
+        });
+    </script>
+    @endpush
 </div>

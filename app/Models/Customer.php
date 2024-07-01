@@ -13,17 +13,29 @@ class Customer extends Model
 
     protected $fillable = [
         'customer_name',
-        'amc_id',
+        'tally_serial_no',
+        'licence_editon',
+        'primary_address_id',
+        'default_customer_type_id',
         'product_id',
+        'location_id',
+        'staff_id',
+        'amc_id',
         'amc',
         'tss_status',
         'tss_adminemail',
         'tss_expirydate',
         'profile_status',
-        'staff_id',
         'remarks',
-        'primary_address_id',
-        'default_customer_type_id'
+        'whatsapp_telegram_group',
+        'tdl_addons',
+        'auto_backup',
+        'cloud_user',
+        'mobile_app',
+        'gst_no',
+        'map_location',
+        'latitude',
+        'longitude',
     ];
 
     public static function boot()
