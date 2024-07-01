@@ -9,13 +9,13 @@
                         </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#importModal">
-                                <i class="ri-file-download-line align-bottom me-1"></i> Import Customers
+                                <i class="ri-file-download-line align-bottom me-1"></i> Import 
                             </button>
                             <button wire:click="export" class="btn btn-sm btn-success">
-                                <i class="ri-file-upload-line align-bottom me-1"></i> Export Customers
+                                <i class="ri-file-upload-line align-bottom me-1"></i> Export 
                             </button>
                             <a href="{{ route('customers.add') }}" class="btn btn-sm btn-info">
-                                <i class="ri-file-add-line align-bottom me-1"></i> Add New Customer
+                                <i class="ri-file-add-line align-bottom me-1"></i> Add New 
                             </a>
                         </div>
                     </div>
