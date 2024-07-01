@@ -5,7 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Customer;
 use App\Models\AddressBook;
-use App\Models\Customertype;
+use App\Models\CustomerType;
+
 
 class EditAddress extends Component
 {
@@ -19,7 +20,7 @@ class EditAddress extends Component
         $this->customer_id = $customerId;
         $this->customer_name = Customer::find($customerId)->customer_name;
         $this->addresses = AddressBook::where('customer_id', $customerId)->get()->toArray();
-        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
+        $this->addressTypes = CustomerType::orderBy('name', 'asc')->get();
     }
 
     public function removeAddress($index)

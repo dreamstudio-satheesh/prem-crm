@@ -8,7 +8,8 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Customer;
 use App\Models\Location;
-use App\Models\Customertype;
+use App\Models\CustomerType;
+
 
 class AddCustomer extends Component
 {
@@ -161,7 +162,7 @@ class AddCustomer extends Component
         $this->locations = Location::all();
         $this->licences = Licence::all();
         $this->users = User::all();
-        $this->addressTypes = Customertype::orderBy('name', 'asc')->get();
+        $this->addressTypes = CustomerType::orderBy('name', 'asc')->get();
         $this->addAddress();
     }
 
