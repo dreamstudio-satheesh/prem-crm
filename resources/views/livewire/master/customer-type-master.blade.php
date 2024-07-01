@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="row d-flex align-items-center" style="padding-top: 20px; padding-left:20px;">
                         <div class="col-md-4">
-                            <h2>Location Master</h2>
+                            <h2>Customer Type </h2>
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
-                            <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Location..">
+                            <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Customer Type..">
                         </div>
                     </div>
                 </div>
@@ -30,30 +30,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($locations->count() > 0)
-                                @foreach ($locations as $location)
+                                @if ($customerTypes->count() > 0)
+                                @foreach ($customerTypes as $customerType)
                                 <tr>
-                                    <td>{{ ($locations->currentPage() - 1) * $locations->perPage() + $loop->index + 1 }}</td>
-                                    <td>{{ $location->name }}</td>
-                                    <td>{{ $location->description }}</td>
+                                    <td>{{ ($customerTypes->currentPage() - 1) * $customerTypes->perPage() + $loop->index + 1 }}</td>
+                                    <td>{{ $customerType->name }}</td>
+                                    <td>{{ $customerType->description }}</td>
                                     <td>
-                                        <button wire:click="edit({{ $location->id }})" class="btn btn-primary btn-sm">Edit</button>
-                                        <button x-data="{ unitId: {{ $location->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
+                                        <button wire:click="edit({{ $customerType->id }})" class="btn btn-primary btn-sm">Edit</button>
+                                        <button x-data="{ unitId: {{ $customerType->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
                                 @else
                                 <tr>
                                     <td colspan="4">
-                                        <h5>No Location found</h5>
+                                        <h5>No Customer Type found</h5>
                                     </td>
                                 </tr>
                                 @endif
                             </tbody>
                         </table>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>{{ $locations->links() }}</div>
-                            <div class="text-right">Total: {{ $locations->total() }}</div>
+                            <div>{{ $customerTypes->links() }}</div>
+                            <div class="text-right">Total: {{ $customerTypes->total() }}</div>
                         </div>
                     </div>
                 </div>
@@ -64,14 +64,14 @@
         <div class="col-md-4 col-xs-12">
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h5>{{ $location_id ? 'Edit Location' : 'Create Location' }}</h5>
+                    <h5>{{ $customer_type_id ? 'Edit Customer Type' : 'Create Customer Type' }}</h5>
                     <button type="button" class="btn btn-sm btn-info ml-2" data-bs-toggle="modal" data-bs-target="#importModal"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
                 </div>
                 <div class="card-body" style="padding-top: 10px">
                     <form wire:submit.prevent="store">
                         <div class="form-group">
                             <label for="name">Name*</label>
-                            <input type="text" class="form-control" id="name" autofocus placeholder="Enter Location name" wire:model="name">
+                            <input type="text" class="form-control" id="name" autofocus placeholder="Enter Customer Type name" wire:model="name">
                             @error('name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -98,7 +98,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import Locations</h5>
+                    <h5 class="modal-title" id="importModalLabel">Import Customer Types</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -132,7 +132,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     @this.call('delete', unitId);
-                    Swal.fire('Deleted!', 'Location Deleted Successfully.', 'success');
+                    Swal.fire('Deleted!', 'Customer Type Deleted Successfully.', 'success');
                 }
             });
         }

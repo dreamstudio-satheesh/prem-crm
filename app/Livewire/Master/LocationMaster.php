@@ -5,14 +5,19 @@ namespace App\Livewire\Master;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Location;
+use Livewire\WithFileUploads;
+use App\Imports\LocationsImport;
+use App\Exports\LocationsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LocationMaster extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $location_id;
     public $name, $description;
     public $search = '';
+    public $upload_file;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -21,13 +26,25 @@ class LocationMaster extends Component
         'description' => 'nullable|string',
     ];
 
+    public function mount()
+    {
+        $this->resetInputFields();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $locations = Location::where('name', 'like', '%'.$this->search.'%')
+        $locations = Location::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.location-master', compact('locations'));
+        return view('livewire.master.location-master', [
+            'locations' => $locations,
+        ]);
     }
 
     public function resetInputFields()
@@ -47,7 +64,8 @@ class LocationMaster extends Component
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Location '.($this->location_id ? 'Updated' : 'Created').' Successfully.']);
+
+        $this->dispatch('show-toastr', ['message' => 'Location ' . ($this->location_id ? 'Updated' : 'Created') . ' Successfully.']);
     }
 
     public function edit($id)
@@ -60,12 +78,37 @@ class LocationMaster extends Component
 
     public function delete($id)
     {
-        Location::findOrFail($id)->delete();
-        session()->flash('success', 'Location Deleted Successfully.');
+        $location = Location::find($id);
+
+        if ($location) {
+            $location->delete();
+            session()->flash('success', 'Location Deleted Successfully.');
+        } else {
+            session()->flash('error', 'Location Not Found.');
+        }
+        $this->dispatch('$refresh');
     }
 
     public function create()
     {
         $this->resetInputFields();
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'upload_file' => 'required|mimes:xlsx,csv,txt',
+        ]);
+
+        Excel::import(new LocationsImport, $this->upload_file->getRealPath());
+
+        session()->flash('success', 'Locations Imported Successfully.');
+
+        $this->dispatch('close-modal');
+    }
+
+    public function export()
+    {
+        return Excel::download(new LocationsExport, 'locations.xlsx');
     }
 }

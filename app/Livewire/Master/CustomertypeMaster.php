@@ -4,36 +4,52 @@ namespace App\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Customertype;
+use App\Models\CustomerType;
+use Livewire\WithFileUploads;
+use App\Imports\CustomerTypesImport;
+use App\Exports\CustomerTypesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
-class CustomertypeMaster extends Component
+class CustomerTypeMaster extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
-    public $id;
+    public $customer_type_id;
     public $name, $description;
     public $search = '';
+    public $upload_file;
 
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
     ];
 
+    public function mount()
+    {
+        $this->resetInputFields();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $customertype = Customertype::where('name', 'like', '%' . $this->search . '%')
+        $customerTypes = CustomerType::where('name', 'like', '%' . $this->search . '%')
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.master.customertype-master', compact('customertype'));
+        return view('livewire.master.customer-type-master', [
+            'customerTypes' => $customerTypes,
+        ]);
     }
 
     public function resetInputFields()
     {
-        $this->id = null;
+        $this->customer_type_id = null;
         $this->name = '';
         $this->description = '';
     }
@@ -42,31 +58,58 @@ class CustomertypeMaster extends Component
     {
         $this->validate();
 
-        Customertype::updateOrCreate(['id' => $this->id], [
+        CustomerType::updateOrCreate(['id' => $this->customer_type_id], [
             'name' => $this->name,
             'description' => $this->description,
         ]);
 
         $this->resetInputFields();
-        $this->dispatch('show-toastr', ['message' => 'Customer Type ' . ($this->id ? 'Updated' : 'Created') . ' Successfully.']);
+
+        $this->dispatch('show-toastr', ['message' => 'Customer Type ' . ($this->customer_type_id ? 'Updated' : 'Created') . ' Successfully.']);
     }
 
     public function edit($id)
     {
-        $customertype = Customertype::findOrFail($id);
-        $this->id = $customertype->id;
-        $this->name = $customertype->name;
-        $this->description = $customertype->description;
+        $customerType = CustomerType::findOrFail($id);
+        $this->customer_type_id = $customerType->id;
+        $this->name = $customerType->name;
+        $this->description = $customerType->description;
     }
 
     public function delete($id)
     {
-        //Customertype::findOrFail($id)->delete();
-        session()->flash('success', 'Customer Type Deleted Successfully.');
+        $customerType = CustomerType::find($id);
+
+        if ($customerType) {
+            $customerType->delete();
+            session()->flash('success', 'Customer Type Deleted Successfully.');
+        } else {
+            session()->flash('error', 'Customer Type Not Found.');
+        }
+        $this->dispatch('$refresh');
     }
 
     public function create()
     {
         $this->resetInputFields();
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'upload_file' => 'required|mimes:xlsx,csv,txt',
+        ]);
+
+        Excel::import(new CustomerTypesImport, $this->upload_file->getRealPath());
+
+        session()->flash('success', 'Customer Types Imported Successfully.');
+
+        // Close the modal
+        $this->dispatch('close-modal');
+    }
+
+    public function export()
+    {
+        return Excel::download(new CustomerTypesExport, 'customer_types.xlsx');
     }
 }
