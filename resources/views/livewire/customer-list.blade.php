@@ -8,13 +8,13 @@
                             <h5 class="card-title mb-0">Customer List</h5>
                         </div>
                         <div class="col-sm-auto">
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#importModal">
+                            <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#importModal">
                                 <i class="ri-file-download-line align-bottom me-1"></i> Import Customers
                             </button>
-                            <button wire:click="export" class="btn btn-success">
+                            <button wire:click="export" class="btn btn-sm btn-success">
                                 <i class="ri-file-upload-line align-bottom me-1"></i> Export Customers
                             </button>
-                            <a href="{{ route('customers.add') }}" class="btn btn-info">
+                            <a href="{{ route('customers.add') }}" class="btn btn-sm btn-info">
                                 <i class="ri-file-add-line align-bottom me-1"></i> Add New Customer
                             </a>
                         </div>
