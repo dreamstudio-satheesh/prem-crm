@@ -4,15 +4,20 @@ namespace App\Livewire\Master;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\Licence;
+use App\Imports\LicencesImport;
+use App\Exports\LicencesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LicenceMaster extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $licence_id;
     public $name, $description;
     public $search = '';
+    public $upload_file;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -58,14 +63,42 @@ class LicenceMaster extends Component
         $this->description = $licence->description;
     }
 
+
     public function delete($id)
     {
-        Licence::findOrFail($id)->delete();
-        session()->flash('success', 'Licence Deleted Successfully.');
+        $licence = Licence::find($id);
+
+        if ($licence) {
+            $licence->delete();
+            session()->flash('success', 'Licence Deleted Successfully.');
+        } else {
+            session()->flash('error', 'Licence Not Found.');
+        }
+        $this->dispatch('$refresh');
     }
+
 
     public function create()
     {
         $this->resetInputFields();
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'upload_file' => 'required|mimes:xlsx,csv,txt',
+        ]);
+
+        Excel::import(new LicencesImport, $this->upload_file->getRealPath());
+
+        session()->flash('success', 'Licences Imported Successfully.');
+
+        // Close the modal
+        $this->dispatch('close-modal');
+    }
+
+    public function export()
+    {
+        return Excel::download(new LicencesExport, 'licences.xlsx');
     }
 }
