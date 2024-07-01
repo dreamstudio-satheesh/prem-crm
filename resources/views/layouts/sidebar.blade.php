@@ -67,7 +67,7 @@
 
                                     <li class="nav-item">
                                         <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
-                                            Customer Type
+                                            Desigination
                                         </a>
                                     </li>
 
@@ -80,7 +80,7 @@
 
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
-                                            Desigination
+                                            Staff Role
                                         </a>
                                     </li>
 
