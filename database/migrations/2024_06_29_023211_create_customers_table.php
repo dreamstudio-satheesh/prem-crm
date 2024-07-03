@@ -17,7 +17,6 @@ class CreateCustomersTable extends Migration
             $table->bigIncrements('customer_id');
             $table->string('customer_name', 191)->unique();
             $table->string('tally_serial_no', 191)->nullable();
-            $table->string('licence_editon', 191)->nullable();
             $table->unsignedInteger('licence_editon_id')->nullable();
             $table->unsignedInteger('primary_address_id')->nullable();
             $table->unsignedBigInteger('default_customer_type_id');

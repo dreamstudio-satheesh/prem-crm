@@ -9,7 +9,7 @@ class CustomerTypesImport implements ToModel
 {
     public function model(array $row)
     {
-        return new CustomerType(
+        return CustomerType::updateOrCreate(
             ['id' => $row['id']], 
             [
                 'name' => $row['name'],

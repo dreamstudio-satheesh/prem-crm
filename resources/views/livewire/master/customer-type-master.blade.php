@@ -102,7 +102,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="importForm" wire:submit.prevent="import">
+                    <form id="importForm"  wire:submit.prevent="import" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="file">Upload CSV File</label>
                             <input type="file" class="form-control" id="file" wire:model="upload_file">

@@ -15,8 +15,8 @@ class LicencesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return new Licence(
-            ['id' => $row['id']], 
+        return Licence::updateOrCreate(
+            ['id' => $row['id']],
             [
                 'name' => $row['name'],
                 'description' => $row['description'],
