@@ -9,9 +9,12 @@ class CustomerTypesImport implements ToModel
 {
     public function model(array $row)
     {
-        return new CustomerType([
-            'name' => $row[0],
-            'description' => $row[1],
-        ]);
+        return new CustomerType(
+            ['id' => $row['id']], 
+            [
+                'name' => $row['name'],
+                'description' => $row['description'],
+            ]
+        );
     }
 }

@@ -15,9 +15,12 @@ class LicencesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return new Licence([
-            'name' => $row['name'],
-            'description' => $row['description'],
-        ]);
+        return new Licence(
+            ['id' => $row['id']], 
+            [
+                'name' => $row['name'],
+                'description' => $row['description'],
+            ]
+        );
     }
 }

@@ -9,9 +9,12 @@ class LocationsImport implements ToModel
 {
     public function model(array $row)
     {
-        return new Location([
-            'name' => $row[0],
-            'description' => $row[1],
-        ]);
+        return new Location(
+            ['id' => $row['id']], 
+            [
+                'name' => $row['name'],
+                'description' => $row['description'],
+            ]
+        );
     }
 }

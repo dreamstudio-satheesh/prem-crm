@@ -13,7 +13,7 @@ class LicencesExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        return Licence::all(['name', 'description']);
+        return Licence::select('id', 'name', 'description')->get();
     }
 
     /**
