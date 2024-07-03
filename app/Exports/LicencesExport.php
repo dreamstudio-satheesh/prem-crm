@@ -22,9 +22,9 @@ class LicencesExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'ID',
-            'Name',
-            'Description',
+           'id',
+            'name',
+            'description',
         ];
     }
 }

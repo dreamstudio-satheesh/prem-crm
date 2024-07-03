@@ -105,7 +105,7 @@
                     <form id="importForm"  wire:submit.prevent="import" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="file">Upload CSV File</label>
-                            <input type="file" class="form-control" id="file" wire:model="upload_file">
+                            <input type="file" name="upload_file" class="form-control" id="file" wire:model="upload_file">
                             @error('upload_file')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
