@@ -37,14 +37,14 @@
                             </div>
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="licence_editon">Licence Edition</label>
-                                    <select class="form-control" id="licence_editon" wire:model="licence_editon">
+                                    <label for="licence_editon_id">Licence Edition</label>
+                                    <select class="form-control" id="licence_editon_id" wire:model="licence_editon_id">
                                         <option value="">Select Licence Edition</option>
                                         @foreach($licences as $licence)
                                             <option value="{{ $licence->id }}">{{ $licence->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('licence_editon') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('licence_editon_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-xxl-3 col-md-6">

@@ -22,7 +22,7 @@ class EditCustomer extends Component
     // Customer properties
     public $customer_name;
     public $tally_serial_no;
-    public $licence_editon;
+    public $licence_editon_id;
     public $primary_address_id;
     public $default_customer_type_id;
     public $product_id;
@@ -57,7 +57,7 @@ class EditCustomer extends Component
         'customer_name' => 'required|string|max:191',
         'tally_serial_no' => 'nullable|string|max:191',
         'primary_address_id' => 'nullable|exists:address_books,address_id',
-        'licence_editon' => 'nullable|exists:licences,id',
+        'licence_editon_id' => 'nullable|exists:licences,id',
         'product_id' => 'nullable|exists:products,id',
         'location_id' => 'nullable|exists:locations,id',
         'staff_id' => 'nullable|exists:users,id',
@@ -87,7 +87,7 @@ class EditCustomer extends Component
         $this->customer = $customer;
         $this->customer_name = $customer->customer_name;
         $this->tally_serial_no = $customer->tally_serial_no;
-        $this->licence_editon = $customer->licence_editon;
+        $this->licence_editon_id = $customer->licence_editon_id;
         $this->primary_address_id = $customer->primary_address_id;
         $this->default_customer_type_id = $customer->default_customer_type_id;
         $this->product_id = $customer->product_id;

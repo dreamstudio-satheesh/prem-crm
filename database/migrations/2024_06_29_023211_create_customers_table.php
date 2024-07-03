@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('customer_name', 191)->unique();
             $table->string('tally_serial_no', 191)->nullable();
             $table->string('licence_editon', 191)->nullable();
+            $table->unsignedInteger('licence_editon_id')->nullable();
             $table->unsignedInteger('primary_address_id')->nullable();
             $table->unsignedBigInteger('default_customer_type_id');
             $table->unsignedBigInteger('product_id')->nullable();
@@ -39,6 +40,7 @@ class CreateCustomersTable extends Migration
             $table->string('map_location', 191)->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('status', 191)->default('active'); 
             $table->timestamps();
 
             //$table->foreign('amc_id')->references('id')->on('amc')->onDelete('set null');

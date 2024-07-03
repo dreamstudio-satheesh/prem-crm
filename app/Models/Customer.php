@@ -36,6 +36,7 @@ class Customer extends Model
         'map_location',
         'latitude',
         'longitude',
+        'status',
     ];
 
     public static function boot()

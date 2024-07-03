@@ -20,7 +20,7 @@ class AddCustomer extends Component
 
     public $customer_name;
     public $tally_serial_no;
-    public $licence_editon;
+    public $licence_editon_id;
     public $primary_address_id;
     public $default_customer_type_id;
     public $product_id;
@@ -56,7 +56,7 @@ class AddCustomer extends Component
         'tally_serial_no' => 'nullable|string|max:191',
         'primary_address_id' => 'nullable|exists:address_books,address_id',
         // 'default_customer_type_id' => 'required|exists:customer_types,id',
-        'licence_editon' => 'nullable|exists:licences,id',
+        'licence_editon_id' => 'nullable|exists:licences,id',
         'product_id' => 'nullable|exists:products,id',
         'location_id' => 'nullable|exists:locations,id',
         'staff_id' => 'nullable|exists:users,id',
@@ -96,7 +96,7 @@ class AddCustomer extends Component
         $customer = Customer::create([
             'customer_name' => $this->customer_name,
             'tally_serial_no' => $this->tally_serial_no,
-          //  'primary_address_id' => $this->primary_address_id,
+            'licence_editon_id' => $this->licence_editon_id,
             'default_customer_type_id' => $this->default_customer_type_id,
             'product_id' => $this->product_id,
             'location_id' => $this->location_id,
