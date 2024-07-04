@@ -31,12 +31,13 @@
                                         </div>
                                     </th>
                                     <th>Customer</th>
+                                    <th>Tally S.NO</th>
                                     <th>A.M.C</th>
                                     <th>T.S.S</th>
-                                    <th>Executive</th>
-                                    <th>Remarks</th>
+                                    <th> Status</th>
+                                    <th> Contact No</th>
                                     <th>Action</th>
-                                    <th>Edit Address</th>
+                                    <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,6 +49,9 @@
                                             </div>
                                         </th>
                                         <td class="text-uppercase">{{ $customer->customer_name }}</td>
+
+                                        <td>{{ $customer->tally_serial_no }}</td>
+
                                         <td>
                                             <span class="badge badge-soft-{{ $customer->amc == 'yes' ? 'success' : 'danger' }} text-uppercase">
                                                 {{ $customer->amc }}
@@ -58,9 +62,12 @@
                                                 {{ $customer->tss_status }}
                                             </span>
                                         </td>
-                                        <td>{{ $customer->staffname }}</td>
+                                       
                                         <td>
-                                            <span class="badge badge-soft text-uppercase">{{ $customer->remarks }}</span>
+                                            <span class="text-capitalize">  {{ $customer->status }} </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-capitalize"> 908899889 </span>
                                         </td>
                                         <td>
                                             <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-info">
@@ -70,11 +77,11 @@
                                         <td>
                                             @if($customer->address_books_count == 0)
                                                 <a href="{{ url('/master/customers/add-address', $customer->customer_id) }}" class="btn btn-info">
-                                                    <i class="ri-add-line align-bottom me-1"></i> Create Address Book
+                                                    <i class="ri-add-line align-bottom me-1"></i> Create Address 
                                                 </a>
                                             @else
                                                 <a href="{{ url('/master/customers/edit-address', $customer->customer_id) }}" class="btn btn-info">
-                                                    <i class="ri-edit-line align-bottom me-1"></i> Edit Address Book
+                                                    <i class="ri-edit-line align-bottom me-1"></i> Edit Address 
                                                 </a>
                                             @endif
                                         </td>

@@ -29,7 +29,7 @@
                                     <select class="form-control" id="product_id" wire:model="product_id">
                                         <option value="">Select Product</option>
                                         @foreach($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -41,7 +41,7 @@
                                     <select class="form-control" id="licence_editon_id" wire:model="licence_editon_id">
                                         <option value="">Select Licence Edition</option>
                                         @foreach($licences as $licence)
-                                            <option value="{{ $licence->id }}">{{ $licence->name }}</option>
+                                        <option value="{{ $licence->id }}">{{ $licence->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('licence_editon_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -53,7 +53,7 @@
                                     <select class="form-control" id="location_id" wire:model="location_id">
                                         <option value="">Select Customer Area</option>
                                         @foreach($locations as $location)
-                                            <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('location_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -75,7 +75,7 @@
                                     <select class="form-control" id="staff_id" wire:model="staff_id">
                                         <option value="">Select Executive</option>
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -133,7 +133,8 @@
                                             <th width="10%">Contact Person</th>
                                             <th width="10%">Mobile No</th>
                                             <th width="10%">Phone No</th>
-                                            <th width="10%">e-Mail</th>
+                                            <th width="10%">Email</th>
+                                            <th width="2%">#</th>
                                             <th width="2%">Actions</th>
                                         </tr>
                                     </thead>
@@ -145,7 +146,7 @@
                                                 <select class="form-control" wire:model="addresses.{{ $index }}.customer_type_id">
                                                     <option value="">-- Select Customer Type --</option>
                                                     @foreach($addressTypes as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error("addresses.$index.customer_type_id") <span class="text-danger">{{ $message }}</span> @enderror
@@ -154,6 +155,9 @@
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no"></td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.phone_no"></td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.email"></td>
+                                            <td>
+                                                <input type="radio" name="primary_address_id" wire:model="temporary_primary_address_id" value="{{ $address['id'] }}">
+                                            </td>
                                             <td>
                                                 <button type="button" wire:click.prevent="removeAddress({{ $index }})" class="btn btn-danger btn-sm">Delete</button>
                                             </td>
@@ -181,7 +185,7 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="tss_status" class="form-label">T.S.S. Status</label>
-                                    <select class="form-control" id="tss_status" wire:model="tss_status">
+                                    <select class="form-control" id="tss_status" wire:model.live="tss_status">
                                         <option value="active">ACTIVE</option>
                                         <option value="inactive">INACTIVE</option>
                                     </select>
@@ -222,7 +226,7 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="amc" class="form-label">A.M.C.</label>
-                                    <select class="form-control" id="amc" wire:model="amc">
+                                    <select class="form-control" id="amc" wire:model.live="amc">
                                         <option value="yes">YES</option>
                                         <option value="no">NO</option>
                                     </select>
@@ -338,4 +342,3 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endpush
 </div>
-

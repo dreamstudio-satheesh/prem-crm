@@ -24,7 +24,6 @@ class EditCustomer extends Component
     public $tally_serial_no;
     public $licence_editon_id;
     public $primary_address_id;
-    public $default_customer_type_id;
     public $product_id;
     public $location_id;
     public $staff_id;
@@ -52,6 +51,8 @@ class EditCustomer extends Component
     public $no_of_visits;
     public $amc_amount;
     public $amc_last_year_amount;
+
+    public $temporary_primary_address_id;
 
     protected $rules = [
         'customer_name' => 'required|string|max:191',
@@ -89,7 +90,6 @@ class EditCustomer extends Component
         $this->tally_serial_no = $customer->tally_serial_no;
         $this->licence_editon_id = $customer->licence_editon_id;
         $this->primary_address_id = $customer->primary_address_id;
-        $this->default_customer_type_id = $customer->default_customer_type_id;
         $this->product_id = $customer->product_id;
         $this->location_id = $customer->location_id;
         $this->staff_id = $customer->staff_id;
@@ -106,7 +106,17 @@ class EditCustomer extends Component
         $this->mobile_app = $customer->mobile_app;
         $this->gst_no = $customer->gst_no;
         $this->map_location = $customer->map_location;
-        $this->addresses = $customer->addresses()->get()->toArray();
+        //$this->addresses = $customer->addresses()->get()->toArray();
+        $this->addresses = $customer->addresses()->get()->map(function ($address) {
+            return [
+                'id' => $address->address_id,
+                'customer_type_id' => $address->customer_type_id,
+                'contact_person' => $address->contact_person,
+                'mobile_no' => $address->mobile_no,
+                'phone_no' => $address->phone_no,
+                'email' => $address->email,
+            ];
+        })->toArray();
         $this->amc_from_date = $customer->amc_from_date;
         $this->amc_to_date = $customer->amc_to_date;
         $this->amc_renewal_date = $customer->amc_renewal_date;
@@ -119,6 +129,9 @@ class EditCustomer extends Component
         $this->licences = Licence::all();
         $this->users = User::all();
         $this->addressTypes = CustomerType::orderBy('name', 'asc')->get();
+
+        // Initialize with current primary address ID
+        $this->temporary_primary_address_id = $customer->primary_address_id;
     }
 
     public function save()
@@ -130,7 +143,6 @@ class EditCustomer extends Component
             'customer_name' => $this->customer_name,
             'tally_serial_no' => $this->tally_serial_no,
             'primary_address_id' => $this->primary_address_id,
-            'default_customer_type_id' => $this->default_customer_type_id,
             'product_id' => $this->product_id,
             'location_id' => $this->location_id,
             'staff_id' => $this->staff_id,
@@ -171,8 +183,18 @@ class EditCustomer extends Component
         foreach ($this->addresses as $address) {
             if (!empty($address['customer_type_id'])) {
                 $address['customer_id'] = $this->customer->customer_id;
-                $this->customer->addresses()->create($address);
+                $createdAddress = $this->customer->addresses()->create($address);
+
+                // Check if this address is the primary address
+                if ($address['id'] == $this->temporary_primary_address_id) {
+                    $this->primary_address_id = $createdAddress->address_id;
+                }
             }
+        }
+
+        // Update the customer with the primary_address_id
+        if ($this->primary_address_id) {
+            $this->customer->update(['primary_address_id' => $this->primary_address_id]);
         }
 
         session()->flash('message', 'Customer updated successfully.');
@@ -182,6 +204,7 @@ class EditCustomer extends Component
     public function addAddress()
     {
         $this->addresses[] = [
+            'id' =>  uniqid(),
             'customer_type_id' => '',
             'contact_person' => '',
             'mobile_no' => '',
@@ -201,4 +224,3 @@ class EditCustomer extends Component
         return view('livewire.edit-customer');
     }
 }
-

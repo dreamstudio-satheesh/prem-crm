@@ -22,7 +22,6 @@ class AddCustomer extends Component
     public $tally_serial_no;
     public $licence_editon_id;
     public $primary_address_id;
-    public $default_customer_type_id;
     public $product_id;
     public $location_id;
     public $staff_id;
@@ -55,7 +54,6 @@ class AddCustomer extends Component
         'customer_name' => 'required|string|max:191',
         'tally_serial_no' => 'nullable|string|max:191',
         'primary_address_id' => 'nullable|exists:address_books,address_id',
-        // 'default_customer_type_id' => 'required|exists:customer_types,id',
         'licence_editon_id' => 'nullable|exists:licences,id',
         'product_id' => 'nullable|exists:products,id',
         'location_id' => 'nullable|exists:locations,id',
@@ -97,7 +95,6 @@ class AddCustomer extends Component
             'customer_name' => $this->customer_name,
             'tally_serial_no' => $this->tally_serial_no,
             'licence_editon_id' => $this->licence_editon_id,
-            'default_customer_type_id' => $this->default_customer_type_id,
             'product_id' => $this->product_id,
             'location_id' => $this->location_id,
             'staff_id' => $this->staff_id,
@@ -128,11 +125,20 @@ class AddCustomer extends Component
             ]);
         }
 
+        $primaryAddressId = null;
         if ($this->addresses) {
-            foreach ($this->addresses as $address) {
+            foreach ($this->addresses as $index => $address) {
                 $address['customer_id'] = $customer->customer_id;
-                $customer->addresses()->create($address);
+                $createdAddress = $customer->addresses()->create($address);
+
+                if ($index === 0) {
+                    $primaryAddressId = $createdAddress->address_id;
+                }
             }
+        }
+
+        if ($primaryAddressId) {
+            $customer->update(['primary_address_id' => $primaryAddressId]);
         }
 
         session()->flash('message', 'Customer added successfully.');

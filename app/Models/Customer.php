@@ -16,7 +16,6 @@ class Customer extends Model
         'tally_serial_no',
         'licence_editon',
         'primary_address_id',
-        'default_customer_type_id',
         'product_id',
         'location_id',
         'staff_id',
@@ -43,12 +42,11 @@ class Customer extends Model
     {
         parent::boot();
 
-        static::creating(function ($customer) {
+       /*  static::creating(function ($customer) {
             if (!$customer->default_customer_type_id) {
-                // Assuming '1' is the ID for the 'owner' address type in addresstypes table
                 $customer->default_customer_type_id = 1;
             }
-        });
+        }); */
     }
 
     public function primaryAddress()
