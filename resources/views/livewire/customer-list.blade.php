@@ -8,18 +8,111 @@
                             <h5 class="card-title mb-0">Customer List</h5>
                         </div>
                         <div class="col-sm-auto">
+                            <button wire:click="toggleFilters" class="btn btn-sm btn-secondary">
+                                <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
+                            </button>
+
                             <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#importModal">
-                                <i class="ri-file-download-line align-bottom me-1"></i> Import 
+                                <i class="ri-file-download-line align-bottom me-1"></i> Import
                             </button>
                             <button wire:click="export" class="btn btn-sm btn-success">
-                                <i class="ri-file-upload-line align-bottom me-1"></i> Export 
+                                <i class="ri-file-upload-line align-bottom me-1"></i> Export
                             </button>
                             <a href="{{ route('customers.add') }}" class="btn btn-sm btn-info">
-                                <i class="ri-file-add-line align-bottom me-1"></i> Add New 
+                                <i class="ri-file-add-line align-bottom me-1"></i> Add New
                             </a>
                         </div>
                     </div>
                 </div>
+
+                @if ($showFilters)
+                <div class="card-body border border-dashed border-end-0 border-start-0">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-xxl-2 col-sm-4">
+                                <input type="text" class="form-control form-control-sm flatpickr-input active" wire:model="date_range" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true">
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="amc">
+                                    <option value="">Select AMC</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="license_edition">
+                                    <option value="">Select License Edition</option>
+                                    @foreach($license_editions as $edition)
+                                    <option value="{{ $edition->id }}">{{ $edition->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="product">
+                                    <option value="">Select Product</option>
+                                    @foreach($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="tss_status">
+                                    <option value="">Select TSS Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="auto_backup">
+                                    <option value="">Select Auto Backup</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="cloud_user">
+                                    <option value="">Select Cloud User</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="mobile_app">
+                                    <option value="">Select Mobile App</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="whatsapp">
+                                    <option value="">Select WhatsApp</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <select class="form-control form-control-sm" wire:model="status">
+                                    <option value="">Select Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model="search">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-xxl-1 col-sm-4">
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-primary w-100" wire:click="applyFilters"><i class="ri-equalizer-fill me-1 align-bottom"></i> Filters</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @endif
+
                 <div class="card-body">
                     <div class="table-responsive table-card mb-1">
                         <table class="table align-middle" id="customerTable">
@@ -34,58 +127,55 @@
                                     <th>Tally S.NO</th>
                                     <th>A.M.C</th>
                                     <th>T.S.S</th>
-                                    <th> Status</th>
-                                    <th> Contact No</th>
+                                    <th>Status</th>
+                                    <th>Contact No</th>
                                     <th>Action</th>
                                     <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($customers as $customer)
-                                    <tr>
-                                        <th>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="chk_child" value="{{ $customer->customer_id }}">
-                                            </div>
-                                        </th>
-                                        <td class="text-uppercase">{{ $customer->customer_name }}</td>
-
-                                        <td>{{ $customer->tally_serial_no }}</td>
-
-                                        <td>
-                                            <span class="badge badge-soft-{{ $customer->amc == 'yes' ? 'success' : 'danger' }} text-uppercase">
-                                                {{ $customer->amc }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-soft-{{ $customer->tss_status == 'active' ? 'success' : 'danger' }} text-uppercase">
-                                                {{ $customer->tss_status }}
-                                            </span>
-                                        </td>
-                                       
-                                        <td>
-                                            <span class="text-capitalize">  {{ $customer->status }} </span>
-                                        </td>
-                                        <td>
-                                            <span class="text-capitalize"> 908899889 </span>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-info">
-                                                <i class="ri-edit-line align-bottom me-1"></i> Edit Customer
-                                            </a>
-                                        </td>
-                                        <td>
-                                            @if($customer->address_books_count == 0)
-                                                <a href="{{ url('/master/customers/add-address', $customer->customer_id) }}" class="btn btn-info">
-                                                    <i class="ri-add-line align-bottom me-1"></i> Create Address 
-                                                </a>
-                                            @else
-                                                <a href="{{ url('/master/customers/edit-address', $customer->customer_id) }}" class="btn btn-info">
-                                                    <i class="ri-edit-line align-bottom me-1"></i> Edit Address 
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <th>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="chk_child" value="{{ $customer->customer_id }}">
+                                        </div>
+                                    </th>
+                                    <td class="text-uppercase">{{ $customer->customer_name }}</td>
+                                    <td>{{ $customer->tally_serial_no }}</td>
+                                    <td>
+                                        <span class="badge badge-soft-{{ $customer->amc == 'yes' ? 'success' : 'danger' }} text-uppercase">
+                                            {{ $customer->amc }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-soft-{{ $customer->tss_status == 'active' ? 'success' : 'danger' }} text-uppercase">
+                                            {{ $customer->tss_status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-capitalize">{{ $customer->status }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-capitalize">908899889</span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-info">
+                                            <i class="ri-edit-line align-bottom me-1"></i> Edit Customer
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if($customer->address_books_count == 0)
+                                        <a href="{{ url('/master/customers/add-address', $customer->customer_id) }}" class="btn btn-info">
+                                            <i class="ri-add-line align-bottom me-1"></i> Create Address
+                                        </a>
+                                        @else
+                                        <a href="{{ url('/master/customers/edit-address', $customer->customer_id) }}" class="btn btn-info">
+                                            <i class="ri-edit-line align-bottom me-1"></i> Edit Address
+                                        </a>
+                                        @endif
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -139,6 +229,17 @@
                 const detail = event.detail[0];
                 if (detail && detail.message) {
                     toastr.success(detail.message);
+                }
+            });
+        });
+
+        // Initialize Flatpickr for date range
+        document.addEventListener('livewire:load', function() {
+            flatpickr('input[data-provider="flatpickr"]', {
+                mode: "range",
+                dateFormat: "d M, Y",
+                onChange: function(selectedDates, dateStr, instance) {
+                    @this.set('date_range', dateStr);
                 }
             });
         });

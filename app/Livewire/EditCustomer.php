@@ -10,7 +10,6 @@ use App\Models\Location;
 use App\Models\CustomerType;
 use Livewire\Component;
 
-
 class EditCustomer extends Component
 {
     public $customer;
@@ -51,8 +50,6 @@ class EditCustomer extends Component
     public $no_of_visits;
     public $amc_amount;
     public $amc_last_year_amount;
-
-    public $temporary_primary_address_id;
 
     protected $rules = [
         'customer_name' => 'required|string|max:191',
@@ -106,7 +103,6 @@ class EditCustomer extends Component
         $this->mobile_app = $customer->mobile_app;
         $this->gst_no = $customer->gst_no;
         $this->map_location = $customer->map_location;
-        //$this->addresses = $customer->addresses()->get()->toArray();
         $this->addresses = $customer->addresses()->get()->map(function ($address) {
             return [
                 'id' => $address->address_id,
@@ -129,20 +125,16 @@ class EditCustomer extends Component
         $this->licences = Licence::all();
         $this->users = User::all();
         $this->addressTypes = CustomerType::orderBy('name', 'asc')->get();
-
-        // Initialize with current primary address ID
-        $this->temporary_primary_address_id = $customer->primary_address_id;
     }
 
     public function save()
     {
         $this->validate();
 
-        // Update customer details
+        // Update customer details without primary_address_id
         $this->customer->update([
             'customer_name' => $this->customer_name,
             'tally_serial_no' => $this->tally_serial_no,
-            'primary_address_id' => $this->primary_address_id,
             'product_id' => $this->product_id,
             'location_id' => $this->location_id,
             'staff_id' => $this->staff_id,
@@ -186,7 +178,7 @@ class EditCustomer extends Component
                 $createdAddress = $this->customer->addresses()->create($address);
 
                 // Check if this address is the primary address
-                if ($address['id'] == $this->temporary_primary_address_id) {
+                if ($address['id'] == $this->primary_address_id) {
                     $this->primary_address_id = $createdAddress->address_id;
                 }
             }
@@ -204,7 +196,7 @@ class EditCustomer extends Component
     public function addAddress()
     {
         $this->addresses[] = [
-            'id' =>  uniqid(),
+            'id' => uniqid(),
             'customer_type_id' => '',
             'contact_person' => '',
             'mobile_no' => '',

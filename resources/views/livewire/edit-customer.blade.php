@@ -156,7 +156,9 @@
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.phone_no"></td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.email"></td>
                                             <td>
-                                                <input type="radio" name="primary_address_id" wire:model="temporary_primary_address_id" value="{{ $address['id'] }}">
+                                                <div class="form-check form-radio-outline form-radio-success mb-3">
+                                                    <input type="radio" class="form-check-input" name="primary_address_id" wire:model="primary_address_id" value="{{ $address['id'] }}">
+                                                </div>
                                             </td>
                                             <td>
                                                 <button type="button" wire:click.prevent="removeAddress({{ $index }})" class="btn btn-danger btn-sm">Delete</button>
