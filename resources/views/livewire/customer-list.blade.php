@@ -102,8 +102,7 @@
                             </div>
                             <div class="col-xxl-4 col-sm-6">
                                 <div class="search-box">
-                                    <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model.live.debounce.500ms="search" @if($showFilters) autofocus @endif>
-
+                                    <input type="text" id="search-input" class="form-control form-control-sm search" placeholder="Search ..." wire:model.live.debounce.500ms="search">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -232,6 +231,15 @@
                 }
             });
         });
+
+        document.addEventListener('livewire:load', function () {
+        Livewire.on('filterToggled', () => {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        });
+    });
     </script>
     @endpush
 </div>

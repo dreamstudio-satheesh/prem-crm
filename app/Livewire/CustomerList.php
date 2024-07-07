@@ -114,5 +114,7 @@ class CustomerList extends Component
     public function toggleFilters()
     {
         $this->showFilters = !$this->showFilters;
+
+        $this->dispatch('filterToggled');
     }
 }
