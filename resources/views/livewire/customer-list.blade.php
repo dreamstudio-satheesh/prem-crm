@@ -30,7 +30,10 @@
                     <form>
                         <div class="row g-3">
                             <div class="col-xxl-2 col-sm-4">
-                                <input type="text" class="form-control form-control-sm flatpickr-input active" wire:model="date_range" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true">
+                                <input type="date" wire:model="start_date" class="form-control" placeholder="Start Date">
+                            </div>
+                            <div class="col-xxl-2 col-sm-4">
+                                <input type="date" wire:model="end_date" class="form-control" placeholder="End Date">
                             </div>
                             <div class="col-xxl-2 col-sm-4">
                                 <select class="form-control form-control-sm" wire:model="amc">
@@ -97,13 +100,13 @@
                                     <option value="inactive">Inactive</option>
                                 </select>
                             </div>
-                            <div class="col-xxl-3 col-sm-6">
+                            <div class="col-xxl-4 col-sm-6">
                                 <div class="search-box">
                                     <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model="search">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
-                            <div class="col-xxl-1 col-sm-4">
+                            <div class="col-xxl-2 col-sm-4">
                                 <div>
                                     <button type="button" class="btn btn-sm btn-primary w-100" wire:click="applyFilters"><i class="ri-equalizer-fill me-1 align-bottom"></i> Filters</button>
                                 </div>
@@ -214,6 +217,7 @@
     </div>
 
     @push('scripts')
+
     <script>
         document.addEventListener('close-modal', event => {
             var modal = $('#importModal');
@@ -229,17 +233,6 @@
                 const detail = event.detail[0];
                 if (detail && detail.message) {
                     toastr.success(detail.message);
-                }
-            });
-        });
-
-        // Initialize Flatpickr for date range
-        document.addEventListener('livewire:load', function() {
-            flatpickr('input[data-provider="flatpickr"]', {
-                mode: "range",
-                dateFormat: "d M, Y",
-                onChange: function(selectedDates, dateStr, instance) {
-                    @this.set('date_range', dateStr);
                 }
             });
         });
