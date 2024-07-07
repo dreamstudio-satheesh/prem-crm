@@ -232,7 +232,7 @@
             });
         });
 
-        document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:init', () => {
         Livewire.on('filterToggled', () => {
             console.log('toggle enabled');
             const searchInput = document.getElementById('search-input');
