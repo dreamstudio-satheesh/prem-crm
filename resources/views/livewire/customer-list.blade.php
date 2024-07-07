@@ -30,20 +30,20 @@
                     <form>
                         <div class="row g-3">
                             <div class="col-xxl-2 col-sm-4">
-                                <input type="date" wire:model="start_date" class="form-control" placeholder="Start Date">
+                                <input type="date" wire:model.lazy="start_date" class="form-control" placeholder="Start Date">
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <input type="date" wire:model="end_date" class="form-control" placeholder="End Date">
+                                <input type="date" wire:model.lazy="end_date" class="form-control" placeholder="End Date">
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="amc">
+                                <select class="form-control form-control-sm" wire:model.lazy="amc">
                                     <option value="">Select AMC</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="license_edition">
+                                <select class="form-control form-control-sm" wire:model.lazy="license_edition">
                                     <option value="">Select License Edition</option>
                                     @foreach($license_editions as $edition)
                                     <option value="{{ $edition->id }}">{{ $edition->name }}</option>
@@ -51,7 +51,7 @@
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="product">
+                                <select class="form-control form-control-sm" wire:model.lazy="product">
                                     <option value="">Select Product</option>
                                     @foreach($products as $product)
                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -59,42 +59,42 @@
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="tss_status">
+                                <select class="form-control form-control-sm" wire:model.lazy="tss_status">
                                     <option value="">Select TSS Status</option>
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="auto_backup">
+                                <select class="form-control form-control-sm" wire:model.lazy="auto_backup">
                                     <option value="">Select Auto Backup</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="cloud_user">
+                                <select class="form-control form-control-sm" wire:model.lazy="cloud_user">
                                     <option value="">Select Cloud User</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="mobile_app">
+                                <select class="form-control form-control-sm" wire:model.lazy="mobile_app">
                                     <option value="">Select Mobile App</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="whatsapp">
+                                <select class="form-control form-control-sm" wire:model.lazy="whatsapp">
                                     <option value="">Select WhatsApp</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
                             </div>
                             <div class="col-xxl-2 col-sm-4">
-                                <select class="form-control form-control-sm" wire:model="status">
+                                <select class="form-control form-control-sm" wire:model.lazy="status">
                                     <option value="">Select Status</option>
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
@@ -104,11 +104,6 @@
                                 <div class="search-box">
                                     <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model="search">
                                     <i class="ri-search-line search-icon"></i>
-                                </div>
-                            </div>
-                            <div class="col-xxl-2 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-primary w-100" wire:click="applyFilters"><i class="ri-equalizer-fill me-1 align-bottom"></i> Filters</button>
                                 </div>
                             </div>
                         </div>
