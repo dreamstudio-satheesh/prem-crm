@@ -1,12 +1,12 @@
 <?php
 
-
 namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\OnsiteVisit;
 use App\Models\Customer;
 use App\Models\AddressBook;
+use Carbon\Carbon;
 
 class CreateOnsiteVisit extends Component
 {
@@ -24,17 +24,27 @@ class CreateOnsiteVisit extends Component
     protected $rules = [
         'customer_id' => 'required|exists:customers,customer_id',
         'contact_person_id' => 'required|exists:address_books,address_id',
-        'type_of_call' => 'required|string',
-        'call_start_time' => 'required|date',
-        'call_end_time' => 'nullable|date',
+        'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
+        'call_start_time' => 'required|date_format:h:i A',
+        'call_end_time' => 'nullable|date_format:h:i A',
         'status_of_call' => 'required|in:completed,pending',
         'service_charges' => 'nullable|numeric',
         'remarks' => 'nullable|string',
     ];
 
+    public function mount()
+    {
+        $this->call_start_time = '';
+        $this->call_end_time ='';
+    }
+
     public function updatedCustomerId($value)
     {
         $this->contactPersons = AddressBook::where('customer_id', $value)->get();
+        $customer = Customer::find($value);
+        $this->type_of_call = $customer->amc == 'yes' ? 'AMC Call' : 'PER Call';
+        $this->contact_person_id = null;
+        $this->contact_person_mobile = null;
     }
 
     public function updatedContactPersonId($value)
@@ -50,8 +60,8 @@ class CreateOnsiteVisit extends Component
             'customer_id' => $this->customer_id,
             'contact_person_id' => $this->contact_person_id,
             'type_of_call' => $this->type_of_call,
-            'call_start_time' => $this->call_start_time,
-            'call_end_time' => $this->call_end_time,
+            'call_start_time' => Carbon::now()->toDateString() . ' ' . $this->call_start_time,
+            'call_end_time' => Carbon::now()->toDateString() . ' ' . $this->call_end_time,
             'status_of_call' => $this->status_of_call,
             'service_charges' => $this->service_charges,
             'remarks' => $this->remarks,

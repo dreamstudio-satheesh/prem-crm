@@ -2,6 +2,9 @@
 
 
 use App\Livewire\AddCustomer;
+use App\Livewire\CustomerList;
+use App\Livewire\OnsiteVisitList;
+use App\Livewire\CreateOnsiteVisit;
 use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +15,8 @@ use App\Livewire\Master\IndustryMaster;
 use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
+use App\Http\Controllers\OnsiteVisitController;
 use App\Http\Controllers\Master\CustomerController;
-use App\Livewire\CreateOnsiteVisit;
-use App\Livewire\CustomerList;
-use App\Livewire\OnsiteVisitList;
 
 Route::get('/', function () {
     return redirect('home');
@@ -52,7 +53,11 @@ Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress
 Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddress::class)->name('customers.editAddress');
 
 Route::get('/onsite-visits', OnsiteVisitList::class)->name('onsite-visits.index'); 
-Route::get('/onsite-visits/create', CreateOnsiteVisit::class)->name('onsite-visits.create'); 
+Route::get('onsite-visits/create', [OnsiteVisitController::class, 'create'])->name('onsite-visits.create');
+Route::post('onsite-visits', [OnsiteVisitController::class, 'store'])->name('onsite-visits.store');
+Route::get('onsite-visits/contact-persons/{customerId}', [OnsiteVisitController::class, 'getContactPersons']);
+Route::get('onsite-visits/contact-person-mobile/{contactPersonId}', [OnsiteVisitController::class, 'getContactPersonMobile']);
+//Route::get('/onsite-visits/create', CreateOnsiteVisit::class)->name('onsite-visits.create'); 
 
 
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
