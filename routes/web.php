@@ -13,7 +13,9 @@ use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\Master\CustomerController;
+use App\Livewire\CreateOnsiteVisit;
 use App\Livewire\CustomerList;
+use App\Livewire\OnsiteVisitList;
 
 Route::get('/', function () {
     return redirect('home');
@@ -48,6 +50,9 @@ Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->nam
 Route::get('/master/customers', CustomerList::class)->name('customers.index'); 
 Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
 Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddress::class)->name('customers.editAddress');
+
+Route::get('/onsite-visits', OnsiteVisitList::class)->name('onsite-visits.index'); 
+Route::get('/onsite-visits/create', CreateOnsiteVisit::class)->name('onsite-visits.create'); 
 
 
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 

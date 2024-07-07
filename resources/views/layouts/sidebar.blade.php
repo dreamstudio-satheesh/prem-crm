@@ -183,7 +183,7 @@
                             <div class="collapse menu-dropdown" id="Services">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="{{ url('transactions/onsiteentry') }}" class="nav-link" data-key="t-services"> On-Site Visit </a>
+                                        <a href="{{ url('onsite-visits') }}" class="nav-link" data-key="t-services"> On-Site Visits </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Renewal </a>
