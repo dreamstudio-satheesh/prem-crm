@@ -234,6 +234,7 @@
 
         document.addEventListener('livewire:load', function () {
         Livewire.on('filterToggled', () => {
+            console.log('toggle enabled');
             const searchInput = document.getElementById('search-input');
             if (searchInput) {
                 searchInput.focus();
