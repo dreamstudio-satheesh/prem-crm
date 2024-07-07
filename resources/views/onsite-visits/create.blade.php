@@ -96,94 +96,94 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('.select2').select2();
+    $('.select2').select2();
 
-        $('.timepicker').timepicker({
-            timeFormat: 'h:i A',
-            interval: 1,
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
-
-        $('#customer_id').on('change', function() {
-            var customerId = $(this).val();
-            if (customerId) {
-                $.ajax({
-                    url: '/onsite-visits/contact-persons/' + customerId,
-                    type: 'GET',
-                    success: function(data) {
-                        $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
-                        $.each(data, function(key, value) {
-                            $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
-                        });
-                        $('#contact_person_id').trigger('change');
-                        $('#contact-person-wrapper').show();
-
-                        // Set type of call based on customer AMC status
-                        var customer = data[0]; // Assuming all contact persons have the same customer AMC status
-                        if (customer.amc == 'yes') {
-                            $('#type_of_call').val('AMC Call');
-                        } else {
-                            $('#type_of_call').val('PER Call');
-                        }
-                        $('#type-of-call-wrapper').show();
-                    }
-                });
-            } else {
-                $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
-                $('#contact-person-wrapper').hide();
-                $('#type-of-call-wrapper').hide();
-                $('#contact_person_mobile').val('');
-                $('#contact-person-mobile-wrapper').hide();
-            }
-        });
-
-        $('#contact_person_id').on('change', function() {
-            var contactPersonId = $(this).val();
-            if (contactPersonId) {
-                $.ajax({
-                    url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
-                    type: 'GET',
-                    success: function(data) {
-                        $('#contact_person_mobile').val(data.mobile_no);
-                        $('#contact-person-mobile-wrapper').show();
-                    }
-                });
-            } else {
-                $('#contact_person_mobile').val('');
-                $('#contact-person-mobile-wrapper').hide();
-            }
-        });
-
-        // Set call start time after 2 seconds
-        setTimeout(() => {
-            let now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            let formattedTime = `${hours}:${minutes} ${ampm}`;
-            console.log('Setting call_start_time:', formattedTime);
-            $('#call_start_time').val(formattedTime);
-        }, 2000);
-
-        // Update call end time every second
-        setInterval(() => {
-            let now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
-            let ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            let formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
-            $('#call_end_time').val(formattedTime);
-        }, 1000);
+    $('.timepicker').timepicker({
+        timeFormat: 'h:i A',
+        interval: 1,
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
     });
+
+    $('#customer_id').on('change', function() {
+        var customerId = $(this).val();
+        if (customerId) {
+            $.ajax({
+                url: '/onsite-visits/contact-persons/' + customerId,
+                type: 'GET',
+                success: function(data) {
+                    $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
+                    $.each(data.contactPersons, function(key, value) {
+                        $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
+                    });
+                    $('#contact_person_id').trigger('change');
+                    $('#contact-person-wrapper').show();
+
+                    // Set type of call based on customer AMC status
+                    if (data.customerAmc == 'yes') {
+                        $('#type_of_call').val('AMC Call');
+                    } else {
+                        $('#type_of_call').val('PER Call');
+                    }
+                    $('#type-of-call-wrapper').show();
+                }
+            });
+        } else {
+            $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
+            $('#contact-person-wrapper').hide();
+            $('#type-of-call-wrapper').hide();
+            $('#contact_person_mobile').val('');
+            $('#contact-person-mobile-wrapper').hide();
+        }
+    });
+
+    $('#contact_person_id').on('change', function() {
+        var contactPersonId = $(this).val();
+        if (contactPersonId) {
+            $.ajax({
+                url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
+                type: 'GET',
+                success: function(data) {
+                    $('#contact_person_mobile').val(data.mobile_no);
+                    $('#contact-person-mobile-wrapper').show();
+                }
+            });
+        } else {
+            $('#contact_person_mobile').val('');
+            $('#contact-person-mobile-wrapper').hide();
+        }
+    });
+
+    // Set call start time after 2 seconds
+    setTimeout(() => {
+        let now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        let formattedTime = `${hours}:${minutes} ${ampm}`;
+        console.log('Setting call_start_time:', formattedTime);
+        $('#call_start_time').val(formattedTime);
+    }, 2000);
+
+    // Update call end time every second
+    setInterval(() => {
+        let now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        let formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+        $('#call_end_time').val(formattedTime);
+    }, 1000);
+});
+
 </script>
 @endpush
