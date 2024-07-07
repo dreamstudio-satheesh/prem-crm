@@ -1,14 +1,14 @@
 <div>
-   
+
     <div class="card">
         <div class="card-header align-items-center d-flex">
             <div class="col">
-            <h4 class="card-title mb-0 flex-grow-1">Create Onsite Visit</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Create Onsite Visit</h4>
             </div>
-           
+
             <div class="col-auto">
-            <a href="{{ route('onsite-visits.index') }}" class="btn btn-secondary">Back to List</a>
-        </div>
+                <a href="{{ route('onsite-visits.index') }}" class="btn btn-secondary">Back to List</a>
+            </div>
 
         </div>
         <div class="card-body">
@@ -16,10 +16,10 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="customer_id" class="form-label">Customer</label>
-                        <select id="customer_id" wire:model="customer_id" class="form-control">
+                        <select id="customer_id" wire:model="customer_id" class="form-control select2">
                             <option value="">Select Customer</option>
                             @foreach($customers as $customer)
-                            <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
+                                <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -27,10 +27,10 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="contact_person_id" class="form-label">Contact Person</label>
-                        <select id="contact_person_id" wire:model="contact_person_id" class="form-control">
+                        <select id="contact_person_id" wire:model="contact_person_id" class="form-control select2">
                             <option value="">Select Contact Person</option>
                             @foreach($contactPersons as $contactPerson)
-                            <option value="{{ $contactPerson->id }}">{{ $contactPerson->name }}</option>
+                                <option value="{{ $contactPerson->id }}">{{ $contactPerson->name }}</option>
                             @endforeach
                         </select>
                         @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -83,4 +83,25 @@
             </form>
         </div>
     </div>
+
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('livewire:init', function () {
+        initSelect2();
+
+        Livewire.hook('message.processed', (message, component) => {
+            initSelect2();
+        });
+
+        function initSelect2() {
+            $('.select2').select2();
+            $('.select2').on('change', function (e) {
+                var data = $(this).val();
+                @this.set($(this).attr('id'), data);
+            });
+        }
+    });
+</script>
+@endpush
