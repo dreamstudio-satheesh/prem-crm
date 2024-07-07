@@ -51,7 +51,7 @@ class CustomerList extends Component
     public function render()
     {
         $customers = Customer::withCount('AddressBooks')
-            ->when($this->search, function ($query) {
+            ->when(strlen($this->search) > 2, function ($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             })
             ->when($this->status, function ($query) {
