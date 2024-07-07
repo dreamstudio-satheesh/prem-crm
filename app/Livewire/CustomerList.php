@@ -64,10 +64,10 @@ class CustomerList extends Component
                 $query->where('amc', $this->amc);
             })
             ->when($this->license_edition, function ($query) {
-                $query->where('license_edition', $this->license_edition);
+                $query->where('licence_editon_id', $this->license_edition);
             })
             ->when($this->product, function ($query) {
-                $query->where('product', $this->product);
+                $query->where('product_id', $this->product);
             })
             ->when($this->auto_backup, function ($query) {
                 $query->where('auto_backup', $this->auto_backup);
