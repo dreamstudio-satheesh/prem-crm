@@ -106,20 +106,26 @@
                             </div>
                         </li>
 
-                        <div class="collapse menu-dropdown" id="Services">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ url('online-calls') }}" class="nav-link" data-key="t-services"> Online Calls </a>
-                                    <a href="{{ url('onsite-visits') }}" class="nav-link" data-key="t-services"> On-Site Visits </a>
-                                    <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC </a>
-                                    <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL </a>
-                                    <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Renewal </a>
-                                </li>
-                            </ul>
-                        </div>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#Services" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Services">
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-services">Services</span>
+                            </a>
+
+                            <div class="collapse menu-dropdown" id="Services">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{ url('online-calls') }}" class="nav-link" data-key="t-services"> Online Calls </a>
+                                        <a href="{{ url('onsite-visits') }}" class="nav-link" data-key="t-services"> On-Site Visits </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Renewal </a>
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> Calls Closing </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
-
-
 
 
                         <li class="nav-item">
@@ -188,11 +194,7 @@
 
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#Services" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Services">
-                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-services">Services</span>
-                            </a>
-
+                       
 
 
                         <li class="nav-item">
