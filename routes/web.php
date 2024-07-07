@@ -57,6 +57,10 @@ Route::get('onsite-visits/create', [OnsiteVisitController::class, 'create'])->na
 Route::post('onsite-visits', [OnsiteVisitController::class, 'store'])->name('onsite-visits.store');
 Route::get('onsite-visits/contact-persons/{customerId}', [OnsiteVisitController::class, 'getContactPersons']);
 Route::get('onsite-visits/contact-person-mobile/{contactPersonId}', [OnsiteVisitController::class, 'getContactPersonMobile']);
+Route::get('/onsite-visits/{id}/edit', [OnsiteVisitController::class, 'edit'])->name('onsite-visits.edit');
+Route::post('/onsite-visits/{id}', [OnsiteVisitController::class, 'update'])->name('onsite-visits.update');
+
+
 //Route::get('/onsite-visits/create', CreateOnsiteVisit::class)->name('onsite-visits.create'); 
 
 

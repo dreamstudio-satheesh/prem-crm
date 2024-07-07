@@ -20,7 +20,7 @@
                         <select id="customer_id" name="customer_id" class="form-control select2">
                             <option value="">Select Customer</option>
                             @foreach($customers as $customer)
-                                <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
+                            <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -96,94 +96,113 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-    $('.select2').select2();
+        $('.select2').select2();
 
-    $('.timepicker').timepicker({
-        timeFormat: 'h:i A',
-        interval: 1,
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true
-    });
+        $('.timepicker').timepicker({
+            timeFormat: 'h:i:s A',
+            interval: 1,
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
 
-    $('#customer_id').on('change', function() {
-        var customerId = $(this).val();
-        if (customerId) {
-            $.ajax({
-                url: '/onsite-visits/contact-persons/' + customerId,
-                type: 'GET',
-                success: function(data) {
-                    $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
-                    $.each(data.contactPersons, function(key, value) {
-                        $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
-                    });
-                    $('#contact_person_id').trigger('change');
-                    $('#contact-person-wrapper').show();
+        $('#customer_id').on('change', function() {
+            var customerId = $(this).val();
+            if (customerId) {
+                $.ajax({
+                    url: '/onsite-visits/contact-persons/' + customerId,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
+                        $.each(data.contactPersons, function(key, value) {
+                            $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
+                        });
+                        $('#contact_person_id').trigger('change');
+                        $('#contact-person-wrapper').show();
 
-                    // Set type of call based on customer AMC status
-                    if (data.customerAmc == 'yes') {
-                        $('#type_of_call').val('AMC Call');
-                    } else {
-                        $('#type_of_call').val('PER Call');
+                        // Set type of call based on customer AMC status
+                        if (data.customerAmc == 'yes') {
+                            $('#type_of_call').val('AMC Call');
+                        } else {
+                            $('#type_of_call').val('PER Call');
+                        }
+                        $('#type-of-call-wrapper').show();
                     }
-                    $('#type-of-call-wrapper').show();
-                }
-            });
-        } else {
-            $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
-            $('#contact-person-wrapper').hide();
-            $('#type-of-call-wrapper').hide();
-            $('#contact_person_mobile').val('');
-            $('#contact-person-mobile-wrapper').hide();
-        }
-    });
+                });
+            } else {
+                $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
+                $('#contact-person-wrapper').hide();
+                $('#type-of-call-wrapper').hide();
+                $('#contact_person_mobile').val('');
+                $('#contact-person-mobile-wrapper').hide();
+            }
+        });
 
-    $('#contact_person_id').on('change', function() {
-        var contactPersonId = $(this).val();
-        if (contactPersonId) {
+        $('#contact_person_id').on('change', function() {
+            var contactPersonId = $(this).val();
+            if (contactPersonId) {
+                $.ajax({
+                    url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#contact_person_mobile').val(data.mobile_no);
+                        $('#contact-person-mobile-wrapper').show();
+                    }
+                });
+            } else {
+                $('#contact_person_mobile').val('');
+                $('#contact-person-mobile-wrapper').hide();
+            }
+        });
+
+        // Set call start time after 2 seconds
+        setTimeout(() => {
+            let now = moment().format('h:mm:ss A');
+            $('#call_start_time').val(now);
+        }, 2000);
+
+        // Update call end time every second
+        setInterval(() => {
+            let now = moment().format('h:mm:ss A');
+            $('#call_end_time').val(now);
+        }, 1000);
+
+        // Handle form submission with AJAX
+        $('#onsite-visit-form').on('submit', function(e) {
+            e.preventDefault();
+
+            // Format time fields using moment.js
+            let callStartTime = moment($('#call_start_time').val(), 'h:mm:ss A').format('h:mm:ss A');
+            let callEndTime = $('#call_end_time').val() ? moment($('#call_end_time').val(), 'h:mm:ss A').format('h:mm:ss A') : null;
+
+            let formData = $(this).serializeArray();
+
+            // Remove any existing call_start_time and call_end_time fields
+            formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
+
+            formData.push({
+                name: 'call_start_time',
+                value: callStartTime
+            });
+            formData.push({
+                name: 'call_end_time',
+                value: callEndTime
+            });
+
             $.ajax({
-                url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
-                type: 'GET',
-                success: function(data) {
-                    $('#contact_person_mobile').val(data.mobile_no);
-                    $('#contact-person-mobile-wrapper').show();
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: formData,
+                success: function(response) {
+                    window.location.href = '/onsite-visits';
+                },
+                error: function(xhr) {
+                    console.error('Submission error:', xhr.responseText);
+                    // Handle validation errors
+                    // Display the validation error messages
                 }
             });
-        } else {
-            $('#contact_person_mobile').val('');
-            $('#contact-person-mobile-wrapper').hide();
-        }
+        });
     });
-
-    // Set call start time after 2 seconds
-    setTimeout(() => {
-        let now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        let formattedTime = `${hours}:${minutes} ${ampm}`;
-        console.log('Setting call_start_time:', formattedTime);
-        $('#call_start_time').val(formattedTime);
-    }, 2000);
-
-    // Update call end time every second
-    setInterval(() => {
-        let now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        let seconds = now.getSeconds();
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        let formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
-        $('#call_end_time').val(formattedTime);
-    }, 1000);
-});
-
 </script>
 @endpush

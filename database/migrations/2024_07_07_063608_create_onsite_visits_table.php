@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');
-            $table->foreign('contact_person_id')->references('id')->on('customer_types')->onDelete('cascade');
+            $table->foreign('contact_person_id')->references('customer_id')->on('address_books')->onDelete('cascade');
         });
     }
 

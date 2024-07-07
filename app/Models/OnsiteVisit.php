@@ -27,6 +27,6 @@ class OnsiteVisit extends Model
 
     public function contactPerson()
     {
-        return $this->belongsTo(CustomerType::class, 'contact_person_id');
+        return $this->belongsTo(AddressBook::class, 'contact_person_id','customer_id');
     }
 }

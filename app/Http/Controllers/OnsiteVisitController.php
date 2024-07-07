@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\OnsiteVisit;
+use Carbon\Carbon;
 use App\Models\Customer;
 use App\Models\AddressBook;
-use Carbon\Carbon;
+use App\Models\OnsiteVisit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OnsiteVisitController extends Controller
 {
@@ -39,26 +40,89 @@ class OnsiteVisitController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|exists:customers,customer_id',
-            'contact_person_id' => 'required|exists:address_books,address_id',
+            'contact_person_id' => 'required|exists:customer_types,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
-            'call_start_time' => 'required|date_format:h:i A',
-            'call_end_time' => 'nullable|date_format:h:i A',
+            'call_start_time' => 'required',
+            'call_end_time' => 'required',
             'status_of_call' => 'required|in:completed,pending',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
 
+        $currentDate = Carbon::now()->toDateString();
+        $callStartTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_start_time);
+        $callEndTime = $request->call_end_time ? Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_end_time) : null;
+
         OnsiteVisit::create([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
-            'call_start_time' => Carbon::now()->toDateString() . ' ' . $request->call_start_time,
-            'call_end_time' => Carbon::now()->toDateString() . ' ' . $request->call_end_time,
+            'call_start_time' => $callStartTime,
+            'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
 
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Onsite Visit Created Successfully.']);
+        }
+
         return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Created Successfully.');
+    }
+
+
+
+    public function edit($id)
+    {
+        $visit = OnsiteVisit::findOrFail($id);
+
+        // Convert call_start_time and call_end_time to Carbon instances
+        $visit->call_start_time = Carbon::parse($visit->call_start_time);
+        if ($visit->call_end_time) {
+            $visit->call_end_time = Carbon::parse($visit->call_end_time);
+        }
+
+        $customers = Customer::all();
+        $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
+
+        return view('onsite-visits.edit', compact('visit', 'customers', 'contactPersons'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,customer_id',
+            'contact_person_id' => 'required|exists:customer_types,id',
+            'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
+            'call_start_time' => 'required',
+            'call_end_time' => 'nullable',
+            'status_of_call' => 'required|in:completed,pending',
+            'service_charges' => 'nullable|numeric',
+            'remarks' => 'nullable|string',
+        ]);
+
+        $currentDate = Carbon::now()->toDateString();
+        $callStartTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_start_time);
+        $callEndTime = $request->call_end_time ? Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_end_time) : null;
+
+        $visit = OnsiteVisit::findOrFail($id);
+        $visit->update([
+            'customer_id' => $request->customer_id,
+            'contact_person_id' => $request->contact_person_id,
+            'type_of_call' => $request->type_of_call,
+            'call_start_time' => $callStartTime,
+            'call_end_time' => $callEndTime,
+            'status_of_call' => $request->status_of_call,
+            'service_charges' => $request->service_charges,
+            'remarks' => $request->remarks,
+        ]);
+
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Onsite Visit Updated Successfully.']);
+        }
+
+        return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Updated Successfully.');
     }
 }
