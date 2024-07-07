@@ -1,26 +1,29 @@
 <?php
 
+
 namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\OnsiteVisit;
 use App\Models\Customer;
-use App\Models\CustomerType;
+use App\Models\AddressBook;
 
 class CreateOnsiteVisit extends Component
 {
     public $customer_id;
     public $contact_person_id;
+    public $contact_person_mobile;
     public $type_of_call;
     public $call_start_time;
     public $call_end_time;
     public $status_of_call;
     public $service_charges;
     public $remarks;
+    public $contactPersons = [];
 
     protected $rules = [
         'customer_id' => 'required|exists:customers,customer_id',
-        'contact_person_id' => 'required|exists:customer_types,id',
+        'contact_person_id' => 'required|exists:address_books,address_id',
         'type_of_call' => 'required|string',
         'call_start_time' => 'required|date',
         'call_end_time' => 'nullable|date',
@@ -28,6 +31,16 @@ class CreateOnsiteVisit extends Component
         'service_charges' => 'nullable|numeric',
         'remarks' => 'nullable|string',
     ];
+
+    public function updatedCustomerId($value)
+    {
+        $this->contactPersons = AddressBook::where('customer_id', $value)->get();
+    }
+
+    public function updatedContactPersonId($value)
+    {
+        $this->contact_person_mobile = AddressBook::where('address_id', $value)->value('mobile_no');
+    }
 
     public function submit()
     {
@@ -53,7 +66,6 @@ class CreateOnsiteVisit extends Component
     {
         return view('livewire.create-onsite-visit', [
             'customers' => Customer::all(),
-            'contactPersons' => CustomerType::all(),
         ]);
     }
 }

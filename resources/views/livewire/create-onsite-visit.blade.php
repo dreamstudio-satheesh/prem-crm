@@ -25,22 +25,31 @@
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="contact_person_id" class="form-label">Contact Person</label>
-                        <select id="contact_person_id" wire:model="contact_person_id" class="form-control select2">
-                            <option value="">Select Contact Person</option>
-                            @foreach($contactPersons as $contactPerson)
-                                <option value="{{ $contactPerson->id }}">{{ $contactPerson->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                    @if ($customer_id)
+                        <div class="col-md-4 mb-3">
+                            <label for="contact_person_id" class="form-label">Contact Person</label>
+                            <select id="contact_person_id" wire:model.lazy="contact_person_id" class="form-control select2">
+                                <option value="">Select Contact Person</option>
+                                @foreach($contactPersons as $contactPerson)
+                                    <option value="{{ $contactPerson->address_id }}">{{ $contactPerson->contact_person }}</option>
+                                @endforeach
+                            </select>
+                            @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="type_of_call" class="form-label">Type Of Call</label>
-                        <input type="text" id="type_of_call" wire:model="type_of_call" class="form-control">
-                        @error('type_of_call') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                        @if ($contact_person_id)
+                            <div class="col-md-4 mb-3">
+                                <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
+                                <input type="text" id="contact_person_mobile" wire:model="contact_person_mobile" class="form-control" readonly>
+                            </div>
+                        @endif
+
+                        <div class="col-md-4 mb-3">
+                            <label for="type_of_call" class="form-label">Type Of Call</label>
+                            <input type="text" id="type_of_call" wire:model="type_of_call" class="form-control">
+                            @error('type_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    @endif
 
                     <div class="col-md-4 mb-3">
                         <label for="call_start_time" class="form-label">Call Start Time</label>
@@ -59,7 +68,7 @@
                         <select id="status_of_call" wire:model="status_of_call" class="form-control">
                             <option value="">Select Status</option>
                             <option value="completed">Completed</option>
-                            <option value="pending">Pending</option>
+                            <option value="pending">Pending</select>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
