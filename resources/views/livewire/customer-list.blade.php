@@ -233,14 +233,16 @@
         });
 
         document.addEventListener('livewire:init', () => {
-        Livewire.on('filterToggled', () => {
-            console.log('toggle enabled');
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                searchInput.focus();
-            }
+            Livewire.on('filterToggled', () => {
+                console.log('toggle enabled');
+                setTimeout(() => {
+                    const searchInput = document.getElementById('search-input');
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
+                }, 100); // Delay by 100ms
+            });
         });
-    });
     </script>
     @endpush
 </div>
