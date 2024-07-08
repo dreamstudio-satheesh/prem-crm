@@ -21,7 +21,7 @@
                         <select id="customer_id" name="customer_id" class="form-control select2">
                             <option value="">Select Customer</option>
                             @foreach($customers as $customer)
-                                <option value="{{ $customer->customer_id }}" {{ $visit->customer_id == $customer->customer_id ? 'selected' : '' }}>{{ $customer->customer_name }}</option>
+                            <option value="{{ $customer->customer_id }}" {{ $visit->customer_id == $customer->customer_id ? 'selected' : '' }}>{{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -32,7 +32,7 @@
                         <select id="contact_person_id" name="contact_person_id" class="form-control select2">
                             <option value="">Select Contact Person</option>
                             @foreach($contactPersons as $contactPerson)
-                                <option value="{{ $contactPerson->address_id }}" {{ $visit->contact_person_id == $contactPerson->address_id ? 'selected' : '' }}>{{ $contactPerson->contact_person }}</option>
+                            <option value="{{ $contactPerson->address_id }}" {{ $visit->contact_person_id == $contactPerson->address_id ? 'selected' : '' }}>{{ $contactPerson->contact_person }}</option>
                             @endforeach
                         </select>
                         @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -64,6 +64,18 @@
                         <input type="text" id="call_end_time" name="call_end_time" class="form-control timepicker" value="{{ $visit->call_end_time ? $visit->call_end_time->format('h:i:s A') : '' }}" readonly>
                         @error('call_end_time') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
+                        <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
+                            <option value="">Select Nature of Issue</option>
+                            @foreach($issues as $issue)
+                            <option value="{{ $issue->id }}" {{ $issue->id == $visit->nature_of_issue_id ? 'selected' : '' }}>{{ $issue->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
 
                     <div class="col-md-4 mb-3">
                         <label for="status_of_call" class="form-label">Status of the Call</label>
@@ -171,8 +183,14 @@
             // Remove any existing call_start_time and call_end_time fields
             formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
 
-            formData.push({ name: 'call_start_time', value: callStartTime });
-            formData.push({ name: 'call_end_time', value: callEndTime });
+            formData.push({
+                name: 'call_start_time',
+                value: callStartTime
+            });
+            formData.push({
+                name: 'call_end_time',
+                value: callEndTime
+            });
 
             $.ajax({
                 url: $(this).attr('action'),

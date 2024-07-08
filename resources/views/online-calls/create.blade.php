@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="customer_id" class="form-label">Customer</label>
-                        <select id="customer_id" name="customer_id" class="form-control select2" >
+                        <select id="customer_id" name="customer_id" class="form-control select2">
                             <option value="">Select Customer</option>
                             @foreach($customers as $customer)
                             <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
@@ -71,7 +71,7 @@
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                     <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
                         <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
                             <option value="">Select Nature of Issue</option>
@@ -107,7 +107,22 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        
         $('.select2').select2();
+        
+        // Initialize Select2 for customer dropdown
+        const customerSelect = $('#customer_id').select2();
+        customerSelect.on('select2:open', () => {
+            setTimeout(() => {
+                const searchInput = document.querySelector('.select2-container--open .select2-search--dropdown .select2-search__field');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }, 50);
+        });
+
+        // Trigger the open event to focus on the search input on page load
+        customerSelect.select2('open');
 
         $('.timepicker').timepicker({
             timeFormat: 'h:i:s A',

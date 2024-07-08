@@ -6,15 +6,16 @@ use Carbon\Carbon;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
+use App\Models\NatureOfIssue; 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class OnsiteVisitController extends Controller
 {
     public function create()
     {
         $customers = Customer::all();
-        return view('onsite-visits.create', compact('customers'));
+        $issues = NatureOfIssue::all(); 
+        return view('onsite-visits.create', compact('customers', 'issues')); // Modify this line
     }
 
     public function getContactPersons($customerId)
@@ -27,14 +28,6 @@ class OnsiteVisitController extends Controller
         ]);
     }
 
-
-
-    /* public function getContactPersonMobile($contactPersonId)
-    {
-        $contactPerson = AddressBook::where('address_id', $contactPersonId)->first();
-        return response()->json(['mobile_no' => $contactPerson->mobile_no]);
-    } */
-
     public function getContactPersonMobile($contactPersonId)
     {
         $contactPerson = AddressBook::where('address_id', $contactPersonId)->first();
@@ -43,10 +36,6 @@ class OnsiteVisitController extends Controller
         }
         return response()->json(['mobile_no' => $contactPerson->mobile_no]);
     }
-
-
-
-
 
     public function store(Request $request)
     {
@@ -57,6 +46,7 @@ class OnsiteVisitController extends Controller
             'call_start_time' => 'required',
             'call_end_time' => 'required',
             'status_of_call' => 'required|in:completed,pending',
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id', // Add this line
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
@@ -73,6 +63,7 @@ class OnsiteVisitController extends Controller
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
+            'nature_of_issue_id' => $request->nature_of_issue_id, // Add this line
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
@@ -83,8 +74,6 @@ class OnsiteVisitController extends Controller
 
         return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Created Successfully.');
     }
-
-
 
     public function edit($id)
     {
@@ -98,10 +87,10 @@ class OnsiteVisitController extends Controller
 
         $customers = Customer::all();
         $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
+        $issues = NatureOfIssue::all(); 
 
-        return view('onsite-visits.edit', compact('visit', 'customers', 'contactPersons'));
+        return view('onsite-visits.edit', compact('visit', 'customers', 'contactPersons', 'issues')); // Modify this line
     }
-
 
     public function update(Request $request, $id)
     {
@@ -112,6 +101,7 @@ class OnsiteVisitController extends Controller
             'call_start_time' => 'required',
             'call_end_time' => 'nullable',
             'status_of_call' => 'required|in:completed,pending',
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id', 
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
@@ -125,10 +115,10 @@ class OnsiteVisitController extends Controller
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
-            //'call_type' => 'onsite_visit',
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
+            'nature_of_issue_id' => $request->nature_of_issue_id, // Add this line
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
