@@ -29,11 +29,23 @@ class OnsiteVisitController extends Controller
 
 
 
-    public function getContactPersonMobile($contactPersonId)
+    /* public function getContactPersonMobile($contactPersonId)
     {
         $contactPerson = AddressBook::where('address_id', $contactPersonId)->first();
         return response()->json(['mobile_no' => $contactPerson->mobile_no]);
+    } */
+
+    public function getContactPersonMobile($contactPersonId)
+    {
+        $contactPerson = AddressBook::where('address_id', $contactPersonId)->first();
+        if (!$contactPerson) {
+            return response()->json(['error' => 'Contact person not found'], 404);
+        }
+        return response()->json(['mobile_no' => $contactPerson->mobile_no]);
     }
+
+
+
 
 
     public function store(Request $request)

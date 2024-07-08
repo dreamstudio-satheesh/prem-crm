@@ -95,11 +95,17 @@
                                             Industry
                                         </a>
                                     </li>
-
+                                   
 
                                     <li class="nav-item">
                                         <a href="{{ url('location') }}" class="nav-link" data-key="t-master">
                                             Area
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('nature-of-issue') }}" class="nav-link" data-key="t-master">
+                                            Nature Of Issue
                                         </a>
                                     </li>
                                 </ul>

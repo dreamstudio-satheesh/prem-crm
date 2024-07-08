@@ -75,6 +75,18 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
+                        <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
+                        <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
+                            <option value="">Select Nature of Issue</option>
+                            @foreach($issues as $issue)
+                            <option value="{{ $issue->id }}">{{ $issue->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
                         <label for="service_charges" class="form-label">Service Charges</label>
                         <input type="number" id="service_charges" name="service_charges" class="form-control" value="{{ $visit->service_charges }}">
                         @error('service_charges') <span class="text-danger">{{ $message }}</span> @enderror

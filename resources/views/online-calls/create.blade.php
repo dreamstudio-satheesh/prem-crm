@@ -51,7 +51,7 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="call_start_time" class="form-label">Call Start Time</label>
-                        <input type="text" id="call_start_time" name="call_start_time" class="form-control timepicker">
+                        <input type="text" id="call_start_time" name="call_start_time" class="form-control timepicker" readonly>
                         @error('call_start_time') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
@@ -69,6 +69,17 @@
                             <option value="pending">Pending</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
+                     <div class="col-md-4 mb-3">
+                        <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
+                        <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
+                            <option value="">Select Nature of Issue</option>
+                            @foreach($issues as $issue)
+                            <option value="{{ $issue->id }}">{{ $issue->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-4 mb-3">

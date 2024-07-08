@@ -18,6 +18,7 @@ use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\OnsiteVisitController;
 use App\Http\Controllers\Master\CustomerController;
 use App\Http\Controllers\OnlineCallController;
+use App\Livewire\Master\NatureOfIssueMaster;
 use App\Livewire\OnlineCallList;
 
 Route::get('/', function () {
@@ -44,6 +45,7 @@ Route::get('/industry', IndustryMaster::class);
 Route::get('/customertype', CustomertypeMaster::class); 
 Route::get('/location', LocationMaster::class); 
 Route::get('/licence', LicenceMaster::class); 
+Route::get('/nature-of-issue', NatureOfIssueMaster::class); 
 
 
 Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 

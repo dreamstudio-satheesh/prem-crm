@@ -7,31 +7,15 @@ use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
 use Illuminate\Http\Request;
+use App\Models\NatureOfIssue;
 
 class OnlineCallController extends Controller
 {
     public function create()
     {
         $customers = Customer::all();
-        return view('online-calls.create', compact('customers'));
-    }
-
-    public function getContactPersons($customerId)
-    {
-        $customer = Customer::find($customerId);
-        $contactPersons = AddressBook::where('customer_id', $customerId)->get();
-        return response()->json([
-            'contactPersons' => $contactPersons,
-            'customerAmc' => $customer->amc
-        ]);
-    }
-
-
-
-    public function getContactPersonMobile($contactPersonId)
-    {
-        $contactPerson = AddressBook::where('address_id', $contactPersonId)->first();
-        return response()->json(['mobile_no' => $contactPerson->mobile_no]);
+        $issues = NatureOfIssue::all();
+        return view('online-calls.create', compact('customers', 'issues'));
     }
 
 
@@ -44,6 +28,7 @@ class OnlineCallController extends Controller
             'call_start_time' => 'required',
             'call_end_time' => 'required',
             'status_of_call' => 'required|in:completed,pending',
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
@@ -60,6 +45,7 @@ class OnlineCallController extends Controller
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
+            'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
@@ -84,9 +70,10 @@ class OnlineCallController extends Controller
         }
 
         $customers = Customer::all();
+        $issues = NatureOfIssue::all();
         $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
 
-        return view('online-calls.edit', compact('visit', 'customers', 'contactPersons'));
+        return view('online-calls.edit', compact('visit', 'customers', 'issues', 'contactPersons'));
     }
 
 
@@ -99,6 +86,7 @@ class OnlineCallController extends Controller
             'call_start_time' => 'required',
             'call_end_time' => 'nullable',
             'status_of_call' => 'required|in:completed,pending',
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
@@ -116,6 +104,7 @@ class OnlineCallController extends Controller
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
+            'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
