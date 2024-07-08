@@ -5,7 +5,7 @@
                 <div class="card-header border-bottom-dashed">
                     <div class="row g-4 align-items-center">
                         <div class="col-sm">
-                            <h5 class="card-title mb-0">Customer List (ALT + C )</h5>
+                            <h5 class="card-title mb-0">Customer List (ALT + T )</h5>
                         </div>
                         <div class="col-sm-auto">
                             <button accesskey="S" title="ALT+S" wire:click="toggleFilters" class="btn btn-sm btn-secondary">
@@ -18,7 +18,7 @@
                             <button wire:click="export" class="btn btn-sm btn-success">
                                 <i class="ri-file-upload-line align-bottom me-1"></i> Export
                             </button>
-                            <a href="{{ route('customers.add') }}" accesskey="N" title="ALT+N" class="btn btn-sm btn-info">
+                            <a href="{{ route('customers.add') }}" accesskey="C" title="ALT+C" class="btn btn-sm btn-info">
                                 <i class="ri-file-add-line align-bottom me-1"></i> Add New
                             </a>
                         </div>

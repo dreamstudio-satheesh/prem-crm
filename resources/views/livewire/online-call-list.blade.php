@@ -10,7 +10,7 @@
                     <button wire:click="toggleFilters" accesskey="S" title="ALT+S" class="btn btn-sm btn-secondary">
                         <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
                     </button>
-                    <a href="{{ route('online-calls.create') }}" accesskey="N" title="ALT+N" class="btn btn-sm btn-primary">
+                    <a href="{{ route('online-calls.create') }}" accesskey="C" title="ALT+C" class="btn btn-sm btn-primary">
                         <i class="ri-add-line align-bottom me-1"></i> Add New
                     </a>
                 </div>

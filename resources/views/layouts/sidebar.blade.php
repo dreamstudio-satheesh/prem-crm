@@ -54,7 +54,7 @@
                                 <ul class="nav nav-sm flex-column">
 
                                     <li class="nav-item">
-                                        <a class="nav-link menu-link" accesskey="C" title="ALT+C" href="{{ url('/master/customers') }}">
+                                        <a class="nav-link menu-link" accesskey="T" title="ALT+T" href="{{ url('/master/customers') }}">
                                             <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
                                         </a>
                                     </li>
