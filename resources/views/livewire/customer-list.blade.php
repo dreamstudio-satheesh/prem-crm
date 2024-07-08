@@ -8,7 +8,7 @@
                             <h5 class="card-title mb-0">Customer List</h5>
                         </div>
                         <div class="col-sm-auto">
-                            <button wire:click="toggleFilters" class="btn btn-sm btn-secondary">
+                            <button accesskey="S" title="ALT+S" wire:click="toggleFilters" class="btn btn-sm btn-secondary">
                                 <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
                             </button>
 
@@ -18,7 +18,7 @@
                             <button wire:click="export" class="btn btn-sm btn-success">
                                 <i class="ri-file-upload-line align-bottom me-1"></i> Export
                             </button>
-                            <a href="{{ route('customers.add') }}" class="btn btn-sm btn-info">
+                            <a href="{{ route('customers.add') }}" accesskey="N" title="ALT+N" class="btn btn-sm btn-info">
                                 <i class="ri-file-add-line align-bottom me-1"></i> Add New
                             </a>
                         </div>

@@ -7,10 +7,10 @@
                     <h5 class="card-title mb-0">Onsite Visit List</h5>
                 </div>
                 <div class="col-sm-auto">
-                    <button wire:click="toggleFilters" class="btn btn-sm btn-secondary">
+                    <button wire:click="toggleFilters" accesskey="S" title="ALT+S" class="btn btn-sm btn-secondary">
                         <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
                     </button>
-                    <a href="{{ route('onsite-visits.create') }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('onsite-visits.create') }}" accesskey="N" title="ALT+N" class="btn btn-sm btn-primary">
                         <i class="ri-add-line align-bottom me-1"></i> Add New
                     </a>
                 </div>
