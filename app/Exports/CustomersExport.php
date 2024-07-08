@@ -13,7 +13,7 @@ class CustomersExport implements FromCollection, WithHeadings
         return Customer::all([
             'customer_name',
             'tally_serial_no',
-            'licence_editon',
+            'licence_editon_id',
             'primary_address_id',
             'default_customer_type_id',
             'product_id',
