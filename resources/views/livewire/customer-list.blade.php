@@ -5,7 +5,7 @@
                 <div class="card-header border-bottom-dashed">
                     <div class="row g-4 align-items-center">
                         <div class="col-sm">
-                            <h5 class="card-title mb-0">Customer List</h5>
+                            <h5 class="card-title mb-0">Customer List (ALT + C )</h5>
                         </div>
                         <div class="col-sm-auto">
                             <button accesskey="S" title="ALT+S" wire:click="toggleFilters" class="btn btn-sm btn-secondary">

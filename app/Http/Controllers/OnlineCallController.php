@@ -7,14 +7,13 @@ use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
-class OnsiteVisitController extends Controller
+class OnlineCallController extends Controller
 {
     public function create()
     {
         $customers = Customer::all();
-        return view('onsite-visits.create', compact('customers'));
+        return view('online-calls.create', compact('customers'));
     }
 
     public function getContactPersons($customerId)
@@ -57,7 +56,7 @@ class OnsiteVisitController extends Controller
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
-            'call_type' => 'onsite_visit',
+            'call_type' => 'online_call',
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
@@ -69,7 +68,7 @@ class OnsiteVisitController extends Controller
             return response()->json(['success' => 'Onsite Visit Created Successfully.']);
         }
 
-        return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Created Successfully.');
+        return redirect()->route('online-calls.index')->with('success', 'Onsite Visit Created Successfully.');
     }
 
 
@@ -87,7 +86,7 @@ class OnsiteVisitController extends Controller
         $customers = Customer::all();
         $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
 
-        return view('onsite-visits.edit', compact('visit', 'customers', 'contactPersons'));
+        return view('online-calls.edit', compact('visit', 'customers', 'contactPersons'));
     }
 
 
@@ -113,7 +112,7 @@ class OnsiteVisitController extends Controller
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
-            //'call_type' => 'onsite_visit',
+            //'call_type' => 'online_call',
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $request->status_of_call,
@@ -125,6 +124,6 @@ class OnsiteVisitController extends Controller
             return response()->json(['success' => 'Onsite Visit Updated Successfully.']);
         }
 
-        return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Updated Successfully.');
+        return redirect()->route('online-calls.index')->with('success', 'Onsite Visit Updated Successfully.');
     }
 }

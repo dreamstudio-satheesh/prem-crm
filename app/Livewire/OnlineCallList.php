@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\ServiceCall;
 
-class OnsiteVisitList extends Component
+class OnlineCallList extends Component
 {
     use WithPagination;
 
@@ -27,12 +27,12 @@ class OnsiteVisitList extends Component
 
     public function render()
     {
-        $onsiteVisits = ServiceCall::where('call_type','onsite_visit')->with(['customer', 'contactPerson'])
+        $onlineCalls = ServiceCall::where('call_type','online_call')->with(['customer', 'contactPerson'])
             ->whereHas('customer', function($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             })
             ->paginate(10);
 
-        return view('livewire.onsite-visit-list', ['onsiteVisits' => $onsiteVisits]);
+        return view('livewire.online-call-list', ['onlineCalls' => $onlineCalls]);
     }
 }

@@ -1,16 +1,16 @@
 <div>
 
-    <div class="card" id="onsiteVisitList">
+    <div class="card" id="OnlineCallList">
         <div class="card-header border-bottom-dashed">
             <div class="row g-4 align-items-center">
                 <div class="col-sm">
-                    <h5 class="card-title mb-0">Onsite Visit List (ALT + V )</h5>
+                    <h5 class="card-title mb-0">Online Call List (ALT + O )</h5>
                 </div>
                 <div class="col-sm-auto">
                     <button wire:click="toggleFilters" accesskey="S" title="ALT+S" class="btn btn-sm btn-secondary">
                         <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
                     </button>
-                    <a href="{{ route('onsite-visits.create') }}" accesskey="N" title="ALT+N" class="btn btn-sm btn-primary">
+                    <a href="{{ route('online-calls.create') }}" accesskey="N" title="ALT+N" class="btn btn-sm btn-primary">
                         <i class="ri-add-line align-bottom me-1"></i> Add New
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onsiteVisits as $visit)
+                        @foreach($onlineCalls as $visit)
                         <tr>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->contactPerson->name }}</td>
@@ -61,7 +61,7 @@
                             <td>{{ $visit->service_charges }}</td>
                             <td>{{ $visit->remarks }}</td>
                             <td>
-                                <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-info">
+                                <a href="{{ route('online-calls.edit', $visit->id) }}" class="btn btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
                                 </a>
                             </td>
@@ -70,7 +70,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    {{ $onsiteVisits->links() }}
+                    {{ $onlineCalls->links() }}
                 </div>
             </div>
         </div>

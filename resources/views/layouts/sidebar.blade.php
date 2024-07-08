@@ -116,7 +116,7 @@
                             <div class="collapse menu-dropdown" id="Services">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="{{ url('online-calls') }}" class="nav-link" data-key="t-services"> Online Calls </a>
+                                        <a href="{{ url('online-calls') }}" accesskey="O" title="ALT+O" class="nav-link" data-key="t-services"> Online Calls </a>
                                         <a href="{{ url('onsite-visits') }}" accesskey="V" title="ALT+V" class="nav-link" data-key="t-services"> On-Site Visits </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL </a>

@@ -17,6 +17,8 @@ use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\OnsiteVisitController;
 use App\Http\Controllers\Master\CustomerController;
+use App\Http\Controllers\OnlineCallController;
+use App\Livewire\OnlineCallList;
 
 Route::get('/', function () {
     return redirect('home');
@@ -59,6 +61,13 @@ Route::get('onsite-visits/contact-persons/{customerId}', [OnsiteVisitController:
 Route::get('onsite-visits/contact-person-mobile/{contactPersonId}', [OnsiteVisitController::class, 'getContactPersonMobile']);
 Route::get('/onsite-visits/{id}/edit', [OnsiteVisitController::class, 'edit'])->name('onsite-visits.edit');
 Route::post('/onsite-visits/{id}', [OnsiteVisitController::class, 'update'])->name('onsite-visits.update');
+
+
+Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index'); 
+Route::get('online-calls/create', [OnlineCallController::class, 'create'])->name('online-calls.create');
+Route::post('online-calls', [OnlineCallController::class, 'store'])->name('online-calls.store');
+Route::get('/online-calls/{id}/edit', [OnlineCallController::class, 'edit'])->name('online-calls.edit');
+Route::post('/online-calls/{id}', [OnlineCallController::class, 'update'])->name('online-calls.update');
 
 
 //Route::get('/onsite-visits/create', CreateOnsiteVisit::class)->name('onsite-visits.create'); 
