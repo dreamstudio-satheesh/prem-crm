@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('call_start_time');
             $table->timestamp('call_end_time')->nullable();
             $table->enum('status_of_call', ['completed', 'pending']);
+            $table->unsignedBigInteger('nature_of_issue_id');
             $table->decimal('service_charges', 8, 2)->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();

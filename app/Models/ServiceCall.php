@@ -17,6 +17,7 @@ class ServiceCall extends Model
         'call_start_time',
         'call_end_time',
         'status_of_call',
+        'nature_of_issue_id',
         'service_charges',
         'remarks',
     ];

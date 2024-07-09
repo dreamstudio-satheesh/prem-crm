@@ -82,8 +82,11 @@
                         <select id="status_of_call" name="status_of_call" class="form-control">
                             <option value="completed" {{ $visit->status_of_call == 'completed' ? 'selected' : '' }}>Completed</option>
                             <option value="pending" {{ $visit->status_of_call == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="online_call">Online Call</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+
+                        <input type="hidden" name="call_type" id="call_type" value="onsite_visit"> <!-- Hidden input -->
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -205,6 +208,22 @@
                     // Display the validation error messages
                 }
             });
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusOfCallElement = document.getElementById('status_of_call');
+        const callTypeInput = document.getElementById('call_type');
+
+        statusOfCallElement.addEventListener('change', function () {
+            const selectedValue = this.value;
+
+            if (selectedValue === 'online_call') {
+                callTypeInput.value = 'online_call';
+            } else {
+                callTypeInput.value = 'onsite_visit'; // Default call type
+            }
         });
     });
 </script>

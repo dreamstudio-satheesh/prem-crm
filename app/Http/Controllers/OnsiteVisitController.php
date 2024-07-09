@@ -45,7 +45,7 @@ class OnsiteVisitController extends Controller
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
             'call_start_time' => 'required',
             'call_end_time' => 'required',
-            'status_of_call' => 'required|in:completed,pending',
+            'status_of_call' => 'required|in:completed,pending,online_call',
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id', // Add this line
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
@@ -54,15 +54,16 @@ class OnsiteVisitController extends Controller
         $currentDate = Carbon::now()->toDateString();
         $callStartTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_start_time);
         $callEndTime = $request->call_end_time ? Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_end_time) : null;
+        $statusOfCall = $request->status_of_call === 'online_call' ? 'pending' : $request->status_of_call;
 
         ServiceCall::create([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
-            'call_type' => 'onsite_visit',
+            'call_type' => $request->call_type,
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
-            'status_of_call' => $request->status_of_call,
+            'status_of_call' => $statusOfCall,
             'nature_of_issue_id' => $request->nature_of_issue_id, // Add this line
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
@@ -100,7 +101,7 @@ class OnsiteVisitController extends Controller
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
             'call_start_time' => 'required',
             'call_end_time' => 'nullable',
-            'status_of_call' => 'required|in:completed,pending',
+            'status_of_call' => 'required|in:completed,pending,online_call',
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id', 
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
@@ -109,15 +110,16 @@ class OnsiteVisitController extends Controller
         $currentDate = Carbon::now()->toDateString();
         $callStartTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_start_time);
         $callEndTime = $request->call_end_time ? Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_end_time) : null;
-
+        $statusOfCall = $request->status_of_call === 'online_call' ? 'pending' : $request->status_of_call;
         $visit = ServiceCall::findOrFail($id);
         $visit->update([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
+            'call_type' => $request->call_type,
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
-            'status_of_call' => $request->status_of_call,
+            'status_of_call' => $statusOfCall,
             'nature_of_issue_id' => $request->nature_of_issue_id, // Add this line
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,

@@ -63,12 +63,15 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="status_of_call" class="form-label">Status of the Call</label>
-                        <select id="status_of_call" name="status_of_call" class="form-control">
+                        <select id="status_of_call" id="status_of_call" name="status_of_call" class="form-control">
                             <option value="">Select Status</option>
                             <option value="completed">Completed</option>
                             <option value="pending">Pending</option>
+                            <option value="onsite_visit">Onsite Visit</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+
+                        <input type="hidden" name="call_type" id="call_type" value="online_call"> <!-- Hidden input -->
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -107,9 +110,9 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        
+
         $('.select2').select2();
-        
+
         // Initialize Select2 for customer dropdown
         const customerSelect = $('#customer_id').select2();
         customerSelect.on('select2:open', () => {
@@ -228,6 +231,23 @@
                     // Display the validation error messages
                 }
             });
+        });
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusOfCallElement = document.getElementById('status_of_call');
+        const callTypeInput = document.getElementById('call_type');
+
+        statusOfCallElement.addEventListener('change', function() {
+            const selectedValue = this.value;
+
+            if (selectedValue === 'onsite_visit') {
+                callTypeInput.value = 'onsite_visit';
+            } else {
+                callTypeInput.value = 'online_call'; // Default call type
+            }
         });
     });
 </script>

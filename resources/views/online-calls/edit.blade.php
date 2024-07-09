@@ -21,7 +21,7 @@
                         <select id="customer_id" name="customer_id" class="form-control select2">
                             <option value="">Select Customer</option>
                             @foreach($customers as $customer)
-                                <option value="{{ $customer->customer_id }}" {{ $visit->customer_id == $customer->customer_id ? 'selected' : '' }}>{{ $customer->customer_name }}</option>
+                            <option value="{{ $customer->customer_id }}" {{ $visit->customer_id == $customer->customer_id ? 'selected' : '' }}>{{ $customer->customer_name }}</option>
                             @endforeach
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -32,7 +32,7 @@
                         <select id="contact_person_id" name="contact_person_id" class="form-control select2">
                             <option value="">Select Contact Person</option>
                             @foreach($contactPersons as $contactPerson)
-                                <option value="{{ $contactPerson->address_id }}" {{ $visit->contact_person_id == $contactPerson->address_id ? 'selected' : '' }}>{{ $contactPerson->contact_person }}</option>
+                            <option value="{{ $contactPerson->address_id }}" {{ $visit->contact_person_id == $contactPerson->address_id ? 'selected' : '' }}>{{ $contactPerson->contact_person }}</option>
                             @endforeach
                         </select>
                         @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -67,11 +67,14 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="status_of_call" class="form-label">Status of the Call</label>
-                        <select id="status_of_call" name="status_of_call" class="form-control">
+                        <select id="status_of_call" id="status_of_call" name="status_of_call" class="form-control">
                             <option value="completed" {{ $visit->status_of_call == 'completed' ? 'selected' : '' }}>Completed</option>
                             <option value="pending" {{ $visit->status_of_call == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="onsite_visit">Onsite Visit</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+
+                        <input type="hidden" name="call_type" id="call_type" value="online_call">
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -183,8 +186,14 @@
             // Remove any existing call_start_time and call_end_time fields
             formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
 
-            formData.push({ name: 'call_start_time', value: callStartTime });
-            formData.push({ name: 'call_end_time', value: callEndTime });
+            formData.push({
+                name: 'call_start_time',
+                value: callStartTime
+            });
+            formData.push({
+                name: 'call_end_time',
+                value: callEndTime
+            });
 
             $.ajax({
                 url: $(this).attr('action'),
@@ -199,6 +208,22 @@
                     // Display the validation error messages
                 }
             });
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusOfCallElement = document.getElementById('status_of_call');
+        const callTypeInput = document.getElementById('call_type');
+
+        statusOfCallElement.addEventListener('change', function () {
+            const selectedValue = this.value;
+
+            if (selectedValue === 'onsite_visit') {
+                callTypeInput.value = 'onsite_visit';
+            } else {
+                callTypeInput.value = 'online_call'; // Default call type
+            }
         });
     });
 </script>
