@@ -12,7 +12,7 @@ use App\Models\AddressBook;
 use App\Models\CustomerType;
 use App\Models\MobileNumber;
 
-class AddCustomer1 extends Component
+class AddCustomer extends Component
 {
     public $products;
     public $locations;

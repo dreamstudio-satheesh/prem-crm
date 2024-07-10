@@ -1,7 +1,9 @@
 <?php
 
 
+use App\Livewire\AddCustomer;
 use App\Livewire\CustomerList;
+use App\Livewire\EditCustomer;
 use App\Livewire\OnlineCallList;
 use App\Livewire\OnsiteVisitList;
 use App\Livewire\Master\RoleMaster;
@@ -13,8 +15,6 @@ use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
 use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
-use App\Livewire\AddCustomer\AddCustomer;
-use App\Livewire\EditCustomer\EditCustomer;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Livewire\Master\NatureOfIssueMaster;
 use App\Http\Controllers\OnlineCallController;
