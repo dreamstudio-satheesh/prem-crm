@@ -11,7 +11,7 @@ use App\Models\Location;
 use App\Models\CustomerType;
 use App\Models\MobileNumber;
 
-class EditCustomer extends Component
+class EditCustomer1 extends Component
 {
     public $customer;
     public $products;

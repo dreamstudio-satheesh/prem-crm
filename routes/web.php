@@ -1,10 +1,9 @@
 <?php
 
 
-use App\Livewire\AddCustomer;
 use App\Livewire\CustomerList;
+use App\Livewire\OnlineCallList;
 use App\Livewire\OnsiteVisitList;
-use App\Livewire\CreateOnsiteVisit;
 use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +13,12 @@ use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
 use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
+use App\Livewire\AddCustomer\AddCustomer;
+use App\Livewire\EditCustomer\EditCustomer;
 use App\Livewire\Master\CustomertypeMaster;
-use App\Http\Controllers\OnsiteVisitController;
-use App\Http\Controllers\Master\CustomerController;
-use App\Http\Controllers\OnlineCallController;
 use App\Livewire\Master\NatureOfIssueMaster;
-use App\Livewire\OnlineCallList;
+use App\Http\Controllers\OnlineCallController;
+use App\Http\Controllers\OnsiteVisitController;
 
 Route::get('/', function () {
     return redirect('home');
@@ -49,7 +48,8 @@ Route::get('/nature-of-issue', NatureOfIssueMaster::class);
 
 
 Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 
-Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
+Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
+//Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
 
 
 Route::get('/master/customers', CustomerList::class)->name('customers.index'); 
