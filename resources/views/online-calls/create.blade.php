@@ -22,6 +22,7 @@
                             @foreach($customers as $customer)
                             <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
                             @endforeach
+                            <option value="new_customer">Add New Customer</option>
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
@@ -30,13 +31,14 @@
                         <label for="contact_person_id" class="form-label">Contact Person</label>
                         <select id="contact_person_id" name="contact_person_id" class="form-control select2">
                             <option value="">Select Contact Person</option>
+                            <option value="new_contact_person">Add New Contact Person</option>
                         </select>
                         @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
-                        <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" readonly>
+                        <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control">
                     </div>
 
                     <div class="col-md-4 mb-3" id="type-of-call-wrapper" style="display: none;">
@@ -63,7 +65,7 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="status_of_call" class="form-label">Status of the Call</label>
-                        <select id="status_of_call" id="status_of_call" name="status_of_call" class="form-control">
+                        <select id="status_of_call" name="status_of_call" class="form-control">
                             <option value="">Select Status</option>
                             <option value="completed">Completed</option>
                             <option value="pending">Pending</option>
@@ -104,13 +106,87 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal for Adding New Customer -->
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addCustomerForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="customer_name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter customer name" required>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="tally_serial_no" class="form-label">Tally Serial No</label>
+                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number" required>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding New Contact Person -->
+    <div class="modal fade" id="addContactPersonModal" tabindex="-1" aria-labelledby="addContactPersonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactPersonModalLabel">Add New Contact Person</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addContactPersonForm">
+                    @csrf
+                    <input type="hidden" id="modal_customer_id" name="customer_id">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="contact_person" class="form-label">Contact Person Name</label>
+                                    <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Enter contact person name" required>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
+                                    <input type="text" class="form-control" id="contact_person_mobile" name="contact_person_mobile[]" placeholder="Enter mobile number" required>
+                                    <div id="additional-mobile-numbers"></div>
+                                    <button type="button" class="btn btn-link" id="add-mobile-number">Add More Mobile Numbers</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Contact Person</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function() {
-
         $('.select2').select2();
 
         // Initialize Select2 for customer dropdown
@@ -137,6 +213,10 @@
 
         $('#customer_id').on('change', function() {
             var customerId = $(this).val();
+            if (customerId === 'new_customer') {
+                $('#addCustomerModal').modal('show');
+                return;
+            }
             if (customerId) {
                 $.ajax({
                     url: '/onsite-visits/contact-persons/' + customerId,
@@ -146,10 +226,18 @@
                         $.each(data.contactPersons, function(key, value) {
                             $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
                         });
+
+                        // Add New Contact Person option
+                        $('#contact_person_id').append('<option value="new_contact_person">Add New Contact Person</option>');
+
+                        // Set the contact person address ID if it matches primary_address_id
+                        if (data.primaryAddressId) {
+                            $('#contact_person_id').val(data.primaryAddressId).trigger('change');
+                        }
+
                         $('#contact_person_id').trigger('change');
                         $('#contact-person-wrapper').show();
 
-                        // Set type of call based on customer AMC status
                         if (data.customerAmc == 'yes') {
                             $('#type_of_call').val('AMC Call');
                         } else {
@@ -169,6 +257,12 @@
 
         $('#contact_person_id').on('change', function() {
             var contactPersonId = $(this).val();
+            if (contactPersonId === 'new_contact_person') {
+                var customerId = $('#customer_id').val();
+                $('#modal_customer_id').val(customerId); // Set the customer ID in the modal form
+                $('#addContactPersonModal').modal('show');
+                return;
+            }
             if (contactPersonId) {
                 $.ajax({
                     url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
@@ -184,70 +278,68 @@
             }
         });
 
-        // Set call start time after 2 seconds
         setTimeout(() => {
             let now = moment().format('h:mm:ss A');
             $('#call_start_time').val(now);
         }, 2000);
 
-        // Update call end time every second
         setInterval(() => {
             let now = moment().format('h:mm:ss A');
             $('#call_end_time').val(now);
         }, 1000);
 
-        // Handle form submission with AJAX
-        $('#online-call-form').on('submit', function(e) {
+        document.getElementById('status_of_call').addEventListener('change', function() {
+            const callTypeInput = document.getElementById('call_type');
+            if (this.value === 'onsite_visit') {
+                callTypeInput.value = 'onsite_visit';
+            } else {
+                callTypeInput.value = 'online_call';
+            }
+        });
+
+        // Handle the form submission for adding a new customer
+        $('#addCustomerForm').on('submit', function(e) {
             e.preventDefault();
-
-            // Format time fields using moment.js
-            let callStartTime = moment($('#call_start_time').val(), 'h:mm:ss A').format('h:mm:ss A');
-            let callEndTime = $('#call_end_time').val() ? moment($('#call_end_time').val(), 'h:mm:ss A').format('h:mm:ss A') : null;
-
-            let formData = $(this).serializeArray();
-
-            // Remove any existing call_start_time and call_end_time fields
-            formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
-
-            formData.push({
-                name: 'call_start_time',
-                value: callStartTime
-            });
-            formData.push({
-                name: 'call_end_time',
-                value: callEndTime
-            });
-
             $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: formData,
+                url: '/customers', // Update this URL to your route for creating a customer
+                method: 'POST',
+                data: $(this).serialize(),
                 success: function(response) {
-                    window.location.href = '/online-calls';
+                    $('#addCustomerModal').modal('hide');
+                    $('#customer_id').append('<option value="' + response.customer.customer_id + '">' + response.customer.customer_name + '</option>');
+                    $('#customer_id').val(response.customer.customer_id).trigger('change');
                 },
                 error: function(xhr) {
-                    console.error('Submission error:', xhr.responseText);
+                    console.error('Error creating customer:', xhr.responseText);
                     // Handle validation errors
-                    // Display the validation error messages
                 }
             });
         });
-    });
 
+        // Handle adding more mobile number fields
+        $('#add-mobile-number').on('click', function() {
+            $('#additional-mobile-numbers').append(
+                '<input type="text" class="form-control mt-2" name="contact_person_mobile[]" placeholder="Enter mobile number" required>'
+            );
+        });
 
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const statusOfCallElement = document.getElementById('status_of_call');
-        const callTypeInput = document.getElementById('call_type');
-
-        statusOfCallElement.addEventListener('change', function() {
-            const selectedValue = this.value;
-
-            if (selectedValue === 'onsite_visit') {
-                callTypeInput.value = 'onsite_visit';
-            } else {
-                callTypeInput.value = 'online_call'; // Default call type
-            }
+        // Handle the form submission for adding a new contact person
+        $('#addContactPersonForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/contact-persons', // Update this URL to your route for creating a contact person
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#addContactPersonModal').modal('hide');
+                    $('#contact_person_id').append('<option value="' + response.contactPerson.address_id + '">' + response.contactPerson.contact_person + '</option>');
+                    $('#contact_person_id').val(response.contactPerson.address_id).trigger('change');
+                },
+                error: function(xhr) {
+                    console.error('Error creating contact person:', xhr.responseText);
+                    // Handle validation errors
+                }
+            });
         });
     });
 </script>

@@ -49,7 +49,22 @@
                                             @error("addresses.$index.customer_type_id") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
                                         <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.contact_person"></td>
-                                        <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no"></td>
+                                        <td>
+                                            @foreach($address['mobile_no'] as $mobileIndex => $mobile)
+                                            <div class="d-flex mb-2">
+                                                <div class="input-group input-group-sm">
+
+                                                    <input type="text" class="form-control  mr-2" wire:model="addresses.{{ $index }}.mobile_no.{{ $mobileIndex }}">
+
+                                                    <button type="button" class="btn  btn-danger ml-2" wire:click.prevent="removeMobileNumber({{ $index }}, {{ $mobileIndex }})">-</button>
+
+                                                </div>
+
+                                            </div>
+                                            @endforeach
+                                            <button type="button" class="btn btn-sm btn-link" wire:click.prevent="addMobileNumber({{ $index }})">Add More</button>
+                                            @error("addresses.$index.mobile_no") <span class="text-danger">{{ $message }}</span> @enderror
+                                        </td>
                                         <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.phone_no"></td>
                                         <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.email"></td>
                                         <td>

@@ -6,17 +6,35 @@ use Carbon\Carbon;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
-use App\Models\NatureOfIssue; 
+use App\Models\MobileNumber;
 use Illuminate\Http\Request;
+use App\Models\NatureOfIssue;
 
 class OnsiteVisitController extends Controller
 {
     public function create()
     {
         $customers = Customer::all();
-        $issues = NatureOfIssue::all(); 
+        $issues = NatureOfIssue::all();
         return view('onsite-visits.create', compact('customers', 'issues')); // Modify this line
     }
+
+
+    public function store_customer(Request $request)
+    {
+        $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'tally_serial_no' => 'required|string|max:255',
+        ]);
+
+        $customer = Customer::create([
+            'customer_name' => $request->customer_name,
+            'tally_serial_no' => $request->tally_serial_no,
+        ]);
+
+        return response()->json(['customer' => $customer]);
+    }
+
 
     public function getContactPersons($customerId)
     {
@@ -24,9 +42,35 @@ class OnsiteVisitController extends Controller
         $contactPersons = AddressBook::where('customer_id', $customerId)->get();
         return response()->json([
             'contactPersons' => $contactPersons,
-            'customerAmc' => $customer->amc
+            'customerAmc' => $customer->amc,
+            'primaryAddressId' => $customer->primary_address_id
         ]);
     }
+
+    public function storeContactPerson(Request $request)
+    {
+        $request->validate([
+            'contact_person' => 'required|string|max:255',
+            'contact_person_mobile' => 'required|array|min:1',
+            'contact_person_mobile.*' => 'required|string|max:15',
+            'customer_id' => 'required|exists:customers,customer_id', // Ensure customer_id is valid
+        ]);
+
+        $contactPerson = AddressBook::create([
+            'contact_person' => $request->contact_person,
+            'customer_id' => $request->customer_id,
+        ]);
+
+        foreach ($request->contact_person_mobile as $mobileNo) {
+            MobileNumber::create([
+                'address_id' => $contactPerson->address_id,
+                'mobile_no' => $mobileNo,
+            ]);
+        }
+
+        return response()->json(['contactPerson' => $contactPerson]);
+    }
+
 
     public function getContactPersonMobile($contactPersonId)
     {
@@ -88,7 +132,7 @@ class OnsiteVisitController extends Controller
 
         $customers = Customer::all();
         $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
-        $issues = NatureOfIssue::all(); 
+        $issues = NatureOfIssue::all();
 
         return view('onsite-visits.edit', compact('visit', 'customers', 'contactPersons', 'issues')); // Modify this line
     }
@@ -102,7 +146,7 @@ class OnsiteVisitController extends Controller
             'call_start_time' => 'required',
             'call_end_time' => 'nullable',
             'status_of_call' => 'required|in:completed,pending,online_call',
-            'nature_of_issue_id' => 'required|exists:nature_of_issues,id', 
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);

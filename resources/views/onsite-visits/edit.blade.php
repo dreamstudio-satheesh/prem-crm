@@ -173,50 +173,22 @@
             }
         });
 
-        // Handle form submission with AJAX
-        $('#onsite-visit-form').on('submit', function(e) {
-            e.preventDefault();
-
+        document.getElementById('onsite-visit-form').onsubmit = function() {
             // Format time fields using moment.js
             let callStartTime = moment($('#call_start_time').val(), 'h:mm:ss A').format('h:mm:ss A');
             let callEndTime = $('#call_end_time').val() ? moment($('#call_end_time').val(), 'h:mm:ss A').format('h:mm:ss A') : null;
 
-            let formData = $(this).serializeArray();
-
-            // Remove any existing call_start_time and call_end_time fields
-            formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
-
-            formData.push({
-                name: 'call_start_time',
-                value: callStartTime
-            });
-            formData.push({
-                name: 'call_end_time',
-                value: callEndTime
-            });
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: formData,
-                success: function(response) {
-                    window.location.href = '/onsite-visits';
-                },
-                error: function(xhr) {
-                    console.error('Submission error:', xhr.responseText);
-                    // Handle validation errors
-                    // Display the validation error messages
-                }
-            });
-        });
+            // Update the form fields
+            $('#call_start_time').val(callStartTime);
+            $('#call_end_time').val(callEndTime);
+        };
     });
 
-
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const statusOfCallElement = document.getElementById('status_of_call');
         const callTypeInput = document.getElementById('call_type');
 
-        statusOfCallElement.addEventListener('change', function () {
+        statusOfCallElement.addEventListener('change', function() {
             const selectedValue = this.value;
 
             if (selectedValue === 'online_call') {

@@ -131,7 +131,7 @@
                                             <th width="4%">S.No</th>
                                             <th width="10%">Type</th>
                                             <th width="10%">Contact Person</th>
-                                            <th width="10%">Mobile No</th>
+                                            <th width="10%">Mobile Nos</th>
                                             <th width="10%">Phone No</th>
                                             <th width="10%">Email</th>
                                             <th width="2%">#</th>
@@ -152,12 +152,20 @@
                                                 @error("addresses.$index.customer_type_id") <span class="text-danger">{{ $message }}</span> @enderror
                                             </td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.contact_person"></td>
-                                            <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no"></td>
+                                            <td>
+                                                @foreach($address['mobile_no'] as $mobileIndex => $mobileNo)
+                                                <div class="input-group input-group-sm mb-2">
+                                                    <input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no.{{ $mobileIndex }}">
+                                                    <button type="button" class="btn btn-danger" wire:click.prevent="removeMobileNo({{ $index }}, {{ $mobileIndex }})">-</button>
+                                                </div>
+                                                @endforeach
+                                                <button type="button" class="btn btn-success btn-sm" wire:click.prevent="addMobileNo({{ $index }})">+ Add Mobile No</button>
+                                            </td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.phone_no"></td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.email"></td>
                                             <td>
                                                 <div class="form-check form-radio-outline form-radio-success mb-3">
-                                                    <input type="radio" class="form-check-input" name="primary_address_id" wire:model="primary_address_id" value="{{ $address['id'] }}">
+                                                    <input type="radio" class="form-check-input" name="primary_address_id" wire:model="primary_address_id" value="{{ $address['address_id'] }}">
                                                 </div>
                                             </td>
                                             <td>

@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\AddressBook;
 use App\Models\CustomerType;
 use App\Models\Customer;
-
+use App\Models\MobileNumber;
 
 class AddAddress extends Component
 {
@@ -18,7 +18,8 @@ class AddAddress extends Component
     protected $rules = [
         'addresses.*.customer_type_id' => 'required',
         'addresses.*.contact_person' => 'required|string|max:255',
-        'addresses.*.mobile_no' => 'required|numeric',
+        'addresses.*.mobile_no' => 'required|array|min:1',
+        'addresses.*.mobile_no.*' => 'nullable|numeric',
         'addresses.*.phone_no' => 'nullable|numeric',
         'addresses.*.email' => 'nullable|email|max:255',
     ];
@@ -37,7 +38,7 @@ class AddAddress extends Component
         return [
             'customer_type_id' => '',
             'contact_person' => '',
-            'mobile_no' => '',
+            'mobile_no' => [''], // Initialize with one empty mobile number
             'phone_no' => '',
             'email' => '',
         ];
@@ -54,27 +55,44 @@ class AddAddress extends Component
         $this->addresses = array_values($this->addresses);
     }
 
+    public function addMobileNumber($index)
+    {
+        $this->addresses[$index]['mobile_no'][] = ''; // Add a new empty mobile number field
+    }
+
+    public function removeMobileNumber($addressIndex, $mobileIndex)
+    {
+        unset($this->addresses[$addressIndex]['mobile_no'][$mobileIndex]);
+        $this->addresses[$addressIndex]['mobile_no'] = array_values($this->addresses[$addressIndex]['mobile_no']);
+    }
+
     public function save()
     {
         $this->validate();
 
         foreach ($this->addresses as $index => $address) {
-            AddressBook::create([
+            $addressBook = AddressBook::create([
                 'index' => $index + 1,
                 'customer_id' => $this->customer_id, // Ensure customer_id is set
                 'customer_type_id' => $address['customer_type_id'],
                 'contact_person' => $address['contact_person'],
-                'mobile_no' => $address['mobile_no'],
                 'phone_no' => $address['phone_no'],
                 'email' => $address['email'],
             ]);
+
+            foreach ($address['mobile_no'] as $mobileNo) {
+                if (!is_null($mobileNo) && $mobileNo !== '') { // Check if mobile number is not null or empty
+                    MobileNumber::create([
+                        'address_id' => $addressBook->address_id,
+                        'mobile_no' => $mobileNo,
+                    ]);
+                }
+            }
         }
 
         session()->flash('message', 'Customer Address created successfully!');
         return redirect()->route('customers.index');
     }
-
-
 
     public function render()
     {

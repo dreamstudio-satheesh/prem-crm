@@ -1,15 +1,12 @@
 <div>
-
     <form wire:submit.prevent="save" class="form-horizontal form-bordered">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
                         <h4 class="card-title mb-0 flex-grow-1">Add Customer</h4>
-
                     </div><!-- end card header -->
                     <div class="card-body">
-
                         @csrf
                         <div class="row gy-4">
                             <div class="col-xxl-3 col-md-6">
@@ -26,7 +23,6 @@
                                     @error('tally_serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="product_id">Product</label>
@@ -39,7 +35,6 @@
                                     @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="licence_editon_id">Licence Edition</label>
@@ -52,10 +47,9 @@
                                     @error('licence_editon_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="remarks">Customer Location</label>
+                                    <label for="location_id">Customer Location</label>
                                     <select class="form-control" id="location_id" wire:model="location_id">
                                         <option value="">Select Customer Area</option>
                                         @foreach($locations as $location)
@@ -65,7 +59,6 @@
                                     @error('location_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="profile_status">Profile Status</label>
@@ -76,7 +69,6 @@
                                     @error('profile_status') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="staff_id">Followup Executive</label>
@@ -89,7 +81,6 @@
                                     @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="map_location">Map Location</label>
@@ -97,7 +88,6 @@
                                     @error('map_location') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="latitude">Latitude</label>
@@ -105,7 +95,6 @@
                                     @error('latitude') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="longitude">Longitude</label>
@@ -113,7 +102,6 @@
                                     @error('longitude') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="gst_no">GST No</label>
@@ -121,7 +109,6 @@
                                     @error('gst_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="tdl_addons">TDL & Addons</label>
@@ -129,7 +116,6 @@
                                     @error('tdl_addons') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                             <div class="col-lg-6 col-md-12">
                                 <div class="input-group">
                                     <span class="input-group-text">Remarks</span>
@@ -137,13 +123,13 @@
                                     @error('remarks') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Address Book -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -152,7 +138,6 @@
                     </div><!-- end card header -->
                     <div class="card-body">
                         <div class="row gy-4">
-
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <table border="1" class="table">
                                     <thead>
@@ -182,7 +167,18 @@
                                                 @error("addresses.$index.customer_type_id") <span class="text-danger">{{ $message }}</span> @enderror
                                             </td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.contact_person"></td>
-                                            <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no"></td>
+                                            <td>
+                                                @foreach($address['mobile_no'] as $mobileIndex => $mobile)
+                                                <div class="d-flex mb-2">
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control" wire:model="addresses.{{ $index }}.mobile_no.{{ $mobileIndex }}">
+                                                        <button type="button" class="btn btn-danger btn-sm ml-2" wire:click.prevent="removeMobileNumber({{ $index }}, {{ $mobileIndex }})">-</button>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                                <button type="button" class="btn btn-sm btn-link" wire:click.prevent="addMobileNumber({{ $index }})">Add More</button>
+                                                @error("addresses.$index.mobile_no") <span class="text-danger">{{ $message }}</span> @enderror
+                                            </td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.phone_no"></td>
                                             <td><input type="text" class="form-control" wire:model="addresses.{{ $index }}.email"></td>
                                             <td>
@@ -192,16 +188,12 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-
-
                             </div>
-
                             <div class="row">
                                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                     <button type="button" wire:click.prevent="addAddress" class="btn btn-success">+ Add More</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -318,10 +310,10 @@
             </div>
         </div>
 
+        <!-- Other Settings Card -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-
                     <div class="card-body">
                         <div class="row gy-4">
                             <div class="col-xxl-3 col-md-6">
@@ -331,8 +323,6 @@
                                         <input type="checkbox" class="form-check-input" id="whatsapp_telegram_group" wire:model="whatsapp_telegram_group">
                                         @error('whatsapp_telegram_group') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-xxl-3 col-md-6">
@@ -368,18 +358,12 @@
                                     <button type="button" onclick="window.history.back()" class="btn btn-secondary">Cancel</button>
                                 </div>
                             </div>
-
-                            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </form>
-
-
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

@@ -8,8 +8,9 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Customer;
 use App\Models\Location;
+use App\Models\AddressBook;
 use App\Models\CustomerType;
-
+use App\Models\MobileNumber;
 
 class AddCustomer extends Component
 {
@@ -38,6 +39,8 @@ class AddCustomer extends Component
     public $mobile_app = false;
     public $gst_no;
     public $map_location;
+    public $latitude;
+    public $longitude;
 
     public $addresses = [];
     public $addressTypes;
@@ -71,6 +74,8 @@ class AddCustomer extends Component
         'mobile_app' => 'nullable|boolean',
         'gst_no' => 'nullable|string|max:191',
         'map_location' => 'nullable|string|max:191',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
 
         // AMC validation rules
         'amc_from_date' => 'nullable|date',
@@ -89,7 +94,6 @@ class AddCustomer extends Component
         $this->addresses = array_filter($this->addresses, function ($address) {
             return !empty($address['customer_type_id']);
         });
-
 
         $customer = Customer::create([
             'customer_name' => $this->customer_name,
@@ -111,11 +115,13 @@ class AddCustomer extends Component
             'mobile_app' => $this->mobile_app,
             'gst_no' => $this->gst_no,
             'map_location' => $this->map_location,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ]);
 
         if ($this->amc === 'yes') {
             $customer->amc()->create([
-                'customer_id' =>  $customer->customer_id,
+                'customer_id' => $customer->customer_id,
                 'amc_from_date' => $this->amc_from_date,
                 'amc_to_date' => $this->amc_to_date,
                 'amc_renewal_date' => $this->amc_renewal_date,
@@ -128,8 +134,24 @@ class AddCustomer extends Component
         $primaryAddressId = null;
         if ($this->addresses) {
             foreach ($this->addresses as $index => $address) {
-                $address['customer_id'] = $customer->customer_id;
-                $createdAddress = $customer->addresses()->create($address);
+                $addressData = [
+                    'customer_type_id' => $address['customer_type_id'],
+                    'contact_person' => $address['contact_person'],
+                    'phone_no' => $address['phone_no'],
+                    'email' => $address['email'],
+                    'customer_id' => $customer->customer_id,
+                ];
+
+                $createdAddress = AddressBook::create($addressData);
+
+                foreach ($address['mobile_no'] as $mobileNo) {
+                    if (!is_null($mobileNo) && $mobileNo !== '') {
+                        MobileNumber::create([
+                            'address_id' => $createdAddress->address_id,
+                            'mobile_no' => $mobileNo,
+                        ]);
+                    }
+                }
 
                 if ($index === 0) {
                     $primaryAddressId = $createdAddress->address_id;
@@ -150,10 +172,21 @@ class AddCustomer extends Component
         $this->addresses[] = [
             'customer_type_id' => '',
             'contact_person' => '',
-            'mobile_no' => '',
+            'mobile_no' => [''], // Initialize with one empty mobile number
             'phone_no' => '',
             'email' => '',
         ];
+    }
+
+    public function addMobileNumber($index)
+    {
+        $this->addresses[$index]['mobile_no'][] = ''; // Add a new empty mobile number field
+    }
+
+    public function removeMobileNumber($addressIndex, $mobileIndex)
+    {
+        unset($this->addresses[$addressIndex]['mobile_no'][$mobileIndex]);
+        $this->addresses[$addressIndex]['mobile_no'] = array_values($this->addresses[$addressIndex]['mobile_no']);
     }
 
     public function removeAddress($index)

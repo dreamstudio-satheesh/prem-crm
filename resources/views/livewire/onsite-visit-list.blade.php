@@ -55,8 +55,8 @@
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->contactPerson->name }}</td>
                             <td>{{ $visit->type_of_call }}</td>
-                            <td>{{ $visit->call_start_time }}</td>
-                            <td>{{ $visit->call_end_time }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->service_charges }}</td>
                             <td>{{ $visit->remarks }}</td>

@@ -5,10 +5,11 @@ namespace App\Livewire;
 use App\Models\User;
 use App\Models\Licence;
 use App\Models\Product;
+use Livewire\Component;
 use App\Models\Customer;
 use App\Models\Location;
 use App\Models\CustomerType;
-use Livewire\Component;
+use App\Models\MobileNumber;
 
 class EditCustomer extends Component
 {
@@ -39,6 +40,8 @@ class EditCustomer extends Component
     public $mobile_app;
     public $gst_no;
     public $map_location;
+    public $latitude;
+    public $longitude;
 
     public $addresses = [];
     public $addressTypes;
@@ -72,6 +75,8 @@ class EditCustomer extends Component
         'mobile_app' => 'nullable|boolean',
         'gst_no' => 'nullable|string|max:191',
         'map_location' => 'nullable|string|max:191',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
         'amc_from_date' => 'nullable|date',
         'amc_to_date' => 'nullable|date',
         'amc_renewal_date' => 'nullable|date',
@@ -103,12 +108,14 @@ class EditCustomer extends Component
         $this->mobile_app = $customer->mobile_app;
         $this->gst_no = $customer->gst_no;
         $this->map_location = $customer->map_location;
+        $this->latitude = $customer->latitude;
+        $this->longitude = $customer->longitude;
         $this->addresses = $customer->addresses()->get()->map(function ($address) {
             return [
-                'id' => $address->address_id,
+                'address_id' => $address->address_id,
                 'customer_type_id' => $address->customer_type_id,
                 'contact_person' => $address->contact_person,
-                'mobile_no' => $address->mobile_no,
+                'mobile_no' => MobileNumber::where('address_id', $address->address_id)->pluck('mobile_no')->toArray(),
                 'phone_no' => $address->phone_no,
                 'email' => $address->email,
             ];
@@ -151,6 +158,8 @@ class EditCustomer extends Component
             'mobile_app' => $this->mobile_app,
             'gst_no' => $this->gst_no,
             'map_location' => $this->map_location,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ]);
 
         // Update AMC details
@@ -171,14 +180,34 @@ class EditCustomer extends Component
         }
 
         // Update addresses
-        $this->customer->addresses()->delete();
         foreach ($this->addresses as $address) {
             if (!empty($address['customer_type_id'])) {
-                $address['customer_id'] = $this->customer->customer_id;
-                $createdAddress = $this->customer->addresses()->create($address);
+                $addressData = [
+                    'customer_type_id' => $address['customer_type_id'],
+                    'contact_person' => $address['contact_person'],
+                    'phone_no' => $address['phone_no'],
+                    'email' => $address['email'],
+                    'customer_id' => $this->customer->customer_id,
+                ];
+
+                $createdAddress = $this->customer->addresses()->updateOrCreate(
+                    ['address_id' => $address['address_id']],
+                    $addressData
+                );
+
+                // Save mobile numbers
+                MobileNumber::where('address_id', $createdAddress->address_id)->delete();
+                foreach ($address['mobile_no'] as $mobileNo) {
+                    if (!empty($mobileNo)) {
+                        MobileNumber::create([
+                            'address_id' => $createdAddress->address_id,
+                            'mobile_no' => $mobileNo,
+                        ]);
+                    }
+                }
 
                 // Check if this address is the primary address
-                if ($address['id'] == $this->primary_address_id) {
+                if ($address['address_id'] == $this->primary_address_id) {
                     $this->primary_address_id = $createdAddress->address_id;
                 }
             }
@@ -196,10 +225,10 @@ class EditCustomer extends Component
     public function addAddress()
     {
         $this->addresses[] = [
-            'id' => uniqid(),
+            'address_id' => uniqid(),
             'customer_type_id' => '',
             'contact_person' => '',
-            'mobile_no' => '',
+            'mobile_no' => [''],
             'phone_no' => '',
             'email' => '',
         ];
@@ -209,6 +238,17 @@ class EditCustomer extends Component
     {
         unset($this->addresses[$index]);
         $this->addresses = array_values($this->addresses);
+    }
+
+    public function addMobileNo($addressIndex)
+    {
+        $this->addresses[$addressIndex]['mobile_no'][] = '';
+    }
+
+    public function removeMobileNo($addressIndex, $mobileIndex)
+    {
+        unset($this->addresses[$addressIndex]['mobile_no'][$mobileIndex]);
+        $this->addresses[$addressIndex]['mobile_no'] = array_values($this->addresses[$addressIndex]['mobile_no']);
     }
 
     public function render()

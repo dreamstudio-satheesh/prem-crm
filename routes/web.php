@@ -65,6 +65,10 @@ Route::get('/onsite-visits/{id}/edit', [OnsiteVisitController::class, 'edit'])->
 Route::post('/onsite-visits/{id}', [OnsiteVisitController::class, 'update'])->name('onsite-visits.update');
 
 
+Route::post('/customers', [OnsiteVisitController::class, 'store_customer'])->name('customers.create');
+Route::post('/contact-persons', [OnsiteVisitController::class, 'storeContactPerson']);
+
+
 Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index'); 
 Route::get('online-calls/create', [OnlineCallController::class, 'create'])->name('online-calls.create');
 Route::post('online-calls', [OnlineCallController::class, 'store'])->name('online-calls.store');

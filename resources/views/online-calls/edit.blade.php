@@ -82,7 +82,7 @@
                         <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
                             <option value="">Select Nature of Issue</option>
                             @foreach($issues as $issue)
-                            <option value="{{ $issue->id }}">{{ $issue->name }}</option>
+                            <option   value="{{ $issue->id }}" {{ $visit->nature_of_issue_id == $issue->id ? 'selected' : '' }}>{{ $issue->name }}</option>
                             @endforeach
                         </select>
                         @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -116,6 +116,7 @@
     $(document).ready(function() {
         $('.select2').select2();
 
+
         $('.timepicker').timepicker({
             timeFormat: 'h:i:s A',
             interval: 1,
@@ -128,7 +129,7 @@
             var customerId = $(this).val();
             if (customerId) {
                 $.ajax({
-                    url: 'onsite-visits/contact-persons/' + customerId,
+                    url: '/onsite-visits/contact-persons/' + customerId,
                     type: 'GET',
                     success: function(data) {
                         $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
@@ -138,7 +139,6 @@
                         $('#contact_person_id').trigger('change');
                         $('#contact-person-wrapper').show();
 
-                        // Set type of call based on customer AMC status
                         if (data.customerAmc == 'yes') {
                             $('#type_of_call').val('AMC Call');
                         } else {
@@ -160,7 +160,7 @@
             var contactPersonId = $(this).val();
             if (contactPersonId) {
                 $.ajax({
-                    url: 'onsite-visits/contact-person-mobile/' + contactPersonId,
+                    url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
                     type: 'GET',
                     success: function(data) {
                         $('#contact_person_mobile').val(data.mobile_no);
@@ -173,50 +173,22 @@
             }
         });
 
-        // Handle form submission with AJAX
-        $('#online-call-form').on('submit', function(e) {
-            e.preventDefault();
-
+        document.getElementById('online-call-form').onsubmit = function() {
             // Format time fields using moment.js
             let callStartTime = moment($('#call_start_time').val(), 'h:mm:ss A').format('h:mm:ss A');
             let callEndTime = $('#call_end_time').val() ? moment($('#call_end_time').val(), 'h:mm:ss A').format('h:mm:ss A') : null;
 
-            let formData = $(this).serializeArray();
-
-            // Remove any existing call_start_time and call_end_time fields
-            formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
-
-            formData.push({
-                name: 'call_start_time',
-                value: callStartTime
-            });
-            formData.push({
-                name: 'call_end_time',
-                value: callEndTime
-            });
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: formData,
-                success: function(response) {
-                    window.location.href = '/online-calls';
-                },
-                error: function(xhr) {
-                    console.error('Submission error:', xhr.responseText);
-                    // Handle validation errors
-                    // Display the validation error messages
-                }
-            });
-        });
+            // Update the form fields
+            $('#call_start_time').val(callStartTime);
+            $('#call_end_time').val(callEndTime);
+        };
     });
 
-
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const statusOfCallElement = document.getElementById('status_of_call');
         const callTypeInput = document.getElementById('call_type');
 
-        statusOfCallElement.addEventListener('change', function () {
+        statusOfCallElement.addEventListener('change', function() {
             const selectedValue = this.value;
 
             if (selectedValue === 'onsite_visit') {

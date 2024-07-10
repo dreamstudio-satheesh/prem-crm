@@ -36,7 +36,7 @@
 
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
-                        <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" readonly>
+                        <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" >
                     </div>
 
                     <div class="col-md-4 mb-3" id="type-of-call-wrapper" style="display: none;">
@@ -51,7 +51,7 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="call_start_time" class="form-label">Call Start Time</label>
-                        <input type="text" id="call_start_time" name="call_start_time" class="form-control timepicker">
+                        <input type="text" id="call_start_time" name="call_start_time" class="form-control timepicker" readonly>
                         @error('call_start_time') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
@@ -75,7 +75,7 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="status_of_call" class="form-label">Status of the Call</label>
-                        <select id="status_of_call" id="status_of_call"  name="status_of_call" class="form-control">
+                        <select id="status_of_call" id="status_of_call" name="status_of_call" class="form-control">
                             <option value="">Select Status</option>
                             <option value="completed">Completed</option>
                             <option value="pending">Pending</option>
@@ -111,8 +111,6 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-
-        
         $('.select2').select2();
 
         // Initialize Select2 for customer dropdown
@@ -148,6 +146,12 @@
                         $.each(data.contactPersons, function(key, value) {
                             $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
                         });
+
+                        // Set the contact person address ID if it matches primary_address_id
+                        if (data.primaryAddressId) {
+                            $('#contact_person_id').val(data.primaryAddressId).trigger('change');
+                        }
+
                         $('#contact_person_id').trigger('change');
                         $('#contact-person-wrapper').show();
 
@@ -198,50 +202,22 @@
             $('#call_end_time').val(now);
         }, 1000);
 
-        // Handle form submission with AJAX
-        $('#onsite-visit-form').on('submit', function(e) {
-            e.preventDefault();
-
+        document.getElementById('onsite-visit-form').onsubmit = function() {
             // Format time fields using moment.js
             let callStartTime = moment($('#call_start_time').val(), 'h:mm:ss A').format('h:mm:ss A');
             let callEndTime = $('#call_end_time').val() ? moment($('#call_end_time').val(), 'h:mm:ss A').format('h:mm:ss A') : null;
 
-            let formData = $(this).serializeArray();
-
-            // Remove any existing call_start_time and call_end_time fields
-            formData = formData.filter(item => item.name !== 'call_start_time' && item.name !== 'call_end_time');
-
-            formData.push({
-                name: 'call_start_time',
-                value: callStartTime
-            });
-            formData.push({
-                name: 'call_end_time',
-                value: callEndTime
-            });
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: formData,
-                success: function(response) {
-                    window.location.href = '/onsite-visits';
-                },
-                error: function(xhr) {
-                    console.error('Submission error:', xhr.responseText);
-                    // Handle validation errors
-                    // Display the validation error messages
-                }
-            });
-        });
+            // Update the form fields
+            $('#call_start_time').val(callStartTime);
+            $('#call_end_time').val(callEndTime);
+        };
     });
 
-
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const statusOfCallElement = document.getElementById('status_of_call');
         const callTypeInput = document.getElementById('call_type');
 
-        statusOfCallElement.addEventListener('change', function () {
+        statusOfCallElement.addEventListener('change', function() {
             const selectedValue = this.value;
 
             if (selectedValue === 'online_call') {
