@@ -67,6 +67,7 @@ Route::post('/onsite-visits/{id}', [OnsiteVisitController::class, 'update'])->na
 
 Route::post('/customers', [OnsiteVisitController::class, 'store_customer'])->name('customers.create');
 Route::post('/contact-persons', [OnsiteVisitController::class, 'storeContactPerson']);
+Route::get('/customer-types', [OnsiteVisitController::class, 'getCustomerTypes']);
 
 
 Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index'); 

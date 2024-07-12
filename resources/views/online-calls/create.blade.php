@@ -170,6 +170,12 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-xxl-12">
+                                <label for="customer_type_id" class="form-label">Customer Type</label>
+                                <select id="customer_type_id" name="customer_type_id" class="form-control">
+                                  
+                                </select>
+                            </div>
+                            <div class="col-xxl-12">
                                 <div>
                                     <label for="contact_person" class="form-label">Contact Person Name</label>
                                     <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Enter contact person name" required>
@@ -261,9 +267,31 @@
             }
         });
 
+
+        function loadCustomerTypes() {
+            $.ajax({
+                url: '/customer-types', // Ensure this URL is set to wherever your customer types can be fetched from
+                type: 'GET',
+                success: function(data) {
+                    var select = $('#customer_type_id');
+                    select.empty().append('<option value="">Select Customer Type</option>');
+                    $.each(data, function(index, type) {
+                        select.append($('<option>', {
+                            value: type.id,
+                            text: type.name
+                        }));
+                    });
+                },
+                error: function(error) {
+                    console.log('Error loading customer types:', error.responseText);
+                }
+            });
+        }
+
         $('#contact_person_id').on('change', function() {
             var contactPersonId = $(this).val();
             if (contactPersonId === 'new_contact_person') {
+                loadCustomerTypes();
                 $('#addContactPersonModal').modal('show');
             } else if (contactPersonId) {
                 // Fetch and display contact person mobile numbers
@@ -316,7 +344,7 @@
             $('#call_type').val(this.value === 'onsite_visit' ? 'onsite_visit' : 'online_call');
         });
 
-          // Handle the form submission for adding a new customer
+        // Handle the form submission for adding a new customer
         $('#addCustomerForm').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
@@ -354,8 +382,8 @@
             });
         });
 
-        
-        
+
+
 
 
     });

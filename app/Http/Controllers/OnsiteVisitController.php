@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
+use App\Models\CustomerType;
 use App\Models\MobileNumber;
 use Illuminate\Http\Request;
 use App\Models\NatureOfIssue;
@@ -33,6 +34,12 @@ class OnsiteVisitController extends Controller
         ]);
 
         return response()->json(['customer' => $customer]);
+    }
+
+    public function getCustomerTypes()
+    {
+        $customerTypes = CustomerType::all();
+        return response()->json($customerTypes);
     }
 
 
