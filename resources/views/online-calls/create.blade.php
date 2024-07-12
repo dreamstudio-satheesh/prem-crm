@@ -300,6 +300,11 @@
             );
         });
 
+        setTimeout(() => {
+            let now = moment().format('h:mm:ss A');
+            $('#call_start_time').val(now);
+        }, 2000);
+
         // Set call end time continuously
         setInterval(() => {
             let now = moment().format('h:mm:ss A');
