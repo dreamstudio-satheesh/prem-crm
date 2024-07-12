@@ -38,8 +38,11 @@
 
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
-                        <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control">
+                        <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
+                        <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
+                        <button type="button" class="btn btn-link" id="add-mobile-number">Add More Mobile Numbers</button>
                     </div>
+
 
                     <div class="col-md-4 mb-3" id="type-of-call-wrapper" style="display: none;">
                         <label for="type_of_call" class="form-label">Type Of Call</label>
@@ -92,6 +95,17 @@
                         <input type="number" id="service_charges" name="service_charges" class="form-control">
                         @error('service_charges') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="staff_id" class="form-label">Assigned Staff</label>
+                        <select id="staff_id" name="staff_id" class="form-control select2">
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
 
                     <div class="col-md-4 mb-3">
                         <label for="remarks" class="form-label">Remarks</label>
@@ -200,9 +214,7 @@
             }, 50);
         });
 
-        // Trigger the open event to focus on the search input on page load
-        customerSelect.select2('open');
-
+        // Initialize timepicker
         $('.timepicker').timepicker({
             timeFormat: 'h:i:s A',
             interval: 1,
@@ -211,12 +223,17 @@
             scrollbar: true
         });
 
+        // Fetch and display contact persons based on customer selection
         $('#customer_id').on('change', function() {
             var customerId = $(this).val();
             if (customerId === 'new_customer') {
                 $('#addCustomerModal').modal('show');
                 return;
             }
+
+            // Set customer ID in the hidden input for the Add Contact Person Form
+            $('#modal_customer_id').val(customerId);
+
             if (customerId) {
                 $.ajax({
                     url: '/onsite-visits/contact-persons/' + customerId,
@@ -227,22 +244,13 @@
                             $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
                         });
 
-                        // Add New Contact Person option
+                        // Add option to add new contact person
                         $('#contact_person_id').append('<option value="new_contact_person">Add New Contact Person</option>');
 
-                        // Set the contact person address ID if it matches primary_address_id
                         if (data.primaryAddressId) {
                             $('#contact_person_id').val(data.primaryAddressId).trigger('change');
                         }
-
-                        $('#contact_person_id').trigger('change');
                         $('#contact-person-wrapper').show();
-
-                        if (data.customerAmc == 'yes') {
-                            $('#type_of_call').val('AMC Call');
-                        } else {
-                            $('#type_of_call').val('PER Call');
-                        }
                         $('#type-of-call-wrapper').show();
                     }
                 });
@@ -250,97 +258,86 @@
                 $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
                 $('#contact-person-wrapper').hide();
                 $('#type-of-call-wrapper').hide();
-                $('#contact_person_mobile').val('');
-                $('#contact-person-mobile-wrapper').hide();
             }
         });
 
         $('#contact_person_id').on('change', function() {
             var contactPersonId = $(this).val();
             if (contactPersonId === 'new_contact_person') {
-                var customerId = $('#customer_id').val();
-                $('#modal_customer_id').val(customerId); // Set the customer ID in the modal form
                 $('#addContactPersonModal').modal('show');
-                return;
-            }
-            if (contactPersonId) {
+            } else if (contactPersonId) {
+                // Fetch and display contact person mobile numbers
                 $.ajax({
                     url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
                     type: 'GET',
                     success: function(data) {
-                        $('#contact_person_mobile').val(data.mobile_no);
+                        var mobilesContainer = $('#contact_person_mobiles');
+                        mobilesContainer.empty(); // Clear existing content
+
+                        if (data.mobile_no && data.mobile_no.length > 0) {
+                            data.mobile_no.forEach(function(mobileNumber) {
+                                mobilesContainer.append(`<input type="text" class="form-control mt-2" value="${mobileNumber}" readonly>`);
+                            });
+                        } else {
+                            mobilesContainer.append('<input type="text" class="form-control mt-2" value="No mobile number available" readonly>');
+                        }
                         $('#contact-person-mobile-wrapper').show();
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
                     }
                 });
             } else {
-                $('#contact_person_mobile').val('');
+                $('#contact_person_mobiles').empty();
                 $('#contact-person-mobile-wrapper').hide();
             }
         });
 
-        setTimeout(() => {
-            let now = moment().format('h:mm:ss A');
-            $('#call_start_time').val(now);
-        }, 2000);
-
-        setInterval(() => {
-            let now = moment().format('h:mm:ss A');
-            $('#call_end_time').val(now);
-        }, 1000);
-
-        document.getElementById('status_of_call').addEventListener('change', function() {
-            const callTypeInput = document.getElementById('call_type');
-            if (this.value === 'onsite_visit') {
-                callTypeInput.value = 'onsite_visit';
-            } else {
-                callTypeInput.value = 'online_call';
-            }
-        });
-
-        // Handle the form submission for adding a new customer
-        $('#addCustomerForm').on('submit', function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: '/customers', // Update this URL to your route for creating a customer
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    $('#addCustomerModal').modal('hide');
-                    $('#customer_id').append('<option value="' + response.customer.customer_id + '">' + response.customer.customer_name + '</option>');
-                    $('#customer_id').val(response.customer.customer_id).trigger('change');
-                },
-                error: function(xhr) {
-                    console.error('Error creating customer:', xhr.responseText);
-                    // Handle validation errors
-                }
-            });
-        });
-
-        // Handle adding more mobile number fields
+        // Handle adding more mobile number fields dynamically
         $('#add-mobile-number').on('click', function() {
             $('#additional-mobile-numbers').append(
                 '<input type="text" class="form-control mt-2" name="contact_person_mobile[]" placeholder="Enter mobile number" required>'
             );
         });
 
-        // Handle the form submission for adding a new contact person
-        $('#addContactPersonForm').on('submit', function(e) {
+        // Set call end time continuously
+        setInterval(() => {
+            let now = moment().format('h:mm:ss A');
+            $('#call_end_time').val(now);
+        }, 1000);
+
+        // Change the call type based on status selection
+        $('#status_of_call').change(function() {
+            $('#call_type').val(this.value === 'onsite_visit' ? 'onsite_visit' : 'online_call');
+        });
+
+        // Form submission handlers for adding new customer and contact person
+        $('#addCustomerForm, #addContactPersonForm').on('submit', function(e) {
             e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
             $.ajax({
-                url: '/contact-persons', // Update this URL to your route for creating a contact person
+                url: url,
                 method: 'POST',
-                data: $(this).serialize(),
+                data: form.serialize(),
                 success: function(response) {
-                    $('#addContactPersonModal').modal('hide');
-                    $('#contact_person_id').append('<option value="' + response.contactPerson.address_id + '">' + response.contactPerson.contact_person + '</option>');
-                    $('#contact_person_id').val(response.contactPerson.address_id).trigger('change');
+                    if (form.attr('id') === 'addCustomerForm') {
+                        $('#addCustomerModal').modal('hide');
+                        $('#customer_id').append('<option value="' + response.customer.customer_id + '">' + response.customer.customer_name + '</option>');
+                        $('#customer_id').val(response.customer.customer_id).trigger('change');
+                    } else if (form.attr('id') === 'addContactPersonForm') {
+                        $('#addContactPersonModal').modal('hide');
+                        $('#contact_person_id').append('<option value="' + response.contactPerson.address_id + '">' + response.contactPerson.contact_person + '</option>');
+                        $('#contact_person_id').val(response.contactPerson.address_id).trigger('change');
+                    }
                 },
                 error: function(xhr) {
-                    console.error('Error creating contact person:', xhr.responseText);
-                    // Handle validation errors
+                    console.error('Error:', xhr.responseText);
                 }
             });
         });
     });
 </script>
+
 @endpush

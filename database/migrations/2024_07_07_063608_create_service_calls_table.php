@@ -22,11 +22,12 @@ return new class extends Migration
             $table->enum('status_of_call', ['completed', 'pending']);
             $table->unsignedBigInteger('nature_of_issue_id');
             $table->decimal('service_charges', 8, 2)->nullable();
+            $table->unsignedBigInteger('staff_id')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
         
             $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');
-            $table->foreign('contact_person_id')->references('customer_id')->on('address_books')->onDelete('cascade');
+            $table->foreign('contact_person_id')->references('address_id')->on('address_books')->onDelete('cascade'); 
         });
         
     }

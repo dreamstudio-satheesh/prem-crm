@@ -74,11 +74,15 @@ class OnsiteVisitController extends Controller
 
     public function getContactPersonMobile($contactPersonId)
     {
-        $contactPerson = AddressBook::where('address_id', $contactPersonId)->first();
-        if (!$contactPerson) {
+        $mobileNumbers = MobileNumber::where('address_id', $contactPersonId)->get();
+
+        if ($mobileNumbers->isEmpty()) {
             return response()->json(['error' => 'Contact person not found'], 404);
         }
-        return response()->json(['mobile_no' => $contactPerson->mobile_no]);
+
+        $numbers = $mobileNumbers->pluck('mobile_no');  // Collects all numbers into a simple array
+
+        return response()->json(['mobile_no' => $numbers]);
     }
 
     public function store(Request $request)

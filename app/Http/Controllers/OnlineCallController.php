@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
@@ -15,7 +16,9 @@ class OnlineCallController extends Controller
     {
         $customers = Customer::all();
         $issues = NatureOfIssue::all();
-        return view('online-calls.create', compact('customers', 'issues'));
+        $staffId = auth()->id(); 
+        $users = User::all(); 
+        return view('online-calls.create', compact('customers', 'issues', 'staffId', 'users'));
     }
 
 

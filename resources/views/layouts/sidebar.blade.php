@@ -67,7 +67,7 @@
 
                                     <li class="nav-item">
                                         <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
-                                            Desigination
+                                            Designation
                                         </a>
                                     </li>
 
