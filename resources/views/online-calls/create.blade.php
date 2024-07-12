@@ -316,32 +316,48 @@
             $('#call_type').val(this.value === 'onsite_visit' ? 'onsite_visit' : 'online_call');
         });
 
-        // Form submission handlers for adding new customer and contact person
-        $('#addCustomerForm, #addContactPersonForm').on('submit', function(e) {
+          // Handle the form submission for adding a new customer
+        $('#addCustomerForm').on('submit', function(e) {
             e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-
             $.ajax({
-                url: url,
+                url: '/customers', // Update this URL to your route for creating a customer
                 method: 'POST',
-                data: form.serialize(),
+                data: $(this).serialize(),
                 success: function(response) {
-                    if (form.attr('id') === 'addCustomerForm') {
-                        $('#addCustomerModal').modal('hide');
-                        $('#customer_id').append('<option value="' + response.customer.customer_id + '">' + response.customer.customer_name + '</option>');
-                        $('#customer_id').val(response.customer.customer_id).trigger('change');
-                    } else if (form.attr('id') === 'addContactPersonForm') {
-                        $('#addContactPersonModal').modal('hide');
-                        $('#contact_person_id').append('<option value="' + response.contactPerson.address_id + '">' + response.contactPerson.contact_person + '</option>');
-                        $('#contact_person_id').val(response.contactPerson.address_id).trigger('change');
-                    }
+                    $('#addCustomerModal').modal('hide');
+                    $('#customer_id').append('<option value="' + response.customer.customer_id + '">' + response.customer.customer_name + '</option>');
+                    $('#customer_id').val(response.customer.customer_id).trigger('change');
                 },
                 error: function(xhr) {
-                    console.error('Error:', xhr.responseText);
+                    console.error('Error creating customer:', xhr.responseText);
+                    // Handle validation errors
                 }
             });
         });
+
+        // Handle the form submission for adding a new contact person
+        $('#addContactPersonForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/contact-persons', // Update this URL to your route for creating a contact person
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#addContactPersonModal').modal('hide');
+                    $('#contact_person_id').append('<option value="' + response.contactPerson.address_id + '">' + response.contactPerson.contact_person + '</option>');
+                    $('#contact_person_id').val(response.contactPerson.address_id).trigger('change');
+                },
+                error: function(xhr) {
+                    console.error('Error creating contact person:', xhr.responseText);
+                    // Handle validation errors
+                }
+            });
+        });
+
+        
+        
+
+
     });
 </script>
 
