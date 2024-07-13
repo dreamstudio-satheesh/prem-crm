@@ -5,14 +5,14 @@
     <div class="card">
         <div class="card-header align-items-center d-flex">
             <div class="col">
-                <h4 class="card-title mb-0 flex-grow-1">Create Onsite Visit</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Create Onsite Visit Calls</h4>
             </div>
             <div class="col-auto">
-                <a href="{{ route('onsite-visits.index') }}" class="btn btn-secondary">Back to List</a>
+                <a href="{{ route('online-calls.index') }}" class="btn btn-secondary">Back to List</a>
             </div>
         </div>
         <div class="card-body">
-            <form id="onsite-visit-form" action="{{ route('onsite-visits.store') }}" method="POST">
+            <form id="online-call-form" action="{{ route('online-calls.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-4 mb-3">
@@ -22,6 +22,7 @@
                             @foreach($customers as $customer)
                             <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
                             @endforeach
+                            <option value="new_customer">Add New Customer</option>
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
@@ -30,14 +31,18 @@
                         <label for="contact_person_id" class="form-label">Contact Person</label>
                         <select id="contact_person_id" name="contact_person_id" class="form-control select2">
                             <option value="">Select Contact Person</option>
+                            <option value="new_contact_person">Add New Contact Person</option>
                         </select>
                         @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
-                        <input type="text" id="contact_person_mobile" name="contact_person_mobile" class="form-control" >
+                        <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
+                        <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
+                        <button type="button" class="btn btn-link" id="add-mobile-number">Add More Mobile Numbers</button>
                     </div>
+
 
                     <div class="col-md-4 mb-3" id="type-of-call-wrapper" style="display: none;">
                         <label for="type_of_call" class="form-label">Type Of Call</label>
@@ -62,6 +67,19 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
+                        <label for="status_of_call" class="form-label">Status of the Call</label>
+                        <select id="status_of_call" name="status_of_call" class="form-control">
+                            <option value="">Select Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="pending">Pending</option>
+                            <option value="online_call">Online Calls</option>
+                        </select>
+                        @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+
+                        <input type="hidden" name="call_type" id="call_type" value="online_call"> <!-- Hidden input -->
+                    </div>
+
+                    <div class="col-md-4 mb-3">
                         <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
                         <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
                             <option value="">Select Nature of Issue</option>
@@ -72,25 +90,22 @@
                         @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-
-                    <div class="col-md-4 mb-3">
-                        <label for="status_of_call" class="form-label">Status of the Call</label>
-                        <select id="status_of_call" id="status_of_call" name="status_of_call" class="form-control">
-                            <option value="">Select Status</option>
-                            <option value="completed">Completed</option>
-                            <option value="pending">Pending</option>
-                            <option value="online_call">Online Call</option>
-                        </select>
-                        @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
-
-                        <input type="hidden" name="call_type" id="call_type" value="onsite_visit"> <!-- Hidden input -->
-                    </div>
-
                     <div class="col-md-4 mb-3">
                         <label for="service_charges" class="form-label">Service Charges</label>
                         <input type="number" id="service_charges" name="service_charges" class="form-control">
                         @error('service_charges') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="staff_id" class="form-label">Assigned Staff</label>
+                        <select id="staff_id" name="staff_id" class="form-control select2">
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
 
                     <div class="col-md-4 mb-3">
                         <label for="remarks" class="form-label">Remarks</label>
@@ -99,12 +114,93 @@
                     </div>
 
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary">Create Onsite Visit</button>
+                        <button type="submit" class="btn btn-primary">Create Online Calls</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Modal for Adding New Customer -->
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addCustomerForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="customer_name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter customer name" required>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="tally_serial_no" class="form-label">Tally Serial No</label>
+                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number" required>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding New Contact Person -->
+    <div class="modal fade" id="addContactPersonModal" tabindex="-1" aria-labelledby="addContactPersonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactPersonModalLabel">Add New Contact Person</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addContactPersonForm">
+                    @csrf
+                    <input type="hidden" id="modal_customer_id" name="customer_id">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <label for="customer_type_id" class="form-label">Customer Type</label>
+                                <select id="customer_type_id" name="customer_type_id" class="form-control">
+                                  
+                                </select>
+                            </div>
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="contact_person" class="form-label">Contact Person Name</label>
+                                    <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Enter contact person name" required>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
+                                    <input type="text" class="form-control" id="contact_person_mobile" name="contact_person_mobile[]" placeholder="Enter mobile number" required>
+                                    <div id="additional-mobile-numbers"></div>
+                                    <button type="button" class="btn btn-link" id="add-mobile-number">Add More Mobile Numbers</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Contact Person</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 @endsection
 
@@ -124,9 +220,7 @@
             }, 50);
         });
 
-        // Trigger the open event to focus on the search input on page load
-        customerSelect.select2('open');
-
+        // Initialize timepicker
         $('.timepicker').timepicker({
             timeFormat: 'h:i:s A',
             interval: 1,
@@ -135,8 +229,17 @@
             scrollbar: true
         });
 
+        // Fetch and display contact persons based on customer selection
         $('#customer_id').on('change', function() {
             var customerId = $(this).val();
+            if (customerId === 'new_customer') {
+                $('#addCustomerModal').modal('show');
+                return;
+            }
+
+            // Set customer ID in the hidden input for the Add Contact Person Form
+            $('#modal_customer_id').val(customerId);
+
             if (customerId) {
                 $.ajax({
                     url: '/onsite-visits/contact-persons/' + customerId,
@@ -147,20 +250,13 @@
                             $('#contact_person_id').append('<option value="' + value.address_id + '">' + value.contact_person + '</option>');
                         });
 
-                        // Set the contact person address ID if it matches primary_address_id
+                        // Add option to add new contact person
+                        $('#contact_person_id').append('<option value="new_contact_person">Add New Contact Person</option>');
+
                         if (data.primaryAddressId) {
                             $('#contact_person_id').val(data.primaryAddressId).trigger('change');
                         }
-
-                        $('#contact_person_id').trigger('change');
                         $('#contact-person-wrapper').show();
-
-                        // Set type of call based on customer AMC status
-                        if (data.customerAmc == 'yes') {
-                            $('#type_of_call').val('AMC Call');
-                        } else {
-                            $('#type_of_call').val('PER Call');
-                        }
                         $('#type-of-call-wrapper').show();
                     }
                 });
@@ -168,64 +264,129 @@
                 $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
                 $('#contact-person-wrapper').hide();
                 $('#type-of-call-wrapper').hide();
-                $('#contact_person_mobile').val('');
-                $('#contact-person-mobile-wrapper').hide();
             }
         });
 
+
+        function loadCustomerTypes() {
+            $.ajax({
+                url: '/customer-types', // Ensure this URL is set to wherever your customer types can be fetched from
+                type: 'GET',
+                success: function(data) {
+                    var select = $('#customer_type_id');
+                    select.empty().append('<option value="">Select Customer Type</option>');
+                    $.each(data, function(index, type) {
+                        select.append($('<option>', {
+                            value: type.id,
+                            text: type.name
+                        }));
+                    });
+                },
+                error: function(error) {
+                    console.log('Error loading customer types:', error.responseText);
+                }
+            });
+        }
+
         $('#contact_person_id').on('change', function() {
             var contactPersonId = $(this).val();
-            if (contactPersonId) {
+            if (contactPersonId === 'new_contact_person') {
+                loadCustomerTypes();
+                $('#addContactPersonModal').modal('show');
+            } else if (contactPersonId) {
+                // Fetch and display contact person mobile numbers
                 $.ajax({
                     url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
                     type: 'GET',
                     success: function(data) {
-                        $('#contact_person_mobile').val(data.mobile_no);
+                        var mobilesContainer = $('#contact_person_mobiles');
+                        mobilesContainer.empty(); // Clear existing content
+
+                        if (data.mobile_no && data.mobile_no.length > 0) {
+                            data.mobile_no.forEach(function(mobileNumber) {
+                                mobilesContainer.append(`<input type="text" class="form-control mt-2" value="${mobileNumber}" readonly>`);
+                            });
+                        } else {
+                            mobilesContainer.append('<input type="text" class="form-control mt-2" value="No mobile number available" readonly>');
+                        }
                         $('#contact-person-mobile-wrapper').show();
+                    },
+                    error: function(xhr) {
+                        console.log('Error:', xhr.responseText);
                     }
                 });
             } else {
-                $('#contact_person_mobile').val('');
+                $('#contact_person_mobiles').empty();
                 $('#contact-person-mobile-wrapper').hide();
             }
         });
 
-        // Set call start time after 2 seconds
+        // Handle adding more mobile number fields dynamically
+        $('#add-mobile-number').on('click', function() {
+            $('#additional-mobile-numbers').append(
+                '<input type="text" class="form-control mt-2" name="contact_person_mobile[]" placeholder="Enter mobile number" required>'
+            );
+        });
+
         setTimeout(() => {
             let now = moment().format('h:mm:ss A');
             $('#call_start_time').val(now);
         }, 2000);
 
-        // Update call end time every second
+        // Set call end time continuously
         setInterval(() => {
             let now = moment().format('h:mm:ss A');
             $('#call_end_time').val(now);
         }, 1000);
 
-        document.getElementById('onsite-visit-form').onsubmit = function() {
-            // Format time fields using moment.js
-            let callStartTime = moment($('#call_start_time').val(), 'h:mm:ss A').format('h:mm:ss A');
-            let callEndTime = $('#call_end_time').val() ? moment($('#call_end_time').val(), 'h:mm:ss A').format('h:mm:ss A') : null;
-
-            // Update the form fields
-            $('#call_start_time').val(callStartTime);
-            $('#call_end_time').val(callEndTime);
-        };
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const statusOfCallElement = document.getElementById('status_of_call');
-        const callTypeInput = document.getElementById('call_type');
-
-        statusOfCallElement.addEventListener('change', function() {
-            const selectedValue = this.value;
-
-            if (selectedValue === 'online_call') {
-                callTypeInput.value = 'online_call';
-            } else {
-                callTypeInput.value = 'onsite_visit'; // Default call type
-            }
+        // Change the call type based on status selection
+        $('#status_of_call').change(function() {
+            $('#call_type').val(this.value === 'online_call' ? 'online_call' : 'onsite_visit');
         });
+
+        // Handle the form submission for adding a new customer
+        $('#addCustomerForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/customers', // Update this URL to your route for creating a customer
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#addCustomerModal').modal('hide');
+                    $('#customer_id').append('<option value="' + response.customer.customer_id + '">' + response.customer.customer_name + '</option>');
+                    $('#customer_id').val(response.customer.customer_id).trigger('change');
+                },
+                error: function(xhr) {
+                    console.error('Error creating customer:', xhr.responseText);
+                    // Handle validation errors
+                }
+            });
+        });
+
+        // Handle the form submission for adding a new contact person
+        $('#addContactPersonForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/contact-persons', // Update this URL to your route for creating a contact person
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#addContactPersonModal').modal('hide');
+                    $('#contact_person_id').append('<option value="' + response.contactPerson.address_id + '">' + response.contactPerson.contact_person + '</option>');
+                    $('#contact_person_id').val(response.contactPerson.address_id).trigger('change');
+                },
+                error: function(xhr) {
+                    console.error('Error creating contact person:', xhr.responseText);
+                    // Handle validation errors
+                }
+            });
+        });
+
+
+
+
+
     });
 </script>
+
 @endpush

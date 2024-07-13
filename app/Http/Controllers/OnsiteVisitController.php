@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
@@ -17,7 +18,9 @@ class OnsiteVisitController extends Controller
     {
         $customers = Customer::all();
         $issues = NatureOfIssue::all();
-        return view('onsite-visits.create', compact('customers', 'issues')); // Modify this line
+        $staffId = auth()->id(); 
+        $users = User::all(); 
+        return view('onsite-visits.create', compact('customers', 'issues', 'staffId', 'users'));
     }
 
 
