@@ -104,7 +104,7 @@ class OnsiteVisitController extends Controller
             'call_start_time' => 'required',
             'call_end_time' => 'required',
             'status_of_call' => 'required|in:completed,pending,online_call',
-            'nature_of_issue_id' => 'required|exists:nature_of_issues,id', // Add this line
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id', 
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
@@ -122,7 +122,7 @@ class OnsiteVisitController extends Controller
             'call_start_time' => $callStartTime,
             'call_end_time' => $callEndTime,
             'status_of_call' => $statusOfCall,
-            'nature_of_issue_id' => $request->nature_of_issue_id, // Add this line
+            'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);

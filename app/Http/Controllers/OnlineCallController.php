@@ -56,10 +56,10 @@ class OnlineCallController extends Controller
         ]);
 
         if ($request->ajax()) {
-            return response()->json(['success' => 'Onsite Visit Created Successfully.']);
+            return response()->json(['success' => 'Online Calls Created Successfully.']);
         }
 
-        return redirect()->route('online-calls.index')->with('success', 'Onsite Visit Created Successfully.');
+        return redirect()->route('online-calls.index')->with('success', 'Online Calls Created Successfully.');
     }
 
 
