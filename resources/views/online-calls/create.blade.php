@@ -185,8 +185,7 @@
                                 <div>
                                     <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
                                     <input type="text" class="form-control" id="contact_person_mobile" name="contact_person_mobile[]" placeholder="Enter mobile number" required>
-                                    <div id="additional-mobile-numbers"></div>
-                                    <button type="button" class="btn btn-link" id="add-mobile-number">Add More Mobile Numbers</button>
+                                   
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
