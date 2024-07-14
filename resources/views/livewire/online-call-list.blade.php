@@ -53,8 +53,8 @@
                         <tr>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
-                            <td>{{ $visit->type_of_call }}</td>
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
+                            <td>{{ $visit->type_of_call }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
                             <td>

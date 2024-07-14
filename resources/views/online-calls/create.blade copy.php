@@ -55,9 +55,15 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="booking_time" class="form-label">Call Booking Time</label>
-                        <input type="text" id="booking_time" name="booking_time" class="form-control timepicker" readonly>
-                        @error('booking_time') <span class="text-danger">{{ $message }}</span> @enderror
+                        <label for="call_start_time" class="form-label">Call Start Time</label>
+                        <input type="text" id="call_start_time" name="call_start_time" class="form-control timepicker" readonly>
+                        @error('call_start_time') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="call_end_time" class="form-label">Call End Time</label>
+                        <input type="text" id="call_end_time" name="call_end_time" class="form-control timepicker" readonly>
+                        @error('call_end_time') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -73,17 +79,6 @@
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
 
                         <input type="hidden" name="call_type" id="call_type" value="online_call"> <!-- Hidden input -->
-                    </div>
-
-
-                    <div class="col-md-4 mb-3">
-                        <label for="staff_id" class="form-label">Executive</label>
-                        <select id="staff_id" name="staff_id" class="form-control select2">
-                            @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -103,7 +98,15 @@
                         @error('service_charges') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-
+                    <div class="col-md-4 mb-3">
+                        <label for="staff_id" class="form-label">Assigned Staff</label>
+                        <select id="staff_id" name="staff_id" class="form-control select2">
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
 
                     <div class="col-md-4 mb-3">
@@ -171,7 +174,7 @@
                             <div class="col-xxl-12">
                                 <label for="customer_type_id" class="form-label">Customer Type</label>
                                 <select id="customer_type_id" name="customer_type_id" class="form-control">
-
+                                  
                                 </select>
                             </div>
                             <div class="col-xxl-12">
@@ -184,7 +187,7 @@
                                 <div>
                                     <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
                                     <input type="text" class="form-control" id="contact_person_mobile" name="contact_person_mobile[]" placeholder="Enter mobile number" required>
-
+                                   
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
@@ -328,7 +331,7 @@
 
         setTimeout(() => {
             let now = moment().format('h:mm:ss A');
-            $('#booking_time').val(now);
+            $('#call_start_time').val(now);
         }, 2000);
 
         // Set call end time continuously
@@ -337,7 +340,11 @@
             $('#call_end_time').val(now);
         }, 1000);
 
-        
+        // Change the call type based on status selection
+        $('#status_of_call').change(function() {
+            $('#call_type').val(this.value === 'onsite_visit' ? 'onsite_visit' : 'online_call');
+        });
+
         // Handle the form submission for adding a new customer
         $('#addCustomerForm').on('submit', function(e) {
             e.preventDefault();
