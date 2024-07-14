@@ -72,7 +72,7 @@
                             <option value="">Select Status</option>
                             <option selected value="pending">Pending</option>
                             <option value="on_process">On Process</option>
-                            <option value="follow_up">Follow Up Customer</option>
+                            <option value="follow_up">Follow Up</option>
                             <option value="completed">Completed</option>
                             <option value="online_call">Online Calls</option>
                         </select>

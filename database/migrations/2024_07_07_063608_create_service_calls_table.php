@@ -19,7 +19,8 @@ return new class extends Migration
             $table->enum('call_type', ['onsite_visit', 'online_call']);
             $table->timestamp('call_start_time');
             $table->timestamp('call_end_time')->nullable();
-            $table->enum('status_of_call', ['completed', 'pending']);
+            $table->timestamp('follow_up_date')->nullable();
+            $table->enum('status_of_call', ['completed', 'pending','on_process','follow_up']);
             $table->unsignedBigInteger('nature_of_issue_id');
             $table->decimal('service_charges', 8, 2)->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
