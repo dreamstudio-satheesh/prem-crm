@@ -27,7 +27,7 @@ class OnlineCallList extends Component
 
     public function render()
     {
-        $onlineCalls = ServiceCall::where('call_type','online_call')->with(['customer', 'contactPerson'])
+        $onlineCalls = ServiceCall::where('call_type','online_call')->with(['customer', 'contactPerson.mobileNumbers'])
             ->whereHas('customer', function($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             })->paginate(10);
