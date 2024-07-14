@@ -71,7 +71,7 @@
                         <select id="status_of_call" name="status_of_call" class="form-control">
                             <option value="">Select Status</option>
                             <option value="completed">Completed</option>
-                            <option value="pending">Pending</option>
+                            <option selected value="pending">Pending</option>
                             <option value="onsite_visit">Onsite Visit</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
