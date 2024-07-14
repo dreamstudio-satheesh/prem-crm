@@ -30,7 +30,7 @@ class OnlineCallList extends Component
         $onlineCalls = ServiceCall::where('call_type','online_call')->with(['customer', 'contactPerson.mobileNumbers'])
             ->whereHas('customer', function($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
-            })->paginate(10);
+            })->paginate(100);
 
         return view('livewire.online-call-list', ['onlineCalls' => $onlineCalls]);
     }
