@@ -34,6 +34,8 @@ class AddressBook extends Model
         return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
     }
 
+    //mobile numbers
+
     public function mobileNumbers()
     {
         return $this->hasMany(MobileNumber::class, 'address_id', 'address_id');
