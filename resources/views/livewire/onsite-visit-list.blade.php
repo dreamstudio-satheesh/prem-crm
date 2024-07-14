@@ -1,5 +1,4 @@
 <div>
-
     <div class="card" id="onsiteVisitList">
         <div class="card-header border-bottom-dashed">
             <div class="row g-4 align-items-center">
@@ -21,7 +20,6 @@
         <div class="card-body border border-dashed border-end-0 border-start-0">
             <form>
                 <div class="row g-3">
-                    <!-- Add your filter inputs here similar to the customer list -->
                     <div class="col-xxl-4 col-sm-6">
                         <div class="search-box">
                             <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model="search">
@@ -43,6 +41,7 @@
                             <th>Type Of Call</th>
                             <th>Call Start Time</th>
                             <th>Call End Time</th>
+                            <th>Call Duration</th>
                             <th>Status</th>
                             <th>Service Charges</th>
                             <th>Remarks</th>
@@ -57,6 +56,13 @@
                             <td>{{ $visit->type_of_call }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
+                            <td>
+                                @if($visit->call_end_time)
+                                    {{ \Carbon\Carbon::parse($visit->call_start_time)->diff(\Carbon\Carbon::parse($visit->call_end_time))->format('%H:%I:%S') }}
+                                @else
+                                    Ongoing
+                                @endif
+                            </td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->service_charges }}</td>
                             <td>{{ $visit->remarks }}</td>
