@@ -20,7 +20,6 @@ class CreateAddressBooksTable extends Migration
             $table->integer('customer_code')->nullable();
             $table->unsignedInteger('customer_type_id')->nullable(); // Changed from addresstype to address_type_id
             $table->string('contact_person', 150)->nullable();
-            $table->string('mobile_no', 250)->nullable(); // Changed from mobileno to mobile_no
             $table->string('phone_no', 250)->nullable(); // Changed from phoneno to phone_no
             $table->string('email', 250)->nullable();
             $table->string('address', 250)->nullable(); 
