@@ -70,8 +70,10 @@
                         <label for="status_of_call" class="form-label">Status of the Call</label>
                         <select id="status_of_call" name="status_of_call" class="form-control">
                             <option value="">Select Status</option>
-                            <option value="completed">Completed</option>
                             <option selected value="pending">Pending</option>
+                            <option value="on_process">On Process</option>
+                            <option value="follow_up">Follow Up Customer</option>
+                            <option value="completed">Completed</option>
                             <option value="onsite_visit">Onsite Visit</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
