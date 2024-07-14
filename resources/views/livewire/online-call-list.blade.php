@@ -38,13 +38,13 @@
                         <tr>
                             <th>Customer</th>
                             <th>Contact Person</th>
+                            <th>Mobile Numbers</th>
                             <th>Type Of Call</th>
                             <th>Call Start Time</th>
                             <th>Call End Time</th>
                             <th>Call Duration</th>
                             <th>Status</th>
                             <th>Service Charges</th>
-                            <th>Remarks</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -54,6 +54,7 @@
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
                             <td>{{ $visit->type_of_call }}</td>
+                            <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
                             <td>
@@ -65,7 +66,6 @@
                             </td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->service_charges }}</td>
-                            <td>{{ $visit->remarks }}</td>
                             <td>
                                 <a href="{{ route('online-calls.edit', $visit->id) }}" class="btn btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit

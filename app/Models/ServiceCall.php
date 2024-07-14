@@ -28,9 +28,9 @@ class ServiceCall extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
-
+    
     public function contactPerson()
     {
-        return $this->belongsTo(AddressBook::class, 'contact_person_id','customer_id');
+        return $this->belongsTo(AddressBook::class, 'contact_person_id')->with('mobileNumbers');
     }
 }
