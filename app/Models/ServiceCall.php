@@ -33,4 +33,19 @@ class ServiceCall extends Model
     {
         return $this->belongsTo(AddressBook::class, 'contact_person_id');
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'staff_id');
+    }
+
+    public function serviceCallLogs()
+    {
+        return $this->hasMany(ServiceCallLog::class, 'service_call_id');
+    }
 }

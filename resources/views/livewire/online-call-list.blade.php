@@ -44,7 +44,6 @@
                             <th>Call End Time</th>
                             <th>Call Duration</th>
                             <th>Status</th>
-                            <th>Created By</th>
                             <th>Assigned To</th>
                             <th>Action</th>
                         </tr>
@@ -56,18 +55,39 @@
                             <td>{{ $visit->contactPerson->contact_person }}</td>
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
                             <td>
-                                @if($visit->call_end_time)
-                                    {{ \Carbon\Carbon::parse($visit->call_start_time)->diff(\Carbon\Carbon::parse($visit->call_end_time))->format('%H:%I:%S') }}
+                                @if($visit->serviceCallLogs->isNotEmpty())
+                                @foreach($visit->serviceCallLogs as $log)
+                                {{ $log->call_start_time ? \Carbon\Carbon::parse($log->call_start_time)->format('h:i:s A') : '' }}<br>
+                                @endforeach
                                 @else
-                                    Ongoing
+                                N/A
+                                @endif
+                            </td>
+                            <td>
+                                @if($visit->serviceCallLogs->isNotEmpty())
+                                @foreach($visit->serviceCallLogs as $log)
+                                {{ $log->call_end_time ? \Carbon\Carbon::parse($log->call_end_time)->format('h:i:s A') : '' }}<br>
+                                @endforeach
+                                @else
+                                N/A
+                                @endif
+                            </td>
+                            <td>
+                                @if($visit->serviceCallLogs->isNotEmpty())
+                                @foreach($visit->serviceCallLogs as $log)
+                                @if($log->call_end_time)
+                                {{ \Carbon\Carbon::parse($log->call_start_time)->diff(\Carbon\Carbon::parse($log->call_end_time))->format('%H:%I:%S') }}<br>
+                                @else
+                                Ongoing<br>
+                                @endif
+                                @endforeach
+                                @else
+                                N/A
                                 @endif
                             </td>
                             <td>{{ $visit->status_of_call }}</td>
-                            <td>{{ $visit->service_charges }}</td>
-                            <td>{{ $visit->service_charges }}</td>
+                            <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
                             <td>
                                 <a href="{{ route('online-calls.edit', $visit->id) }}" class="btn btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
@@ -82,5 +102,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>

@@ -9,6 +9,7 @@ use App\Models\AddressBook;
 use App\Models\ServiceCall;
 use Illuminate\Http\Request;
 use App\Models\NatureOfIssue;
+use App\Models\ServiceCallLog;
 
 class OnlineCallController extends Controller
 {
@@ -90,26 +91,27 @@ class OnlineCallController extends Controller
         ]);
 
         $visit = ServiceCall::findOrFail($id);
-
         
-        $callDetails = $visit->call_details ? json_decode($visit->call_details, true) : [];
-        $callDetails[] = [
-            'staff_id' => auth()->id(),
-            'start_time' => Carbon::createFromFormat('d F Y, h:i:s A', $request->call_start_time),
-            'end_time' =>  $request->call_end_time ? Carbon::createFromFormat('d F Y, h:i:s A', $request->call_end_time) : null,
-        ];
-
         $visit->update([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
-            'call_details' => json_encode($callDetails),
             'status_of_call' => $request->status_of_call,
             'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
+
+
+        ServiceCallLog::create([
+            'service_call_id' => $visit->id,
+            'call_start_time' => Carbon::createFromFormat('d F Y, h:i:s A', $request->call_start_time),
+            'call_end_time' => $request->call_end_time ? Carbon::createFromFormat('d F Y, h:i:s A', $request->call_end_time) : null,
+            'updated_by' => auth()->id(),
+        ]);
+
+
 
         if ($request->ajax()) {
             return response()->json(['success' => 'Online Call Updated Successfully.']);

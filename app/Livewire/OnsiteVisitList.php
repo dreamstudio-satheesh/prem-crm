@@ -27,12 +27,15 @@ class OnsiteVisitList extends Component
 
     public function render()
     {
-        $onsiteVisits = ServiceCall::where('call_type','onsite_visit')->with(['customer', 'contactPerson'])
-            ->whereHas('customer', function($query) {
+        $onsiteVisits = ServiceCall::where('call_type', 'onsite_visit')
+            ->with(['customer', 'contactPerson', 'serviceCallLogs'])
+            ->whereHas('customer', function ($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             })
             ->paginate(10);
 
         return view('livewire.onsite-visit-list', ['onsiteVisits' => $onsiteVisits]);
     }
+
+    
 }

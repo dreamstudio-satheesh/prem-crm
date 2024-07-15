@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('type_of_call');
             $table->enum('call_type', ['onsite_visit', 'online_call']);
             $table->timestamp('call_booking_time'); 
-            $table->json('call_details')->nullable(); // Store call details (start time, end time, staff ID) as JSON
             $table->timestamp('follow_up_date')->nullable();
             $table->enum('status_of_call', ['completed', 'pending','cancelled','on_process','follow_up','onsite_visit','online_call']);
             $table->unsignedBigInteger('nature_of_issue_id');
