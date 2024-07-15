@@ -28,6 +28,19 @@ class OnsiteVisitList extends Component
     public function render()
     {
         $onsiteVisits = ServiceCall::where('call_type', 'onsite_visit')
+            ->where('status_of_call', '!=','cancelled')
+            ->with(['customer', 'contactPerson.mobileNumbers'])
+            ->whereHas('customer', function($query) {
+                $query->where('customer_name', 'like', '%' . $this->search . '%');
+            })
+            ->paginate(10);
+    
+        return view('livewire.onsite-visit-list', ['onsiteVisits' => $onsiteVisits]);
+    }
+
+    /* public function render()
+    {
+        $onsiteVisits = ServiceCall::where('call_type', 'onsite_visit')
             ->with(['customer', 'contactPerson', 'serviceCallLogs'])
             ->whereHas('customer', function ($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
@@ -35,7 +48,7 @@ class OnsiteVisitList extends Component
             ->paginate(10);
 
         return view('livewire.onsite-visit-list', ['onsiteVisits' => $onsiteVisits]);
-    }
+    } */
 
     
 }

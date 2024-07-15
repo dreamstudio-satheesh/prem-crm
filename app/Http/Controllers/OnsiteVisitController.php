@@ -11,6 +11,7 @@ use App\Models\CustomerType;
 use App\Models\MobileNumber;
 use Illuminate\Http\Request;
 use App\Models\NatureOfIssue;
+use App\Models\ServiceCallLog;
 
 class OnsiteVisitController extends Controller
 {
@@ -18,8 +19,8 @@ class OnsiteVisitController extends Controller
     {
         $customers = Customer::all();
         $issues = NatureOfIssue::all();
-        $staffId = auth()->id(); 
-        $users = User::all(); 
+        $staffId = auth()->id();
+        $users = User::all();
         return view('onsite-visits.create', compact('customers', 'issues', 'staffId', 'users'));
     }
 
@@ -101,31 +102,37 @@ class OnsiteVisitController extends Controller
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:customer_types,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
-            'call_start_time' => 'required',
-            'call_end_time' => 'required',
-            'status_of_call' => 'required|in:completed,pending,on_process,follow_up,online_call',
-            'nature_of_issue_id' => 'required|exists:nature_of_issues,id', 
+            'booking_time' => 'required',
+            'staff_id' => 'required',
+            'status_of_call' => 'required|in:completed,pending,on_process,follow_up,onsite_visit',
+            'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
+            'follow_up_date' => 'nullable|date',
             'remarks' => 'nullable|string',
         ]);
-
         $currentDate = Carbon::now()->toDateString();
-        $callStartTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_start_time);
-        $callEndTime = $request->call_end_time ? Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_end_time) : null;
-        $statusOfCall = $request->status_of_call === 'online_call' ? 'pending' : $request->status_of_call;
+        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->booking_time);
 
-        ServiceCall::create([
+        $serviceCallData = [
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
-            'call_start_time' => $callStartTime,
-            'call_end_time' => $callEndTime,
-            'status_of_call' => $statusOfCall,
+            'staff_id' => $request->staff_id,
+            'careated_by' => auth()->id(),
+            'call_booking_time' => $bookingTime,
+            'status_of_call' => $request->status_of_call,
             'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
-        ]);
+        ];
+
+        if ($request->status_of_call === 'follow_up' && $request->follow_up_date) {
+            $followUpDate = Carbon::createFromFormat('Y-m-d', $request->follow_up_date);
+            $serviceCallData['follow_up_date'] = $followUpDate;
+        }
+
+        ServiceCall::create($serviceCallData);
 
         if ($request->ajax()) {
             return response()->json(['success' => 'Onsite Visit Created Successfully.']);
@@ -134,21 +141,17 @@ class OnsiteVisitController extends Controller
         return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Created Successfully.');
     }
 
+
+
     public function edit($id)
     {
         $visit = ServiceCall::findOrFail($id);
-
-        // Convert call_start_time and call_end_time to Carbon instances
-        $visit->call_start_time = Carbon::parse($visit->call_start_time);
-        if ($visit->call_end_time) {
-            $visit->call_end_time = Carbon::parse($visit->call_end_time);
-        }
-
-        $customers = Customer::all();
-        $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
+        $callDetails = $visit->call_details ? json_decode($visit->call_details, true) : [];
         $issues = NatureOfIssue::all();
+        $users = User::all();
+        $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
 
-        return view('onsite-visits.edit', compact('visit', 'customers', 'contactPersons', 'issues')); // Modify this line
+        return view('onsite-visits.edit', compact('visit',  'issues', 'users', 'contactPersons', 'callDetails'));
     }
 
     public function update(Request $request, $id)
@@ -157,31 +160,34 @@ class OnsiteVisitController extends Controller
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:customer_types,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
-            'call_start_time' => 'required',
-            'call_end_time' => 'nullable',
-            'status_of_call' => 'required|in:completed,pending,on_process,follow_up,online_call',
+            'status_of_call' => 'required|in:completed,pending,cancelled,on_process,follow_up,onsite_visit,online_call',
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
         ]);
 
-        $currentDate = Carbon::now()->toDateString();
-        $callStartTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_start_time);
-        $callEndTime = $request->call_end_time ? Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_end_time) : null;
-        $statusOfCall = $request->status_of_call === 'online_call' ? 'pending' : $request->status_of_call;
         $visit = ServiceCall::findOrFail($id);
+        
         $visit->update([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
-            'call_start_time' => $callStartTime,
-            'call_end_time' => $callEndTime,
-            'status_of_call' => $statusOfCall,
-            'nature_of_issue_id' => $request->nature_of_issue_id, // Add this line
+            'status_of_call' => $request->status_of_call,
+            'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
             'remarks' => $request->remarks,
         ]);
+
+
+        ServiceCallLog::create([
+            'service_call_id' => $visit->id,
+            'call_start_time' => Carbon::createFromFormat('d F Y, h:i:s A', $request->call_start_time),
+            'call_end_time' => $request->call_end_time ? Carbon::createFromFormat('d F Y, h:i:s A', $request->call_end_time) : null,
+            'updated_by' => auth()->id(),
+        ]);
+
+
 
         if ($request->ajax()) {
             return response()->json(['success' => 'Onsite Visit Updated Successfully.']);
@@ -189,4 +195,6 @@ class OnsiteVisitController extends Controller
 
         return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Updated Successfully.');
     }
+
+    
 }
