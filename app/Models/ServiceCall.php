@@ -14,13 +14,13 @@ class ServiceCall extends Model
         'contact_person_id',
         'type_of_call',
         'call_type',
-        'call_start_time',
-        'call_end_time',
+        'call_details',
         'follow_up_date',
         'status_of_call',
         'nature_of_issue_id',
         'service_charges',
         'staff_id',
+        'careated_by',
         'remarks',
     ];
 

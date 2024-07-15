@@ -20,10 +20,11 @@ return new class extends Migration
             $table->timestamp('call_booking_time'); 
             $table->json('call_details')->nullable(); // Store call details (start time, end time, staff ID) as JSON
             $table->timestamp('follow_up_date')->nullable();
-            $table->enum('status_of_call', ['completed', 'pending','on_process','follow_up','onsite_visit','online_call']);
+            $table->enum('status_of_call', ['completed', 'pending','cancelled','on_process','follow_up','onsite_visit','online_call']);
             $table->unsignedBigInteger('nature_of_issue_id');
             $table->decimal('service_charges', 8, 2)->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
+            $table->unsignedBigInteger('careated_by')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
         

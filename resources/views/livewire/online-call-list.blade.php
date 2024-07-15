@@ -44,7 +44,8 @@
                             <th>Call End Time</th>
                             <th>Call Duration</th>
                             <th>Status</th>
-                            <th>Service Charges</th>
+                            <th>Created By</th>
+                            <th>Assigned To</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,6 +66,7 @@
                                 @endif
                             </td>
                             <td>{{ $visit->status_of_call }}</td>
+                            <td>{{ $visit->service_charges }}</td>
                             <td>{{ $visit->service_charges }}</td>
                             <td>
                                 <a href="{{ route('online-calls.edit', $visit->id) }}" class="btn btn-info">

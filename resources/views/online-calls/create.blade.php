@@ -68,16 +68,21 @@
                             <option value="on_process">On Process</option>
                             <option value="follow_up">Follow Up</option>
                             <option value="completed">Completed</option>
-                            <option value="onsite_visit">Onsite Visit</option>
                         </select>
                         @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
 
                         <input type="hidden" name="call_type" id="call_type" value="online_call"> <!-- Hidden input -->
                     </div>
 
+                    <div class="col-md-4 mb-3" id="follow-up-date-wrapper" style="display: none;">
+                        <label for="follow_up_date" class="form-label">Follow Up Date</label>
+                        <input type="date" id="follow_up_date" name="follow_up_date" class="form-control">
+                    </div>
+
+
 
                     <div class="col-md-4 mb-3">
-                        <label for="staff_id" class="form-label">Executive</label>
+                        <label for="staff_id" class="form-label">Executive (Assign To)</label>
                         <select id="staff_id" name="staff_id" class="form-control select2">
                             @foreach($users as $user)
                             <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
@@ -331,13 +336,8 @@
             $('#booking_time').val(now);
         }, 2000);
 
-        // Set call end time continuously
-        setInterval(() => {
-            let now = moment().format('h:mm:ss A');
-            $('#call_end_time').val(now);
-        }, 1000);
 
-        
+
         // Handle the form submission for adding a new customer
         $('#addCustomerForm').on('submit', function(e) {
             e.preventDefault();
@@ -378,7 +378,14 @@
 
 
 
-
+        $('#status_of_call').on('change', function() {
+            var selectedStatus = $(this).val();
+            if (selectedStatus === 'follow_up') {
+                $('#follow-up-date-wrapper').show();
+            } else {
+                $('#follow-up-date-wrapper').hide();
+            }
+        });
 
     });
 </script>
