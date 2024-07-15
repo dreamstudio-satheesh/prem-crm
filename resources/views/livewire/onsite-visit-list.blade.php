@@ -89,7 +89,7 @@
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
                             <td>
-                                <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-info">
+                                <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-sm btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
                                 </a>
                             </td>
