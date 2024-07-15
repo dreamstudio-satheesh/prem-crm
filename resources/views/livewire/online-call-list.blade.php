@@ -43,6 +43,7 @@
                             <th>Booking Date & Time</th>
                             <th>Status</th>
                             <th>Assigned To</th>
+                            <th>Remarks</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -56,6 +57,7 @@
                             <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('Y-m-d h:i:s A') }}</td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
+                            <td>{{ $visit->remarks }}</td>
                             <td>
                                 <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-sm btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
