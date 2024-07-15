@@ -48,7 +48,7 @@
                         <label for="type_of_call" class="form-label">Type Of Call</label>
                         <select id="type_of_call" name="type_of_call" class="form-control">
                             <option value="AMC Call">AMC Call</option>
-                            <option value="PER Call">PER Call</option>
+                            <option selected value="PER Call">PER Call</option>
                             <option value="FREE Call">FREE Call</option>
                         </select>
                         @error('type_of_call') <span class="text-danger">{{ $message }}</span> @enderror
