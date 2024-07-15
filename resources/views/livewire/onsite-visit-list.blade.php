@@ -40,52 +40,20 @@
                             <th>Contact Person</th>
                             <th>Mobile Numbers</th>
                             <th>Type Of Call</th>
-                            <th>Call Start Time</th>
-                            <th>Call End Time</th>
-                            <th>Call Duration</th>
+                            <th>Booking Date & Time</th>
                             <th>Status</th>
                             <th>Assigned To</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onsiteVisits as $visit)
+                        @foreach($onsiteVisits as $visit) <!-- Replace with $onlineCalls for the Online Call List -->
                         <tr>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
-                            <td>
-                                @if($visit->serviceCallLogs->isNotEmpty())
-                                @foreach($visit->serviceCallLogs as $log)
-                                {{ $log->call_start_time ? \Carbon\Carbon::parse($log->call_start_time)->format('h:i:s A') : '' }}<br>
-                                @endforeach
-                                @else
-                                N/A
-                                @endif
-                            </td>
-                            <td>
-                                @if($visit->serviceCallLogs->isNotEmpty())
-                                @foreach($visit->serviceCallLogs as $log)
-                                {{ $log->call_end_time ? \Carbon\Carbon::parse($log->call_end_time)->format('h:i:s A') : '' }}<br>
-                                @endforeach
-                                @else
-                                N/A
-                                @endif
-                            </td>
-                            <td>
-                                @if($visit->serviceCallLogs->isNotEmpty())
-                                @foreach($visit->serviceCallLogs as $log)
-                                @if($log->call_end_time)
-                                {{ \Carbon\Carbon::parse($log->call_start_time)->diff(\Carbon\Carbon::parse($log->call_end_time))->format('%H:%I:%S') }}<br>
-                                @else
-                                Ongoing<br>
-                                @endif
-                                @endforeach
-                                @else
-                                N/A
-                                @endif
-                            </td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('Y-m-d h:i:s A') }}</td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
                             <td>
@@ -96,6 +64,7 @@
                         </tr>
                         @endforeach
                     </tbody>
+
                 </table>
                 <div class="d-flex justify-content-end">
                     {{ $onsiteVisits->links() }}
