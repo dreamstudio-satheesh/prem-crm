@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onsiteVisits as $visit) <!-- Replace with $onlineCalls for the Online Call List -->
+                        @foreach($onlineCalls as $visit)
                         <tr>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
