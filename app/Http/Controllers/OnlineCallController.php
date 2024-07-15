@@ -84,7 +84,7 @@ class OnlineCallController extends Controller
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:customer_types,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
-            'status_of_call' => 'required|in:completed,pending,on_process,follow_up,onsite_visit',
+            'status_of_call' => 'required|in:completed,pending,cancelled,on_process,follow_up,onsite_visit',
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
