@@ -37,7 +37,7 @@
                         @error('contact_person_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
+                    <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: block;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
                         <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
                         <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
