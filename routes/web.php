@@ -19,6 +19,7 @@ use App\Livewire\Master\CustomertypeMaster;
 use App\Livewire\Master\NatureOfIssueMaster;
 use App\Http\Controllers\OnlineCallController;
 use App\Http\Controllers\OnsiteVisitController;
+use App\Livewire\CompletedCallList;
 
 Route::get('/', function () {
     return redirect('home');
@@ -64,6 +65,7 @@ Route::get('onsite-visits/contact-person-mobile/{contactPersonId}', [OnsiteVisit
 Route::get('/onsite-visits/{id}/edit', [OnsiteVisitController::class, 'edit'])->name('onsite-visits.edit');
 Route::post('/onsite-visits/{id}', [OnsiteVisitController::class, 'update'])->name('onsite-visits.update');
 
+Route::get('/completed-calls', CompletedCallList::class)->name('completed-calls.index'); 
 
 Route::post('/customers', [OnsiteVisitController::class, 'store_customer'])->name('customers.create');
 Route::post('/contact-persons', [OnsiteVisitController::class, 'storeContactPerson']);
