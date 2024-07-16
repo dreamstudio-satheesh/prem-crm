@@ -64,7 +64,7 @@ class OnsiteVisitController extends Controller
             'contact_person' => 'required|string|max:255',
             'contact_person_mobile' => 'required|array|min:1',
             'contact_person_mobile.*' => 'required|string|max:15',
-            'customer_id' => 'required|exists:customers,customer_id', // Ensure customer_id is valid
+            'customer_id' => 'required|exists:customers,customer_id',
         ]);
 
         $contactPerson = AddressBook::create([
@@ -77,6 +77,14 @@ class OnsiteVisitController extends Controller
                 'address_id' => $contactPerson->address_id,
                 'mobile_no' => $mobileNo,
             ]);
+        }
+
+        $customer = Customer::find($request->customer_id);
+
+        // Check and set primary_address_id if it is null
+        if (is_null($customer->primary_address_id)) {
+            $customer->primary_address_id = $contactPerson->address_id;
+            $customer->save();
         }
 
         return response()->json(['contactPerson' => $contactPerson]);
@@ -167,7 +175,7 @@ class OnsiteVisitController extends Controller
         ]);
 
         $visit = ServiceCall::findOrFail($id);
-        
+
         $visit->update([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
@@ -195,6 +203,4 @@ class OnsiteVisitController extends Controller
 
         return redirect()->route('onsite-visits.index')->with('success', 'Onsite Visit Updated Successfully.');
     }
-
-    
 }
