@@ -3,7 +3,7 @@
         <div class="card-header border-bottom-dashed">
             <div class="row g-4 align-items-center">
                 <div class="col-sm">
-                    <h5 class="card-title mb-0">Onsite Visit List (ALT + V )</h5>
+                    <h5 class="card-title mb-0">Onsite Calls List (ALT + V )</h5>
                 </div>
                 <div class="col-sm-auto">
                     <button wire:click="toggleFilters" accesskey="S" title="ALT+S" class="btn btn-sm btn-secondary">
