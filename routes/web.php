@@ -22,7 +22,7 @@ use App\Http\Controllers\OnsiteVisitController;
 use App\Livewire\CompletedCallList;
 
 Route::get('/', function () {
-    return redirect('home');
+  return redirect('home');
 });
 
 Route::get('/customer-page', function () {
@@ -33,31 +33,31 @@ Route::get('/customer-page2', function () {
   return view('customer-page2');
 });
 
-Auth::routes([  'register' => false,  'reset' => false, 'verify' => false,  ]);
-  
+Auth::routes(['register' => false,  'reset' => false, 'verify' => false,]);
+
 Route::get('/logout',  [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/user', UserMaster::class);  
-Route::get('/role', RoleMaster::class); 
-Route::get('/product', ProductMaster::class);    
-Route::get('/industry', IndustryMaster::class); 
-Route::get('/customertype', CustomertypeMaster::class); 
-Route::get('/location', LocationMaster::class); 
-Route::get('/licence', LicenceMaster::class); 
-Route::get('/nature-of-issue', NatureOfIssueMaster::class); 
+Route::get('/user', UserMaster::class);
+Route::get('/role', RoleMaster::class);
+Route::get('/product', ProductMaster::class);
+Route::get('/industry', IndustryMaster::class);
+Route::get('/customertype', CustomertypeMaster::class);
+Route::get('/location', LocationMaster::class);
+Route::get('/licence', LicenceMaster::class);
+Route::get('/nature-of-issue', NatureOfIssueMaster::class);
 
 
-Route::get('master/customers/add', AddCustomer::class)->name('customers.add'); 
+Route::get('master/customers/add', AddCustomer::class)->name('customers.add');
 Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
 //Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
 
 
-Route::get('/master/customers', CustomerList::class)->name('customers.index'); 
+Route::get('/master/customers', CustomerList::class)->name('customers.index');
 Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
 Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddress::class)->name('customers.editAddress');
 
-Route::get('/onsite-visits', OnsiteVisitList::class)->name('onsite-visits.index'); 
+Route::get('/onsite-visits', OnsiteVisitList::class)->name('onsite-visits.index');
 Route::get('onsite-visits/create', [OnsiteVisitController::class, 'create'])->name('onsite-visits.create');
 Route::post('onsite-visits', [OnsiteVisitController::class, 'store'])->name('onsite-visits.store');
 Route::get('onsite-visits/contact-persons/{customerId}', [OnsiteVisitController::class, 'getContactPersons']);
@@ -65,16 +65,18 @@ Route::get('onsite-visits/contact-person-mobile/{contactPersonId}', [OnsiteVisit
 Route::get('/onsite-visits/{id}/edit', [OnsiteVisitController::class, 'edit'])->name('onsite-visits.edit');
 Route::post('/onsite-visits/{id}', [OnsiteVisitController::class, 'update'])->name('onsite-visits.update');
 
-Route::get('/completed-calls', CompletedCallList::class)->name('completed-calls.index'); 
+Route::get('/completed-calls', CompletedCallList::class)->name('completed-calls.index');
 
 Route::post('/customers', [OnsiteVisitController::class, 'store_customer'])->name('customers.create');
 Route::post('/contact-persons', [OnsiteVisitController::class, 'storeContactPerson']);
 Route::get('/customer-types', [OnsiteVisitController::class, 'getCustomerTypes']);
 
-Route::get('/online-calls/reset-editing/{id}', [OnlineCallController::class, 'resetEditing'])->name('online-calls.reset');
+Route::post('/online-calls/reset-editing/{id}', 'OnlineCallController@resetEditing')
+  ->middleware('auth')
+  ->name('online-calls.reset-editing');
 
 
-Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index'); 
+Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index');
 Route::get('online-calls/create', [OnlineCallController::class, 'create'])->name('online-calls.create');
 Route::post('online-calls', [OnlineCallController::class, 'store'])->name('online-calls.store');
 Route::get('/online-calls/{id}/edit', [OnlineCallController::class, 'edit'])->name('online-calls.edit');
