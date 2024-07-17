@@ -1,4 +1,4 @@
-<div>
+<div wire:poll.10000ms>
     <div class="card" id="onsiteVisitList">
         <div class="card-header border-bottom-dashed">
             <div class="row g-4 align-items-center">
