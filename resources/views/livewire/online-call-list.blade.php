@@ -37,6 +37,7 @@
                     <thead class="table-light text-muted">
                         <tr>
                             <th>Customer</th>
+                            <th>Tally S.NO</th>
                             <th>Contact Person</th>
                             <th>Mobile Numbers</th>
                             <th>Type Of Call</th>
@@ -51,6 +52,7 @@
                         @foreach($onlineCalls as $visit)
                         <tr>
                             <td>{{ $visit->customer->customer_name }}</td>
+                            <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
