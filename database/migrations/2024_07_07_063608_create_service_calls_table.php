@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->unsignedBigInteger('careated_by')->nullable();
             $table->text('remarks')->nullable();
+            $table->boolean('is_editing')->default(false);
             $table->timestamps();
         
             $table->foreign('customer_id')->references('customer_id')->on('customers')->onDelete('cascade');

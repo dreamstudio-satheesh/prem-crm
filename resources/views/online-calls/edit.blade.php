@@ -73,7 +73,6 @@
                         <select id="status_of_call" name="status_of_call" class="form-control">
                             <option value="pending" {{ $visit->status_of_call == 'pending' ? 'selected' : '' }}>Pending</option>
                             <option value="completed" {{ $visit->status_of_call == 'completed' ? 'selected' : '' }}>Completed</option>
-                            <option value="on_process" {{ $visit->status_of_call == 'on_process' ? 'selected' : '' }}>On Process</option>
                             <option value="follow_up" {{ $visit->status_of_call == 'follow_up' ? 'selected' : '' }}>Follow Up</option>
                             <option value="cancelled" {{ $visit->status_of_call == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                             <option value="onsite_visit" {{ $visit->status_of_call == 'onsite_visit' ? 'selected' : '' }}>Onsite Visit</option>

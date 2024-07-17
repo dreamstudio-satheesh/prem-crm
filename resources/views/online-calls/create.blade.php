@@ -65,7 +65,7 @@
                         <select id="status_of_call" name="status_of_call" class="form-control">
                             <option value="">Select Status</option>
                             <option selected value="pending">Pending</option>
-                            <option value="on_process">On Process</option>
+                            <!--  <option value="on_process">On Process</option> -->
                             <option value="follow_up">Follow Up</option>
                             <option value="completed">Completed</option>
                         </select>

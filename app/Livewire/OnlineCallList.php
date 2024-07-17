@@ -35,6 +35,14 @@ class OnlineCallList extends Component
             })
             ->paginate(10);
 
+
+            $onlineCalls->getCollection()->transform(function ($call) {
+                if ($call->is_editing) {
+                    $call->status_of_call = "On Process";
+                }
+                return $call;
+            });
+
         return view('livewire.online-call-list', ['onlineCalls' => $onlineCalls]);
     }
 }

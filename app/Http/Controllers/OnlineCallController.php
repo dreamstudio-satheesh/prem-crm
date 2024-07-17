@@ -70,6 +70,8 @@ class OnlineCallController extends Controller
     public function edit($id)
     {
         $visit = ServiceCall::findOrFail($id);
+        $visit->update(['is_editing' => true]);
+
         $callDetails = $visit->call_details ? json_decode($visit->call_details, true) : [];
         $issues = NatureOfIssue::all();
         $users = User::all(); 
@@ -100,6 +102,7 @@ class OnlineCallController extends Controller
             'status_of_call' => $request->status_of_call,
             'nature_of_issue_id' => $request->nature_of_issue_id,
             'service_charges' => $request->service_charges,
+            'is_editing' => false,
             'remarks' => $request->remarks,
         ]);
 

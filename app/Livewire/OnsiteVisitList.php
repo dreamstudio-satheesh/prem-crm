@@ -35,6 +35,13 @@ class OnsiteVisitList extends Component
             })
             ->paginate(10);
 
+            $onsiteVisits->getCollection()->transform(function ($call) {
+                if ($call->is_editing) {
+                    $call->status_of_call = "On Process";
+                }
+                return $call;
+            });
+
         return view('livewire.onsite-visit-list', ['onsiteVisits' => $onsiteVisits]);
     }
 
