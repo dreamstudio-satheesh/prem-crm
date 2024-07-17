@@ -56,7 +56,7 @@
                             <td>{{ $visit->contactPerson->contact_person }}</td>
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d-m-y h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d M h:i:s A') }}</td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
                             <td style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
