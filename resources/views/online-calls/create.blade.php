@@ -267,6 +267,8 @@
                 $('#contact_person_id').empty().append('<option value="">Select Contact Person</option>');
                 $('#contact-person-wrapper').hide();
                 $('#type-of-call-wrapper').hide();
+                $('#contact_person_mobiles').empty();
+                $('#contact-person-mobile-wrapper').hide();
             }
         });
 
