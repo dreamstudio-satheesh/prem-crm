@@ -317,20 +317,11 @@
 
 
         window.onbeforeunload = function(event) {
-            $.ajax({
-                url: '{{ url(' / online - calls / reset - editing / ' . $visit->id) }}',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}' // CSRF token included in data
-                },
-                success: function(response) {
-                    console.log('Reset successful');
-                },
-                error: function(xhr) {
-                    console.log('Error resetting editing status');
-                }
-            });
+            var data = new FormData();
+            data.append('_token', '{{ csrf_token() }}'); // Adding CSRF token from Blade
+            navigator.sendBeacon('{{ url('/online-calls/reset-editing/'.$visit->id) }}', data);
         };
+
     });
 </script>
 @endpush
