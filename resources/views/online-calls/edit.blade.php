@@ -314,13 +314,23 @@
                 }
             });
         }
+
+
+        window.onbeforeunload = function(event) {
+            $.ajax({
+                url: '{{ url(' / online - calls / reset - editing / ' . $visit->id) }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}' // CSRF token included in data
+                },
+                success: function(response) {
+                    console.log('Reset successful');
+                },
+                error: function(xhr) {
+                    console.log('Error resetting editing status');
+                }
+            });
+        };
     });
-
-   window.onbeforeunload = function(event) {
-    var data = new FormData();
-    data.append('_token', '{{ csrf_token() }}');  
-    navigator.sendBeacon('{{ url('/online-calls/reset-editing/' . $visit->id) }}', data);
-};
-
 </script>
 @endpush
