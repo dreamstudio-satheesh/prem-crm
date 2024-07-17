@@ -71,6 +71,8 @@ Route::post('/customers', [OnsiteVisitController::class, 'store_customer'])->nam
 Route::post('/contact-persons', [OnsiteVisitController::class, 'storeContactPerson']);
 Route::get('/customer-types', [OnsiteVisitController::class, 'getCustomerTypes']);
 
+Route::get('/online-calls/reset-editing/{id}', [OnlineCallController::class, 'resetEditing'])->name('online-calls.reset');
+
 
 Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index'); 
 Route::get('online-calls/create', [OnlineCallController::class, 'create'])->name('online-calls.create');

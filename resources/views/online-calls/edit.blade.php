@@ -315,5 +315,9 @@
             });
         }
     });
+
+    window.onbeforeunload = function(event) {
+        navigator.sendBeacon('/online-calls/reset-editing/{{ $visit->id }}');
+    };
 </script>
 @endpush

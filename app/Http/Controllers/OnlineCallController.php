@@ -17,8 +17,8 @@ class OnlineCallController extends Controller
     {
         $customers = Customer::all();
         $issues = NatureOfIssue::all();
-        $staffId = auth()->id(); 
-        $users = User::all(); 
+        $staffId = auth()->id();
+        $users = User::all();
         return view('online-calls.create', compact('customers', 'issues', 'staffId', 'users'));
     }
 
@@ -74,10 +74,10 @@ class OnlineCallController extends Controller
 
         $callDetails = $visit->call_details ? json_decode($visit->call_details, true) : [];
         $issues = NatureOfIssue::all();
-        $users = User::all(); 
+        $users = User::all();
         $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
 
-        return view('online-calls.edit', compact('visit',  'issues', 'users','contactPersons', 'callDetails'));
+        return view('online-calls.edit', compact('visit',  'issues', 'users', 'contactPersons', 'callDetails'));
     }
 
     public function update(Request $request, $id)
@@ -93,7 +93,7 @@ class OnlineCallController extends Controller
         ]);
 
         $visit = ServiceCall::findOrFail($id);
-        
+
         $visit->update([
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
@@ -124,5 +124,12 @@ class OnlineCallController extends Controller
     }
 
 
-
+    public function resetEditing($id)
+    {
+        $visit = ServiceCall::find($id);
+        if ($visit) {
+            $visit->is_editing = false;
+            $visit->save();
+        }
+    }
 }
