@@ -316,9 +316,11 @@
         }
     });
 
-    window.onbeforeunload = function(event) {
-        var url = "{{ url('/online-calls/reset-editing/' . $visit->id) }}";
-        navigator.sendBeacon(url);
-    };
+   window.onbeforeunload = function(event) {
+    var data = new FormData();
+    data.append('_token', '{{ csrf_token() }}');  
+    navigator.sendBeacon('{{ url('/online-calls/reset-editing/' . $visit->id) }}', data);
+};
+
 </script>
 @endpush
