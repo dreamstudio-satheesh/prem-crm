@@ -317,7 +317,8 @@
     });
 
     window.onbeforeunload = function(event) {
-        navigator.sendBeacon('/online-calls/reset-editing/{{ $visit->id }}');
+        var url = "{{ url('/online-calls/reset-editing/' . $visit->id) }}";
+        navigator.sendBeacon(url);
     };
 </script>
 @endpush
