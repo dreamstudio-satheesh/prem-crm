@@ -37,6 +37,7 @@
                     <thead class="table-light text-muted">
                         <tr>
                             <th>Customer</th>
+                            <th>Tally S.NO</th>
                             <th>Contact Person</th>
                             <th>Mobile Numbers</th>
                             <th>Type Of Call</th>
@@ -51,10 +52,11 @@
                         @foreach($onsiteVisits as $visit) <!-- Replace with $onlineCalls for the Online Call List -->
                         <tr>
                             <td>{{ $visit->customer->customer_name }}</td>
+                            <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('Y-m-d h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d-m-y h:i:s A') }}</td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
                             <td style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
