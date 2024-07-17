@@ -261,6 +261,7 @@
                         }
                         $('#contact-person-wrapper').show();
                         $('#type-of-call-wrapper').show();
+                        $('#contact-person-mobile-wrapper').hide();
                     }
                 });
             } else {
