@@ -68,7 +68,7 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-sm btn-info">
+                                <a href="{{ route('online-calls.edit', $visit->id) }}" class="btn btn-sm btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
                                 </a>
                             </td>
