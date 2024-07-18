@@ -55,9 +55,9 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="booking_time" class="form-label">Call Booking Time</label>
-                        <input type="text" id="booking_time" name="booking_time" class="form-control timepicker" readonly>
-                        @error('booking_time') <span class="text-danger">{{ $message }}</span> @enderror
+                        <label for="call_booking_time" class="form-label">Call Booking Time</label>
+                        <input type="text" id="call_booking_time" name="call_booking_time" class="form-control timepicker" readonly>
+                        @error('call_booking_time') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -333,7 +333,7 @@
 
         setTimeout(() => {
             let now = moment().format('h:mm:ss A');
-            $('#booking_time').val(now);
+            $('#call_booking_time').val(now);
         }, 2000);
 
 
