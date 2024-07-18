@@ -128,12 +128,12 @@ class OnlineCallController extends Controller
     }
 
 
-    public function resetEditing($id)
+    public function keepAlive($id)
     {
-        $visit = ServiceCall::find($id);
-        if ($visit) {
-            $visit->is_editing = false;
-            $visit->save();
-        }
+        $visit = ServiceCall::findOrFail($id);
+        $visit->last_active_time = now();
+        $visit->save();
     }
+
+
 }

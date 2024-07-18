@@ -71,7 +71,7 @@ Route::post('/customers', [OnsiteVisitController::class, 'store_customer'])->nam
 Route::post('/contact-persons', [OnsiteVisitController::class, 'storeContactPerson']);
 Route::get('/customer-types', [OnsiteVisitController::class, 'getCustomerTypes']);
 
-Route::post('/online-calls/reset-editing/{id}', 'OnlineCallController@resetEditing')
+Route::post('/online-calls/keep-alive/{id}', 'OnlineCallController@keepAlive')
   ->middleware('auth')
   ->name('online-calls.reset-editing');
 

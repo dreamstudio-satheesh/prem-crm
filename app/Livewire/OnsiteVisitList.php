@@ -35,10 +35,12 @@ class OnsiteVisitList extends Component
             })
             ->paginate(10);
 
-            $onsiteVisits->getCollection()->transform(function ($call) {
-                if ($call->is_editing) {
+            $onsiteVisits->each(function ($call) {
+                // Assume "On Process" if last activity was within the last 5 minutes
+                if ($call->last_activity_time && $call->last_activity_time->gt(now()->subMinutes(5))) {
                     $call->status_of_call = "On Process";
                 }
+
                 return $call;
             });
 

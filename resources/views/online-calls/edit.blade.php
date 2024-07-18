@@ -321,6 +321,19 @@
             });
         }
 
+        setInterval(function() {
+            fetch('{{ url(' /online-calls/keep-alive/'.$visit->id) }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    active: true
+                })
+            });
+        }, 5000);
+
 
         window.onbeforeunload = function(event) {
             var data = new FormData();
