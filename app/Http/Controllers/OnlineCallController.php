@@ -28,7 +28,7 @@ class OnlineCallController extends Controller
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:customer_types,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
-            'booking_time' => 'required',
+            'call_booking_time' => 'required',
             'staff_id' => 'required',
             'status_of_call' => 'required|in:completed,pending,on_process,follow_up,onsite_visit',
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
@@ -37,7 +37,7 @@ class OnlineCallController extends Controller
             'remarks' => 'nullable|string',
         ]);
         $currentDate = Carbon::now()->toDateString();
-        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->booking_time);
+        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time);
 
         $serviceCallData = [
             'customer_id' => $request->customer_id,
