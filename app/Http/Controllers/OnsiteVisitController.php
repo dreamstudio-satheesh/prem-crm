@@ -176,6 +176,7 @@ class OnsiteVisitController extends Controller
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
             'service_charges' => 'nullable|numeric',
             'remarks' => 'nullable|string',
+            'tally_serial_no' => 'nullable|string',
         ]);
 
         $visit = ServiceCall::findOrFail($id);
@@ -191,6 +192,10 @@ class OnsiteVisitController extends Controller
             'is_editing' => false,
             'remarks' => $request->remarks,
         ]);
+
+        if (!$visit->customer->tally_serial_no && $request->has('tally_serial_no')) {
+            $visit->customer->update(['tally_serial_no' => $request->tally_serial_no]);
+        }
 
 
         ServiceCallLog::create([
