@@ -16,6 +16,7 @@ class ServiceCall extends Model
         'call_type',
         'call_details',
         'follow_up_date',
+        'call_booking_time',
         'status_of_call',
         'nature_of_issue_id',
         'service_charges',
