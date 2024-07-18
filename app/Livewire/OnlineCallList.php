@@ -43,8 +43,6 @@ class OnlineCallList extends Component
                 return $call;
             });
 
-            dd( $onlineCalls);
-
         return view('livewire.online-call-list', ['onlineCalls' => $onlineCalls]);
     }
 }
