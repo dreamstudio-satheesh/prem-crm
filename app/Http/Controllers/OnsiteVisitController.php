@@ -118,8 +118,10 @@ class OnsiteVisitController extends Controller
             'follow_up_date' => 'nullable|date',
             'remarks' => 'nullable|string',
         ]);
+        
         $currentDate = Carbon::now()->toDateString();
-        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time);
+        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time)->toDateTimeString();
+
 
         $serviceCallData = [
             'customer_id' => $request->customer_id,

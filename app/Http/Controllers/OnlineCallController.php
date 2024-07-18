@@ -37,8 +37,8 @@ class OnlineCallController extends Controller
             'remarks' => 'nullable|string',
         ]);
         $currentDate = Carbon::now()->toDateString();
-        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time);
-return $bookingTime;
+        $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time)->toDateTimeString();
+
         $serviceCallData = [
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
