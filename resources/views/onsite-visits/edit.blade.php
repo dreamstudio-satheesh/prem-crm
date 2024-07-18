@@ -25,6 +25,13 @@
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
+
+                    <div class="col-md-4 mb-3">
+                        <label for="tally_serial_no" class="form-label">Tally Serial No</label>
+                        <input type="text" id="tally_serial_no" name="tally_serial_no" class="form-control" value="{{ $visit->customer->tally_serial_no ?? '' }}" {{ $visit->customer->tally_serial_no ? 'readonly' : 'required' }}>
+                        @error('tally_serial_no') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
                     <div class="col-md-4 mb-3">
                         <label for="contact_person_id" class="form-label">Contact Person</label>
                         <select id="contact_person_id" name="contact_person_id" class="form-control select2">
