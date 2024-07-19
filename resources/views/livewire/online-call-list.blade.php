@@ -36,6 +36,7 @@
                 <table class="table align-middle" id="onsiteVisitTable">
                     <thead class="table-light text-muted">
                         <tr>
+                            <th>S.No</th>
                             <th>Customer</th>
                             <th>Tally S.NO</th>
                             <th>Contact Person</th>
@@ -50,8 +51,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onlineCalls as $visit)
+                        @foreach($onlineCalls as as $index => $visit)
                         <tr>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
@@ -79,8 +81,9 @@
                     </tbody>
 
                 </table>
-                <div class="d-flex justify-content-end">
-                    {{ $onlineCalls->links() }}
+                <div class="d-flex justify-content-between">
+                    <div>Total Records: {{ $onsiteVisits->total() }}</div>
+                    <div>{{ $onsiteVisits->links() }}</div>
                 </div>
             </div>
         </div>

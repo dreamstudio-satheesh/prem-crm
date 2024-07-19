@@ -36,6 +36,7 @@
                 <table class="table align-middle" id="onsiteVisitTable">
                     <thead class="table-light text-muted">
                         <tr>
+                            <th>S.No</th>
                             <th>Customer</th>
                             <th>Tally S.NO</th>
                             <th>Contact Person</th>
@@ -44,14 +45,15 @@
                             <th>Booking Date & Time</th>
                             <th>Status</th>
                             <th>Assigned To</th>
-                            <th>Folow Up Date</th>
+                            <th>Follow Up Date</th>
                             <th>Remarks</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onsiteVisits as $visit) <!-- Replace with $onlineCalls for the Online Call List -->
+                        @foreach($onsiteVisits as $index => $visit) 
                         <tr>
+                            <td>{{ $index + 1 }}</td> 
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
@@ -68,7 +70,6 @@
                                 {{ $visit->remarks }}
                                 @endif
                             </td>
-
                             <td>
                                 <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-sm btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
@@ -77,13 +78,14 @@
                         </tr>
                         @endforeach
                     </tbody>
-
                 </table>
-                <div class="d-flex justify-content-end">
-                    {{ $onsiteVisits->links() }}
+                <div class="d-flex justify-content-between">
+                    <div>Total Records: {{ $onsiteVisits->total() }}</div> <!-- Display total records count -->
+                    <div>{{ $onsiteVisits->links() }}</div>
                 </div>
             </div>
         </div>
+
 
 
     </div>
