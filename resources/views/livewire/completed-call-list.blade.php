@@ -60,11 +60,11 @@
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d M h:i:s A') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->serviceCallLogs->call_start_time)->format('h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->serviceCallLogs->call_end_time)->format('h:i:s A') }}</td>
                             <td>
                                 @if($visit->call_end_time && $visit->call_start_time)
-                                {{ \Carbon\Carbon::parse($visit->call_start_time)->diff(\Carbon\Carbon::parse($visit->call_end_time))->format('%H:%I:%S') }}
+                                {{ \Carbon\Carbon::parse($visit->serviceCallLogs->call_start_time)->diff(\Carbon\Carbon::parse($visit->serviceCallLogs->call_end_time))->format('%H:%I:%S') }}
                                 @else
                                 N/A
                                 @endif

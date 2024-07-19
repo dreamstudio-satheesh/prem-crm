@@ -34,8 +34,6 @@ class CompletedCallList extends Component
             })
             ->paginate(10);
 
-            dd($onsiteVisits);
-
         return view('livewire.completed-call-list', ['onsiteVisits' => $onsiteVisits]);
     }
 
