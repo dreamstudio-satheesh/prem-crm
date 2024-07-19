@@ -45,6 +45,7 @@
                             <th>Booking Date & Time</th>
                             <th>Call Start Time</th>
                             <th>Call End Time</th>
+                            <th>Duration</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -59,28 +60,16 @@
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d M h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_start_time)->format('h:i:s A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($visit->call_end_time)->format('h:i:s A') }}</td>
                             <td>
-                                @if($visit->serviceCallLogs->isNotEmpty())
-                                @foreach($visit->serviceCallLogs as $log)
-                                {{ $log->call_start_time ? \Carbon\Carbon::parse($log->call_start_time)->format('h:i:s A') : '' }}<br>
-                                @endforeach
-                                @else
-                                N/A
-                                @endif
-                            </td>
-                            <td>
-                                @if($visit->serviceCallLogs->isNotEmpty())
-                                @foreach($visit->serviceCallLogs as $log)
-                                {{ $log->call_end_time ? \Carbon\Carbon::parse($log->call_end_time)->format('h:i:s A') : '' }}<br>
-                                @endforeach
+                                @if($visit->call_end_time && $visit->call_start_time)
+                                {{ \Carbon\Carbon::parse($visit->call_start_time)->diff(\Carbon\Carbon::parse($visit->call_end_time))->format('%H:%I:%S') }}
                                 @else
                                 N/A
                                 @endif
                             </td>
                             <td>{{ $visit->status_of_call }}</td>
-
-
-
                             <td>
                                 <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-sm btn-info">
                                     <i class="ri-edit-line align-bottom me-1"></i> Edit
@@ -89,6 +78,7 @@
                         </tr>
                         @endforeach
                     </tbody>
+
 
                 </table>
                 <div class="d-flex justify-content-between">
