@@ -73,7 +73,7 @@
                             <td>
                                 @foreach($visit->serviceCallLogs as $log)
                                 @if($log->call_start_time && $log->call_end_time)
-                                {{ \Carbon\Carbon::parse($log->call_start_time)->diff(\Carbon\Carbon::parse($log->call_end_time))->format('%H:%I:%S') }}<br>
+                                {{ \Carbon\Carbon::parse($log->call_start_time)->diff(\Carbon\Carbon::parse($log->call_end_time))->format('%I:%S') }}<br>
                                 @else
                                 N/A<br>
                                 @endif
