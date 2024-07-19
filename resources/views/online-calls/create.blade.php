@@ -146,7 +146,7 @@
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="tally_serial_no" class="form-label">Tally Serial No</label>
-                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number" required>
+                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number" >
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->

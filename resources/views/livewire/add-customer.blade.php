@@ -19,7 +19,7 @@
                             <div class="col-xxl-3 col-md-6">
                                 <div class="form-group">
                                     <label for="tally_serial_no">Tally Serial No</label>
-                                    <input type="text" class="form-control" id="tally_serial_no" wire:model="tally_serial_no" placeholder="Enter Tally Serial No" required>
+                                    <input type="text" class="form-control" id="tally_serial_no" wire:model="tally_serial_no" placeholder="Enter Tally Serial No" >
                                     @error('tally_serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
