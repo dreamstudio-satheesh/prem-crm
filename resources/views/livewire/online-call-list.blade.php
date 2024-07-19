@@ -82,8 +82,8 @@
 
                 </table>
                 <div class="d-flex justify-content-between">
-                    <div>Total Records: {{ $onsiteVisits->total() }}</div>
-                    <div>{{ $onsiteVisits->links() }}</div>
+                    <div>Total Records: {{ $onlineCalls->total() }}</div>
+                    <div>{{ $onlineCalls->links() }}</div>
                 </div>
             </div>
         </div>
