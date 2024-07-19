@@ -51,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onlineCalls as as $index => $visit)
+                        @foreach($onlineCalls as $index => $visit)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $visit->customer->customer_name }}</td>
