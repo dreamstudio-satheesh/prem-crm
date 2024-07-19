@@ -44,6 +44,7 @@
                             <th>Booking Date & Time</th>
                             <th>Status</th>
                             <th>Assigned To</th>
+                            <th>Folow Up Date</th>
                             <th>Remarks</th>
                             <th>Action</th>
                         </tr>
@@ -59,6 +60,7 @@
                             <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d M h:i:s A') }}</td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>{{ $visit->assignedTo->name ?? 'N/A' }}</td>
+                            <td>{{ $visit->follow_up_date ?? 'N/A' }}</td>
                             <td style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 @if(strlen($visit->remarks) > 50)
                                 <marquee behavior="scroll" direction="left">{{ $visit->remarks }}</marquee>
