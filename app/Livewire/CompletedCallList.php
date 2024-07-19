@@ -28,7 +28,7 @@ class CompletedCallList extends Component
     public function render()
     {
         $onsiteVisits = ServiceCall::whereIn('status_of_call', ['cancelled', 'completed'])
-            ->with(['customer', 'contactPerson.mobileNumbers'])
+            ->with(['customer', 'contactPerson.mobileNumbers','serviceCallLogs'])
             ->whereHas('customer', function ($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             })
