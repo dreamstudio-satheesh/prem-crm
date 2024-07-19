@@ -36,6 +36,7 @@
                 <table class="table align-middle" id="onsiteVisitTable">
                     <thead class="table-light text-muted">
                         <tr>
+                            <th>S.No</th>
                             <th>Customer</th>
                             <th>Tally S.NO</th>
                             <th>Contact Person</th>
@@ -49,8 +50,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onsiteVisits as $visit) <!-- Replace with $onlineCalls for the Online Call List -->
+                        @foreach($onsiteVisits as $index => $visit)
                         <tr>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
@@ -76,8 +78,8 @@
                                 @endif
                             </td>
                             <td>{{ $visit->status_of_call }}</td>
-                            
-                           
+
+
 
                             <td>
                                 <a href="{{ route('onsite-visits.edit', $visit->id) }}" class="btn btn-sm btn-info">
@@ -89,8 +91,9 @@
                     </tbody>
 
                 </table>
-                <div class="d-flex justify-content-end">
-                    {{ $onsiteVisits->links() }}
+                <div class="d-flex justify-content-between">
+                    <div style="margin-left: 20px;">Total Records: {{ $onsiteVisits->total() }}</div> <!-- Add margin to the right of the total records count -->
+                    <div style="margin-left: 20px;">{{ $onsiteVisits->links() }}</div> <!-- Add margin to the left of the pagination links -->
                 </div>
             </div>
         </div>
