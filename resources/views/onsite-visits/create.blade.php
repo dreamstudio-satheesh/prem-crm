@@ -15,17 +15,22 @@
             <form id="onsite-visit-form" action="{{ route('onsite-visits.store') }}" method="POST">
                 @csrf
                 <div class="row">
+
                     <div class="col-md-4 mb-3">
                         <label for="customer_id" class="form-label">Customer</label>
                         <select id="customer_id" name="customer_id" class="form-control select2">
                             <option value="">Select Customer</option>
                             @foreach($customers as $customer)
-                            <option value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</option>
+                            <option value="{{ $customer->customer_id }}" {{ old('customer_id') == $customer->customer_id ? 'selected' : '' }}>
+                                {{ $customer->customer_name }}
+                            </option>
                             @endforeach
                             <option value="new_customer">Add New Customer</option>
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
+
 
                     <div class="col-md-4 mb-3" id="contact-person-wrapper" style="display: none;">
                         <label for="contact_person_id" class="form-label">Contact Person</label>
@@ -146,7 +151,7 @@
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="tally_serial_no" class="form-label">Tally Serial No</label>
-                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number" >
+                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number">
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
