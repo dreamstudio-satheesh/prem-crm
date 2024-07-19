@@ -71,16 +71,13 @@
                                 @endforeach
                             </td>
                             <td>
-                                @if($visit->serviceCallLogs->isNotEmpty())
-                                @php
-                                $firstLog = $visit->serviceCallLogs->first();
-                                $lastLog = $visit->serviceCallLogs->last();
-                                $duration = \Carbon\Carbon::parse($firstLog->call_start_time)->diff(\Carbon\Carbon::parse($lastLog->call_end_time));
-                                @endphp
-                                {{ $duration->format('%H:%I:%S') }}
+                                @foreach($visit->serviceCallLogs as $log)
+                                @if($log->call_start_time && $log->call_end_time)
+                                {{ \Carbon\Carbon::parse($log->call_start_time)->diff(\Carbon\Carbon::parse($log->call_end_time))->format('%H:%I:%S') }}<br>
                                 @else
-                                N/A
+                                N/A<br>
                                 @endif
+                                @endforeach
                             </td>
                             <td>{{ $visit->status_of_call }}</td>
                             <td>
@@ -90,6 +87,7 @@
                             </td>
                         </tr>
                         @endforeach
+
 
                     </tbody>
 
