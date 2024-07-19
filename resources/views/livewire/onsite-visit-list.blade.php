@@ -51,9 +51,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($onsiteVisits as $index => $visit) 
+                        @foreach($onsiteVisits as $index => $visit)
                         <tr>
-                            <td>{{ $index + 1 }}</td> 
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
@@ -80,8 +80,8 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-between">
-                    <div>Total Records: {{ $onsiteVisits->total() }}</div> <!-- Display total records count -->
-                    <div>{{ $onsiteVisits->links() }}</div>
+                    <div style="margin-left: 20px;">Total Records: {{ $onsiteVisits->total() }}</div> <!-- Add margin to the right of the total records count -->
+                    <div style="margin-left: 20px;">{{ $onsiteVisits->links() }}</div> <!-- Add margin to the left of the pagination links -->
                 </div>
             </div>
         </div>

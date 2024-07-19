@@ -82,8 +82,8 @@
 
                 </table>
                 <div class="d-flex justify-content-between">
-                    <div class="ml-5 pl-5">Total Records: {{ $onlineCalls->total() }}</div>
-                    <div class="ml-5 pl-5">{{ $onlineCalls->links() }}</div>
+                    <div style="margin-left: 20px;">Total Records: {{ $onlineCalls->total() }}</div>
+                    <div style="margin-left: 20px;">{{ $onlineCalls->links() }}</div>
                 </div>
             </div>
         </div>
