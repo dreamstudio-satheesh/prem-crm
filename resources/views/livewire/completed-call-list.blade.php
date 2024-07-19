@@ -60,11 +60,24 @@
                             <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
                             <td>{{ $visit->type_of_call }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d M h:i:s A') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->serviceCallLogs->call_start_time)->format('h:i:s A') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($visit->serviceCallLogs->call_end_time)->format('h:i:s A') }}</td>
                             <td>
-                                @if($visit->call_end_time && $visit->call_start_time)
-                                {{ \Carbon\Carbon::parse($visit->serviceCallLogs->call_start_time)->diff(\Carbon\Carbon::parse($visit->serviceCallLogs->call_end_time))->format('%H:%I:%S') }}
+                                @foreach($visit->serviceCallLogs as $log)
+                                {{ $log->call_start_time ? \Carbon\Carbon::parse($log->call_start_time)->format('h:i:s A') : 'N/A' }}<br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($visit->serviceCallLogs as $log)
+                                {{ $log->call_end_time ? \Carbon\Carbon::parse($log->call_end_time)->format('h:i:s A') : 'N/A' }}<br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @if($visit->serviceCallLogs->isNotEmpty())
+                                @php
+                                $firstLog = $visit->serviceCallLogs->first();
+                                $lastLog = $visit->serviceCallLogs->last();
+                                $duration = \Carbon\Carbon::parse($firstLog->call_start_time)->diff(\Carbon\Carbon::parse($lastLog->call_end_time));
+                                @endphp
+                                {{ $duration->format('%H:%I:%S') }}
                                 @else
                                 N/A
                                 @endif
@@ -77,6 +90,7 @@
                             </td>
                         </tr>
                         @endforeach
+
                     </tbody>
 
 
