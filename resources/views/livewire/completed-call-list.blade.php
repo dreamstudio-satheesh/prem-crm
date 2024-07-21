@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="col-xxl-4 col-sm-6">
-                        <select class="form-control form-control-sm" wire:model="callType">
+                        <select class="form-control form-control-sm" wire:model.lazy="callType">
                             <option value="">All Types</option>
                             <option value="onsite_visit">Onsite Visit</option>
                             <option value="online_call">Online Call</option>
