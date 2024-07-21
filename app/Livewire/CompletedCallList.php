@@ -11,6 +11,8 @@ class CompletedCallList extends Component
     use WithPagination;
 
     public $search = '';
+    public $callType = '';
+
     public $showFilters = false;
 
     protected $paginationTheme = 'bootstrap';
@@ -27,25 +29,17 @@ class CompletedCallList extends Component
 
     public function render()
     {
-        $onsiteVisits = ServiceCall::whereIn('status_of_call', ['cancelled', 'completed'])
-            ->with(['customer', 'contactPerson.mobileNumbers','serviceCallLogs'])
-            ->whereHas('customer', function ($query) {
-                $query->where('customer_name', 'like', '%' . $this->search . '%');
-            })
-            ->paginate(10);
+        $query = ServiceCall::whereIn('status_of_call', ['cancelled', 'completed'])
+            ->with(['customer', 'contactPerson.mobileNumbers', 'serviceCallLogs']);
+
+        if ($this->callType) {
+            $query->where('type_of_call', $this->callType);
+        }
+
+        $onsiteVisits = $query->whereHas('customer', function ($query) {
+            $query->where('customer_name', 'like', '%' . $this->search . '%');
+        })->paginate(10);
 
         return view('livewire.completed-call-list', ['onsiteVisits' => $onsiteVisits]);
     }
-
-    /* public function render()
-    {
-        $onsiteVisits = ServiceCall::where('call_type', 'onsite_visit')
-            ->with(['customer', 'contactPerson', 'serviceCallLogs'])
-            ->whereHas('customer', function ($query) {
-                $query->where('customer_name', 'like', '%' . $this->search . '%');
-            })
-            ->paginate(10);
-
-        return view('livewire.onsite-visit-list', ['onsiteVisits' => $onsiteVisits]);
-    } */
 }

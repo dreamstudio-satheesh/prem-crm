@@ -26,10 +26,18 @@
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
+                    <div class="col-xxl-4 col-sm-6">
+                        <select class="form-control form-control-sm" wire:model="callType">
+                            <option value="">All Types</option>
+                            <option value="onsite_visit">Onsite Visit</option>
+                            <option value="online_call">Online Call</option>
+                        </select>
+                    </div>
                 </div>
             </form>
         </div>
         @endif
+
 
         <div class="card-body">
             <div class="table-responsive table-card mb-1">
