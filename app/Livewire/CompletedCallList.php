@@ -43,9 +43,13 @@ class CompletedCallList extends Component
             });
         }
 
-        // Debugging line
-       // dd($query->toSql(), $query->getBindings());
-       Log::info('CompletedCallList Query: ' . $query->toSql(), $query->getBindings());
+        // Log the query and bindings
+        Log::info('CompletedCallList Query: ' . $query->toSql(), $query->getBindings());
+
+        // Log the count of the results
+        $resultCount = $query->count();
+        Log::info('Filtered Results Count: ' . $resultCount);
+
         $onsiteVisits = $query->paginate(10);
 
         return view('livewire.completed-call-list', ['onsiteVisits' => $onsiteVisits]);
