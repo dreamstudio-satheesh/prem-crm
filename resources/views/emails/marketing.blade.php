@@ -2,8 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h1>Send Marketing Email</h1>
     <div class="card">
+        <div class="card-header">
+            <div class="col">
+                <h4 class="card-title mb-0 flex-grow-1">Send Marketing Email</h4>
+            </div>
+
+        </div>
+
         <div class="card-body">
             <form action="{{ route('send.marketing.email') }}" method="POST">
                 @csrf
