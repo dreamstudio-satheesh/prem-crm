@@ -43,7 +43,7 @@ class CompletedCallList extends Component
         }
 
         // Debugging line
-       // dd($query->toSql(), $query->getBindings());
+        dd($query->toSql(), $query->getBindings());
 
         $onsiteVisits = $query->paginate(10);
 
