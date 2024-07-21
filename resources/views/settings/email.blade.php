@@ -8,7 +8,7 @@
                 <h4 class="card-title mb-0 flex-grow-1">Edit Email Settings</h4>
             </div>
             <div class="col-auto">
-                <a href="{{ route('settings.index') }}" class="btn btn-secondary">Back to Settings</a>
+                <a href="{{ url('settings.index') }}" class="btn btn-secondary">Back to Settings</a>
             </div>
         </div>
         <div class="card-body">
