@@ -285,6 +285,20 @@
         }, 100);
 
 
+
+        function checkStatusAndDisplayFollowUp() {
+            var statusOfCall = $('#status_of_call').val();
+            if (statusOfCall === 'follow_up') {
+                $('#follow-up-date-wrapper').show();
+            } else {
+                $('#follow-up-date-wrapper').hide();
+            }
+        }
+
+        // Call the function on page load to check the status
+        checkStatusAndDisplayFollowUp();
+
+
         $('#status_of_call').on('change', function() {
             var selectedStatus = $(this).val();
 
@@ -322,7 +336,7 @@
         }
 
         setInterval(function() {
-            fetch('{{ url(' /online-calls/keep-alive/'.$visit->id) }}', {
+            fetch('{{ url(' / online - calls / keep - alive / '.$visit->id) }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
