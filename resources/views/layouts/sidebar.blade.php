@@ -95,7 +95,7 @@
                                             Industry
                                         </a>
                                     </li>
-                                   
+
 
                                     <li class="nav-item">
                                         <a href="{{ url('location') }}" class="nav-link" data-key="t-master">
@@ -124,7 +124,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('online-calls') }}" accesskey="O" title="ALT+O" class="nav-link" data-key="t-services"> Online Calls </a>
                                         <a href="{{ url('onsite-visits') }}" accesskey="V" title="ALT+V" class="nav-link" data-key="t-services"> On-Site Calls </a>
-                                        
+
                                         <a href="{{ url('completed-calls') }}" class="nav-link" data-key="t-services"> Completed Calls </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> AMC </a>
                                         <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-services"> TDL </a>
@@ -201,15 +201,19 @@
 
                         </li>
 
-                       
+
 
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Traning" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Traning">
-                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Training</span>
+                                <i class="mdi mdi-sticker-text-outline"></i> <span data-key="t-apps">Settings</span>
                             </a>
                             <div class="collapse menu-dropdown" id="Traning">
                                 <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> E-Mail Settings
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
