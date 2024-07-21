@@ -6,6 +6,7 @@ use App\Livewire\CustomerList;
 use App\Livewire\EditCustomer;
 use App\Livewire\OnlineCallList;
 use App\Livewire\OnsiteVisitList;
+use App\Livewire\CompletedCallList;
 use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,10 @@ use App\Livewire\Master\IndustryMaster;
 use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Master\CustomertypeMaster;
+use App\Http\Controllers\SettingsController;
 use App\Livewire\Master\NatureOfIssueMaster;
 use App\Http\Controllers\OnlineCallController;
 use App\Http\Controllers\OnsiteVisitController;
-use App\Livewire\CompletedCallList;
 
 Route::get('/', function () {
   return redirect('home');
