@@ -23,14 +23,15 @@
                     <label for="recipients" class="form-label">Select Recipients</label>
                     <select class="form-control" id="recipients" name="recipients[]" multiple>
                         @foreach($customers as $customer)
-                        
-                        @if($customer->addressBooks)
-                        <optgroup label="{{ gettype($customer->addressBooks) }}">
-                            @foreach($customer->addressBooks as $addressBook)
-                            <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
-                            @endforeach
-                        </optgroup>
-                        @endif
+                            @if($customer->addressBooks->isNotEmpty())  <!-- Correct check for non-empty collection -->
+                                <optgroup label="{{ $customer->customer_name }}">
+                                    @foreach($customer->addressBooks as $addressBook)
+                                        @if($addressBook->email) <!-- Optional: Ensure there's an email address -->
+                                            <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
+                                        @endif
+                                    @endforeach
+                                </optgroup>
+                            @endif
                         @endforeach
                     </select>
                 </div>
