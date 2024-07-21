@@ -89,8 +89,7 @@
 
                     <div class="col-md-4 mb-3" id="follow-up-date-wrapper" style="display: none;">
                         <label for="follow_up_date" class="form-label">Follow Up Date</label>
-                        <input type="date" id="follow_up_date" name="follow_up_date" class="form-control" value="{{ $visit->follow_up_date }}">
-
+                        <input type="date" id="follow_up_date" name="follow_up_date" class="form-control" value="{{ $visit->follow_up_date ? \Carbon\Carbon::parse($visit->follow_up_date)->format('Y-m-d') : '' }}">
                     </div>
 
 
