@@ -18,7 +18,7 @@
             <select class="form-control" id="recipients" name="recipients[]" multiple>
                 @foreach($customers as $customer)
                     @foreach($customer->addressBooks as $addressBook)
-                        <option value="{{ $addressBook->email }}">{{ $customer->name }} - {{ $addressBook->email }}</option>
+                        <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
                     @endforeach
                 @endforeach
             </select>
