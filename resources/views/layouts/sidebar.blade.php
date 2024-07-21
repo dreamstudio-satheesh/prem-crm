@@ -211,6 +211,10 @@
                             <div class="collapse menu-dropdown" id="Traning">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
+                                        <a href="{{ url('settings') }}" class="nav-link" data-key="t-calendar">  Settings
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{{ url('email-settings') }}" class="nav-link" data-key="t-calendar"> EMail Settings
                                         </a>
                                     </li>

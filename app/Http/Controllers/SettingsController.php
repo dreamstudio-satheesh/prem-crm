@@ -7,7 +7,35 @@ use App\Models\Setting;
 
 class SettingsController extends Controller
 {
+
     public function edit()
+    {
+        $settings = Setting::whereIn('key', [
+            'app.name', 
+            'company.name', 
+            'company.email', 
+            'ui.theme_color'
+        ])->pluck('value', 'key');
+
+        return view('settings.edit', compact('settings'));
+    }
+
+    public function update(Request $request)
+    {
+        $data = $request->validate([
+            'app.name' => 'required|string|max:255',
+            'company.name' => 'required|string|max:255',
+            'company.email' => 'required|email|max:255',
+            'ui.theme_color' => 'required|string|regex:/^#[0-9a-fA-F]{6}$/'
+        ]);
+
+        foreach ($data as $key => $value) {
+            Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        return redirect()->route('settings.edit')->with('success', 'Settings updated successfully!');
+    }
+    public function edit_email()
     {
         $settings = Setting::whereIn('key', [
             'email.mail_host',
@@ -22,7 +50,7 @@ class SettingsController extends Controller
         return view('settings.email', compact('settings'));
     }
 
-    public function update(Request $request)
+    public function update_email(Request $request)
     {
         $data = $request->validate([
             'email.mail_host' => 'required',
