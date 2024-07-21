@@ -11,7 +11,10 @@ class EmailMarketingController extends Controller
 {
     public function create()
     {
-        $customers = Customer::select('id', 'name', 'email')->get();
+        $customers = Customer::with(['addressBooks' => function ($query) {
+            $query->select('customer_id', 'email')->whereNotNull('email');
+        }])->get(['customer_id', 'name']);
+
         return view('emails.marketing', compact('customers'));
     }
 
