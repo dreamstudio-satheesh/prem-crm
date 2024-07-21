@@ -7,9 +7,7 @@
             <div class="col">
                 <h4 class="card-title mb-0 flex-grow-1">Send Marketing Email</h4>
             </div>
-
         </div>
-
         <div class="card-body">
             <form action="{{ route('send.marketing.email') }}" method="POST">
                 @csrf
@@ -25,9 +23,11 @@
                     <label for="recipients" class="form-label">Select Recipients</label>
                     <select class="form-control" id="recipients" name="recipients[]" multiple>
                         @foreach($customers as $customer)
-                        @foreach($customer->addressBooks as $addressBook)
-                        <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
-                        @endforeach
+                        <optgroup label="{{ $customer->name }}">
+                            @foreach($customer->addressBooks as $addressBook)
+                            <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
+                            @endforeach
+                        </optgroup>
                         @endforeach
                     </select>
                 </div>
