@@ -7,41 +7,29 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
-        Schema::create('leads', function (Blueprint $table) {
-            $table->id('leads_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('designation'); // Corrected typo from 'desgination'
-            $table->dateTime('followup_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->enum('followup_type', ['CALL', 'DEMO', 'EMAIL', 'MEETING', 'TASK'])->nullable();
-            $table->enum('status', ['NEW', 'ASSIGNED', 'IN PROCESS', 'CONVERTED', 'DEAD'])->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('email')->nullable();
-            $table->text('comments')->nullable();
-            $table->enum('product_category', ['SALES', 'AMC', 'SERVICE', 'TDL', 'OTHERS'])->nullable();
+  public function up(): void
+  {
+    Schema::create('leads', function (Blueprint $table) {
+      $table->id();
+      $table->dateTime('date');
+      $table->string('customer_name');
+      $table->string('product');
+      $table->decimal('amount', 8, 2)->nullable();
+      $table->string('contact_no');
+      $table->string('status');
+      $table->text('remarks')->nullable();
+      $table->dateTime('follow_up_date')->nullable();
+      $table->timestamps();
+    });
 
-            $table->unsignedBigInteger('product_id')->nullable(); //  users table
-          //  $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
-            $table->enum('lead_source', ['WEBSITE', 'PARTNER', 'WALK IN', 'REFERENCE', 'JUST DIAL'])->nullable();
-            $table->enum('industry', ['OTHERS'])->nullable();
-          //  $table->enum('hierarchy', ['OTHERS'])->nullable();//$table->enum('hierarchy', ['OTHERS'])->nullable();
-            $table->unsignedBigInteger('hierarchy_id')->nullable(); 
-             //  $table->foreign('hierarchy_id')->references('id')->on('role_permissions')->onDelete('cascade');
-            $table->unsignedBigInteger('industry_id')->default(0); // Changed to unsignedBigInteger
-            $table->timestamps();
-        });
+  }
 
-        // No additional changes needed in the second schema table modification section
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('leads');
-    }
+  /**
+   * Reverse the migrations.
+   */
+  public function down(): void
+  {
+    Schema::dropIfExists('leads');
+  }
 };
