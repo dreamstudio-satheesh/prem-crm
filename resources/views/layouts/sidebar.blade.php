@@ -211,11 +211,11 @@
                             <div class="collapse menu-dropdown" id="Traning">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> E-Mail Settings
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> EMail Settings
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> E-Mail Templates
+                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> EMail Templates
                                         </a>
                                     </li>
                                 </ul>
