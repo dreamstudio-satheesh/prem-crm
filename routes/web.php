@@ -95,3 +95,8 @@ Route::post('/email-settings', [SettingsController::class, 'update_email'])->nam
 
 Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+
+Route::get('/marketing/email', 'EmailMarketingController@create')->name('marketing.email.create');
+Route::post('/send/marketing/email', 'EmailMarketingController@send')->name('send.marketing.email');
+

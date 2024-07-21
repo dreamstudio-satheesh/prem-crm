@@ -218,7 +218,10 @@
                                         <a href="{{ url('email-settings') }}" class="nav-link" data-key="t-calendar"> EMail Settings
                                         </a>
                                     </li>
-                                 
+                                    <li class="nav-item">
+                                        <a href="{{ route('marketing.email.create') }}" class="nav-link" data-key="t-calendar"> Send Marketing Mail
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
