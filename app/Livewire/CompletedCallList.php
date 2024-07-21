@@ -36,9 +36,16 @@ class CompletedCallList extends Component
             $query->where('type_of_call', $this->callType);
         }
 
-        $onsiteVisits = $query->whereHas('customer', function ($query) {
-            $query->where('customer_name', 'like', '%' . $this->search . '%');
-        })->paginate(10);
+        if ($this->search) {
+            $query->whereHas('customer', function ($query) {
+                $query->where('customer_name', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        // Debugging line
+        dd($query->toSql(), $query->getBindings());
+
+        $onsiteVisits = $query->paginate(10);
 
         return view('livewire.completed-call-list', ['onsiteVisits' => $onsiteVisits]);
     }
