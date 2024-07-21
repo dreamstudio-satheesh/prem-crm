@@ -218,10 +218,7 @@
                                         <a href="{{ url('email-settings') }}" class="nav-link" data-key="t-calendar"> EMail Settings
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-calendar"> EMail Templates
-                                        </a>
-                                    </li>
+                                 
                                 </ul>
                             </div>
                         </li>
