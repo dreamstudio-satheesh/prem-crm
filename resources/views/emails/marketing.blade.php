@@ -23,8 +23,9 @@
                     <label for="recipients" class="form-label">Select Recipients</label>
                     <select class="form-control" id="recipients" name="recipients[]" multiple>
                         @foreach($customers as $customer)
+                        
                         @if($customer->addressBooks)
-                        <optgroup label="{{ $customer->customer_name }}">
+                        <optgroup label="{{ get_type($customer->addressBooks) }}">
                             @foreach($customer->addressBooks as $addressBook)
                             <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
                             @endforeach
