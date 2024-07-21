@@ -91,7 +91,7 @@
 
                     <div class="col-md-4 mb-3" id="follow-up-date-wrapper" style="display: none;">
                         <label for="follow_up_date" class="form-label">Follow Up Date</label>
-                        <input type="date" id="follow_up_date" name="follow_up_date" class="form-control">
+                        <input type="date" id="follow_up_date" name="follow_up_date" class="form-control" value="{{ $visit->follow_up_date }}">
                     </div>
 
 
@@ -285,6 +285,19 @@
             let now = moment().format('DD MMMM YYYY, h:mm:ss A');
             $('#call_end_time').val(now);
         }, 100);
+
+
+        function checkStatusAndDisplayFollowUp() {
+            var statusOfCall = $('#status_of_call').val();
+            if (statusOfCall === 'follow_up') {
+                $('#follow-up-date-wrapper').show();
+            } else {
+                $('#follow-up-date-wrapper').hide();
+            }
+        }
+
+        // Call this function to check status and display follow-up date section appropriately
+        checkStatusAndDisplayFollowUp();
 
 
         $('#status_of_call').on('change', function() {
