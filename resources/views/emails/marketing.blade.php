@@ -25,7 +25,7 @@
                         @foreach($customers as $customer)
                         
                         @if($customer->addressBooks)
-                        <optgroup label="{{ get_type($customer->addressBooks) }}">
+                        <optgroup label="{{ gettype($customer->addressBooks) }}">
                             @foreach($customer->addressBooks as $addressBook)
                             <option value="{{ $addressBook->email }}">{{ $addressBook->contact_person }} - {{ $addressBook->email }}</option>
                             @endforeach
