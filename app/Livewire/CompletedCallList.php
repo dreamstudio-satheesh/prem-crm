@@ -3,8 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\ServiceCall;
+use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
 
 class CompletedCallList extends Component
 {
@@ -44,7 +45,7 @@ class CompletedCallList extends Component
 
         // Debugging line
        // dd($query->toSql(), $query->getBindings());
-
+       Log::info('CompletedCallList Query: ' . $query->toSql(), $query->getBindings());
         $onsiteVisits = $query->paginate(10);
 
         return view('livewire.completed-call-list', ['onsiteVisits' => $onsiteVisits]);
