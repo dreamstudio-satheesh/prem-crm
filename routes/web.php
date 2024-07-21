@@ -89,10 +89,5 @@ Route::post('/online-calls/{id}', [OnlineCallController::class, 'update'])->name
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
 
-//Route::get('transactions/trnenquiry', [Transactions\TrnEnquiryController::class, 'index']);  
-//Route::get('transactions/trnenquiry/create', [Transactions\TrnEnquiryController::class, 'create']);  
-//Route::post('transactions/trnenquiry/store', [Transactions\TrnEnquiryController::class, 'store']);  
-//::get('transactions/trnenquiry/edit/{number?}', [Transactions\TrnEnquiryController::class, 'edit']);  
-
-//Route::post('transactions/trnenquiry/update', [Transactions\TrnEnquiryController::class, 'update']);  
-//Route::get('transactions/trnenquiry/delete/{number?}', [Transactions\TrnEnquiryController::class, 'delete']);  //
+Route::get('/email-settings', 'SettingsController@edit')->name('email-settings.edit');
+Route::post('/email-settings', 'SettingsController@update')->name('email-settings.update');
