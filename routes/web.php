@@ -90,5 +90,5 @@ Route::post('/online-calls/{id}', [OnlineCallController::class, 'update'])->name
 Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
 
-Route::get('/email-settings', 'SettingsController@edit')->name('email-settings.edit');
-Route::post('/email-settings', 'SettingsController@update')->name('email-settings.update');
+Route::get('/email-settings', [SettingsController::class, 'edit'])->name('email-settings.edit');
+Route::post('/email-settings', [SettingsController::class, 'update'])->name('email-settings.update');
