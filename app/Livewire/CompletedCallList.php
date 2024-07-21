@@ -34,7 +34,7 @@ class CompletedCallList extends Component
             ->with(['customer', 'contactPerson.mobileNumbers', 'serviceCallLogs']);
 
         if ($this->callType) {
-            $query->where('type_of_call', $this->callType);
+            $query->where('call_type', $this->callType); // Corrected column name
         }
 
         if ($this->search) {
@@ -42,13 +42,6 @@ class CompletedCallList extends Component
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             });
         }
-
-        // Log the query and bindings
-        Log::info('CompletedCallList Query: ' . $query->toSql(), $query->getBindings());
-
-        // Log the count of the results
-        $resultCount = $query->count();
-        Log::info('Filtered Results Count: ' . $resultCount);
 
         $onsiteVisits = $query->paginate(10);
 
