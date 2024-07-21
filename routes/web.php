@@ -21,6 +21,7 @@ use App\Http\Controllers\SettingsController;
 use App\Livewire\Master\NatureOfIssueMaster;
 use App\Http\Controllers\OnlineCallController;
 use App\Http\Controllers\OnsiteVisitController;
+use App\Http\Controllers\EmailMarketingController;
 
 Route::get('/', function () {
   return redirect('home');
@@ -97,6 +98,6 @@ Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edi
 Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
 
-Route::get('/marketing/email', 'EmailMarketingController@create')->name('marketing.email.create');
-Route::post('/send/marketing/email', 'EmailMarketingController@send')->name('send.marketing.email');
+Route::get('/marketing/email', [EmailMarketingController::class, 'create'])->name('marketing.email.create');
+Route::post('/send/marketing/email', [EmailMarketingController::class, 'send'])->name('send.marketing.email');
 
