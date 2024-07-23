@@ -15,8 +15,8 @@ return new class extends Migration
       $table->unsignedBigInteger('customer_id'); 
       $table->unsignedBigInteger('product_id');
       $table->decimal('amount', 8, 2)->nullable();
-      $table->string('contact_no');
-      $table->string('status');
+      $table->string('contact_no')->nullable();
+      $table->string('status')->nullable();
       $table->text('remarks')->nullable();
       $table->dateTime('follow_up_date')->nullable();
       $table->unsignedBigInteger('referral_id')->nullable(); // Referring customer or contact ID
