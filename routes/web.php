@@ -16,6 +16,7 @@ use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
 use App\Livewire\Master\LocationMaster;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LeadController;
 use App\Livewire\Master\CustomertypeMaster;
 use App\Http\Controllers\SettingsController;
 use App\Livewire\Master\NatureOfIssueMaster;
@@ -101,3 +102,4 @@ Route::post('/settings', [SettingsController::class, 'update'])->name('settings.
 Route::get('/marketing/email', [EmailMarketingController::class, 'create'])->name('marketing.email.create');
 Route::post('/send/marketing/email', [EmailMarketingController::class, 'send'])->name('send.marketing.email');
 
+Route::resource('leads', LeadController::class);
