@@ -19,10 +19,11 @@ return new class extends Migration
       $table->string('status');
       $table->text('remarks')->nullable();
       $table->dateTime('follow_up_date')->nullable();
+      $table->unsignedBigInteger('referral_id')->nullable(); // Referring customer or contact ID
       $table->string('referral_name')->nullable(); // Name of the referrer
       $table->string('referral_contact_no')->nullable(); // Contact number of the referrer
       $table->decimal('referral_reward', 8, 2)->nullable(); // Reward or incentive for the referral
-      
+
       $table->timestamps();
   
       $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
