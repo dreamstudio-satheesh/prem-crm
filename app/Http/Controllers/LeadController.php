@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Lead; // Assuming your model name is Lead
+use App\Models\Lead;
+use App\Models\Product;
+use App\Models\Customer; // Assuming you have a Customer model
 use Illuminate\Http\Request;
 
 class LeadController extends Controller
 {
     public function index()
     {
-        $leads = Lead::paginate(15);
+        $leads = Lead::with('product', 'customer')->paginate(15); // Eager load related data
         return view('leads.index', compact('leads'));
     }
 
     public function create()
     {
-        return view('leads.create');
+        $products = Product::all();
+        $customers = Customer::all(); // Fetch all customers for dropdown
+        return view('leads.create', compact('products', 'customers'));
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'customer_id' => 'required',
-            'product_id' => 'required',
-            'contact_no' => 'required',
-            'status' => 'required',
-            // Add other fields as necessary
+            'customer_id' => 'required|exists:customers,id',
+            'product_id' => 'required|exists:products,id',
+            'amount' => 'nullable|numeric',
+            'status' => 'required|string',
+            'follow_up_date' => 'nullable|date',
         ]);
 
         Lead::create($validatedData);
@@ -40,17 +43,19 @@ class LeadController extends Controller
 
     public function edit(Lead $lead)
     {
-        return view('leads.edit', compact('lead'));
+        $products = Product::all();
+        $customers = Customer::all(); // Fetch all customers for dropdown
+        return view('leads.edit', compact('lead', 'products', 'customers'));
     }
 
     public function update(Request $request, Lead $lead)
     {
         $validatedData = $request->validate([
-            'customer_id' => 'required',
-            'product_id' => 'required',
-            'contact_no' => 'required',
-            'status' => 'required',
-            // Validate other fields as necessary
+            'customer_id' => 'required|exists:customers,id',
+            'product_id' => 'required|exists:products,id',
+            'amount' => 'nullable|numeric',
+            'status' => 'required|string',
+            'follow_up_date' => 'nullable|date',
         ]);
 
         $lead->update($validatedData);
@@ -63,7 +68,3 @@ class LeadController extends Controller
         return redirect('/leads')->with('success', 'Lead deleted successfully!');
     }
 }
-
-
-
-
