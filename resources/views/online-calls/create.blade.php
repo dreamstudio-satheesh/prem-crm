@@ -18,13 +18,13 @@
                     <div class="col-md-4 mb-3">
                         <label for="customer_id" class="form-label">Customer</label>
                         <select id="customer_id" name="customer_id" class="form-control select2">
-                            <option value="">Select Customer</option>
+                        <option value="new_customer">Add New Customer</option>
                             @foreach($customers as $customer)
                             <option value="{{ $customer->customer_id }}" {{ old('customer_id') == $customer->customer_id ? 'selected' : '' }}>
                                 {{ $customer->customer_name }}
                             </option>
                             @endforeach
-                            <option value="new_customer">Add New Customer</option>
+                           
                         </select>
                         @error('customer_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>

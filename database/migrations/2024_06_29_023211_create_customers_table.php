@@ -38,7 +38,7 @@ class CreateCustomersTable extends Migration
             $table->string('map_location', 191)->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
-            $table->string('status', 191)->default('active'); 
+            $table->string('status', 191)->default('active'); // 'lead', 'prospect', 'confirmed', etc.
             $table->timestamps();
 
             //$table->foreign('amc_id')->references('id')->on('amc')->onDelete('set null');
