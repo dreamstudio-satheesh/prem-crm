@@ -142,7 +142,7 @@
                             <div class="collapse menu-dropdown" id="PreSales">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="{{ url('reports/hourly') }}" class="nav-link" data-key="t-presales"> Leads
+                                        <a href="{{ url('leads') }}" class="nav-link" data-key="t-presales"> Leads
                                         </a>
                                     </li>
 
