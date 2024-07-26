@@ -160,8 +160,6 @@ class CustomerList extends Component
             session()->flash('success', 'Customers Imported Successfully.');
             $this->resetPreview();
         } catch (\Exception $e) {
-
-            dd($this->mappings);
             dd($e->getMessage());
             session()->flash('error', 'Import failed: ' . $e->getMessage());
         }
