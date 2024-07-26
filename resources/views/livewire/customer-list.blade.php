@@ -211,7 +211,7 @@
         </div>
     </div>
 
-
+    @if($previewData)
     <!-- Preview Modal -->
     <div class="modal fade" wire:ignore.self id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -247,6 +247,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 
     @push('scripts')
