@@ -51,9 +51,15 @@ class ImportCustomers extends Component
     {
         $this->mappings = [];
 
-        dd( $this->selectedMappings);
+        // Add debugging to see the current state of selectedMappings
+        logger()->info('Selected Mappings Before Processing:', $this->selectedMappings);
 
         foreach ($this->selectedMappings as $header => $dbField) {
+            // Temporary check to catch non-string values
+            if (is_array($dbField)) {
+                logger()->error('Non-string value found in selectedMappings:', ['header' => $header, 'dbField' => $dbField]);
+                continue; // Skip this invalid mapping
+            }
 
             // Ensure dbField is a string
             if (!empty($dbField) && is_string($header) && is_string($dbField)) {
@@ -61,7 +67,10 @@ class ImportCustomers extends Component
             }
         }
 
+        // Log the final mappings array
+        logger()->info('Mappings:', $this->mappings);
     }
+
 
 
 
