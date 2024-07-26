@@ -66,9 +66,7 @@ Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddre
 
 
 Route::get('customer/import', [CustomerImportController::class, 'showImportForm'])->name('customer_import.show');
-
-Route::get('customer/import/upload', [CustomerImportController::class, 'uploadAndPrepareImport'])->name('customer_import.upload');
-//Route::post('customer/import/upload', [CustomerImportController::class, 'uploadAndPrepareImport'])->name('customer_import.upload');
+Route::post('customer/import/upload', [CustomerImportController::class, 'uploadAndPrepareImport'])->name('customer_import.upload');
 Route::post('customer/import/import', [CustomerImportController::class, 'importData'])->name('customer_import.import');
 
 
