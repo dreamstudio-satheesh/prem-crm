@@ -35,7 +35,7 @@ class CustomersImport implements ToModel, WithHeadingRow
 
         // Check if the mandatory fields are set
         if (empty($data['customer_name'])) {
-            Log::warning('Skipped row due to missing customer_name', ['row' => $row]);
+            Log::warning('Skipped row due to missing customer_name', [$this->mappings]);
             return null; // Skip this row
         }
 
