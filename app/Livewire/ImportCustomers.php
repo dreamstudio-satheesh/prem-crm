@@ -35,7 +35,7 @@ class ImportCustomers extends Component
         $this->tempFilePath = $path;
         $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
 
-        $this->previewData = $array[0];
+        $this->previewData = array_slice($array[0], 0, 3); // Limit preview to 3 rows
         $this->headers = array_keys($this->previewData[0]);
     }
 
