@@ -18,17 +18,19 @@ class CustomersImport implements ToModel, WithHeadingRow, WithMapping
     }
 
     /**
-     * Maps the incoming row to an array based on the defined mappings.
-     * This method is used to debug and log the CSV headers.
+     * This method will be used to log and pass through the data.
+     * It must return an array that will be passed to the model() method.
      *
      * @param array $row
      * @return array
      */
-    public function mapping(array $row): array
+    public function map($row): array
     {
-        // Log the headers found to debug
-        Log::debug('CSV Headers Read', array_keys($row));
-        return $row; // Return the row unchanged for further processing
+        // Log the row data to see what is being processed
+        Log::debug('Processing row with mapping', $row);
+
+        // Pass through the row unchanged
+        return $row;
     }
 
     /**
