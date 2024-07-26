@@ -1,11 +1,4 @@
 <!-- resources/views/customer_import_preview.blade.php -->
-
-
-@extends('layouts.admin')
-
-@section('content')
-
-<!-- resources/views/customer_import_preview.blade.php -->
 <div class="card">
     <div class="card-header align-items-center d-flex">
         <div class="col">
@@ -16,20 +9,20 @@
         </div>
     </div>
     <div class="card-body">
-        <form action="{{ url('customer/import/import') }}" method="POST">
+        <form action="{{ route('customer_import.import') }}" method="POST">
             @csrf
             <input type="hidden" name="tempFilePath" value="{{ $tempFilePath }}">
             <div class="table-responsive mt-5">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            @foreach($headers as $header)
+                            @foreach($headers as $index)
                             <th>
-                                {{ $header }}
-                                <select name="mappings[{{ $header }}]" class="form-control">
+                                Column {{ $index }}
+                                <select name="mappings[{{ $index }}]" class="form-control">
                                     <option value="">Select Field</option>
                                     @foreach($columnOptions as $field => $label)
-                                    <option value="{{ $field }}">{{ $field }}</option>
+                                    <option value="{{ $field }}">{{ $label }}</option>
                                     @endforeach
                                 </select>
                             </th>
@@ -52,6 +45,3 @@
         </form>
     </div>
 </div>
-
-
-@endsection

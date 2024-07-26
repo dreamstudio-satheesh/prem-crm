@@ -39,8 +39,6 @@ class CustomerImportController extends Controller
 
         // Remove the header row from the preview data
         unset($previewData[0]);
-
-        return $headers;
         return view('customer_import_preview', [
             'headers' => $headers,
             'previewData' => $previewData,
