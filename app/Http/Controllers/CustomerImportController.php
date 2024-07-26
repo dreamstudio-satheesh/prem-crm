@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Imports\PreviewImport;
 use App\Imports\CustomersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+
 
 class CustomerImportController extends Controller
 {
@@ -56,15 +58,17 @@ class CustomerImportController extends Controller
 
         try {
             $import = new CustomersImport($mappings);
-           $import_customer= Excel::import($import, storage_path('app/public/' . $tempFilePath));
+            Excel::import($import, storage_path('app/public/' . $tempFilePath));
 
-            return $import_customer;
+            // Delete the temp file after import
+            Storage::disk('public')->delete($tempFilePath);
 
-            // return redirect()->route('customers.index')->with('success', 'Customers imported successfully.');
+            return redirect()->route('customers.index')->with('success', 'Customers imported successfully.');
         } catch (\Exception $e) {
+            // Optionally delete the file even on failure if you don't need to retry the import
+            Storage::disk('public')->delete($tempFilePath);
 
-            return $e->getMessage();
-            //return redirect()->back()->with('error', 'Import failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Import failed: ' . $e->getMessage());
         }
     }
 }
