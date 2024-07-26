@@ -22,6 +22,7 @@ class CustomerImportController extends Controller
         return view('customer_import');
     }
 
+
     public function uploadAndPrepareImport(Request $request)
     {
         $request->validate([
@@ -33,10 +34,8 @@ class CustomerImportController extends Controller
         $previewData = array_slice($array[0], 0, 4); // Limit preview to 3 rows, including headers
         $rawHeaders = $previewData[0]; // Directly use the first row as headers
 
-        // Filter out null or empty headers and ensure headers are strings
-        $headers = array_filter(array_map('trim', $rawHeaders), function ($header) {
-            return !is_null($header) && $header !== '';
-        });
+        // Generate numeric headers for indexing
+        $headers = range(0, count($rawHeaders) - 1);
 
         // Remove the header row from the preview data
         unset($previewData[0]);
@@ -49,6 +48,8 @@ class CustomerImportController extends Controller
         ]);
     }
 
+
+
     public function importData(Request $request)
     {
         $mappings = $request->input('mappings', []);
@@ -59,7 +60,7 @@ class CustomerImportController extends Controller
         try {
             $import = new CustomersImport($mappings);
             Excel::import($import, storage_path('app/public/' . $tempFilePath));
-           // return redirect()->route('customers.index')->with('success', 'Customers imported successfully.');
+            // return redirect()->route('customers.index')->with('success', 'Customers imported successfully.');
         } catch (\Exception $e) {
 
             return $e->getMessage();
