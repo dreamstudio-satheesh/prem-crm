@@ -39,6 +39,9 @@ class CustomersImport implements ToModel, WithHeadingRow
             return null; // Skip this row or handle it differently
         }
 
+        // Debugging: Uncomment to see the $data array
+        dd($data);
+
         return new Customer($data);
     }
 }
