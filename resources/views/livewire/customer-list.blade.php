@@ -12,7 +12,7 @@
                                 <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
                             </button>
 
-                            <a href="{{ route('customers.import') }}" class="btn btn-sm btn-info">
+                            <a href="{{ route('customer_import.upload') }}" class="btn btn-sm btn-info">
                                 <i class="ri-file-download-line align-bottom me-1"></i> Import
                             </a>
                             <button wire:click="export" class="btn btn-sm btn-success">
