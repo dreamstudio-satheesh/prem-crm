@@ -25,20 +25,35 @@ class CustomersImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $data = [];
+        $customerNameFound = false;
 
         // Iterate over the mappings and set the appropriate fields in $data
         foreach ($this->mappings as $fileHeader => $dbField) {
             if (isset($row[$fileHeader])) {
                 $data[$dbField] = $row[$fileHeader];
+
+                // Check for customer_name directly in the loop
+                if ($dbField === 'customer_name' && !empty($data[$dbField])) {
+                    $customerNameFound = true;
+                }
             }
         }
 
-        // Check if the mandatory fields are set
-        if (empty($data['customer_name'])) {
-            Log::warning('Skipped row due to missing customer_name', [$this->mappings]);
+        // Log if the customer name is still missing despite checking within the loop
+        if (!$customerNameFound) {
+            Log::warning('Skipped row due to missing or empty customer_name', ['row' => $row]);
             return null; // Skip this row
         }
 
-        return new Customer($data);
+        // Proceed if the customer name is found and valid
+        Log::info('Processing row', ['data' => $data]);
+
+        $customer = new Customer($data);
+        $customer->save();
+
+        // Optionally, log after successfully saving the record
+        Log::info('Successfully imported customer', ['customer_id' => $customer->id]);
+
+        return $customer;
     }
 }
