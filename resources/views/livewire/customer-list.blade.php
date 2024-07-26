@@ -188,56 +188,69 @@
 
     <!-- Import Modal -->
     <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <!-- Import Modal Content -->
-            <div class="modal-body">
+        <div class="modal-dialog full-screen" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">{{ $previewData ? 'Preview Customers' : 'Import Customers' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Import Modal Content -->
+                <div class="modal-body">
+                    @if ($previewData)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                @foreach($headers as $header)
+                                <th>
+                                    {{ $header }}
+                                    <select wire:model="mappings.{{ $header }}">
+                                        <option value="">Select Field</option>
+                                        @foreach($columnOptions as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                </th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($previewData as $row)
+                            <tr>
+                                @foreach($row as $cell)
+                                <td>{{ $cell }}</td>
+                                @endforeach
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <button wire:click="confirmImport" class="btn btn-success">Confirm Import</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    @else
+                    <!-- File Upload Form -->
+                    <form id="importForm" wire:submit.prevent="uploadAndPrepareImport">
+                        <div class="form-group">
+                            <label for="file">Upload File</label>
+                            <input type="file" class="form-control" id="file" wire:model="upload_file">
+                            @error('upload_file')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Prepare Import</button>
+                    </form>
+                    @endif
+                </div>
+
                 @if ($previewData)
-                <table class="table">
-                    <thead>
-                        <tr>
-                            @foreach($headers as $header)
-                            <th>
-                                {{ $header }}
-                                <select wire:model="mappings.{{ $header }}">
-                                    <option value="">Select Field</option>
-                                    @foreach($columnOptions as $key => $value)
-                                    <option value="{{ $key }}">{{ $value }}</option>
-                                    @endforeach
-                                </select>
-                            </th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($previewData as $row)
-                        <tr>
-                            @foreach($row as $cell)
-                            <td>{{ $cell }}</td>
-                            @endforeach
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <button wire:click="confirmImport" class="btn btn-success">Confirm Import</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                @else
-                <!-- File Upload Form -->
-                <form id="importForm" wire:submit.prevent="uploadAndPrepareImport">
-                    <div class="form-group">
-                        <label for="file">Upload File</label>
-                        <input type="file" class="form-control" id="file" wire:model="upload_file">
-                        @error('upload_file')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Prepare Import</button>
-                </form>
+                <div class="modal-footer">
+                    <button wire:click="confirmImport" class="btn btn-success">Confirm Import</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
                 @endif
             </div>
-
         </div>
     </div>
+
 
 
 
