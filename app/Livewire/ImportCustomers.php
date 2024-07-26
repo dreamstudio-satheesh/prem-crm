@@ -43,6 +43,8 @@ class ImportCustomers extends Component
             return !is_null($header) && $header !== '';
         });
 
+        dd($this->headers);
+
         // Remove the header row from the preview data
         unset($this->previewData[0]);
     }
@@ -52,23 +54,13 @@ class ImportCustomers extends Component
         $this->mappings = [];
 
         foreach ($this->selectedMappings as $header => $dbField) {
-            // Log the types and values of header and dbField
-            logger()->info('Header Type:', [gettype($header)]);
-            logger()->info('Header Value:', [$header]);
-            logger()->info('DB Field Type:', [gettype($dbField)]);
-            logger()->info('DB Field Value:', [$dbField]);
 
             // Ensure dbField is a string
             if (!empty($dbField) && is_string($header) && is_string($dbField)) {
                 $this->mappings[$dbField] = $header; // Maps database field to header
             }
-            else{
-                dd($dbField);
-            }
         }
 
-        // Log the final mappings array
-        logger()->info('Mappings:', $this->mappings);
     }
 
 
