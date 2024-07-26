@@ -4,9 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Imports\PreviewImport;
-use App\Imports\CustomersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CustomersImport;
 
 class ImportCustomers extends Component
 {
@@ -36,10 +35,10 @@ class ImportCustomers extends Component
         $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
 
         $this->previewData = $array[0];
-        $this->headers = array_keys($this->previewData[0]);  // Corrected to use array_keys
+        $this->headers = array_keys($this->previewData[0]);
     }
 
-    public function setUserMappings()
+    public function updatedSelectedMappings()
     {
         $this->mappings = [];
         foreach ($this->selectedMappings as $header => $dbField) {
@@ -47,9 +46,6 @@ class ImportCustomers extends Component
                 $this->mappings[$dbField] = $header; // Maps database field to header
             }
         }
-
-        // Optionally, log or dump to check if mappings are set correctly
-        logger()->info('User defined mappings:', $this->mappings);
     }
 
     public function importData()
@@ -79,4 +75,3 @@ class ImportCustomers extends Component
         return view('livewire.import-customers');
     }
 }
-

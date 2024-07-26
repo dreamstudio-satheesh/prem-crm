@@ -21,35 +21,36 @@
             </form>
 
             @if ($previewData)
-            <table class="table mt-5">
-                <thead>
-                    <tr>
-                        @foreach($headers as $header)
-                        <th>
-                            {{ $header }}
-                            <select wire:model.lazy="selectedMappings.{{ $header }}">
-                                <option value="">Select Field</option>
-                                @foreach($columnOptions as $field => $label)
-                                <option value="{{ $field }}">{{ $label }}</option>
-                                @endforeach
-                            </select>
-                        </th>
+            <div class="table-responsive mt-5">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            @foreach($headers as $header)
+                            <th>
+                                {{ $header }}
+                                <select wire:model.lazy="selectedMappings.{{ $header }}">
+                                    <option value="">Select Field</option>
+                                    @foreach($columnOptions as $field => $label)
+                                    <option value="{{ $field }}">{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($previewData as $row)
+                        <tr>
+                            @foreach($row as $cell)
+                            <td>{{ $cell }}</td>
+                            @endforeach
+                        </tr>
                         @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($previewData as $row)
-                    <tr>
-                        @foreach($row as $cell)
-                        <td>{{ $cell }}</td>
-                        @endforeach
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <button wire:click="setUserMappings" class="btn btn-success">Confirm Mappings</button>
-            <button wire:click="importData" class="btn btn-info">Import Data</button>
-            <button wire:click="resetPreview" class="btn btn-secondary">Reset</button>
+                    </tbody>
+                </table>
+            </div>
+            <button wire:click="importData" class="btn btn-info mt-3">Import Data</button>
+            <button wire:click="resetPreview" class="btn btn-secondary mt-3">Reset</button>
             @endif
         </div>
     </div>
