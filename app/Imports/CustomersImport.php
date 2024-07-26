@@ -28,7 +28,7 @@ class CustomersImport implements ToModel
         ]);
 
         $customer->save(); // Save the customer
-        Log::info('Successfully imported customer', ['customer_id' => $customer->id]);
+        Log::info('Successfully imported customer', ['customer_id' => $customer->customer_id]);
 
         return $customer;
     }
