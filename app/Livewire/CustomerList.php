@@ -148,7 +148,7 @@ class CustomerList extends Component
 
     public function confirmImport()
     {
-        dd($this->mappings);
+     
 
         try {
             $import = new CustomersImport($this->mappings);
@@ -156,6 +156,8 @@ class CustomerList extends Component
             session()->flash('success', 'Customers Imported Successfully.');
             $this->resetPreview();
         } catch (\Exception $e) {
+
+            dd($this->mappings);
             dd($e->getMessage());
             session()->flash('error', 'Import failed: ' . $e->getMessage());
         }

@@ -17,9 +17,8 @@ class CustomersImport implements ToModel
     public function model(array $row)
     {
         return new Customer([
-            'customer_name' => $row[$this->mappings['customer_name']],
-            'tally_serial_no' => $row[$this->mappings['tally_serial_no']],
-            // Map other fields accordingly
+            'customer_name' => $row[$this->mappings['customer_name']] ?? null,
+            'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
         ]);
     }
 }
