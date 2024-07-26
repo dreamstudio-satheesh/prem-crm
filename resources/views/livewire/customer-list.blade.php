@@ -188,7 +188,7 @@
 
     <!-- Import Modal -->
     <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-fullscreen">
             @if($previewData)
             <!-- Preview Modal -->
 
