@@ -4,8 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PreviewImport;
 use App\Imports\CustomersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportCustomers extends Component
 {
