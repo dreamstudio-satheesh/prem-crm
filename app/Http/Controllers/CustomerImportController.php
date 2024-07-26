@@ -54,8 +54,6 @@ class CustomerImportController extends Controller
         $mappings = $request->input('mappings', []);
         $tempFilePath = $request->input('tempFilePath');
 
-        return $mappings;
-
         try {
             $import = new CustomersImport($mappings);
             Excel::import($import, storage_path('app/public/' . $tempFilePath));
