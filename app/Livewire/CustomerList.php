@@ -148,7 +148,7 @@ class CustomerList extends Component
 
     public function confirmImport()
     {
-        dd('hi');
+
         try {
             $import = new CustomersImport($this->mappings);
             Excel::import($import, storage_path('app/public/' . $this->tempFilePath));
@@ -158,6 +158,25 @@ class CustomerList extends Component
             session()->flash('error', 'Import failed: ' . $e->getMessage());
         }
     }
+
+    public function resetPreview()
+    {
+        // Reset all properties to their initial state
+        $this->previewData = null; // Reset the preview data
+        $this->headers = [];       // Reset the headers array
+        $this->mappings = [];      // Reset the mappings array
+        $this->tempFilePath = null; // Clear the path to the temporary file
+
+        // If using file uploads with Livewire, reset the file upload input
+        $this->reset('upload_file');
+
+        // Optionally clear any session messages
+        session()->forget(['success', 'error']);
+
+        // Dispatch an event to close the modal if you're handling modals via JavaScript
+        $this->dispatch('close-modal');
+    }
+
 
 
 
