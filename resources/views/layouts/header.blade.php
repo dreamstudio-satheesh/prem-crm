@@ -50,7 +50,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                                 aria-labelledby="page-header-search-dropdown">
-                                <form class="p-3">
+                                <from class="p-3">
                                     <div class="form-group m-0">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search ..."
@@ -59,7 +59,7 @@
                                                     class="mdi mdi-magnify"></i></button>
                                         </div>
                                     </div>
-                                </form>
+                                </from>
                             </div>
                         </div>
 
