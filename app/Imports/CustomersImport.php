@@ -4,35 +4,28 @@ namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use App\Models\Customer;
+use Maatwebsite\Excel\Concerns\WithLimit;
+use Maatwebsite\Excel\Concerns\ToArray;
 
-class CustomersImport implements ToModel, WithHeadingRow
+class CustomersImport implements ToModel, WithHeadingRow, WithLimit, ToArray
 {
-    private $mappings;
-
-    public function __construct(array $mappings)
+    public function array(array $array)
     {
-        // Adjust mappings to use indices for column access
-        $this->mappings = array_flip($mappings); // Flips keys with their values
+        dd($array); // This will dump the first few rows of your Excel file after applying the heading row
     }
 
     public function model(array $row)
     {
-        // Use column indices to map data fields
+        // Model instantiation code
+    }
 
-        dd([
-            'customer_name' => $row[$this->mappings['customer_name']] ?? null,
-            'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
-        ]);
-        return new Customer([
-            'customer_name' => $row[$this->mappings['customer_name']] ?? null,
-            'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
-        ]);
+    public function limit(): int
+    {
+        return 5;  // Only process the first 5 rows for testing
     }
 
     public function headingRow(): int
     {
-        return 1; // Headers are expected at the first row
+        return 1;
     }
 }
-
