@@ -211,6 +211,44 @@
         </div>
     </div>
 
+
+    <!-- Preview Modal -->
+    <div class="modal fade" wire:ignore.self id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Preview Customers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                @foreach($previewData[0] ?? [] as $key => $value)
+                                <th>{{ $key }}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($previewData as $row)
+                            <tr>
+                                @foreach($row as $cell)
+                                <td>{{ $cell }}</td>
+                                @endforeach
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button wire:click="confirmImport" class="btn btn-success">Confirm Import</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @push('scripts')
 
     <script>

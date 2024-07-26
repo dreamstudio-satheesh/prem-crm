@@ -2,22 +2,24 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
+use App\Models\Licence;
+use App\Models\Product;
 use Livewire\Component;
+use App\Models\Customer;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use App\Models\Customer;
-use App\Models\Product;
-use App\Models\Licence;
-use App\Imports\CustomersImport;
+use App\Imports\PreviewImport;
 use App\Exports\CustomersExport;
+use App\Imports\CustomersImport;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
 
 class CustomerList extends Component
 {
     use WithPagination, WithFileUploads;
 
-    public $upload_file;
+    public $previewData;
+    public $tempFilePath;
     public $search = '';
     public $status = '';
     public $tss_status = '';
@@ -92,19 +94,31 @@ class CustomerList extends Component
         return view('livewire.customer-list', ['customers' => $customers]);
     }
 
+    
+
     public function import()
     {
         $this->validate([
             'upload_file' => 'required|mimes:xlsx,csv,txt',
         ]);
 
-        Excel::import(new CustomersImport, $this->upload_file->getRealPath());
+        // Store the file temporarily
+        $path = $this->upload_file->store('temp', 'public');
+
+        // Save the path to a component property to use later
+        $this->tempFilePath = $path;
+
+        // Load preview data
+        $this->previewData = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path))[0];
 
         session()->flash('success', 'Customers Imported Successfully.');
 
         // Close the modal
         $this->dispatch('close-modal');
+
+        $this->dispatch('show-preview-modal'); // Trigger a browser event to show the preview modal
     }
+
 
     public function export()
     {

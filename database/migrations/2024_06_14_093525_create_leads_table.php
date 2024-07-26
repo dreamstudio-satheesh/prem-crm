@@ -26,8 +26,8 @@ return new class extends Migration
 
       $table->timestamps();
   
-      $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-      $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
+     // $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+     // $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
   });
   
 
