@@ -148,6 +148,7 @@ class CustomerList extends Component
 
     public function confirmImport()
     {
+        dd('hi');
         try {
             $import = new CustomersImport($this->mappings);
             Excel::import($import, storage_path('app/public/' . $this->tempFilePath));
