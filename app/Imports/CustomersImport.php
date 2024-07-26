@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class CustomersImport implements ToModel, WithStartRow
 {
