@@ -51,6 +51,7 @@ class CustomerImportController extends Controller
 
     public function importData(Request $request)
     {
+        return($request->all());
         $mappings = $request->input('mappings', []);
         $tempFilePath = $request->input('tempFilePath');
 
