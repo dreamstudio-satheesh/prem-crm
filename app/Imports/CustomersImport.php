@@ -3,13 +3,14 @@
 namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\Customer;
 
-class CustomersImport implements ToModel
+class CustomersImport implements ToModel, WithHeadingRow
 {
     private $mappings;
 
-    public function __construct($mappings)
+    public function __construct(array $mappings)
     {
         $this->mappings = $mappings;
     }
@@ -21,4 +22,10 @@ class CustomersImport implements ToModel
             'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
         ]);
     }
+
+    public function headingRow(): int
+    {
+        return 1; // Ensure the first row is treated as the header row
+    }
 }
+
