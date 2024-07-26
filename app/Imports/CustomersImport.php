@@ -1,5 +1,7 @@
 <?php
 
+<?php
+
 namespace App\Imports;
 
 use App\Models\Customer;
@@ -14,7 +16,8 @@ class CustomersImport implements ToModel, WithHeadingRow
     {
         $this->mappings = $mappings;
 
-        // dd($this->mappings); // Remove the dd statement now that you have verified the mappings
+        // Debugging: Uncomment to check mappings
+        // dd($this->mappings);
     }
 
     /**
@@ -30,6 +33,12 @@ class CustomersImport implements ToModel, WithHeadingRow
             if (!is_null($header) && isset($row[$header])) {
                 $data[$dbField] = $row[$header];
             }
+        }
+
+        // Ensure required fields are present
+        if (empty($data['customer_name'])) {
+            // Handle missing required field
+            return null; // Skip this row or handle it differently
         }
 
         return new Customer($data);
