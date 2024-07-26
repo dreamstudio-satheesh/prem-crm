@@ -25,17 +25,9 @@ class ImportCustomers extends Component
         // Add more options based on your database schema
     ];
 
-    // Ensure any assignments to selectedMappings are correct
-    public function setSelectedMapping($header, $field)
-    {
-        if (is_string($header) && is_string($field)) {
-            $this->selectedMappings[$header] = $field; // Ensure values are strings
-        } else {
-            logger()->error('Invalid mapping assignment:', ['header' => $header, 'field' => $field]);
-        }
-    }
 
-    public function updatedSelectedMappings()
+
+    public function updatedSelectedMappings($value, $name)
     {
         $this->mappings = [];
 
@@ -84,6 +76,16 @@ class ImportCustomers extends Component
         logger()->info('Headers:', $this->headers);
         logger()->info('Preview Data:', $this->previewData);
     }
+
+    public function setSelectedMapping($header, $field)
+    {
+        if (is_string($header) && is_string($field)) {
+            $this->selectedMappings[$header] = $field; // Ensure values are strings
+        } else {
+            logger()->error('Invalid mapping assignment:', ['header' => $header, 'field' => $field]);
+        }
+    }
+
 
 
 
