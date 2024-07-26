@@ -51,6 +51,7 @@ class ImportCustomers extends Component
 
     public function importData()
     {
+        dd($this->mappings);
         try {
             $import = new CustomersImport($this->mappings);
             Excel::import($import, storage_path('app/public/' . $this->tempFilePath));
