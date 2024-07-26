@@ -58,7 +58,8 @@ class ImportCustomers extends Component
             logger()->info('DB Field Type:', [gettype($dbField)]);
             logger()->info('DB Field Value:', [$dbField]);
 
-            if (!empty($dbField) && is_string($header)) { // Ensure header is a string
+            // Ensure dbField is a string
+            if (!empty($dbField) && is_string($header) && is_string($dbField)) {
                 $this->mappings[$dbField] = $header; // Maps database field to header
             }
         }
@@ -66,6 +67,7 @@ class ImportCustomers extends Component
         // Log the final mappings array
         logger()->info('Mappings:', $this->mappings);
     }
+
 
 
     public function importData()
