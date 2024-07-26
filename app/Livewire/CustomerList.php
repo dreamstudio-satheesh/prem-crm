@@ -155,6 +155,7 @@ class CustomerList extends Component
             session()->flash('success', 'Customers Imported Successfully.');
             $this->resetPreview();
         } catch (\Exception $e) {
+            dd($e->getMessage());
             session()->flash('error', 'Import failed: ' . $e->getMessage());
         }
     }
