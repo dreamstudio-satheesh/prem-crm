@@ -1,4 +1,8 @@
 <!-- resources/views/customer_import.blade.php -->
+
+@extends('layouts.admin')
+
+@section('content')
 <div class="card">
     <div class="card-header align-items-center d-flex">
         <div class="col">
@@ -22,3 +26,5 @@
         </form>
     </div>
 </div>
+
+@endsection
