@@ -138,6 +138,7 @@ class CustomerList extends Component
         $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
     
         $this->previewData = $array[0];
+        dd($this->previewData);
         $this->headers = array_keys($this->previewData[0]);
     
         // Dynamically set mappings based on detected headers
