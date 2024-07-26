@@ -18,8 +18,17 @@ class CustomerList extends Component
 {
     use WithPagination, WithFileUploads;
 
+    public $headers = [];
+    public $mappings = [];
+    public $columnOptions = [
+        'customer_name' => 'Customer Name',
+        'tally_serial_no' => 'Tally Serial No',
+        // Add more options based on your database schema
+    ];
     public $previewData;
     public $tempFilePath;
+
+
     public $upload_file;
     public $search = '';
     public $status = '';
@@ -95,7 +104,7 @@ class CustomerList extends Component
         return view('livewire.customer-list', ['customers' => $customers]);
     }
 
-    
+
 
     public function import()
     {
@@ -115,7 +124,26 @@ class CustomerList extends Component
         session()->flash('success', 'Customers Imported Successfully.');
 
         // Close the modal
-       // $this->dispatch('close-modal');
+        // $this->dispatch('close-modal');
+    }
+
+    public function uploadAndPrepareImport()
+    {
+        $this->validate([
+            'upload_file' => 'required|mimes:xlsx,csv,txt',
+        ]);
+
+        $path = $this->upload_file->store('temp', 'public');
+        $this->tempFilePath = $path;
+        $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
+
+        $this->previewData = $array[0];
+        $this->headers = array_keys($this->previewData[0]);
+
+        // Initialize mappings with default values or empty
+        foreach ($this->headers as $header) {
+            $this->mappings[$header] = '';
+        }
     }
 
 
