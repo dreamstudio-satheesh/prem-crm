@@ -62,6 +62,9 @@ class ImportCustomers extends Component
             if (!empty($dbField) && is_string($header) && is_string($dbField)) {
                 $this->mappings[$dbField] = $header; // Maps database field to header
             }
+            else{
+                dd($dbField);
+            }
         }
 
         // Log the final mappings array
