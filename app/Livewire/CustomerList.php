@@ -132,25 +132,28 @@ class CustomerList extends Component
         $this->validate([
             'upload_file' => 'required|mimes:xlsx,csv,txt',
         ]);
-    
+
         $path = $this->upload_file->store('temp', 'public');
         $this->tempFilePath = $path;
         $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
-    
+
         $this->previewData = $array[0];
         $this->headers = array_keys($this->previewData[0]);
-    
+
         // Dynamically set mappings based on detected headers
-        $this->mappings = [];
         foreach ($this->headers as $index => $header) {
-            if (strtolower($header) == 'customer name') {
-                $this->mappings['customer_name'] = $index;
-            } elseif (strtolower($header) == 'tally serial no') {
-                $this->mappings['tally_serial_no'] = $index;
+            $normalizedHeader = strtolower($header);
+            switch ($normalizedHeader) {
+                case 'customer name':
+                    $this->mappings['customer_name'] = $index; // Store index if needed for direct mapping
+                    break;
+                case 'tally serial no':
+                    $this->mappings['tally_serial_no'] = $index; // Store index if needed for direct mapping
+                    break;
             }
         }
     }
-    
+
 
     public function confirmImport()
     {
