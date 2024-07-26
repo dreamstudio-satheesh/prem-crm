@@ -1,7 +1,5 @@
 <?php
 
-<?php
-
 namespace App\Imports;
 
 use App\Models\Customer;
