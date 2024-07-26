@@ -11,6 +11,7 @@ use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ImportCustomers;
 use App\Livewire\Master\LicenceMaster;
 use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
@@ -55,6 +56,7 @@ Route::get('master/customers/add', AddCustomer::class)->name('customers.add');
 Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
 //Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
 
+Route::get('/customers/import', ImportCustomers::class)->name('customers.import');
 
 Route::get('/master/customers', CustomerList::class)->name('customers.index');
 Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
