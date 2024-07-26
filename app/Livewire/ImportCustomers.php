@@ -51,11 +51,12 @@ class ImportCustomers extends Component
     {
         $this->mappings = [];
         foreach ($this->selectedMappings as $header => $dbField) {
-            if (!empty($dbField)) {
+            if (!empty($dbField) && is_string($header)) { // Ensure header is a string
                 $this->mappings[$dbField] = $header; // Maps database field to header
             }
         }
     }
+
 
     public function importData()
     {
