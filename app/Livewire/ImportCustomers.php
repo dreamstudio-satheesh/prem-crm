@@ -29,6 +29,21 @@ class ImportCustomers extends Component
 
     public function updatedSelectedMappings($value, $name)
     {
+        // Split the name into header and dbField
+        list($header, $dbField) = explode('.', $name);
+
+        // Validate and assign mappings
+        if (is_string($header) && is_string($value)) {
+            $this->selectedMappings[$header] = $value;
+        } else {
+            logger()->error('Invalid mapping assignment:', ['header' => $header, 'value' => $value]);
+        }
+
+        $this->processMappings();
+    }
+
+    protected function processMappings()
+    {
         $this->mappings = [];
 
         // Add debugging to see the current state of selectedMappings
@@ -85,7 +100,6 @@ class ImportCustomers extends Component
             logger()->error('Invalid mapping assignment:', ['header' => $header, 'field' => $field]);
         }
     }
-
 
 
 
