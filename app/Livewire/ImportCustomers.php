@@ -26,17 +26,20 @@ class ImportCustomers extends Component
     ];
 
 
-
     public function updatedSelectedMappings($value, $name)
     {
-        // Split the name into header and dbField
-        list($header, $dbField) = explode('.', $name);
+        // Ensure $name is a valid string and follows the expected format
+        if (strpos($name, '.') !== false) {
+            list($header, $dbField) = explode('.', $name);
 
-        // Validate and assign mappings
-        if (is_string($header) && is_string($value)) {
-            $this->selectedMappings[$header] = $value;
+            // Validate and assign mappings
+            if (is_string($header) && is_string($value)) {
+                $this->selectedMappings[$header] = $value;
+            } else {
+                logger()->error('Invalid mapping assignment:', ['header' => $header, 'value' => $value]);
+            }
         } else {
-            logger()->error('Invalid mapping assignment:', ['header' => $header, 'value' => $value]);
+            logger()->error('Invalid name format:', ['name' => $name]);
         }
 
         $this->processMappings();
@@ -91,16 +94,6 @@ class ImportCustomers extends Component
         logger()->info('Headers:', $this->headers);
         logger()->info('Preview Data:', $this->previewData);
     }
-
-    public function setSelectedMapping($header, $field)
-    {
-        if (is_string($header) && is_string($field)) {
-            $this->selectedMappings[$header] = $field; // Ensure values are strings
-        } else {
-            logger()->error('Invalid mapping assignment:', ['header' => $header, 'field' => $field]);
-        }
-    }
-
 
 
 
