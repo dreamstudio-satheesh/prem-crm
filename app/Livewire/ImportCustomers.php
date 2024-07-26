@@ -40,8 +40,6 @@ class ImportCustomers extends Component
     
         // Remove the header row from the preview data
         unset($this->previewData[0]);
-
-        dd($this->headers);
     }
 
     public function updatedSelectedMappings()
