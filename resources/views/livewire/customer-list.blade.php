@@ -189,32 +189,9 @@
     <!-- Import Modal -->
     <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import Customers</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="importForm" wire:submit.prevent="import">
-                        <div class="form-group">
-                            <label for="file">Upload CSV File</label>
-                            <input type="file" class="form-control" id="file" wire:model="upload_file">
-                            @error('upload_file')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Import</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+            @if($previewData)
+            <!-- Preview Modal -->
 
-    @if($previewData)
-    <!-- Preview Modal -->
-    <div class="modal fade" wire:ignore.self id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="previewModalLabel">Preview Customers</h5>
@@ -245,9 +222,32 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
+            @else
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import Customers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="importForm" wire:submit.prevent="import">
+                        <div class="form-group">
+                            <label for="file">Upload CSV File</label>
+                            <input type="file" class="form-control" id="file" wire:model="upload_file">
+                            @error('upload_file')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
-    @endif
+
+
+
 
 
     @push('scripts')
@@ -257,21 +257,6 @@
             var modal = $('#importModal');
             modal.modal('hide');
         });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            window.livewire.on('show-preview-modal', () => {
-
-                var modal = $('#importModal');
-                modal.modal('hide');
-                
-                $('#previewModal').modal('show');
-            });
-
-            window.livewire.on('close-preview-modal', () => {
-                $('#previewModal').modal('hide');
-            });
-        });
-
 
         document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('show-toastr', event => {
