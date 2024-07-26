@@ -33,14 +33,7 @@ class CustomersImport implements ToModel, WithHeadingRow
             }
         }
 
-        // Ensure required fields are present
-        if (empty($data['customer_name'])) {
-            // Handle missing required field
-            return null; // Skip this row or handle it differently
-        }
-
-        // Debugging: Uncomment to see the $data array
-        dd($data);
+       
 
         return new Customer($data);
     }
