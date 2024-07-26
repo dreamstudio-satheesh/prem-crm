@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="card-body">
-        <form action="{{ route('customer_import.import') }}" method="POST">
+        <form action="{{ url('customer/import/import') }}" method="POST">
             @csrf
             <input type="hidden" name="tempFilePath" value="{{ $tempFilePath }}">
             <div class="table-responsive mt-5">
