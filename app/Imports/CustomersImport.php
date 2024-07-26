@@ -6,14 +6,29 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class CustomersImport implements ToModel, WithHeadingRow
+class CustomersImport implements ToModel, WithHeadingRow, WithMapping
 {
     protected $mappings;
 
     public function __construct(array $mappings)
     {
         $this->mappings = $mappings;
+    }
+
+    /**
+     * Maps the incoming row to an array based on the defined mappings.
+     * This method is used to debug and log the CSV headers.
+     *
+     * @param array $row
+     * @return array
+     */
+    public function mapping(array $row): array
+    {
+        // Log the headers found to debug
+        Log::debug('CSV Headers Read', array_keys($row));
+        return $row; // Return the row unchanged for further processing
     }
 
     /**
@@ -34,18 +49,6 @@ class CustomersImport implements ToModel, WithHeadingRow
                 if ($dbField === 'customer_name' && !empty($data[$dbField])) {
                     $customerNameFound = true;
                 }
-
-                // Log each mapping attempt
-                Log::debug('Mapping data', [
-                    'fileHeader' => $fileHeader,
-                    'dbField' => $dbField,
-                    'value' => $row[$fileHeader]
-                ]);
-            } else {
-                // Log missing fileHeader cases
-                Log::warning('Missing file header in CSV', [
-                    'expectedHeader' => $fileHeader
-                ]);
             }
         }
 
@@ -54,11 +57,8 @@ class CustomersImport implements ToModel, WithHeadingRow
             return null; // Skip this row
         }
 
-        Log::info('Processing row', ['data' => $data]);
-
         $customer = new Customer($data);
         $customer->save();
-
         Log::info('Successfully imported customer', ['customer_id' => $customer->id]);
 
         return $customer;
