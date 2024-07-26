@@ -10,29 +10,24 @@ class CustomersImport implements ToModel, WithHeadingRow
 {
     private $mappings;
 
-    public function __construct(array $mappings)
+    public function __construct($mappings)
     {
-        // Adjust mappings to use indices for column access
-        $this->mappings = array_flip($mappings); // Flips keys with their values
+        $this->mappings = $mappings;
     }
 
     public function model(array $row)
     {
-        // Use column indices to map data fields
+        $customerData = [];
+        
+        foreach ($this->mappings as $dbField => $header) {
+            $customerData[$dbField] = $row[$header] ?? null;
+        }
 
-        dd([
-            'customer_name' => $row[$this->mappings['customer_name']] ?? null,
-            'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
-        ]);
-        return new Customer([
-            'customer_name' => $row[$this->mappings['customer_name']] ?? null,
-            'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
-        ]);
+        return new Customer($customerData);
     }
 
     public function headingRow(): int
     {
-        return 1; // Headers are expected at the first row
+        return 1; // Assuming the first row is the header
     }
 }
-
