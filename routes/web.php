@@ -11,7 +11,7 @@ use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\ImportCustomers;
+use App\Livewire\ImportCustomers;
 use App\Livewire\Master\LicenceMaster;
 use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
