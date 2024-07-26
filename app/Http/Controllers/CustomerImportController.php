@@ -57,9 +57,11 @@ class CustomerImportController extends Controller
         try {
             $import = new CustomersImport($mappings);
             Excel::import($import, storage_path('app/public/' . $tempFilePath));
-            return redirect()->route('customers.index')->with('success', 'Customers imported successfully.');
+           // return redirect()->route('customers.index')->with('success', 'Customers imported successfully.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Import failed: ' . $e->getMessage());
+
+            return $e->getMessage();
+            //return redirect()->back()->with('error', 'Import failed: ' . $e->getMessage());
         }
     }
 }
