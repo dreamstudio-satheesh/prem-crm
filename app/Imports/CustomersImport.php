@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Customer;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -13,27 +14,30 @@ class CustomersImport implements ToModel, WithHeadingRow
     public function __construct(array $mappings)
     {
         $this->mappings = $mappings;
-
-        // Debugging: Uncomment to check mappings
-        // dd($this->mappings);
     }
 
     /**
-     * @param array $row
+     * Maps the incoming row to a model instance based on defined mappings.
      *
+     * @param array $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
         $data = [];
 
-        foreach ($this->mappings as $index => $dbField) {
-            if (isset($row[$index]) && !is_null($dbField)) {
-                $data[$dbField] = $row[$index];
+        // Iterate over the mappings and set the appropriate fields in $data
+        foreach ($this->mappings as $fileHeader => $dbField) {
+            if (isset($row[$fileHeader])) {
+                $data[$dbField] = $row[$fileHeader];
             }
         }
 
-       
+        // Check if the mandatory fields are set
+        if (empty($data['customer_name'])) {
+            Log::warning('Skipped row due to missing customer_name', ['row' => $row]);
+            return null; // Skip this row
+        }
 
         return new Customer($data);
     }
