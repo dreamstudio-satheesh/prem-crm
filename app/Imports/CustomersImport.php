@@ -23,6 +23,8 @@ class CustomersImport implements ToModel, WithHeadingRow
             $customerData[$dbField] = $row[$header] ?? null;
         }
 
+        dd($customerData); // Debugging: dump the customer data to inspect it
+
         return new Customer($customerData);
     }
 
