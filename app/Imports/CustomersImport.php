@@ -30,6 +30,8 @@ class CustomersImport implements ToModel, WithHeadingRow
         foreach ($this->mappings as $dbField => $header) {
             if (!is_null($header) && isset($row[$header])) {
                 $data[$dbField] = $row[$header];
+
+                dd( $data[$dbField]);
             }
         }
 
