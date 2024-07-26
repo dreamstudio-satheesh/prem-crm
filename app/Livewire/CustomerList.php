@@ -146,6 +146,19 @@ class CustomerList extends Component
         }
     }
 
+    public function confirmImport()
+    {
+        try {
+            $import = new CustomersImport($this->mappings);
+            Excel::import($import, storage_path('app/public/' . $this->tempFilePath));
+            session()->flash('success', 'Customers Imported Successfully.');
+            $this->resetPreview();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Import failed: ' . $e->getMessage());
+        }
+    }
+
+
 
     public function export()
     {
