@@ -72,6 +72,7 @@ class ImportCustomers extends Component
 
     public function importData()
     {
+        dd($this->mappings);
 
         try {
             $import = new CustomersImport($this->mappings);
