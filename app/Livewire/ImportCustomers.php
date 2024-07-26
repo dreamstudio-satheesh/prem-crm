@@ -28,8 +28,6 @@ class ImportCustomers extends Component
 
     public function updatedSelectedMappings($value, $name)
     {
-
-        logger()->error('hhh:', ['name' => $name,  'value' => $value]);
         // Ensure $name is a valid string and follows the expected format
         if (strpos($name, '.') !== false) {
             list($header, $dbField) = explode('.', $name);

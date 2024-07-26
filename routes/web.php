@@ -11,7 +11,6 @@ use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\ImportCustomers;
 use App\Livewire\Master\LicenceMaster;
 use App\Livewire\Master\ProductMaster;
 use App\Livewire\Master\IndustryMaster;
@@ -23,6 +22,7 @@ use App\Http\Controllers\SettingsController;
 use App\Livewire\Master\NatureOfIssueMaster;
 use App\Http\Controllers\OnlineCallController;
 use App\Http\Controllers\OnsiteVisitController;
+use App\Http\Controllers\CustomerImportController;
 use App\Http\Controllers\EmailMarketingController;
 
 Route::get('/', function () {
@@ -56,7 +56,10 @@ Route::get('master/customers/add', AddCustomer::class)->name('customers.add');
 Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
 //Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
 
-Route::get('/customers/import', ImportCustomers::class)->name('customers.import');
+Route::get('customer/import', [CustomerImportController::class, 'showImportForm'])->name('customer_import.show');
+Route::post('customer/import/upload', [CustomerImportController::class, 'uploadAndPrepareImport'])->name('customer_import.upload');
+Route::post('customer/import/import', [CustomerImportController::class, 'importData'])->name('customer_import.import');
+
 
 Route::get('/master/customers', CustomerList::class)->name('customers.index');
 Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
