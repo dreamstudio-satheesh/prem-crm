@@ -140,17 +140,8 @@ class CustomerList extends Component
         $this->previewData = $array[0];
         $this->headers = $this->previewData[0];
     
-        // Dynamically set mappings based on detected headers
-        $this->mappings = [];
 
-        dd( $this->headers );
-        foreach ($this->headers as $index => $header) {
-            if (strtolower($header) == 'customer name') {
-                $this->mappings['customer_name'] = $index;
-            } elseif (strtolower($header) == 'tally serial no') {
-                $this->mappings['tally_serial_no'] = $index;
-            }
-        }
+        
     }
     
 
