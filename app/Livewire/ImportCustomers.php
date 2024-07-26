@@ -51,6 +51,8 @@ class ImportCustomers extends Component
     {
         $this->mappings = [];
 
+        dd( $this->mappings);
+
         foreach ($this->selectedMappings as $header => $dbField) {
 
             // Ensure dbField is a string
