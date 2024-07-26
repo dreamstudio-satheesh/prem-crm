@@ -139,7 +139,8 @@ class CustomerList extends Component
     
         $this->previewData = $array[0];
         $this->headers = $this->previewData[0];
-    
+
+        dd( $this->headers);
 
         
     }
