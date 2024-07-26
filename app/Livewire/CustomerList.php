@@ -20,6 +20,7 @@ class CustomerList extends Component
 
     public $previewData;
     public $tempFilePath;
+    public $upload_file;
     public $search = '';
     public $status = '';
     public $tss_status = '';
