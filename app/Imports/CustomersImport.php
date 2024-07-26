@@ -19,6 +19,11 @@ class CustomersImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // Use column indices to map data fields
+
+        dd([
+            'customer_name' => $row[$this->mappings['customer_name']] ?? null,
+            'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
+        ]);
         return new Customer([
             'customer_name' => $row[$this->mappings['customer_name']] ?? null,
             'tally_serial_no' => $row[$this->mappings['tally_serial_no']] ?? null,
