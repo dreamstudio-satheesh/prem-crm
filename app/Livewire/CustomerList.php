@@ -114,8 +114,6 @@ class CustomerList extends Component
 
         session()->flash('success', 'Customers Imported Successfully.');
 
-        // Close the modal
-        $this->dispatch('close-modal');
 
         $this->dispatch('show-preview-modal'); // Trigger a browser event to show the preview modal
     }

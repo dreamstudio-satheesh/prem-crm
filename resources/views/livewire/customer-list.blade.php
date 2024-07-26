@@ -259,6 +259,21 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            window.livewire.on('show-preview-modal', () => {
+
+                var modal = $('#importModal');
+                modal.modal('hide');
+                
+                $('#previewModal').modal('show');
+            });
+
+            window.livewire.on('close-preview-modal', () => {
+                $('#previewModal').modal('hide');
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('show-toastr', event => {
                 toastr.options = {
                     closeButton: true,
