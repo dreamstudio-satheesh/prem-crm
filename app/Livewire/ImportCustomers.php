@@ -37,6 +37,8 @@ class ImportCustomers extends Component
 
         $this->previewData = array_slice($array[0], 0, 3); // Limit preview to 3 rows
         $this->headers = array_keys($this->previewData[0]);
+
+        dd($this->headers);
     }
 
     public function updatedSelectedMappings()
