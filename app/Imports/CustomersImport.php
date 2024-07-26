@@ -2,34 +2,37 @@
 
 namespace App\Imports;
 
+use App\Models\Customer;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use App\Models\Customer;
 
 class CustomersImport implements ToModel, WithHeadingRow
 {
-    private $mappings;
+    protected $mappings;
 
-    public function __construct($mappings)
+    public function __construct(array $mappings)
     {
         $this->mappings = $mappings;
+
+        // Dump and die to see the mappings array
+        dd($this->mappings);
     }
 
+    /**
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
-        $customerData = [];
-        
+        $data = [];
+
         foreach ($this->mappings as $dbField => $header) {
-            $customerData[$dbField] = $row[$header] ?? null;
+            if (isset($row[$header])) {
+                $data[$dbField] = $row[$header];
+            }
         }
 
-        dd($customerData); // Debugging: dump the customer data to inspect it
-
-        return new Customer($customerData);
-    }
-
-    public function headingRow(): int
-    {
-        return 1; // Assuming the first row is the header
+        return new Customer($data);
     }
 }
