@@ -25,26 +25,14 @@ class ImportCustomers extends Component
         // Add more options based on your database schema
     ];
 
-    public function uploadAndPrepareImport()
+    // Ensure any assignments to selectedMappings are correct
+    public function setSelectedMapping($header, $field)
     {
-        $this->validate([
-            'upload_file' => 'required|mimes:xlsx,csv,txt',
-        ]);
-
-        $path = $this->upload_file->store('temp', 'public');
-        $this->tempFilePath = $path;
-        $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
-
-        $this->previewData = array_slice($array[0], 0, 4); // Limit preview to 3 rows, including headers
-        $rawHeaders = $this->previewData[0];
-
-        // Filter out null or empty headers and ensure headers are strings
-        $this->headers = array_filter($rawHeaders, function ($header) {
-            return !is_null($header) && $header !== '';
-        });
-
-        // Remove the header row from the preview data
-        unset($this->previewData[0]);
+        if (is_string($header) && is_string($field)) {
+            $this->selectedMappings[$header] = $field; // Ensure values are strings
+        } else {
+            logger()->error('Invalid mapping assignment:', ['header' => $header, 'field' => $field]);
+        }
     }
 
     public function updatedSelectedMappings()
@@ -69,6 +57,32 @@ class ImportCustomers extends Component
 
         // Log the final mappings array
         logger()->info('Mappings:', $this->mappings);
+    }
+
+    public function uploadAndPrepareImport()
+    {
+        $this->validate([
+            'upload_file' => 'required|mimes:xlsx,csv,txt',
+        ]);
+
+        $path = $this->upload_file->store('temp', 'public');
+        $this->tempFilePath = $path;
+        $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
+
+        $this->previewData = array_slice($array[0], 0, 4); // Limit preview to 3 rows, including headers
+        $rawHeaders = $this->previewData[0]; // Directly use the first row as headers
+
+        // Filter out null or empty headers and ensure headers are strings
+        $this->headers = array_filter(array_map('trim', $rawHeaders), function ($header) {
+            return !is_null($header) && $header !== '';
+        });
+
+        // Remove the header row from the preview data
+        unset($this->previewData[0]);
+
+        // Debugging
+        logger()->info('Headers:', $this->headers);
+        logger()->info('Preview Data:', $this->previewData);
     }
 
 
