@@ -39,14 +39,18 @@ class CustomersImport implements ToModel, WithHeadingRow
             }
         }
 
+
+         // Proceed if the customer name is found and valid
+         Log::info('Processing row', ['data' => $data]);
+
+         
         // Log if the customer name is still missing despite checking within the loop
         if (!$customerNameFound) {
             Log::warning('Skipped row due to missing or empty customer_name', ['row' => $row]);
             return null; // Skip this row
         }
 
-        // Proceed if the customer name is found and valid
-        Log::info('Processing row', ['data' => $data]);
+       
 
         $customer = new Customer($data);
         $customer->save();
