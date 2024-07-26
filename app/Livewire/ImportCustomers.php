@@ -50,11 +50,21 @@ class ImportCustomers extends Component
     public function updatedSelectedMappings()
     {
         $this->mappings = [];
+
         foreach ($this->selectedMappings as $header => $dbField) {
+            // Log the types and values of header and dbField
+            logger()->info('Header Type:', [gettype($header)]);
+            logger()->info('Header Value:', [$header]);
+            logger()->info('DB Field Type:', [gettype($dbField)]);
+            logger()->info('DB Field Value:', [$dbField]);
+
             if (!empty($dbField) && is_string($header)) { // Ensure header is a string
                 $this->mappings[$dbField] = $header; // Maps database field to header
             }
         }
+
+        // Log the final mappings array
+        logger()->info('Mappings:', $this->mappings);
     }
 
 
