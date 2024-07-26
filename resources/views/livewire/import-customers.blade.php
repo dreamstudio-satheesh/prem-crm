@@ -31,7 +31,7 @@
                                 <select wire:model.lazy="selectedMappings.{{ $header }}">
                                     <option value="">Select Field</option>
                                     @foreach($columnOptions as $field => $label)
-                                    <option value="{{ $field }}">{{ $label }}</option>
+                                    <option value="{{ $field }}">{{ $field }}</option>
                                     @endforeach
                                 </select>
                             </th>
