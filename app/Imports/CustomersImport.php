@@ -14,8 +14,7 @@ class CustomersImport implements ToModel, WithHeadingRow
     {
         $this->mappings = $mappings;
 
-        // Dump and die to see the mappings array
-        dd($this->mappings);
+        // dd($this->mappings); // Remove the dd statement now that you have verified the mappings
     }
 
     /**
@@ -28,7 +27,7 @@ class CustomersImport implements ToModel, WithHeadingRow
         $data = [];
 
         foreach ($this->mappings as $dbField => $header) {
-            if (isset($row[$header])) {
+            if (!is_null($header) && isset($row[$header])) {
                 $data[$dbField] = $row[$header];
             }
         }
