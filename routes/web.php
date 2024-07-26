@@ -56,14 +56,19 @@ Route::get('master/customers/add', AddCustomer::class)->name('customers.add');
 Route::get('/customers/{customer}/edit', EditCustomer::class)->name('customers.edit');
 //Route::get('/customers/{customer}/edit', \App\Livewire\EditCustomer::class)->name('customers.edit');
 
-Route::get('customer/import', [CustomerImportController::class, 'showImportForm'])->name('customer_import.show');
-Route::post('customer/import/upload', [CustomerImportController::class, 'uploadAndPrepareImport'])->name('customer_import.upload');
-Route::post('customer/import/import', [CustomerImportController::class, 'importData'])->name('customer_import.import');
+
+
 
 
 Route::get('/master/customers', CustomerList::class)->name('customers.index');
 Route::get('master/customers/add-address/{customerId}', \App\Livewire\AddAddress::class)->name('customers.addAddress');
 Route::get('master/customers/edit-address/{customerId}', \App\Livewire\EditAddress::class)->name('customers.editAddress');
+
+
+Route::get('customer/import', [CustomerImportController::class, 'showImportForm'])->name('customer_import.show');
+Route::post('customer/import/upload', [CustomerImportController::class, 'uploadAndPrepareImport'])->name('customer_import.upload');
+Route::post('customer/import/import', [CustomerImportController::class, 'importData'])->name('customer_import.import');
+
 
 Route::get('/onsite-visits', OnsiteVisitList::class)->name('onsite-visits.index');
 Route::get('onsite-visits/create', [OnsiteVisitController::class, 'create'])->name('onsite-visits.create');
