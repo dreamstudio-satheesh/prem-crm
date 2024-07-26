@@ -31,31 +31,34 @@ class CustomersImport implements ToModel, WithHeadingRow
         foreach ($this->mappings as $fileHeader => $dbField) {
             if (isset($row[$fileHeader])) {
                 $data[$dbField] = $row[$fileHeader];
-
-                // Check for customer_name directly in the loop
                 if ($dbField === 'customer_name' && !empty($data[$dbField])) {
                     $customerNameFound = true;
                 }
+
+                // Log each mapping attempt
+                Log::debug('Mapping data', [
+                    'fileHeader' => $fileHeader,
+                    'dbField' => $dbField,
+                    'value' => $row[$fileHeader]
+                ]);
+            } else {
+                // Log missing fileHeader cases
+                Log::warning('Missing file header in CSV', [
+                    'expectedHeader' => $fileHeader
+                ]);
             }
         }
 
-
-         // Proceed if the customer name is found and valid
-         Log::info('Processing row', ['data' => $data]);
-
-         
-        // Log if the customer name is still missing despite checking within the loop
         if (!$customerNameFound) {
             Log::warning('Skipped row due to missing or empty customer_name', ['row' => $row]);
             return null; // Skip this row
         }
 
-       
+        Log::info('Processing row', ['data' => $data]);
 
         $customer = new Customer($data);
         $customer->save();
 
-        // Optionally, log after successfully saving the record
         Log::info('Successfully imported customer', ['customer_id' => $customer->id]);
 
         return $customer;
