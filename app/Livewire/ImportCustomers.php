@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Livewire;
 
 use Livewire\Component;
@@ -24,7 +25,6 @@ class ImportCustomers extends Component
         'tally_serial_no' => 'Tally Serial No',
         // Add more options based on your database schema
     ];
-
 
     public function updatedSelectedMappings($value, $name)
     {
@@ -94,8 +94,6 @@ class ImportCustomers extends Component
         logger()->info('Headers:', $this->headers);
         logger()->info('Preview Data:', $this->previewData);
     }
-
-
 
     public function importData()
     {
