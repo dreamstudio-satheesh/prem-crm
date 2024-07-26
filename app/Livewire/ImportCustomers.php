@@ -36,12 +36,15 @@ class ImportCustomers extends Component
         $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
 
         $this->previewData = array_slice($array[0], 0, 4); // Limit preview to 3 rows, including headers
-        $this->headers = $this->previewData[0]; // Directly use the first row as headers
-    
+        $rawHeaders = $this->previewData[0];
+
+        // Filter out null or empty headers and ensure headers are strings
+        $this->headers = array_filter($rawHeaders, function ($header) {
+            return !is_null($header) && $header !== '';
+        });
+
         // Remove the header row from the preview data
         unset($this->previewData[0]);
-
-        dd( $this->headers );
     }
 
     public function updatedSelectedMappings()
@@ -56,7 +59,7 @@ class ImportCustomers extends Component
 
     public function importData()
     {
-       
+
         try {
             $import = new CustomersImport($this->mappings);
             Excel::import($import, storage_path('app/public/' . $this->tempFilePath));
