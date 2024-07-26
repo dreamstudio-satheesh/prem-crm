@@ -43,8 +43,6 @@ class ImportCustomers extends Component
             return !is_null($header) && $header !== '';
         });
 
-        dd($this->columnOptions);
-
         // Remove the header row from the preview data
         unset($this->previewData[0]);
     }
