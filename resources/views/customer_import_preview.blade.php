@@ -28,11 +28,9 @@
                                 {{ $header }}
                                 <select name="mappings[{{ $header }}]" class="form-control">
                                     <option value="">Select Field</option>
-                                    <option value="customer_name">customer_name</option>
-                                    <option value="tally_serial_no">tally_serial_no</option>
-                                  <!--   @foreach($columnOptions as $field => $label)
+                                    @foreach($columnOptions as $field => $label)
                                     <option value="{{ $field }}">{{ $field }}</option>
-                                    @endforeach -->
+                                    @endforeach
                                 </select>
                             </th>
                             @endforeach
