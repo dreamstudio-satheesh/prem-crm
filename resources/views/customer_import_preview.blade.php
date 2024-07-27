@@ -26,7 +26,7 @@
                             @foreach($headers as $index)
                             <th style="min-width: 150px;">
                                {{ $rawHeaders[$index] }}
-                                <select name="mappings[{{ $index }}]" class="form-control">
+                                <select name="mappings[{{ $index }}]" class="form-select rounded-pill">
                                     <option value="">Select Field</option>
                                     @foreach($columnOptions as $field => $label)
                                     <option value="{{ $field }}">{{ $label }}</option>
