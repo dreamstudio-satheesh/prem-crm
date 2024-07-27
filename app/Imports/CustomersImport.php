@@ -29,8 +29,7 @@ class CustomersImport implements ToModel, WithStartRow
             }
         }
 
-        // Check if both required attributes are available before saving
-        if (!empty($data['customer_name']) && !empty($data['tally_serial_no'])) {
+        if (!empty($data['tally_serial_no'])) {
             // Update or create customer based on a unique identifier, such as 'tally_serial_no'
             $customer = Customer::updateOrCreate(
                 ['tally_serial_no' => $data['tally_serial_no']], // Unique identifier
