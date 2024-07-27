@@ -16,6 +16,10 @@ class CustomerImportController extends Controller
     public $columnOptions = [
         'customer_name' => 'Customer Name',
         'tally_serial_no' => 'Tally Serial No',
+        'contact_person' => 'Contact Person',
+        'mobile_no' => 'Mobile No',
+        'email' => 'EMail',
+        'address' => 'Address',
         // Add more options based on your database schema
     ];
 
