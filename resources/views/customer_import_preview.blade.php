@@ -22,7 +22,7 @@
             <div class="table-responsive mt-5">
                 <table class="table table-striped">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             @foreach($headers as $index)
                             <th style="min-width: 150px;">
                                {{ $rawHeaders[$index] }}
