@@ -43,6 +43,7 @@ class CustomerImportController extends Controller
         unset($previewData[0]);
         return view('customer_import_preview', [
             'headers' => $headers,
+            'rawHeaders' => $rawHeaders,
             'previewData' => $previewData,
             'columnOptions' => $this->columnOptions,
             'tempFilePath' => $path,

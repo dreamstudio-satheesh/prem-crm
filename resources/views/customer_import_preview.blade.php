@@ -25,7 +25,7 @@
                         <tr>
                             @foreach($headers as $index)
                             <th>
-                                Column {{ $index }}
+                                Column {{ $index }} ({{ $rawHeaders[$index] }})
                                 <select name="mappings[{{ $index }}]" class="form-control">
                                     <option value="">Select Field</option>
                                     @foreach($columnOptions as $field => $label)
