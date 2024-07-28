@@ -54,7 +54,7 @@ class CustomerImportController extends Controller
             foreach ($row as $index => $value) {
                 if (is_numeric($value) && $value > 0 && $value < 60000) {
                     try {
-                        $previewData[$key][$index] = Carbon::createFromFormat('Y-m-d', gmdate('d-m-Y', ($value - 25569) * 86400))->format('Y-m-d');
+                        $previewData[$key][$index] = Carbon::createFromFormat('d-m-Y', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
                     } catch (\Exception $e) {
                         // Handle any parsing exceptions
                     }
