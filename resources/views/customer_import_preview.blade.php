@@ -24,9 +24,6 @@
                                 {{ $rawHeaders[$index] }}
                                 <select name="mappings[{{ $index }}]" class="form-select form-select-sm import-select" data-index="{{ $index }}">
                                     <option value="">Select Field</option>
-                                    @foreach($columnOptions as $field => $label)
-                                    <option value="{{ $field }}">{{ $label }}</option>
-                                    @endforeach
                                 </select>
                             </th>
                             @endforeach
@@ -54,27 +51,36 @@
 @push('scripts')
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        let columnOptions = @json($columnOptions);
         let selects = document.querySelectorAll('.import-select');
+
+        // Populate all selects with options
+        selects.forEach(select => {
+            for (let field in columnOptions) {
+                let option = document.createElement('option');
+                option.value = field;
+                option.textContent = columnOptions[field];
+                select.appendChild(option);
+            }
+        });
 
         function updateSelectOptions() {
             let selectedValues = Array.from(selects).map(select => select.value).filter(value => value !== "");
 
             selects.forEach(select => {
                 let currentValue = select.value;
-                select.querySelectorAll('option').forEach(option => {
-                    if (option.value !== "" && option.value !== currentValue) {
-                        option.remove();
-                    } else {
-                        option.disabled = false;
-                    }
-                });
+                select.innerHTML = '';
+                let defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select Field';
+                select.appendChild(defaultOption);
 
-                for (let value of selectedValues) {
-                    if (value !== currentValue) {
-                        let option = select.querySelector('option[value="' + value + '"]');
-                        if (option) {
-                            option.remove();
-                        }
+                for (let field in columnOptions) {
+                    if (!selectedValues.includes(field) || field === currentValue) {
+                        let option = document.createElement('option');
+                        option.value = field;
+                        option.textContent = columnOptions[field];
+                        select.appendChild(option);
                     }
                 }
 
