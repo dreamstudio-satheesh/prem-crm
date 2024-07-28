@@ -43,7 +43,7 @@ class Customer extends Model
     {
         parent::boot();
 
-       /*  static::creating(function ($customer) {
+        /*  static::creating(function ($customer) {
             if (!$customer->default_customer_type_id) {
                 $customer->default_customer_type_id = 1;
             }
@@ -58,6 +58,12 @@ class Customer extends Model
     public function AddressBooks()
     {
         return $this->hasMany(AddressBook::class, 'customer_id', 'customer_id');
+    }
+
+    public function primaryMobileNumber()
+    {
+        return $this->hasOne(MobileNumber::class, 'address_id', 'primary_address_id')
+            ->orderBy('created_at', 'asc'); // or 'desc' for the most recent
     }
 
     public function staff()
@@ -75,6 +81,4 @@ class Customer extends Model
     {
         return $this->belongsTo(AddressBook::class, 'customer_id', 'customer_id');
     }
-
-
 }

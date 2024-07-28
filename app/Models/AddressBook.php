@@ -20,7 +20,6 @@ class AddressBook extends Model
         'customer_code', 
         'customer_type_id', 
         'contact_person', 
-        'phone_no', 
         'email', 
         'address', 
         'pin_code', 

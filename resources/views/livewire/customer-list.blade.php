@@ -155,7 +155,7 @@
                                         <span class="text-capitalize">{{ $customer->status }}</span>
                                     </td>
                                     <td>
-                                        <span class="text-capitalize">908899889</span>
+                                        <span class="text-capitalize">{{ $customer->primaryMobileNumber->mobile_no }}</span>
                                     </td>
                                     <td>
                                         <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-info">
