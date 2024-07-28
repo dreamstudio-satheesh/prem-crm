@@ -15,10 +15,10 @@ class CustomerImportController extends Controller
     public $selectedMappings = [];
     public $columnOptions = [
         'customer_name' => 'Customer Name',
-        'tally_serial_no' => 'Tally Serial No',
         'contact_person' => 'Contact Person',
         'mobile_no' => 'Mobile No',
         'email' => 'EMail',
+        'tally_serial_no' => 'Tally Serial No',
         'address' => 'Address',
         'amc_from_date' => 'AMC From Date',
         'amc_to_date' => 'AMC To Date',
