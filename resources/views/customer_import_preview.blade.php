@@ -49,8 +49,6 @@
     </div>
 </div>
 
-@endsection
-
 @push('scripts')
     <script>
     document.getElementById('importForm').addEventListener('submit', function(event) {
@@ -83,3 +81,5 @@
     });
     </script>
 @endpush
+
+@endsection

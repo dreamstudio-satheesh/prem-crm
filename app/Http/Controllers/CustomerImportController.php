@@ -46,6 +46,16 @@ class CustomerImportController extends Controller
         $previewData = array_slice($array[0], 0, 4); // Limit preview to 3 rows, including headers
         $rawHeaders = $previewData[0]; // Directly use the first row as headers
 
+        // Convert Excel dates to readable format
+        foreach ($previewData as $key => $row) {
+            if ($key === 0) continue; // Skip headers row
+            foreach ($row as $index => $value) {
+                if (is_numeric($value)) {
+                    $previewData[$key][$index] = Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
+                }
+            }
+        }
+
         // Generate numeric headers for indexing
         $headers = range(0, count($rawHeaders) - 1);
 
@@ -59,6 +69,7 @@ class CustomerImportController extends Controller
             'tempFilePath' => $path,
         ]);
     }
+
 
 
 
