@@ -24,7 +24,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->unsignedBigInteger('amc_id')->nullable();
             $table->enum('amc', ['yes', 'no'])->default('no');
-            $table->enum('tss_status', ['active', 'inactive'])->default('active');
+            $table->enum('tss_status', ['active', 'inactive'])->default('inactive');
             $table->string('tss_adminemail', 191)->nullable();
             $table->date('tss_expirydate')->nullable();
             $table->enum('profile_status', ['Followup', 'Others'])->nullable();
