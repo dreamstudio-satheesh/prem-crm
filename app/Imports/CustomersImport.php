@@ -117,6 +117,8 @@ class CustomersImport implements ToModel, WithStartRow
                     ['customer_id' => $customer->customer_id], // Assuming customer_id is the foreign key
                     $amcData
                 );
+
+                $customer->update(['amc' => 'yes']);
             }
 
 
