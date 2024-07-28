@@ -25,6 +25,8 @@ class CustomerImportController extends Controller
         'amc_renewal_date' => 'AMC Renewal Date',
         'amc_last_year_amount' => 'AMC Last Year Amount',
         'amc_amount' => 'AMC Amount',
+        'release' => 'Release',
+        'licence_editon' => 'Licence Edition',
         // Add more options based on your database schema
     ];
     

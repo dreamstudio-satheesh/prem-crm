@@ -14,7 +14,7 @@ class Customer extends Model
     protected $fillable = [
         'customer_name',
         'tally_serial_no',
-        'licence_editon',
+        'licence_editon_id',
         'primary_address_id',
         'product_id',
         'location_id',
@@ -24,6 +24,7 @@ class Customer extends Model
         'tss_status',
         'tss_adminemail',
         'tss_expirydate',
+        'release',
         'profile_status',
         'remarks',
         'whatsapp_telegram_group',

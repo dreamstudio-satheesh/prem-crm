@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
+use App\Models\Licence;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\MobileNumber;
@@ -23,7 +24,7 @@ class CustomersImport implements ToModel, WithStartRow
     private function getMappingConfiguration(): array
     {
         return [
-            'customer' => ['tally_serial_no', 'customer_name'],
+            'customer' => ['tally_serial_no', 'customer_name', 'release', 'licence_editon'],
             'address' => ['contact_person', 'address', 'email'],
             'mobile' => ['mobile_no'],
             'amc' => ['amc_from_date', 'amc_to_date', 'amc_renewal_date', 'amc_last_year_amount', 'amc_amount']
@@ -49,6 +50,7 @@ class CustomersImport implements ToModel, WithStartRow
         $customerData = [];
         $addressData = [];
         $mobileNumbersData = [];
+        $amcData = [];
 
         foreach ($this->mappings as $index => $attribute) {
             if (isset($row[$index]) && $attribute !== null && $row[$index] !== '') {
@@ -56,7 +58,15 @@ class CustomersImport implements ToModel, WithStartRow
                 foreach ($this->mappingConfiguration as $table => $attributes) {
                     if (in_array($attribute, $attributes)) {
                         if ($table === 'customer') {
-                            $customerData[$attribute] = $row[$index];
+
+                            if ($attribute === 'licence_editon') {
+                                // Convert licence_editon name to id
+                                $licence = Licence::where('name', $row[$index])->first();
+                                $customerData['licence_editon_id'] = $licence ? $licence->id : null;
+                                
+                            } else {
+                                $customerData[$attribute] = $row[$index];
+                            }
                         } elseif ($table === 'address') {
                             $addressData[$attribute] = $row[$index];
                         } elseif ($table === 'mobile') {
@@ -111,8 +121,8 @@ class CustomersImport implements ToModel, WithStartRow
 
 
 
-             // Handle AMC data if it exists
-             if (!empty($amcData)) {
+            // Handle AMC data if it exists
+            if (!empty($amcData)) {
                 $customer->amc()->updateOrCreate(
                     ['customer_id' => $customer->customer_id], // Assuming customer_id is the foreign key
                     $amcData
