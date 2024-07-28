@@ -27,6 +27,7 @@ class CreateCustomersTable extends Migration
             $table->enum('tss_status', ['active', 'inactive'])->default('inactive');
             $table->string('tss_adminemail', 191)->nullable();
             $table->date('tss_expirydate')->nullable();
+            $table->string('release', 191)->nullable();
             $table->enum('profile_status', ['Followup', 'Others'])->nullable();
             $table->string('remarks', 191)->nullable();
             $table->boolean('whatsapp_telegram_group')->nullable();
