@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use Carbon\Carbon;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\MobileNumber;
@@ -34,6 +35,15 @@ class CustomersImport implements ToModel, WithStartRow
         return 2; // Start processing from the second row to skip the header
     }
 
+    private function transformDate($value)
+    {
+        // Excel date format to Carbon date format
+        if (is_numeric($value)) {
+            return Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
+        }
+        return $value;
+    }
+
     public function model(array $row)
     {
         $customerData = [];
@@ -56,7 +66,12 @@ class CustomersImport implements ToModel, WithStartRow
                                 $mobileNumbersData[] = $mobileNumber;
                             }
                         } elseif ($table === 'amc') {
-                            $amcData[$attribute] = $row[$index];
+                            if (strpos($attribute, 'date') !== false) {
+                                // Transform date fields
+                                $amcData[$attribute] = $this->transformDate($row[$index]);
+                            } else {
+                                $amcData[$attribute] = $row[$index];
+                            }
                         }
                         break;
                     }
