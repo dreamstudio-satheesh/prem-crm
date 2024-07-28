@@ -43,6 +43,10 @@ class CustomersImport implements ToModel, WithStartRow
         if (is_numeric($value)) {
             return Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
         }
+        else {
+            // Handling date string format like 11/30/2024
+            return Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d');
+        }
         return $value;
     }
 
