@@ -53,6 +53,31 @@
 
 @push('scripts')
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let selects = document.querySelectorAll('.import-select');
+
+        function updateSelectOptions() {
+            let selectedValues = Array.from(selects).map(select => select.value).filter(value => value !== "");
+
+            selects.forEach(select => {
+                let currentValue = select.value;
+                select.querySelectorAll('option').forEach(option => {
+                    if (option.value !== "" && option.value !== currentValue) {
+                        option.disabled = selectedValues.includes(option.value);
+                    } else {
+                        option.disabled = false;
+                    }
+                });
+            });
+        }
+
+        selects.forEach(select => {
+            select.addEventListener('change', updateSelectOptions);
+        });
+
+        updateSelectOptions();
+    });
+
     document.getElementById('importForm').addEventListener('submit', function(event) {
         let selects = document.querySelectorAll('.import-select');
         let selectedFields = {};
