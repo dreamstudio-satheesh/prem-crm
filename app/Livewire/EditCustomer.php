@@ -120,12 +120,18 @@ class EditCustomer extends Component
                 'email' => $address->email,
             ];
         })->toArray();
-        $this->amc_from_date = $customer->amc_from_date;
-        $this->amc_to_date = $customer->amc_to_date;
-        $this->amc_renewal_date = $customer->amc_renewal_date;
-        $this->no_of_visits = $customer->no_of_visits;
-        $this->amc_amount = $customer->amc_amount;
-        $this->amc_last_year_amount = $customer->amc_last_year_amount;
+
+        // Load AMC details
+        $amcRecord = $customer->amc()->first();
+        if ($amcRecord) {
+            $this->amc_from_date = $amcRecord->amc_from_date;
+            $this->amc_to_date = $amcRecord->amc_to_date;
+            $this->amc_renewal_date = $amcRecord->amc_renewal_date;
+            $this->no_of_visits = $amcRecord->no_of_visits;
+            $this->amc_amount = $amcRecord->amc_amount;
+            $this->amc_last_year_amount = $amcRecord->amc_last_year_amount;
+        }
+
 
         $this->products = Product::all();
         $this->locations = Location::all();
