@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mobile_numbers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('address_id');
-            $table->string('mobile_no', 250);
+            $table->string('mobile_no', 250)->unique();
             $table->timestamps();
 
             $table->foreign('address_id')->references('address_id')->on('address_books')->onDelete('cascade');
