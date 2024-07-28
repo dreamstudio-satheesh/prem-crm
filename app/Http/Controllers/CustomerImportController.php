@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Imports\PreviewImport;
 use App\Imports\CustomersImport;
@@ -36,7 +35,6 @@ class CustomerImportController extends Controller
     }
 
 
-   
     public function uploadAndPrepareImport(Request $request)
     {
         $request->validate([
@@ -47,20 +45,6 @@ class CustomerImportController extends Controller
         $array = Excel::toArray(new PreviewImport, storage_path('app/public/' . $path));
         $previewData = array_slice($array[0], 0, 4); // Limit preview to 3 rows, including headers
         $rawHeaders = $previewData[0]; // Directly use the first row as headers
-
-        // Convert Excel dates to readable format
-        foreach ($previewData as $key => $row) {
-            if ($key === 0) continue; // Skip headers row
-            foreach ($row as $index => $value) {
-                if (is_numeric($value) && $value > 0 && $value < 60000) {
-                    try {
-                        $previewData[$key][$index] = Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
-                    } catch (\Exception $e) {
-                        // Handle any parsing exceptions
-                    }
-                }
-            }
-        }
 
         // Generate numeric headers for indexing
         $headers = range(0, count($rawHeaders) - 1);
