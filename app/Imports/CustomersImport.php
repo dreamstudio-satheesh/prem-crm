@@ -24,7 +24,8 @@ class CustomersImport implements ToModel, WithStartRow
         return [
             'customer' => ['tally_serial_no', 'customer_name'],
             'address' => ['contact_person', 'address', 'email'],
-            'mobile' => ['mobile_no']
+            'mobile' => ['mobile_no'],
+            'amc' => ['amc_from_date', 'amc_to_date', 'amc_renewal_date', 'amc_last_year_amount', 'amc_amount']
         ];
     }
 
@@ -54,6 +55,8 @@ class CustomersImport implements ToModel, WithStartRow
                             foreach ($mobileNumbers as $mobileNumber) {
                                 $mobileNumbersData[] = $mobileNumber;
                             }
+                        } elseif ($table === 'amc') {
+                            $amcData[$attribute] = $row[$index];
                         }
                         break;
                     }
@@ -75,6 +78,11 @@ class CustomersImport implements ToModel, WithStartRow
                     $addressData
                 );
 
+                // Check if primary_address_id is null and update it
+                if ($customer->primary_address_id === null) {
+                    $customer->update(['primary_address_id' => $address->address_id]);
+                }
+
                 // Handle mobile numbers if address is created successfully and has a valid ID
                 if ($address && $address->address_id && !empty($mobileNumbersData)) {
                     foreach ($mobileNumbersData as $mobileNumber) {
@@ -85,6 +93,18 @@ class CustomersImport implements ToModel, WithStartRow
                     }
                 }
             }
+
+
+
+             // Handle AMC data if it exists
+             if (!empty($amcData)) {
+                $customer->amc()->updateOrCreate(
+                    ['customer_id' => $customer->customer_id], // Assuming customer_id is the foreign key
+                    $amcData
+                );
+            }
+
+
 
             return $customer;
         }

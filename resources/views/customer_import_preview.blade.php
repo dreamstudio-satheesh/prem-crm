@@ -25,7 +25,7 @@
                         <tr class="text-center">
                             @foreach($headers as $index)
                             <th style="min-width: 150px;">
-                               {{ $rawHeaders[$index] }}
+                                {{ $rawHeaders[$index] }}
                                 <select name="mappings[{{ $index }}]" class="form-select form-select-sm">
                                     <option value="">Select Field</option>
                                     @foreach($columnOptions as $field => $label)
@@ -55,3 +55,37 @@
 
 
 @endsection
+
+
+@push('scripts')
+    <script>
+    document.getElementById('importForm').addEventListener('submit', function(event) {
+    let selects = document.querySelectorAll('.import-select');
+    let selectedFields = {};
+    let tallySerialSelected = false;
+    let duplicateSelection = false;
+
+    selects.forEach(function(select) {
+        let value = select.value;
+        if (value) {
+            if (value === 'tally_serial_no') {
+                tallySerialSelected = true;
+            }
+            if (selectedFields[value]) {
+                duplicateSelection = true;
+            } else {
+                selectedFields[value] = true;
+            }
+        }
+    });
+
+    if (!tallySerialSelected) {
+        alert('Please select the Tally Serial No field.');
+        event.preventDefault();
+    } else if (duplicateSelection) {
+        alert('Each field can only be selected once.');
+        event.preventDefault();
+    }
+    });
+    </script>
+@endpush

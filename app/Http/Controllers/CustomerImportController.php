@@ -20,6 +20,11 @@ class CustomerImportController extends Controller
         'mobile_no' => 'Mobile No',
         'email' => 'EMail',
         'address' => 'Address',
+        'AMC From Date' => 'amc_from_date',
+        'AMC To Date' => 'amc_to_date',
+        'AMC Renewal Date' => 'amc_renewal_date',
+        'AMC Last Year Amount' => 'amc_last_year_amount',
+        'AMC Amount' => 'amc_amount',
         // Add more options based on your database schema
     ];
 
