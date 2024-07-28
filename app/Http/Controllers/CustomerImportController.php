@@ -79,7 +79,9 @@ class CustomerImportController extends Controller
             // Optionally delete the file even on failure if you don't need to retry the import
             Storage::disk('public')->delete($tempFilePath);
 
-            return redirect()->back()->with('error', 'Import failed: ' . $e->getMessage());
+            return $e->getMessage();
+
+           // return redirect()->back()->with('error', 'Import failed: ' . $e->getMessage());
         }
     }
 }
