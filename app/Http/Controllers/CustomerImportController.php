@@ -52,7 +52,7 @@ class CustomerImportController extends Controller
         foreach ($previewData as $key => $row) {
             if ($key === 0) continue; // Skip headers row
             foreach ($row as $index => $value) {
-                if (is_numeric($value)) {
+                if (is_numeric($value) && $value > 0 && $value < 60000) {
                     try {
                         $previewData[$key][$index] = Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
                     } catch (\Exception $e) {
