@@ -36,6 +36,7 @@ class CustomerImportController extends Controller
     }
 
 
+   
     public function uploadAndPrepareImport(Request $request)
     {
         $request->validate([
@@ -52,7 +53,11 @@ class CustomerImportController extends Controller
             if ($key === 0) continue; // Skip headers row
             foreach ($row as $index => $value) {
                 if (is_numeric($value)) {
-                    $previewData[$key][$index] = Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
+                    try {
+                        $previewData[$key][$index] = Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
+                    } catch (\Exception $e) {
+                        // Handle any parsing exceptions
+                    }
                 }
             }
         }
@@ -70,7 +75,6 @@ class CustomerImportController extends Controller
             'tempFilePath' => $path,
         ]);
     }
-
 
 
 
