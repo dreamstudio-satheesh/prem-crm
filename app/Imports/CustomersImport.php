@@ -3,10 +3,11 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
-use App\Models\Licence;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\MobileNumber;
+use App\Models\Licence;
+use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
@@ -24,7 +25,7 @@ class CustomersImport implements ToModel, WithStartRow
     private function getMappingConfiguration(): array
     {
         return [
-            'customer' => ['tally_serial_no', 'customer_name', 'release', 'licence_editon'],
+            'customer' => ['tally_serial_no', 'customer_name', 'release', 'licence_editon', 'tss_status', 'product','tss_expirydate','tss_adminemail'],
             'address' => ['contact_person', 'address', 'email'],
             'mobile' => ['mobile_no'],
             'amc' => ['amc_from_date', 'amc_to_date', 'amc_renewal_date', 'amc_last_year_amount', 'amc_amount']
@@ -45,6 +46,12 @@ class CustomersImport implements ToModel, WithStartRow
         return $value;
     }
 
+    private function transformStatus($value)
+    {
+        // Transform tss_status values
+        return strtolower($value) === 'active' ? 'active' : 'inactive';
+    }
+
     public function model(array $row)
     {
         $customerData = [];
@@ -58,12 +65,20 @@ class CustomersImport implements ToModel, WithStartRow
                 foreach ($this->mappingConfiguration as $table => $attributes) {
                     if (in_array($attribute, $attributes)) {
                         if ($table === 'customer') {
-
                             if ($attribute === 'licence_editon') {
                                 // Convert licence_editon name to id
                                 $licence = Licence::where('name', $row[$index])->first();
                                 $customerData['licence_editon_id'] = $licence ? $licence->id : null;
-                                
+                            } elseif ($attribute === 'tss_status') {
+                                // Transform tss_status
+                                $customerData['tss_status'] = $this->transformStatus($row[$index]);
+                            } elseif ($attribute === 'product') {
+                                // Convert product name to id
+                                $product = Product::where('name', $row[$index])->first();
+                                $customerData['product_id'] = $product ? $product->id : null;
+                            } elseif ($attribute === 'tss_expirydate') {
+                                // Transform tss_expirydate
+                                $customerData['tss_expirydate'] = $this->transformDate($row[$index]);
                             } else {
                                 $customerData[$attribute] = $row[$index];
                             }
@@ -119,8 +134,6 @@ class CustomersImport implements ToModel, WithStartRow
                 }
             }
 
-
-
             // Handle AMC data if it exists
             if (!empty($amcData)) {
                 $customer->amc()->updateOrCreate(
@@ -130,8 +143,6 @@ class CustomersImport implements ToModel, WithStartRow
 
                 $customer->update(['amc' => 'yes']);
             }
-
-
 
             return $customer;
         }

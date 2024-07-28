@@ -27,6 +27,10 @@ class CustomerImportController extends Controller
         'amc_amount' => 'AMC Amount',
         'release' => 'Release',
         'licence_editon' => 'Licence Edition',
+        'tss_status' => 'TSS Status',
+        'product' => 'Product',
+        'tss_expirydate' => 'T.S.S. Expiry Date',
+        'tss_adminemail' => 'T.S.S. Admin E-Mail',
         // Add more options based on your database schema
     ];
     
