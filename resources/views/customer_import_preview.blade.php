@@ -22,7 +22,7 @@
                             @foreach($headers as $index)
                             <th style="min-width: 150px;">
                                 {{ $rawHeaders[$index] }}
-                                <select name="mappings[{{ $index }}]" class="form-select form-select-sm import-select">
+                                <select name="mappings[{{ $index }}]" class="form-select form-select-sm import-select" data-index="{{ $index }}">
                                     <option value="">Select Field</option>
                                     @foreach($columnOptions as $field => $label)
                                     <option value="{{ $field }}">{{ $label }}</option>
@@ -63,11 +63,22 @@
                 let currentValue = select.value;
                 select.querySelectorAll('option').forEach(option => {
                     if (option.value !== "" && option.value !== currentValue) {
-                        option.disabled = selectedValues.includes(option.value);
+                        option.remove();
                     } else {
                         option.disabled = false;
                     }
                 });
+
+                for (let value of selectedValues) {
+                    if (value !== currentValue) {
+                        let option = select.querySelector('option[value="' + value + '"]');
+                        if (option) {
+                            option.remove();
+                        }
+                    }
+                }
+
+                select.value = currentValue; // Restore the current value
             });
         }
 
