@@ -135,7 +135,7 @@
                                 <tr>
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
                                     <td style="max-width: 170px; overflow: hidden;">
-                                        @if(strlen($customer->customer_name) > 30 )
+                                        @if(strlen($customer->customer_name) > 35 )
                                         <span style="font-size: x-small">{{ $customer->customer_name }}</span>
                                         @else
                                         {{ $customer->customer_name }}
