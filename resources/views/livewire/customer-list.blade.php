@@ -136,7 +136,7 @@
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
                                     <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                         @if(strlen($customer->customer_name) > 25)
-                                        <marquee behavior="scroll" direction="left">{{ $customer->customer_name }}</marquee>
+                                        {{ $customer->customer_name }}
                                         @else
                                         {{ $customer->customer_name }}
                                         @endif
