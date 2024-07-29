@@ -50,7 +50,8 @@ class CustomerList extends Component
     {
         $customers = Customer::withCount('AddressBooks','primaryMobileNumber')
             ->when(strlen($this->search) > 2, function ($query) {
-                $query->where('customer_name', 'like', '%' . $this->search . '%');
+                $query->where('customer_name', 'like', '%' . $this->search . '%')
+                ->orWhere('tally_serial_no', 'like', '%' . $this->search . '%');
             })
             ->when($this->status, function ($query) {
                 $query->where('status', $this->status);
