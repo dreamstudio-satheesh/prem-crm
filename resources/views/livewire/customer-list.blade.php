@@ -134,8 +134,8 @@
                                 @foreach($customers as $index => $customer)
                                 <tr>
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
-                                    <td style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                        @if(strlen($customer->customer_name) > 50)
+                                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                        @if(strlen($customer->customer_name) > 30)
                                         <marquee behavior="scroll" direction="left">{{ $customer->customer_name }}</marquee>
                                         @else
                                         {{ $customer->customer_name }}
