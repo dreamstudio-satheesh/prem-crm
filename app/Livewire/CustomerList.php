@@ -86,7 +86,7 @@ class CustomerList extends Component
             ->when($this->end_date, function ($query) {
                 $query->whereDate('created_at', '<=', Carbon::parse($this->end_date));
             })
-            ->paginate(10);
+            ->paginate(25);
 
         return view('livewire.customer-list', ['customers' => $customers]);
     }
