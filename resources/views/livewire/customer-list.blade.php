@@ -159,17 +159,17 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('customers.edit', $customer->customer_id) }}" class="btn btn-info">
-                                            <i class="ri-edit-line align-bottom me-1"></i> Edit Customer
+                                            <i class="ri-edit-line align-bottom me-1"></i> Customer
                                         </a>
                                     </td>
                                     <td>
                                         @if($customer->address_books_count == 0)
                                         <a href="{{ url('/master/customers/add-address', $customer->customer_id) }}" class="btn btn-info">
-                                            <i class="ri-add-line align-bottom me-1"></i> Create Address
+                                            <i class="ri-add-line align-bottom me-1"></i>  Address
                                         </a>
                                         @else
                                         <a href="{{ url('/master/customers/edit-address', $customer->customer_id) }}" class="btn btn-info">
-                                            <i class="ri-edit-line align-bottom me-1"></i> Edit Address
+                                            <i class="ri-edit-line align-bottom me-1"></i> Address
                                         </a>
                                         @endif
                                     </td>
