@@ -104,4 +104,15 @@ class CustomerList extends Component
 
         $this->dispatch('filterToggled');
     }
+
+    public function deleteCustomer($customerId)
+    {
+        $customer = Customer::findOrFail($customerId);
+        $customer->delete();
+        
+        session()->flash('message', 'Customer deleted successfully.');
+
+        // Optionally, reset the page to the first page if the current page is empty after deletion
+        $this->resetPage();
+    }
 }

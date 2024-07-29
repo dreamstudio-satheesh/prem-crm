@@ -117,9 +117,7 @@
                             <thead class="table-light text-muted">
                                 <tr>
                                     <th style="width: 50px;">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="checkAll">
-                                        </div>
+                                        S.NO
                                     </th>
                                     <th>Customer</th>
                                     <th>Tally S.NO</th>
@@ -132,13 +130,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($customers as $customer)
+                                @foreach($customers as $index => $customer)
                                 <tr>
-                                    <th>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="chk_child" value="{{ $customer->customer_id }}">
-                                        </div>
-                                    </th>
+                                    <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
                                     <td class="text-uppercase">{{ $customer->customer_name }}</td>
                                     <td>{{ $customer->tally_serial_no }}</td>
                                     <td>
@@ -165,13 +159,18 @@
                                     <td>
                                         @if($customer->address_books_count == 0)
                                         <a href="{{ url('/master/customers/add-address', $customer->customer_id) }}" class="btn btn-info">
-                                            <i class="ri-add-line align-bottom me-1"></i>  Address
+                                            <i class="ri-add-line align-bottom me-1"></i> Address
                                         </a>
                                         @else
                                         <a href="{{ url('/master/customers/edit-address', $customer->customer_id) }}" class="btn btn-info">
                                             <i class="ri-edit-line align-bottom me-1"></i> Address
                                         </a>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <button wire:click="deleteCustomer({{ $customer->customer_id }})" class="btn btn-sm btn-danger">
+                                            <i class="ri-delete-bin-line align-bottom me-1"></i> Delete
+                                        </button>
                                     </td>
                                 </tr>
                                 @endforeach

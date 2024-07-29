@@ -80,7 +80,11 @@
 
             <div class="page-content">
                 <div class="container-fluid">
-
+                    @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                    @endif
                     {{ $slot }}
                 </div>
                 <!-- container-fluid -->
