@@ -26,7 +26,7 @@ class OnlineCallController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|exists:customers,customer_id',
-            'contact_person_id' => 'required',
+            'contact_person_id' => 'required|exists:address_books,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
             'call_booking_time' => 'required',
             'staff_id' => 'required',
@@ -83,7 +83,7 @@ class OnlineCallController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|exists:customers,customer_id',
-            'contact_person_id' => 'required',
+            'contact_person_id' => 'required|exists:address_books,id',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
             'status_of_call' => 'required|in:completed,pending,cancelled,on_process,follow_up,onsite_visit',
             'nature_of_issue_id' => 'required|exists:nature_of_issues,id',
