@@ -127,6 +127,7 @@
                                     <th>Contact No</th>
                                     <th>Action</th>
                                     <th>Edit</th>
+                                    <th><i class="ri-delete-bin-line align-bottom me-1"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
