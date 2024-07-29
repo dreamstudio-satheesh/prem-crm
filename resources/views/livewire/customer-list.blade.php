@@ -169,7 +169,7 @@
                                     </td>
                                     <td>
                                         <button wire:click="deleteCustomer({{ $customer->customer_id }})" class="btn btn-sm btn-danger">
-                                            <i class="ri-delete-bin-line align-bottom me-1"></i> Delete
+                                            <i class="ri-delete-bin-line align-bottom me-1"></i> 
                                         </button>
                                     </td>
                                 </tr>
