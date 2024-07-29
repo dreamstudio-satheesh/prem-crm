@@ -136,9 +136,9 @@
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
                                     <td style="max-width: 170px; overflow: hidden;">
                                         @if(strlen($customer->customer_name) > 30 )
-                                        <span style="font-size:small">{{ $customer->customer_name }}</span>
+                                       {{ $customer->customer_name }}
                                         @else
-                                        {{ $customer->customer_name }}
+                                        <span style="font-size:small">{{ $customer->customer_name }}</span>
                                         @endif
                                     </td>
                                     <td>{{ $customer->tally_serial_no }}</td>
