@@ -134,11 +134,11 @@
                                 @foreach($customers as $index => $customer)
                                 <tr>
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
-                                    <td style="max-width: 170px; overflow: hidden;">
-                                        @if(strlen($customer->customer_name) > 30 )
-                                       {{ $customer->customer_name }}
+                                    <td style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                        @if(strlen($customer->customer_name) > 20 )
+                                        <span style="font-size: x-small">{{ $customer->customer_name }}</span>
                                         @else
-                                        <span style="font-size:small">{{ $customer->customer_name }}</span>
+                                        {{ $customer->customer_name }}
                                         @endif
                                     </td>
                                     <td>{{ $customer->tally_serial_no }}</td>
