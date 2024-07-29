@@ -134,7 +134,13 @@
                                 @foreach($customers as $index => $customer)
                                 <tr>
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
-                                    <td class="text-uppercase">{{ $customer->customer_name }}</td>
+                                    <td style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                        @if(strlen($customer->customer_name) > 50)
+                                        <marquee behavior="scroll" direction="left">{{ $customer->customer_name }}</marquee>
+                                        @else
+                                        {{ $customer->customer_name }}
+                                        @endif
+                                    </td>
                                     <td>{{ $customer->tally_serial_no }}</td>
                                     <td>
                                         <span class="badge badge-soft-{{ $customer->amc == 'yes' ? 'success' : 'danger' }} text-uppercase">
@@ -170,7 +176,7 @@
                                     </td>
                                     <td>
                                         <button wire:click="deleteCustomer({{ $customer->customer_id }})" class="btn btn-sm btn-danger">
-                                            <i class="ri-delete-bin-line"></i> 
+                                            <i class="ri-delete-bin-line"></i>
                                         </button>
                                     </td>
                                 </tr>
