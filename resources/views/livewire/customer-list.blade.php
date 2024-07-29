@@ -134,7 +134,7 @@
                                 @foreach($customers as $index => $customer)
                                 <tr>
                                     <td>{{ $customers->firstItem() + $index }}</td> <!-- Serial number -->
-                                    <td style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    <td style="max-width: 170px; overflow: hidden; white-space: nowrap;">
                                         @if(strlen($customer->customer_name) > 20 )
                                         <span style="font-size: x-small">{{ $customer->customer_name }}</span>
                                         @else
