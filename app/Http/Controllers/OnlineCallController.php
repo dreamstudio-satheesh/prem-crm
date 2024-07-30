@@ -45,8 +45,6 @@ class OnlineCallController extends Controller
             ['mobile_no' => $request->contact_person_mobile],
             ['address_id' => $request->contact_person_id ] // Add additional fields as necessary
         );
-
-        return $mobileNumber->id;
     
         $serviceCallData = [
             'customer_id' => $request->customer_id,
