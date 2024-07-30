@@ -101,8 +101,8 @@ Route::post('/online-calls/{id}', [OnlineCallController::class, 'update'])->name
 
 
 
-Route::get('/email-settings', [SettingsController::class, 'edit_email'])->name('email-settings.edit');
-Route::post('/email-settings', [SettingsController::class, 'update_email'])->name('email-settings.update');
+//Route::get('/email-settings', [SettingsController::class, 'edit_email'])->name('email-settings.edit');
+//Route::post('/email-settings', [SettingsController::class, 'update_email'])->name('email-settings.update');
 
 /* Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update'); */
