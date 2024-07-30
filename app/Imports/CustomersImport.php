@@ -108,7 +108,9 @@ class CustomersImport implements ToModel, WithStartRow
             }
         }
 
-        if (!empty($customerData['tally_serial_no'])) {
+       // if (!empty($customerData['tally_serial_no'])) {
+
+       if (!empty($customerData['tally_serial_no']) && preg_match('/^\d{9}$/', $customerData['tally_serial_no'])) {
             // Update or create customer based on a unique identifier, such as 'tally_serial_no'
             $customer = Customer::updateOrCreate(
                 ['tally_serial_no' => $customerData['tally_serial_no']], // Unique identifier
