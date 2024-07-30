@@ -99,7 +99,6 @@ Route::post('/online-calls/{id}', [OnlineCallController::class, 'update'])->name
 //Route::get('/onsite-visits/create', CreateOnsiteVisit::class)->name('onsite-visits.create'); 
 
 
-Route::get('/transactions/onsiteentry', [App\Http\Controllers\Transactions\OnsiteEntryController::class, 'index'])->name('onsiteentry'); 
 
 
 Route::get('/email-settings', [SettingsController::class, 'edit_email'])->name('email-settings.edit');
