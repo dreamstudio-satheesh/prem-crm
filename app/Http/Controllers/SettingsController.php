@@ -29,6 +29,8 @@ class SettingsController extends Controller
             'ui.theme_color' => 'required|string|regex:/^#[0-9a-fA-F]{6}$/'
         ]);
 
+        return  $data;
+
         foreach ($data as $key => $value) {
             Setting::updateOrCreate(['key' => $key], ['value' => $value]);
         }
