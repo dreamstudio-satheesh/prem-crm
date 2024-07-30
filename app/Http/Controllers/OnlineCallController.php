@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\AddressBook;
 use App\Models\ServiceCall;
+use App\Models\MobileNumber;
 use Illuminate\Http\Request;
 use App\Models\NatureOfIssue;
 use App\Models\ServiceCallLog;
@@ -24,10 +25,10 @@ class OnlineCallController extends Controller
 
     public function store(Request $request)
     {
-        return $request->all();
         $request->validate([
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:address_books,address_id',
+            'contact_person_mobile_id' => 'required',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
             'call_booking_time' => 'required',
             'staff_id' => 'required',
@@ -39,10 +40,16 @@ class OnlineCallController extends Controller
         ]);
         $currentDate = Carbon::now()->toDateString();
         $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time)->format('Y-m-d H:i:s');
+       
+        $mobileNumber = MobileNumber::firstOrCreate(
+            ['mobile_no' => $request->contact_person_mobile],
+            ['address_id' => $request->contact_person_id ] // Add additional fields as necessary
+        );
+    
         $serviceCallData = [
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
-            'contact_person_mobile_id' => $request->contact_person_mobile,
+            'contact_person_mobile_id' => $mobileNumber->id,
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
             'staff_id' => $request->staff_id,
