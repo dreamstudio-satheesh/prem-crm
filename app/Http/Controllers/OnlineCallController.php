@@ -28,7 +28,7 @@ class OnlineCallController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:address_books,address_id',
-            'contact_person_mobile_id' => 'required',
+            'contact_person_mobile' => 'required',
             'type_of_call' => 'required|in:AMC Call,PER Call,FREE Call',
             'call_booking_time' => 'required',
             'staff_id' => 'required',
@@ -46,7 +46,7 @@ class OnlineCallController extends Controller
             ['address_id' => $request->contact_person_id ] // Add additional fields as necessary
         );
 
-        return $mobileNumber;
+        //return $mobileNumber;
     
         $serviceCallData = [
             'customer_id' => $request->customer_id,
