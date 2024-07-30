@@ -321,6 +321,7 @@
 
                         if (data.mobile_no && data.mobile_no.length > 0) {
                             var selectHtml = '<select class="form-control" name="contact_person_mobile">';
+                            selectHtml += '<option value="">Select</option>'; 
                             data.mobile_no.forEach(function(entry) {
                                 selectHtml += `<option value="${entry.id}">${entry.mobile_no}</option>`;
                             });
@@ -330,7 +331,7 @@
                             mobilesContainer.append('<p>No mobile number available</p>');
                         }
                         $('#contact-person-mobile-wrapper').show();
-                        
+
                     },
                     error: function(xhr) {
                         console.log('Error:', xhr.responseText);
