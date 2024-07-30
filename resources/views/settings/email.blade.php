@@ -15,17 +15,17 @@
             <form action="{{ route('email-settings.update') }}" method="POST" class="row g-3">
                 @csrf
                 @foreach ([
-                'email.mail_host' => 'Mail Host',
-                'email.mail_port' => 'Mail Port',
-                'email.mail_encryption' => 'Encryption',
-                'email.mail_username' => 'Username',
-                'email.mail_password' => 'Password',
-                'email.from_address' => 'From Address',
-                'email.from_name' => 'From Name'
+                'email[mail_host]' => 'Mail Host',
+                'email[mail_port]' => 'Mail Port',
+                'email[mail_encryption]' => 'Encryption',
+                'email[mail_username]' => 'Username',
+                'email[mail_password]' => 'Password',
+                'email[from_address]' => 'From Address',
+                'email[from_name]' => 'From Name'
                 ] as $key => $label)
                 <div class="col-md-4">
-                    <label for="{{ $key }}" class="form-label">{{ $label }}</label>
-                    <input type="{{ $key === 'email.mail_password' ? 'password' : 'text' }}" class="form-control" id="{{ $key }}" name="{{ $key }}" value="{{ old($key, $settings[$key] ?? '') }}" required>
+                    <label for="{{ str_replace(['[', ']'], ['_', ''], $key) }}" class="form-label">{{ $label }}</label>
+                    <input type="{{ $key === 'email[mail_password]' ? 'password' : 'text' }}" class="form-control" id="{{ str_replace(['[', ']'], ['_', ''], $key) }}" name="{{ $key }}" value="{{ old(str_replace(['[', ']'], ['_', ''], $key), $settings[str_replace(['[', ']'], ['_', ''], $key)] ?? '') }}" required>
                 </div>
                 @endforeach
 

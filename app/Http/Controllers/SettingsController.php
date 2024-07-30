@@ -54,7 +54,6 @@ class SettingsController extends Controller
 
     public function update_email(Request $request)
     {
-        return $request->all();
         $data = $request->validate([
             'email.mail_host' => 'required',
             'email.mail_port' => 'required|integer',
@@ -64,11 +63,11 @@ class SettingsController extends Controller
             'email.from_address' => 'required|email',
             'email.from_name' => 'required',
         ]);
-
-        foreach ($data as $key => $value) {
-            Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+    
+        foreach ($data['email'] as $key => $value) {
+            Setting::updateOrCreate(['key' => 'email.' . $key], ['value' => $value]);
         }
-
+    
         return redirect()->route('email-settings.edit')->with('success', 'Email settings updated successfully!');
     }
-}
+    
