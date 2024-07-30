@@ -63,6 +63,8 @@ class SettingsController extends Controller
             'email.from_address' => 'required|email',
             'email.from_name' => 'required',
         ]);
+
+        return $data;
     
         foreach ($data['email'] as $key => $value) {
             Setting::updateOrCreate(['key' => 'email.' . $key], ['value' => $value]);
