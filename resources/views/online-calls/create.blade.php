@@ -265,6 +265,14 @@
                         $('#contact-person-wrapper').show();
                         $('#type-of-call-wrapper').show();
                         $('#contact-person-mobile-wrapper').hide();
+
+                        // Set Type Of Call based on customerAmc value
+                        if (data.customerAmc) {
+                            $('#type_of_call').val('AMC Call');
+                        } else {
+                            $('#type_of_call').val('PER Call');
+                        }
+                        
                     }
                 });
             } else {
