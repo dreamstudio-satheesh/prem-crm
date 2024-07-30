@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('contact_person_id');
+            $table->unsignedBigInteger('contact_person_mobile_id');
             $table->string('type_of_call');
             $table->enum('call_type', ['onsite_visit', 'online_call']);
             $table->timestamp('call_booking_time')->nullable(); 

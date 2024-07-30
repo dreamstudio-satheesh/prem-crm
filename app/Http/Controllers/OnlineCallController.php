@@ -41,6 +41,7 @@ class OnlineCallController extends Controller
         $serviceCallData = [
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
+            'contact_person_mobile_id' => $request->contact_person_mobile,
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
             'staff_id' => $request->staff_id,
