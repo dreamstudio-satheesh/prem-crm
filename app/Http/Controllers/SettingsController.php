@@ -22,7 +22,6 @@ class SettingsController extends Controller
 
     public function update(Request $request)
     {
-        return $request->all();
         $data = $request->validate([
             'app.name' => 'required|string|max:255',
             'company.name' => 'required|string|max:255',
@@ -55,6 +54,7 @@ class SettingsController extends Controller
 
     public function update_email(Request $request)
     {
+        return $request->all();
         $data = $request->validate([
             'email.mail_host' => 'required',
             'email.mail_port' => 'required|integer',
