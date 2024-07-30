@@ -25,7 +25,7 @@ class CustomersImport implements ToModel, WithStartRow
     private function getMappingConfiguration(): array
     {
         return [
-            'customer' => ['tally_serial_no', 'customer_name', 'release', 'licence_editon', 'tss_status', 'product','tss_expirydate','tss_adminemail'],
+            'customer' => ['tally_serial_no', 'customer_name', 'release', 'licence_editon', 'tss_status', 'product', 'tss_expirydate', 'tss_adminemail'],
             'address' => ['contact_person', 'address', 'email'],
             'mobile' => ['mobile_no'],
             'amc' => ['amc_from_date', 'amc_to_date', 'amc_renewal_date', 'amc_last_year_amount', 'amc_amount']
@@ -39,16 +39,23 @@ class CustomersImport implements ToModel, WithStartRow
 
     private function transformDate($value)
     {
-        // Excel date format to Carbon date format
+        // Check if value is numeric (Excel date format)
         if (is_numeric($value)) {
             return Carbon::createFromFormat('Y-m-d', gmdate('Y-m-d', ($value - 25569) * 86400))->format('Y-m-d');
         }
-        else {
-            // Handling date string format like 11/30/2024
+
+        // Check if value matches date string format like 11/30/2024
+        try {
             return Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d');
+        } catch (\Exception $e) {
+            // If it fails to parse, return null
+            return null;
         }
-        return $value;
+
+        // Default case, return null
+        return null;
     }
+
 
     private function transformStatus($value)
     {
@@ -108,9 +115,9 @@ class CustomersImport implements ToModel, WithStartRow
             }
         }
 
-       // if (!empty($customerData['tally_serial_no'])) {
+        // if (!empty($customerData['tally_serial_no'])) {
 
-       if (!empty($customerData['tally_serial_no']) && preg_match('/^\d{9}$/', $customerData['tally_serial_no'])) {
+        if (!empty($customerData['tally_serial_no']) && preg_match('/^\d{9}$/', $customerData['tally_serial_no'])) {
             // Update or create customer based on a unique identifier, such as 'tally_serial_no'
             $customer = Customer::updateOrCreate(
                 ['tally_serial_no' => $customerData['tally_serial_no']], // Unique identifier
