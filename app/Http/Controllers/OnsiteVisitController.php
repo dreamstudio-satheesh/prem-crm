@@ -104,6 +104,22 @@ class OnsiteVisitController extends Controller
         return response()->json(['mobile_no' => $numbers]);
     }
 
+    public function getContactPersonMobiles($contactPersonId)
+    {
+        $mobileNumbers = MobileNumber::where('address_id', $contactPersonId)->get();
+
+        if ($mobileNumbers->isEmpty()) {
+            return response()->json(['error' => 'No mobile numbers found for the selected contact person'], 404);
+        }
+
+        $numberList = $mobileNumbers->map(function ($number) {
+            return ['id' => $number->id, 'mobile_no' => $number->mobile_no];
+        });
+
+        return response()->json(['mobile_no' => $numberList]);
+    }
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -118,7 +134,7 @@ class OnsiteVisitController extends Controller
             'follow_up_date' => 'nullable|date',
             'remarks' => 'nullable|string',
         ]);
-        
+
         $currentDate = Carbon::now()->toDateString();
         $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time)->toDateTimeString();
 

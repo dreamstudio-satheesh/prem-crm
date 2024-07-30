@@ -272,7 +272,7 @@
                         } else {
                             $('#type_of_call').val('PER Call');
                         }
-                        
+
                     }
                 });
             } else {
@@ -313,20 +313,24 @@
             } else if (contactPersonId) {
                 // Fetch and display contact person mobile numbers
                 $.ajax({
-                    url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
+                    url: '/onsite-visits/contact-person-mobiles/' + contactPersonId,
                     type: 'GET',
                     success: function(data) {
                         var mobilesContainer = $('#contact_person_mobiles');
                         mobilesContainer.empty(); // Clear existing content
 
                         if (data.mobile_no && data.mobile_no.length > 0) {
-                            data.mobile_no.forEach(function(mobileNumber) {
-                                mobilesContainer.append(`<input type="text" class="form-control mt-2" value="${mobileNumber}" readonly>`);
+                            var selectHtml = '<select class="form-control" name="contact_person_mobile">';
+                            data.mobile_no.forEach(function(entry) {
+                                selectHtml += `<option value="${entry.id}">${entry.mobile_no}</option>`;
                             });
+                            selectHtml += '</select>';
+                            mobilesContainer.append(selectHtml);
                         } else {
-                            mobilesContainer.append('<input type="text" class="form-control mt-2" value="No mobile number available" readonly>');
+                            mobilesContainer.append('<p>No mobile number available</p>');
                         }
                         $('#contact-person-mobile-wrapper').show();
+                        
                     },
                     error: function(xhr) {
                         console.log('Error:', xhr.responseText);
