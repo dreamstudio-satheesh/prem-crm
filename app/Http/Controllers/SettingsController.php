@@ -70,4 +70,7 @@ class SettingsController extends Controller
     
         return redirect()->route('email-settings.edit')->with('success', 'Email settings updated successfully!');
     }
+
+
+}
     
