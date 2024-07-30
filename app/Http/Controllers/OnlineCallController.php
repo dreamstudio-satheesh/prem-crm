@@ -66,8 +66,6 @@ class OnlineCallController extends Controller
             $serviceCallData['follow_up_date'] = $followUpDate;
         }
 
-        return $serviceCallData;
-
         ServiceCall::create($serviceCallData);
 
         if ($request->ajax()) {
