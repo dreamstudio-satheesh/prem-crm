@@ -24,6 +24,7 @@ class OnlineCallController extends Controller
 
     public function store(Request $request)
     {
+        return $request->all();
         $request->validate([
             'customer_id' => 'required|exists:customers,customer_id',
             'contact_person_id' => 'required|exists:address_books,address_id',
