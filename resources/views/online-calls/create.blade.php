@@ -313,7 +313,7 @@
             } else if (contactPersonId) {
                 // Fetch and display contact person mobile numbers
                 $.ajax({
-                    url: '/onsite-visits/contact-person-mobiles/' + contactPersonId,
+                    url: '/onsite-visits/contact-person-mobile/' + contactPersonId,
                     type: 'GET',
                     success: function(data) {
                         var mobilesContainer = $('#contact_person_mobiles');
