@@ -12,6 +12,7 @@ class ServiceCall extends Model
     protected $fillable = [
         'customer_id',
         'contact_person_id',
+        'contact_person_mobile_id',
         'type_of_call',
         'call_type',
         'call_details',
