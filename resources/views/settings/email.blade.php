@@ -14,20 +14,41 @@
         <div class="card-body">
             <form action="{{ route('email-settings.update') }}" method="POST" class="row g-3">
                 @csrf
-                @foreach ([
-                'mail_host' => 'Mail Host',
-                'mail_port' => 'Mail Port',
-                'mail_encryption' => 'Encryption',
-                'mail_username' => 'Username',
-                'mail_password' => 'Password',
-                'from_address' => 'From Address',
-                'from_name' => 'From Name'
-                ] as $key => $label)
+
                 <div class="col-md-4">
-                    <label for="email_{{ $key }}" class="form-label">{{ $label }}</label>
-                    <input type="{{ $key === 'mail_password' ? 'password' : 'text' }}" class="form-control" id="email_{{ $key }}" name="email[{{ $key }}]" value="{{ old('email.' . $key, $settings['email.' . $key] ?? '') }}" required>
+                    <label for="email_mail_host" class="form-label">Mail Host</label>
+                    <input type="text" class="form-control" id="email_mail_host" name="email[mail_host]" value="{{ old('email.mail_host', $settings['email.mail_host'] ?? '') }}" required>
                 </div>
-                @endforeach
+
+                <div class="col-md-4">
+                    <label for="email_mail_port" class="form-label">Mail Port</label>
+                    <input type="text" class="form-control" id="email_mail_port" name="email[mail_port]" value="{{ old('email.mail_port', $settings['email.mail_port'] ?? '') }}" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="email_mail_encryption" class="form-label">Encryption</label>
+                    <input type="text" class="form-control" id="email_mail_encryption" name="email[mail_encryption]" value="{{ old('email.mail_encryption', $settings['email.mail_encryption'] ?? '') }}" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="email_mail_username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="email_mail_username" name="email[mail_username]" value="{{ old('email.mail_username', $settings['email.mail_username'] ?? '') }}" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="email_mail_password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="email_mail_password" name="email[mail_password]" value="{{ old('email.mail_password', $settings['email.mail_password'] ?? '') }}" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="email_from_address" class="form-label">From Address</label>
+                    <input type="email" class="form-control" id="email_from_address" name="email[from_address]" value="{{ old('email.from_address', $settings['email.from_address'] ?? '') }}" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="email_from_name" class="form-label">From Name</label>
+                    <input type="text" class="form-control" id="email_from_name" name="email[from_name]" value="{{ old('email.from_name', $settings['email.from_name'] ?? '') }}" required>
+                </div>
 
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Save Settings</button>
