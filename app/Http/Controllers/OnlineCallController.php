@@ -128,7 +128,7 @@ class OnlineCallController extends Controller
         if ($request->status_of_call == 'completed') {
             // Get all email addresses for the current customer
             $customer = Customer::find($request->customer_id);
-            $emails = $customer->addresses->pluck('email')->filter();
+            $emails = $customer->AddressBooks->pluck('email')->filter();
 
             return  $emails;
 
