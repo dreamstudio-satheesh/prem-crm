@@ -44,7 +44,7 @@
                         <div class="input-group">
                         <span id="contact_person_mobiles"></span> <!-- Container for appending AJAX fetched mobile numbers -->
                         <span id="additional-mobile-numbers"></span> <!-- Separate container for dynamically added mobile numbers -->
-                        <button id="add-mobile-number" class="btn btn-outline-secondary shadow-none" type="button">Add</button>
+                        <button id="add-mobile-number" class="btn btn-sm btn-outline-secondary shadow-none" type="button">Add</button>
                     </div>
 
                 </div>
