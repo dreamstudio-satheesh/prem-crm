@@ -101,6 +101,12 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">Industry</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('location') }}" class="nav-link" data-key="t-master">Area</a>
+                        </li>
                         @endif
 
 
