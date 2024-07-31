@@ -20,7 +20,7 @@
                                 <i class="ri-file-upload-line align-bottom me-1"></i> Export
                             </button>
                             @endif
-                            
+
                             <a href="{{ route('customers.add') }}" accesskey="C" title="ALT+C" class="btn btn-sm btn-info">
                                 <i class="ri-file-add-line align-bottom me-1"></i> Add New
                             </a>
@@ -178,9 +178,11 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if(auth()->check() && auth()->user()->role && auth()->user()->role->name == 'Admin')
                                         <button wire:click="deleteCustomer({{ $customer->customer_id }})" class="btn btn-sm btn-danger">
                                             <i class="ri-delete-bin-line"></i>
                                         </button>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
