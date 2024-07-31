@@ -21,8 +21,6 @@ class CallClosedNotification extends Mailable
     {
         $this->recipientEmail = $recipientEmail;
 
-        // Update mail configuration dynamically
-        $this->updateMailConfig();
     }
 
     /**
@@ -37,12 +35,5 @@ class CallClosedNotification extends Mailable
                     ->view('emails.call_closed_notification');
     }
 
-    /**
-     * Update mail configuration from database settings.
-     */
-    protected function updateMailConfig()
-    {
-       
-
-    }
+   
 }
