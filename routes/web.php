@@ -122,26 +122,5 @@ Route::post('/send/marketing/email', [EmailMarketingController::class, 'send'])-
 Route::resource('leads', LeadController::class);
 
 
-use App\Services\PHPMailerService;
-
-Route::get('/send-email', function (PHPMailerService $mailer) {
-    $to = 'satheesh@dreamstudio.in';
-    $subject = 'Test Email from PHPMailer Laravel Service';
-    $body = 'This is the HTML message body <b>in bold!</b>';
-    $altBody = 'This is the body in plain text for non-HTML mail clients';
-
-    $result = $mailer->send($to, $subject, $body, $altBody);
-
-    return $result;
-});
 
 
-Route::get('/test-env', function () {
-  dd([
-      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
-      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
-      'MAIL_USERNAME' => env('MAIL_USERNAME'),
-      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
-      'MAIL_HOST' => env('MAIL_HOST'),
-  ]);
-});
