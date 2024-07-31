@@ -129,7 +129,9 @@
                                     <th>Status</th>
                                     <th>Contact No</th>
                                     <th>Action</th>
+                                    @if(auth()->check() &&  auth()->user()->role->name == 'Admin')
                                     <th>Edit</th>
+                                    @endif
                                     <th><i class="ri-delete-bin-line align-bottom me-1"></i></th>
                                 </tr>
                             </thead>
@@ -178,12 +180,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(auth()->check() && auth()->user()->role && auth()->user()->role->name == 'Admin')
+                                    <td>
+                                        @if(auth()->check() &&  auth()->user()->role->name == 'Admin')
                                         <button wire:click="deleteCustomer({{ $customer->customer_id }})" class="btn btn-sm btn-danger">
                                             <i class="ri-delete-bin-line"></i>
                                         </button>
-                                        @endif
                                     </td>
+                                        @endif
                                 </tr>
                                 @endforeach
                             </tbody>
