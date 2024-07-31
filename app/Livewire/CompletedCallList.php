@@ -14,6 +14,9 @@ class CompletedCallList extends Component
     public $search = '';
     public $callType = '';
 
+    public $startDate = null; 
+    public $endDate = null; 
+    
     public $showFilters = false;
 
     protected $paginationTheme = 'bootstrap';
