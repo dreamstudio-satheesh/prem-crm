@@ -11,7 +11,6 @@ use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Master\LicenceMaster;
 use App\Livewire\Master\ProductMaster;
@@ -96,58 +95,6 @@ Route::get('/test-logging', function () {
 });
 
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-Route::get('/test-email-phpmailer', function () {
-  
-    $mail = new PHPMailer(true);
-
-
-    try {
-        // Server settings
-        $mail->SMTPDebug = 2; // Enable verbose debug output
-        $mail->isSMTP(); // Set mailer to use SMTP
-        $mail->Host = 'mail.dreamcoderz.com'; // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = 'info@dreamcoderz.com'; // SMTP username
-        $mail->Password = 'ahQntr6waaS3Wem'; // SMTP password
-        $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587; // TCP port to connect to
-
-        // Alternatively, try using SSL on port 465 if TLS on 587 doesn't work
-        // $mail->SMTPSecure = 'ssl';
-        // $mail->Port = 465;
-
-        // Recipients
-        $mail->setFrom('info@dreamcoderz.com', 'dreamcoderz');
-        $mail->addAddress('satheesh@dreamstudio.in', 'Satheesh'); // Add a recipient
-
-        // Content
-        $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = 'Test Email from PHPMailer Laravel';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-        $mail->send();
-        echo 'Message has been sent';
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
-});
-
-
-Route::get('/test-email', function () {
-  try {
-      Mail::raw('This is a test email.', function ($message) {
-          $message->to('satheesh@dreamstudio.in')
-                  ->subject('Test Emailfrom laravel dir');
-      });
-      return 'Test email sent successfully.';
-  } catch (\Exception $e) {
-      return 'Error sending test email: ' . $e->getMessage();
-  }
-});
 
 
 Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index');
