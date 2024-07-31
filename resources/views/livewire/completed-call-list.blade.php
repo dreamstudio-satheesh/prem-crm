@@ -34,7 +34,15 @@
                         </select>
                     </div>
                     <div class="col-xxl-3 col-sm-4">
-                        <input type="text" class="form-control form-control-sm" id="startDate" wire:model="startDate" placeholder="Start Date">
+                        <div x-data="{ open: false, date: @entangle('date') }">
+                            <input type="text" readonly x-model="date" @click="open = !open" class="form-control" />
+                            <div x-show="open" @click.away="open = false">
+                                <div class="date-picker">
+                                    <!-- Custom date picker or use a library that works with Alpine.js -->
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-xxl-3 col-sm-4">
                         <input type="text" class="form-control form-control-sm" id="endDate" wire:model="endDate" placeholder="End Date">
@@ -117,33 +125,3 @@
 
     </div>
 </div>
-
-@push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-    document.addEventListener('livewire:init', function () {
-        initFlatpickr();
-
-        Livewire.hook('element.updated', function (el, component) {
-            if ($(el).hasClass('date-input')) {
-                initFlatpickr();  // Reinitialize to ensure Flatpickr binds correctly
-            }
-        });
-    });
-
-    function initFlatpickr() {
-        $(".date-input").flatpickr({
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            onChange: function(selectedDates, dateStr, instance) {
-                let id = instance.input.id;
-                Livewire.emit('dateSelected', id, dateStr);
-            }
-        });
-    }
-</script>
-@endpush
