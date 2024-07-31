@@ -35,7 +35,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->roles->name }}</td>
+                                    <td>{{ $user->role->name }}</td>
                                     <td>
                                         <button wire:click="edit({{ $user->id }})" class="btn btn-primary btn-sm">Edit</button>
                                         <button x-data="{ unitId: {{ $user->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
