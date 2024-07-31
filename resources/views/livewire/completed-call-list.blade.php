@@ -20,7 +20,7 @@
         <div class="card-body border border-dashed border-end-0 border-start-0">
             <form>
                 <div class="row g-3">
-                    <div class="col-xxl-3 col-sm-4">
+                    <div class="col-xxl-2 col-sm-3">
                         <div class="search-box">
                             <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model="search">
                             <i class="ri-search-line search-icon"></i>
