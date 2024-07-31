@@ -37,6 +37,11 @@ class ServiceCall extends Model
         return $this->belongsTo(AddressBook::class, 'contact_person_id');
     }
 
+    public function contactPersonMobile()
+    {
+        return $this->belongsTo(MobileNumber::class, 'contact_person_mobile_id');
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');

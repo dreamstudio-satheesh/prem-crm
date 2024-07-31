@@ -29,7 +29,7 @@ class OnlineCallList extends Component
     {
         $onlineCalls = ServiceCall::where('call_type', 'online_call')
             ->whereNotIn('status_of_call', ['cancelled', 'completed'])
-            ->with(['customer', 'contactPerson.mobileNumbers'])
+            ->with(['customer', 'contactPerson','contactPersonMobile'])
             ->whereHas('customer', function ($query) {
                 $query->where('customer_name', 'like', '%' . $this->search . '%');
             })
