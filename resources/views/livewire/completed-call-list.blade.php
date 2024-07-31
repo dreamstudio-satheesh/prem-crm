@@ -34,6 +34,16 @@
                         </select>
                     </div>
 
+
+                    <div class="col-xxl-2 col-sm-3">
+                        <select class="form-control form-control-sm" wire:model.lazy="type_of_call">
+                            <option value="">Type Of Call</option>
+                            <option value="AMC Call">AMC Call</option>
+                            <option value="PER Call">PER Call</option>
+                            <option value="FREE Call">FREE Call</option>
+                        </select>
+                    </div>
+
                     <div class="col-xxl-6 col-sm-8" x-data="{ startDate: @entangle('startDate'), endDate: @entangle('endDate') }">
                         <div class="row">
                             <div class="col-xxl-3 col-sm-4">

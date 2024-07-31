@@ -13,10 +13,11 @@ class CompletedCallList extends Component
 
     public $search = '';
     public $callType = '';
+    public $type_of_call = '';
 
     public $startDate = null; 
     public $endDate = null; 
-    
+
     public $showFilters = false;
 
     protected $paginationTheme = 'bootstrap';
@@ -39,6 +40,11 @@ class CompletedCallList extends Component
         if ($this->callType) {
             $query->where('call_type', $this->callType); // Corrected column name
         }
+
+        if ($this->type_of_call) {
+            $query->where('type_of_call', $this->type_of_call); // Corrected column name
+        }
+
 
         if ($this->search) {
             $query->whereHas('customer', function ($query) {
