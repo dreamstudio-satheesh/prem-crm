@@ -20,23 +20,23 @@
         <div class="card-body border border-dashed border-end-0 border-start-0">
             <form>
                 <div class="row g-3">
-                    <div class="col-xxl-4 col-sm-6">
+                    <div class="col-xxl-3 col-sm-4">
                         <div class="search-box">
                             <input type="text" class="form-control form-control-sm search" placeholder="Search ..." wire:model="search">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
-                    <div class="col-xxl-4 col-sm-6">
+                    <div class="col-xxl-3 col-sm-4">
                         <select class="form-control form-control-sm" wire:model.lazy="callType">
                             <option value="">All Types</option>
                             <option value="onsite_visit">Onsite Visit</option>
                             <option value="online_call">Online Call</option>
                         </select>
                     </div>
-                    <div class="col-xxl-4 col-sm-6">
+                    <div class="col-xxl-3 col-sm-4">
                         <input type="date" class="form-control form-control-sm" wire:model.lazy="startDate" placeholder="Start Date">
                     </div>
-                    <div class="col-xxl-4 col-sm-6">
+                    <div class="col-xxl-3 col-sm-4">
                         <input type="date" class="form-control form-control-sm" wire:model.lazy="endDate" placeholder="End Date">
                     </div>
                 </div>
