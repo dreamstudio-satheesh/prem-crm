@@ -20,10 +20,14 @@ class UserMaster extends Component
 
     protected $rules = [
         'name' => 'nullable|string|max:255',
-        'username' => 'required|string|max:255',
+        'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
         'email' => 'nullable|email|max:255',
         'role_id' => 'required|exists:roles,id',
         'password' => 'required|string|min:8|confirmed',
+    ];
+
+    protected $messages = [
+        'username.regex' => 'The username must not contain spaces or special characters.',
     ];
 
     public function render()
@@ -32,12 +36,10 @@ class UserMaster extends Component
             ->orWhere('email', 'like', '%'.$this->search.'%')
             ->orderBy('id', 'desc')
             ->paginate(10);
-    
+
         $roles = Role::all();
 
-       
-    
-        return view('livewire.master.user-master', compact('users', 'roles')); 
+        return view('livewire.master.user-master', compact('users', 'roles'));
     }
 
     public function resetInputFields()
@@ -53,6 +55,7 @@ class UserMaster extends Component
 
     public function store()
     {
+        $this->username = strtolower(str_replace(' ', '', $this->username));
         $this->validate();
 
         $data = [

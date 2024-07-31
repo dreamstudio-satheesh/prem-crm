@@ -1,4 +1,5 @@
 <!-- resources/views/livewire/user-master.blade.php -->
+
 <div>
     <div class="row">
         <div style="padding-left:30px;" class="col-md-8 col-xs-12">

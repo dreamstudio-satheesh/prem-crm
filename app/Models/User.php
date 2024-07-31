@@ -36,6 +36,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function setUsernameAttribute($value)
+    {
+        $this->attributes['username'] = strtolower(str_replace(' ', '', $value));
+    }
+
     public function roles()
     {
         return $this->belongsTo(Role::class, 'role_id');
