@@ -129,8 +129,8 @@
                                     <th>Status</th>
                                     <th>Contact No</th>
                                     <th>Action</th>
-                                    @if(auth()->check() &&  auth()->user()->role->name == 'Admin')
                                     <th>Edit</th>
+                                    @if(auth()->check() &&  auth()->user()->role->name == 'Admin')
                                     <th><i class="ri-delete-bin-line align-bottom me-1"></i></th>
                                     @endif
                                 </tr>
