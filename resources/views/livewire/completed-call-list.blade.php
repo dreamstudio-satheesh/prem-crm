@@ -125,19 +125,16 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    document.addEventListener('livewire:init', function() {
-        flatpickr("#startDate", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            onChange: function(selectedDates, dateStr, instance) {
-                Livewire.emit('dateSelected', 'startDate', dateStr);
-            }
-        });
-        flatpickr("#endDate", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            onChange: function(selectedDates, dateStr, instance) {
-                Livewire.emit('dateSelected', 'endDate', dateStr);
+    document.addEventListener('livewire:init', () => {
+        Livewire.hook('element.updated', (el, component) => {
+            if (el.id === 'startDate' || el.id === 'endDate') {
+                flatpickr(el, {
+                    enableTime: true,
+                    dateFormat: "Y-m-d H:i",
+                    onChange: (selectedDates, dateStr) => {
+                        Livewire.emit('dateSelected', el.id, dateStr);
+                    }
+                });
             }
         });
     });
