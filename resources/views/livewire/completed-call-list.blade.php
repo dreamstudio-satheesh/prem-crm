@@ -35,25 +35,15 @@
                     </div>
 
                     <div class="col-xxl-6 col-sm-8" x-data="{ startDate: @entangle('startDate'), endDate: @entangle('endDate') }">
-    <div class="row">
-        <div class="col-xxl-3 col-sm-4">
-            <input 
-                type="date" 
-                class="form-control form-control-sm" 
-                x-model="startDate"
-                x-on:change="if (endDate && endDate < startDate) endDate = startDate"
-                placeholder="Start Date">
-        </div>
-        <div class="col-xxl-3 col-sm-4">
-            <input 
-                type="date" 
-                class="form-control form-control-sm" 
-                x-model="endDate"
-                x-on:change="if (startDate && startDate > endDate) startDate = endDate"
-                placeholder="End Date">
-        </div>
-    </div>
-</div>
+                        <div class="row">
+                            <div class="col-xxl-3 col-sm-4">
+                                <input type="date" class="form-control form-control-sm" x-model="startDate" x-on:change="if (endDate && endDate < startDate) endDate = startDate" placeholder="Start Date">
+                            </div>
+                            <div class="col-xxl-3 col-sm-4">
+                                <input type="date" class="form-control form-control-sm" x-model="endDate" x-on:change="if (startDate && startDate > endDate) startDate = endDate" placeholder="End Date">
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
