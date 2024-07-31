@@ -26,7 +26,7 @@
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
-                    <div class="col-xxl-3 col-sm-4">
+                    <div class="col-xxl-2 col-sm-3">
                         <select class="form-control form-control-sm" wire:model.lazy="callType">
                             <option value="">All Types</option>
                             <option value="onsite_visit">Onsite Visit</option>
