@@ -46,72 +46,62 @@
                             </div>
                         </li> <!-- end Dashboard Menu -->
 
+                        <!-- Master Menu -->
+                        @if(auth()->user()->role->name == 'Admin')
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Master" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Master">
                                 <i class="mdi mdi-view-grid-plus-outline"></i> <span data-key="t-master">Master</span>
                             </a>
                             <div class="collapse menu-dropdown" id="Master">
                                 <ul class="nav nav-sm flex-column">
-
                                     <li class="nav-item">
                                         <a class="nav-link menu-link" accesskey="T" title="ALT+T" href="{{ url('/master/customers') }}">
                                             <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
                                         </a>
                                     </li>
-
                                     <li class="nav-item">
-                                        <a href="{{ url('licence') }}" class="nav-link" data-key="t-master">
-                                            Licence Edition
-                                        </a>
+                                        <a href="{{ url('licence') }}" class="nav-link" data-key="t-master">Licence Edition</a>
                                     </li>
-
                                     <li class="nav-item">
-                                        <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">
-                                            Designation
-                                        </a>
+                                        <a href="{{ url('customertype') }}" class="nav-link" data-key="t-master">Designation</a>
                                     </li>
-
                                     <li class="nav-item">
-                                        <a href="{{ url('product') }}" class="nav-link" data-key="t-master">
-                                            Tally Product
-                                        </a>
+                                        <a href="{{ url('product') }}" class="nav-link" data-key="t-master">Tally Product</a>
                                     </li>
-
-
                                     <li class="nav-item">
-                                        <a href="{{ url('role') }}" class="nav-link" data-key="t-master">
-                                            Staff Role
-                                        </a>
+                                        <a href="{{ url('role') }}" class="nav-link" data-key="t-master">Staff Role</a>
                                     </li>
-
                                     <li class="nav-item">
-                                        <a href="{{ url('user') }}" class="nav-link" data-key="t-master">
-                                            Exceutive
-                                        </a>
+                                        <a href="{{ url('user') }}" class="nav-link" data-key="t-master">Executive</a>
                                     </li>
-
                                     <li class="nav-item">
-                                        <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">
-                                            Industry
-                                        </a>
+                                        <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">Industry</a>
                                     </li>
-
-
                                     <li class="nav-item">
-                                        <a href="{{ url('location') }}" class="nav-link" data-key="t-master">
-                                            Area
-                                        </a>
+                                        <a href="{{ url('location') }}" class="nav-link" data-key="t-master">Area</a>
                                     </li>
-
                                     <li class="nav-item">
-                                        <a href="{{ url('nature-of-issue') }}" class="nav-link" data-key="t-master">
-                                            Nature Of Issue
+                                        <a href="{{ url('nature-of-issue') }}" class="nav-link" data-key="t-master">Nature Of Issue</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        @elseif(in_array(auth()->user()->role->name, ['Sales', 'Support']))
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#Master" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Master">
+                                <i class="mdi mdi-view-grid-plus-outline"></i> <span data-key="t-master">Master</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="Master">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link menu-link" accesskey="T" title="ALT+T" href="{{ url('/master/customers') }}">
+                                            <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-
+                        @endif
 
 
                         <li class="nav-item">
