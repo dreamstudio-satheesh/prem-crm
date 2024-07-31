@@ -42,10 +42,9 @@
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
                         <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
-                        <div class="input-group">
-                            <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
-                            <button type="button" class="btn btn-link" id="add-mobile-number">Add</button>
-                        </div>
+                        <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
+                      
+
                     </div>
 
 
@@ -322,12 +321,15 @@
                         mobilesContainer.empty(); // Clear existing content
 
                         if (data.mobile_no && data.mobile_no.length > 0) {
-                            var selectHtml = '<select class="form-control" name="contact_person_mobile">';
+                            var selectHtml = '<div class="input-group">' +
+                                '<select class="form-select" aria-label="Select mobile number">';
                             selectHtml += '<option value="">Select</option>';
                             data.mobile_no.forEach(function(mobileNumber) {
                                 selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
                             });
-                            selectHtml += '</select>';
+                            selectHtml += '</select>' +
+                                '<button  id="add-mobile-number" class="btn btn-outline-secondary shadow-none" type="button">Add</button>' +
+                                '</div>';
                             mobilesContainer.append(selectHtml);
                         } else {
                             mobilesContainer.append('<p>No mobile number available</p>');
