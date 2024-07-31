@@ -11,6 +11,7 @@ use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Master\LicenceMaster;
 use App\Livewire\Master\ProductMaster;
@@ -92,6 +93,18 @@ Route::post('/online-calls/keep-alive/{id}', 'OnlineCallController@keepAlive')
 Route::get('/test-logging', function () {
   Log::info('This is a test log entry.');
   return 'Log entry created.';
+});
+
+Route::get('/test-email', function () {
+  try {
+      Mail::raw('This is a test email.', function ($message) {
+          $message->to('satheesh@dreamstudio.in')
+                  ->subject('Test Email');
+      });
+      return 'Test email sent successfully.';
+  } catch (\Exception $e) {
+      return 'Error sending test email: ' . $e->getMessage();
+  }
 });
 
 

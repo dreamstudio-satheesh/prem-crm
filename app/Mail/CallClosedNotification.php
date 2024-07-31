@@ -42,7 +42,7 @@ class CallClosedNotification extends Mailable
      */
     protected function updateMailConfig()
     {
-        $settings = Setting::whereIn('key', [
+        /* $settings = Setting::whereIn('key', [
             'email.mail_host',
             'email.mail_port',
             'email.mail_encryption',
@@ -69,6 +69,6 @@ class CallClosedNotification extends Mailable
         config(['mail.from.address' => $settings['email.from_address']]);
         config(['mail.from.name' => $settings['email.from_name']]);
 
-        Log::info('Mail configuration updated: ', $config);
+        Log::info('Mail configuration updated: ', $config); */
     }
 }
