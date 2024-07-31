@@ -128,7 +128,7 @@ class OnlineCallController extends Controller
         if ($request->status_of_call == 'completed') {
             
             // Recipient email address
-            $recipientEmail = 'satheeshpdh@gmail.com'; // You can dynamically get this from your user model or call details
+            $recipientEmail = 'satheesh@dreamstudio.in'; // You can dynamically get this from your user model or call details
             // Log email sending process
             Log::info('Sending email to: ' . $recipientEmail);
             // Send the email immediately
