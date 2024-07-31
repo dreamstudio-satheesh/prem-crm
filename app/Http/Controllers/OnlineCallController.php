@@ -11,6 +11,7 @@ use App\Models\MobileNumber;
 use Illuminate\Http\Request;
 use App\Models\NatureOfIssue;
 use App\Models\ServiceCallLog;
+use Illuminate\Support\Facades\Log;
 use App\Mail\CallClosedNotification;
 use Illuminate\Support\Facades\Mail;
 
@@ -71,10 +72,11 @@ class OnlineCallController extends Controller
         ServiceCall::create($serviceCallData);
 
         if ($request->status_of_call == 'completed') {
-
+            
             // Recipient email address
             $recipientEmail = 'satheeshpdh@gmail.com'; // You can dynamically get this from your user model or call details
-
+            // Log email sending process
+            Log::info('Sending email to: ' . $recipientEmail);
             // Send the email immediately
             Mail::send(new CallClosedNotification($recipientEmail));
         }
