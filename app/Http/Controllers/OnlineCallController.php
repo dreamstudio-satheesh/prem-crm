@@ -71,6 +71,8 @@ class OnlineCallController extends Controller
 
         ServiceCall::create($serviceCallData);
 
+         Log::info('services call test ');
+
         if ($request->status_of_call == 'completed') {
             
             // Recipient email address
