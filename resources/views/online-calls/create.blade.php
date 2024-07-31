@@ -42,10 +42,10 @@
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
                         <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
-                        <div class="input-group">
-                            <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
-                            <button type="button" class="btn btn-link" id="add-mobile-number">Add</button>
-                        </div>
+
+                        <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
+                        <button type="button" class="btn btn-link" id="add-mobile-number">Add</button>
+
                     </div>
 
 
