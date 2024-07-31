@@ -139,7 +139,7 @@ Route::get('/test-email', function () {
   try {
       Mail::raw('This is a test email.', function ($message) {
           $message->to('satheesh@dreamstudio.in')
-                  ->subject('Test Email');
+                  ->subject('Test Emailfrom laravel dir');
       });
       return 'Test email sent successfully.';
   } catch (\Exception $e) {
