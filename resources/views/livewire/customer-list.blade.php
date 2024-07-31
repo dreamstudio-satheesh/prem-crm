@@ -12,12 +12,15 @@
                                 <i class="ri-filter-line align-bottom me-1"></i> {{ $showFilters ? 'Hide Filters' : 'Show Filters' }}
                             </button>
 
+                            @if(auth()->check() && auth()->user()->role && auth()->user()->role->name == 'Admin')
                             <a href="{{ route('customer_import.show') }}" class="btn btn-sm btn-info">
                                 <i class="ri-file-download-line align-bottom me-1"></i> Import
                             </a>
                             <button wire:click="export" class="btn btn-sm btn-success">
                                 <i class="ri-file-upload-line align-bottom me-1"></i> Export
                             </button>
+                            @endif
+                            
                             <a href="{{ route('customers.add') }}" accesskey="C" title="ALT+C" class="btn btn-sm btn-info">
                                 <i class="ri-file-add-line align-bottom me-1"></i> Add New
                             </a>
