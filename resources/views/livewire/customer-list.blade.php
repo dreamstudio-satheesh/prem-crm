@@ -131,8 +131,8 @@
                                     <th>Action</th>
                                     @if(auth()->check() &&  auth()->user()->role->name == 'Admin')
                                     <th>Edit</th>
-                                    @endif
                                     <th><i class="ri-delete-bin-line align-bottom me-1"></i></th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
