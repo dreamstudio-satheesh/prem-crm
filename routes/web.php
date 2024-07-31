@@ -9,6 +9,7 @@ use App\Livewire\OnsiteVisitList;
 use App\Livewire\CompletedCallList;
 use App\Livewire\Master\RoleMaster;
 use App\Livewire\Master\UserMaster;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Master\LicenceMaster;
@@ -87,6 +88,11 @@ Route::get('/customer-types', [OnsiteVisitController::class, 'getCustomerTypes']
 Route::post('/online-calls/keep-alive/{id}', 'OnlineCallController@keepAlive')
   ->middleware('auth')
   ->name('online-calls.reset-editing');
+
+Route::get('/test-logging', function () {
+  Log::info('This is a test log entry.');
+  return 'Log entry created.';
+});
 
 
 Route::get('/online-calls', OnlineCallList::class)->name('online-calls.index');
