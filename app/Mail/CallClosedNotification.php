@@ -5,14 +5,14 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
 
 class CallClosedNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $call;
-    public $recipientEmail;
+    protected $recipientEmail;
 
     /**
      * Create a new message instance.
@@ -30,6 +30,7 @@ class CallClosedNotification extends Mailable
      */
     public function build()
     {
+        Log::info('Building email for recipient: ' . $this->recipientEmail);
         return $this->from(config('mail.from.address'), config('mail.from.name'))
                     ->to($this->recipientEmail)
                     ->subject('Call Closed Notification - Prem Infotech')
@@ -67,5 +68,7 @@ class CallClosedNotification extends Mailable
         config(['mail.mailers.smtp' => $config]);
         config(['mail.from.address' => $settings['email.from_address']]);
         config(['mail.from.name' => $settings['email.from_name']]);
+
+        Log::info('Mail configuration updated: ', $config);
     }
 }
