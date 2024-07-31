@@ -71,18 +71,7 @@ class OnlineCallController extends Controller
 
         ServiceCall::create($serviceCallData);
 
-         Log::info('services call test ');
-
-        if ($request->status_of_call == 'completed') {
-            
-            // Recipient email address
-            $recipientEmail = 'satheeshpdh@gmail.com'; // You can dynamically get this from your user model or call details
-            // Log email sending process
-            Log::info('Sending email to: ' . $recipientEmail);
-            // Send the email immediately
-            Mail::send(new CallClosedNotification($recipientEmail));
-        }
-
+       
         if ($request->ajax()) {
             return response()->json(['success' => 'Online Call Created Successfully.']);
         }
@@ -133,6 +122,19 @@ class OnlineCallController extends Controller
         if (!$visit->customer->tally_serial_no && $request->has('tally_serial_no')) {
             $visit->customer->update(['tally_serial_no' => $request->tally_serial_no]);
         }
+
+        Log::info('services call test ');
+
+        if ($request->status_of_call == 'completed') {
+            
+            // Recipient email address
+            $recipientEmail = 'satheeshpdh@gmail.com'; // You can dynamically get this from your user model or call details
+            // Log email sending process
+            Log::info('Sending email to: ' . $recipientEmail);
+            // Send the email immediately
+            Mail::send(new CallClosedNotification($recipientEmail));
+        }
+
 
 
         ServiceCallLog::create([
