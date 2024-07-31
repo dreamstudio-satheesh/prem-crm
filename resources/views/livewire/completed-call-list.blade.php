@@ -34,11 +34,10 @@
                         </select>
                     </div>
                     <div class="col-xxl-3 col-sm-4">
-                    <input type="text" class="form-control bg-light border-light flatpickr-input" id="datepicker-range" placeholder="Select date" readonly="readonly">
-                        <input type="date" class="form-control form-control-sm" wire:model.lazy="startDate" placeholder="Start Date">
+                        <input type="text" class="form-control form-control-sm" id="startDate" wire:model="startDate" placeholder="Start Date">
                     </div>
                     <div class="col-xxl-3 col-sm-4">
-                        <input type="date" class="form-control form-control-sm" wire:model.lazy="endDate" placeholder="End Date">
+                        <input type="text" class="form-control form-control-sm" id="endDate" wire:model="endDate" placeholder="End Date">
                     </div>
                 </div>
             </form>
@@ -118,3 +117,29 @@
 
     </div>
 </div>
+
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('livewire:init', function() {
+        flatpickr("#startDate", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            onChange: function(selectedDates, dateStr, instance) {
+                Livewire.emit('dateSelected', 'startDate', dateStr);
+            }
+        });
+        flatpickr("#endDate", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            onChange: function(selectedDates, dateStr, instance) {
+                Livewire.emit('dateSelected', 'endDate', dateStr);
+            }
+        });
+    });
+</script>
+@endpush
