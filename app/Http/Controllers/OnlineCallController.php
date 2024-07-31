@@ -130,8 +130,6 @@ class OnlineCallController extends Controller
             $customer = Customer::find($request->customer_id);
             $emails = $customer->AddressBooks->pluck('email')->filter();
 
-            return  $emails;
-
             // Log email sending process
             foreach ($emails as $email) {
                 Log::info('Sending email to: ' . $email);
