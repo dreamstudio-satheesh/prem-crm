@@ -33,6 +33,12 @@
                             <option value="online_call">Online Call</option>
                         </select>
                     </div>
+                    <div class="col-xxl-4 col-sm-6">
+                        <input type="date" class="form-control form-control-sm" wire:model="startDate" placeholder="Start Date">
+                    </div>
+                    <div class="col-xxl-4 col-sm-6">
+                        <input type="date" class="form-control form-control-sm" wire:model="endDate" placeholder="End Date">
+                    </div>
                 </div>
             </form>
         </div>

@@ -43,6 +43,15 @@ class CompletedCallList extends Component
             });
         }
 
+        // Date filtering
+        if ($this->startDate && $this->endDate) {
+            $query->whereBetween('call_booking_time', [$this->startDate, $this->endDate]);
+        } elseif ($this->startDate) {
+            $query->whereDate('call_booking_time', '>=', $this->startDate);
+        } elseif ($this->endDate) {
+            $query->whereDate('call_booking_time', '<=', $this->endDate);
+        }
+
         $onsiteVisits = $query->paginate(10);
 
         return view('livewire.completed-call-list', ['onsiteVisits' => $onsiteVisits]);
