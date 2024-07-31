@@ -13,14 +13,15 @@ class UserMaster extends Component
     use WithPagination;
 
     public $user_id;
-    public $name, $email, $role_id, $password, $password_confirmation;
+    public $name, $username, $email, $role_id, $password, $password_confirmation;
     public $search = '';
 
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email',
+        'name' => 'nullable|string|max:255',
+        'username' => 'required|string|max:255',
+        'email' => 'nullable|email|max:255',
         'role_id' => 'required|exists:roles,id',
         'password' => 'required|string|min:8|confirmed',
     ];
@@ -43,8 +44,9 @@ class UserMaster extends Component
     {
         $this->user_id = null;
         $this->name = '';
+        $this->username = '';
         $this->email = '';
-        $this->role = '';
+        $this->role_id = '';
         $this->password = '';
         $this->password_confirmation = '';
     }
@@ -55,6 +57,7 @@ class UserMaster extends Component
 
         $data = [
             'name' => $this->name,
+            'username' => $this->username,
             'email' => $this->email,
             'role_id' => $this->role_id,
             'password' => Hash::make($this->password),
@@ -71,6 +74,7 @@ class UserMaster extends Component
         $user = User::findOrFail($id);
         $this->user_id = $user->id;
         $this->name = $user->name;
+        $this->username = $user->username;
         $this->email = $user->email;
         $this->role_id = $user->role_id;
     }

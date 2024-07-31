@@ -21,6 +21,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name</th>
+                                    <th>User Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Actions</th>
@@ -31,6 +32,7 @@
                                 <tr>
                                     <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
+                                    <td>{{ $user->username }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->roles->name }}</td>
                                     <td>
@@ -65,14 +67,14 @@
                 <div class="card-body" style="padding-top: 10px">
                     <form wire:submit.prevent="store">
                         <div class="form-group">
-                            <label for="name">Name*</label>
+                            <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" autofocus placeholder="Enter user name" wire:model="name">
                             @error('name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="email">Email*</label>
+                            <label for="email">Email</label>
                             <input type="email" class="form-control" placeholder="Enter email" wire:model="email">
                             @error('email')
                             <span class="text-danger">{{ $message }}</span>
@@ -87,6 +89,14 @@
                                 @endforeach
                             </select>
                             @error('role_id')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">User Name*</label>
+                            <input type="text" class="form-control" id="username" autofocus placeholder="Enter user username" wire:model="username">
+                            @error('username')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
