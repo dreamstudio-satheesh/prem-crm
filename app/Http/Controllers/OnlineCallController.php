@@ -123,16 +123,18 @@ class OnlineCallController extends Controller
             $visit->customer->update(['tally_serial_no' => $request->tally_serial_no]);
         }
 
-        Log::info('services call test ');
+   
 
         if ($request->status_of_call == 'completed') {
-            
-            // Recipient email address
-            $recipientEmail = 'satheesh@dreamstudio.in'; // You can dynamically get this from your user model or call details
+            // Get all email addresses for the current customer
+            $customer = Customer::find($request->customer_id);
+            $emails = $customer->addressBooks->pluck('email')->filter();
+
             // Log email sending process
-            Log::info('Sending email to: ' . $recipientEmail);
-            // Send the email immediately
-            Mail::send(new CallClosedNotification($recipientEmail));
+            foreach ($emails as $email) {
+                Log::info('Sending email to: ' . $email);
+                Mail::to($email)->send(new CallClosedNotification($email));
+            }
         }
 
 
