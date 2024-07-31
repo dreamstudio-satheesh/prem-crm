@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nature_of_issue_id');
             $table->decimal('service_charges', 8, 2)->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
-            $table->unsignedBigInteger('careated_by')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamp('last_activity_time')->nullable();
             $table->timestamps();

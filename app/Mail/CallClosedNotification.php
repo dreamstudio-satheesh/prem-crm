@@ -3,51 +3,69 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Setting;
 
 class CallClosedNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $call;
+    public $recipientEmail;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($recipientEmail)
     {
-        //
+        $this->recipientEmail = $recipientEmail;
+
+        // Update mail configuration dynamically
+        $this->updateMailConfig();
     }
 
     /**
-     * Get the message envelope.
+     * Build the message.
      */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Call Closed Notification',
-        );
+        return $this->from(config('mail.from.address'), config('mail.from.name'))
+                    ->to($this->recipientEmail)
+                    ->subject('Call Closed Notification - Prem Infotech')
+                    ->view('emails.call_closed_notification');
     }
 
     /**
-     * Get the message content definition.
+     * Update mail configuration from database settings.
      */
-    public function content(): Content
+    protected function updateMailConfig()
     {
-        return new Content(
-            view: 'view.name',
-        );
-    }
+        $settings = Setting::whereIn('key', [
+            'email.mail_host',
+            'email.mail_port',
+            'email.mail_encryption',
+            'email.mail_username',
+            'email.mail_password',
+            'email.from_address',
+            'email.from_name'
+        ])->pluck('value', 'key');
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        $config = [
+            'driver'     => 'smtp',
+            'host'       => $settings['email.mail_host'],
+            'port'       => $settings['email.mail_port'],
+            'encryption' => $settings['email.mail_encryption'],
+            'username'   => $settings['email.mail_username'],
+            'password'   => $settings['email.mail_password'],
+            'from'       => [
+                'address' => $settings['email.from_address'],
+                'name'    => $settings['email.from_name']
+            ],
+        ];
+
+        config(['mail.mailers.smtp' => $config]);
+        config(['mail.from.address' => $settings['email.from_address']]);
+        config(['mail.from.name' => $settings['email.from_name']]);
     }
 }

@@ -131,7 +131,7 @@ class OnsiteVisitController extends Controller
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
             'staff_id' => $request->staff_id,
-            'careated_by' => auth()->id(),
+            'created_by' => auth()->id(),
             'call_booking_time' => $bookingTime,
             'status_of_call' => $request->status_of_call,
             'nature_of_issue_id' => $request->nature_of_issue_id,

@@ -11,6 +11,8 @@ use App\Models\MobileNumber;
 use Illuminate\Http\Request;
 use App\Models\NatureOfIssue;
 use App\Models\ServiceCallLog;
+use App\Mail\CallClosedNotification;
+use Illuminate\Support\Facades\Mail;
 
 class OnlineCallController extends Controller
 {
@@ -40,12 +42,12 @@ class OnlineCallController extends Controller
         ]);
         $currentDate = Carbon::now()->toDateString();
         $bookingTime = Carbon::createFromFormat('Y-m-d h:i:s A', $currentDate . ' ' . $request->call_booking_time)->format('Y-m-d H:i:s');
-       
+
         $mobileNumber = MobileNumber::firstOrCreate(
             ['mobile_no' => $request->contact_person_mobile],
-            ['address_id' => $request->contact_person_id ] // Add additional fields as necessary
+            ['address_id' => $request->contact_person_id] // Add additional fields as necessary
         );
-    
+
         $serviceCallData = [
             'customer_id' => $request->customer_id,
             'contact_person_id' => $request->contact_person_id,
@@ -53,7 +55,7 @@ class OnlineCallController extends Controller
             'type_of_call' => $request->type_of_call,
             'call_type' => $request->call_type,
             'staff_id' => $request->staff_id,
-            'careated_by' => auth()->id(),
+            'created_by' => auth()->id(),
             'call_booking_time' => $bookingTime,
             'status_of_call' => $request->status_of_call,
             'nature_of_issue_id' => $request->nature_of_issue_id,
@@ -67,6 +69,15 @@ class OnlineCallController extends Controller
         }
 
         ServiceCall::create($serviceCallData);
+
+        if ($request->status_of_call == 'completed') {
+
+            // Recipient email address
+            $recipientEmail = 'satheeshpdh@gmail.com'; // You can dynamically get this from your user model or call details
+
+            // Send the email immediately
+            Mail::send(new CallClosedNotification($recipientEmail));
+        }
 
         if ($request->ajax()) {
             return response()->json(['success' => 'Online Call Created Successfully.']);
@@ -143,6 +154,4 @@ class OnlineCallController extends Controller
         $visit->last_active_time = now();
         $visit->save();
     }
-
-
 }

@@ -22,7 +22,7 @@ class ServiceCall extends Model
         'nature_of_issue_id',
         'service_charges',
         'staff_id',
-        'careated_by',
+        'created_by',
         'last_active_time',
         'remarks',
     ];
