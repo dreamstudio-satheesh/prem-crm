@@ -41,10 +41,9 @@
 
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
-                        <div class="input-group">
-                        <span id="contact_person_mobiles"></span> <!-- Container for appending AJAX fetched mobile numbers -->
-                        <span id="additional-mobile-numbers"></span> <!-- Separate container for dynamically added mobile numbers -->
-                        <button id="add-mobile-number" class="btn btn-sm btn-outline-secondary shadow-none" type="button">Add</button>
+                        <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
+                        <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
+                        <button id="add-mobile-number" class="btn btn-outline-secondary shadow-none" type="button">Add</button>
                     </div>
 
                 </div>
@@ -323,15 +322,15 @@
                         mobilesContainer.empty(); // Clear existing content
 
                         if (data.mobile_no && data.mobile_no.length > 0) {
-                            var selectHtml = '<select class="form-select" aria-label="Select mobile number">';
-                            selectHtml += '<option value="">Select</option>';
+                            var selectHtml = '<select class="form-control" name="contact_person_mobile">';
+                            selectHtml += '<option value="">Select Mobile Number</option>';
                             data.mobile_no.forEach(function(mobileNumber) {
                                 selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
                             });
                             selectHtml += '</select>';
                             mobilesContainer.append(selectHtml);
                         } else {
-                            mobilesContainer.append('<p>No mobile number available</p>');
+                            mobilesContainer.append('<input type="text" class="form-control mt-2" value="No mobile number available" readonly>');
                         }
                         $('#contact-person-mobile-wrapper').show();
 
