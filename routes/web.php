@@ -100,9 +100,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 Route::get('/test-email-phpmailer', function () {
-    require 'vendor/autoload.php';
-
+  
     $mail = new PHPMailer(true);
+
 
     try {
         // Server settings
