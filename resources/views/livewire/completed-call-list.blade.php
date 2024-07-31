@@ -125,23 +125,25 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-   document.addEventListener('livewire:init', () => {
-    console.log('hello');
-    function initFlatpickr(elementId) {
-        flatpickr(elementId, {
+    document.addEventListener('livewire:init', function () {
+        initFlatpickr();
+
+        Livewire.hook('element.updated', function (el, component) {
+            if ($(el).hasClass('date-input')) {
+                initFlatpickr();  // Reinitialize to ensure Flatpickr binds correctly
+            }
+        });
+    });
+
+    function initFlatpickr() {
+        $(".date-input").flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            onChange: (selectedDates, dateStr) => {
-                Livewire.emit('dateSelected', elementId.replace('#', ''), dateStr);
+            onChange: function(selectedDates, dateStr, instance) {
+                let id = instance.input.id;
+                Livewire.emit('dateSelected', id, dateStr);
             }
         });
     }
-
-    Livewire.hook('element.initialized', (el, component) => {
-        if (el.id === 'startDate' || el.id === 'endDate') {
-            initFlatpickr(`#${el.id}`);
-        }
-    });
-});
 </script>
 @endpush
