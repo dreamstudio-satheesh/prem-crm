@@ -271,9 +271,10 @@
 
         // Handle adding more mobile number fields dynamically
         $('#add-mobile-number').on('click', function() {
-            $('#additional-mobile-numbers').append(
-                '<input type="text" class="form-control mt-2" name="contact_person_mobile[]" placeholder="Enter mobile number" required>'
-            );
+            var additionalMobileNumbers = $('#additional-mobile-numbers');
+            if (additionalMobileNumbers.find('input').length === 0) { // Check if an input already exists
+                additionalMobileNumbers.append('<input type="text" class="form-control mt-2" name="contact_person_mobile" placeholder="Enter mobile number" required>');
+            }
         });
 
 
