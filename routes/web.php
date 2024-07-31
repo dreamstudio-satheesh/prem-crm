@@ -134,3 +134,14 @@ Route::get('/send-email', function (PHPMailerService $mailer) {
 
     return $result;
 });
+
+
+Route::get('/test-env', function () {
+  dd([
+      'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+      'MAIL_FROM_NAME' => env('MAIL_FROM_NAME'),
+      'MAIL_USERNAME' => env('MAIL_USERNAME'),
+      'MAIL_PASSWORD' => env('MAIL_PASSWORD'),
+      'MAIL_HOST' => env('MAIL_HOST'),
+  ]);
+});
