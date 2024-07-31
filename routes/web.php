@@ -99,22 +99,23 @@ Route::get('/test-logging', function () {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+
 Route::get('/test-email-phpmailer', function () {
     $mail = new PHPMailer(true);
 
     try {
-        //Server settings
+        // Server settings
         $mail->SMTPDebug = 2; // Enable verbose debug output
         $mail->isSMTP(); // Set mailer to use SMTP
-        $mail->Host = config('mail.mailers.smtp.host'); // Specify main and backup SMTP servers
+        $mail->Host = env('MAIL_HOST'); // Specify main and backup SMTP servers
         $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = config('mail.mailers.smtp.username'); // SMTP username
-        $mail->Password = config('mail.mailers.smtp.password'); // SMTP password
-        $mail->SMTPSecure = config('mail.mailers.smtp.encryption'); // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = config('mail.mailers.smtp.port'); // TCP port to connect to
+        $mail->Username = env('MAIL_USERNAME'); // SMTP username
+        $mail->Password = env('MAIL_PASSWORD'); // SMTP password
+        $mail->SMTPSecure = env('MAIL_ENCRYPTION'); // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = env('MAIL_PORT'); // TCP port to connect to
 
-        //Recipients
-        $mail->setFrom(config('mail.from.address'), config('mail.from.name'));
+        // Recipients
+        $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         $mail->addAddress('satheesh@dreamstudio.in', 'Satheesh'); // Add a recipient
 
         // Content
