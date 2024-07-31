@@ -44,7 +44,7 @@
                         <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
                         <div class="input-group">
                             <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
-                            <button type="button" class="btn btn-link" id="add-mobile-number">Add</button>
+                            <button type="button" class="btn btn-link">Add</button>
                         </div>
                     </div>
 
@@ -329,7 +329,7 @@
                                 selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
                             });
                             selectHtml += '</select>' +
-                                '<button class="btn btn-outline-secondary shadow-none" type="button">Button</button>' +
+                                '<button  id="add-mobile-number" class="btn btn-outline-secondary shadow-none" type="button">Add</button>' +
                                 '</div>';
                             mobilesContainer.append(selectHtml);
                         } else {
