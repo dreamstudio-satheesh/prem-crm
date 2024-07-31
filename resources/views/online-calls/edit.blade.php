@@ -193,9 +193,13 @@
                     var mobilesContainer = $('#contact_person_mobiles');
                     mobilesContainer.empty(); // Clear existing content
                     if (data.mobile_no && data.mobile_no.length > 0) {
+                        var selectHtml = '<select class="form-control" name="contact_person_mobile">';
+                        selectHtml += '<option value="">Select Mobile Number</option>';
                         data.mobile_no.forEach(function(mobileNumber) {
-                            mobilesContainer.append(`<input type="text" class="form-control mt-2" value="${mobileNumber}" readonly>`);
+                            selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
                         });
+                        selectHtml += '</select>';
+                        mobilesContainer.append(selectHtml);
                     } else {
                         mobilesContainer.append('<input type="text" class="form-control mt-2" value="No mobile number available" readonly>');
                     }
@@ -205,6 +209,7 @@
                 }
             });
         }
+
 
         // Load contact person mobiles on page load if a contact person is selected
         var initialContactPersonId = $('#contact_person_id').val();
