@@ -99,36 +99,39 @@ Route::get('/test-logging', function () {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
 Route::get('/test-email-phpmailer', function () {
-    $mail = new PHPMailer(true);
+  $mail = new PHPMailer(true);
 
-    try {
-        // Server settings
-        $mail->SMTPDebug = 2; // Enable verbose debug output
-        $mail->isSMTP(); // Set mailer to use SMTP
-        $mail->Host = env('MAIL_HOST'); // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = env('MAIL_USERNAME'); // SMTP username
-        $mail->Password = env('MAIL_PASSWORD'); // SMTP password
-        $mail->SMTPSecure = env('MAIL_ENCRYPTION'); // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = env('MAIL_PORT'); // TCP port to connect to
+  try {
+      // Server settings
+      $mail->SMTPDebug = 2; // Enable verbose debug output
+      $mail->isSMTP(); // Set mailer to use SMTP
+      $mail->Host = env('MAIL_HOST'); // Specify main and backup SMTP servers
+      $mail->SMTPAuth = true; // Enable SMTP authentication
+      $mail->Username = env('MAIL_USERNAME'); // SMTP username
+      $mail->Password = env('MAIL_PASSWORD'); // SMTP password
+      $mail->SMTPSecure = env('MAIL_ENCRYPTION'); // Enable TLS encryption, `ssl` also accepted
+      $mail->Port = env('MAIL_PORT'); // TCP port to connect to
 
-        // Recipients
-        $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-        $mail->addAddress('satheesh@dreamstudio.in', 'Satheesh'); // Add a recipient
+      // Alternatively, try using SSL on port 465 if TLS on 587 doesn't work
+      // $mail->SMTPSecure = 'ssl';
+      // $mail->Port = 465;
 
-        // Content
-        $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = 'Test Email';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+      // Recipients
+      $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+      $mail->addAddress('satheesh@dreamstudio.in', 'Satheesh'); // Add a recipient
 
-        $mail->send();
-        echo 'Message has been sent';
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
+      // Content
+      $mail->isHTML(true); // Set email format to HTML
+      $mail->Subject = 'Test Email';
+      $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+      $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+      $mail->send();
+      echo 'Message has been sent';
+  } catch (Exception $e) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
 });
 
 
