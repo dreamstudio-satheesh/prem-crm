@@ -34,6 +34,7 @@
                         </select>
                     </div>
                     <div class="col-xxl-3 col-sm-4">
+                    <input type="text" class="form-control bg-light border-light flatpickr-input" id="datepicker-range" placeholder="Select date" readonly="readonly">
                         <input type="date" class="form-control form-control-sm" wire:model.lazy="startDate" placeholder="Start Date">
                     </div>
                     <div class="col-xxl-3 col-sm-4">
