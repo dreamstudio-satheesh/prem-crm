@@ -100,38 +100,40 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 Route::get('/test-email-phpmailer', function () {
-  $mail = new PHPMailer(true);
+    require 'vendor/autoload.php';
 
-  try {
-      // Server settings
-      $mail->SMTPDebug = 2; // Enable verbose debug output
-      $mail->isSMTP(); // Set mailer to use SMTP
-      $mail->Host = env('MAIL_HOST'); // Specify main and backup SMTP servers
-      $mail->SMTPAuth = true; // Enable SMTP authentication
-      $mail->Username = env('MAIL_USERNAME'); // SMTP username
-      $mail->Password = env('MAIL_PASSWORD'); // SMTP password
-      $mail->SMTPSecure = env('MAIL_ENCRYPTION'); // Enable TLS encryption, `ssl` also accepted
-      $mail->Port = env('MAIL_PORT'); // TCP port to connect to
+    $mail = new PHPMailer(true);
 
-      // Alternatively, try using SSL on port 465 if TLS on 587 doesn't work
-      // $mail->SMTPSecure = 'ssl';
-      // $mail->Port = 465;
+    try {
+        // Server settings
+        $mail->SMTPDebug = 2; // Enable verbose debug output
+        $mail->isSMTP(); // Set mailer to use SMTP
+        $mail->Host = 'mail.dreamcoderz.com'; // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true; // Enable SMTP authentication
+        $mail->Username = 'info@dreamcoderz.com'; // SMTP username
+        $mail->Password = 'ahQntr6waaS3Wem'; // SMTP password
+        $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587; // TCP port to connect to
 
-      // Recipients
-      $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-      $mail->addAddress('satheesh@dreamstudio.in', 'Satheesh'); // Add a recipient
+        // Alternatively, try using SSL on port 465 if TLS on 587 doesn't work
+        // $mail->SMTPSecure = 'ssl';
+        // $mail->Port = 465;
 
-      // Content
-      $mail->isHTML(true); // Set email format to HTML
-      $mail->Subject = 'Test Email from laravel';
-      $mail->Body    = 'This is the HTML message from laravel <b>in bold!</b>';
-      $mail->AltBody = 'This is the message from laravel';
+        // Recipients
+        $mail->setFrom('info@dreamcoderz.com', 'dreamcoderz');
+        $mail->addAddress('satheesh@dreamstudio.in', 'Satheesh'); // Add a recipient
 
-      $mail->send();
-      echo 'Message has been sent';
-  } catch (Exception $e) {
-      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-  }
+        // Content
+        $mail->isHTML(true); // Set email format to HTML
+        $mail->Subject = 'Test Email from PHPMailer Laravel';
+        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+        echo 'Message has been sent';
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
 });
 
 
