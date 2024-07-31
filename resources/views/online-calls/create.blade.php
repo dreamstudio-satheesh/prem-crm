@@ -42,171 +42,171 @@
                     <div class="col-md-4 mb-3" id="contact-person-mobile-wrapper" style="display: none;">
                         <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
                         <div id="contact_person_mobiles"></div> <!-- Container for appending AJAX fetched mobile numbers -->
-                        <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
-                        <button id="add-mobile-number" class="btn btn-outline-secondary shadow-none" type="button">Add</button>
+                        <div class="input-group">
+                            <div id="additional-mobile-numbers"></div> <!-- Separate container for dynamically added mobile numbers -->
+                            <button type="button" class="btn btn-link" id="add-mobile-number">Add</button>
+                        </div>
                     </div>
 
-                </div>
 
+                    <div class="col-md-4 mb-3" id="type-of-call-wrapper" style="display: none;">
+                        <label for="type_of_call" class="form-label">Type Of Call</label>
+                        <select id="type_of_call" name="type_of_call" class="form-control">
+                            <option value="AMC Call">AMC Call</option>
+                            <option selected value="PER Call">PER Call</option>
+                            <option value="FREE Call">FREE Call</option>
+                        </select>
+                        @error('type_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
-                <div class="col-md-4 mb-3" id="type-of-call-wrapper" style="display: none;">
-                    <label for="type_of_call" class="form-label">Type Of Call</label>
-                    <select id="type_of_call" name="type_of_call" class="form-control">
-                        <option value="AMC Call">AMC Call</option>
-                        <option selected value="PER Call">PER Call</option>
-                        <option value="FREE Call">FREE Call</option>
-                    </select>
-                    @error('type_of_call') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="call_booking_time" class="form-label">Call Booking Time</label>
+                        <input type="text" id="call_booking_time" name="call_booking_time" class="form-control timepicker" readonly>
+                        @error('call_booking_time') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="call_booking_time" class="form-label">Call Booking Time</label>
-                    <input type="text" id="call_booking_time" name="call_booking_time" class="form-control timepicker" readonly>
-                    @error('call_booking_time') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="status_of_call" class="form-label">Status of the Call</label>
+                        <select id="status_of_call" name="status_of_call" class="form-control">
+                            <option value="">Select Status</option>
+                            <option selected value="pending">Pending</option>
+                            <!--  <option value="on_process">On Process</option> -->
+                            <option value="follow_up">Follow Up</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
 
-                <div class="col-md-4 mb-3">
-                    <label for="status_of_call" class="form-label">Status of the Call</label>
-                    <select id="status_of_call" name="status_of_call" class="form-control">
-                        <option value="">Select Status</option>
-                        <option selected value="pending">Pending</option>
-                        <!--  <option value="on_process">On Process</option> -->
-                        <option value="follow_up">Follow Up</option>
-                        <option value="completed">Completed</option>
-                    </select>
-                    @error('status_of_call') <span class="text-danger">{{ $message }}</span> @enderror
+                        <input type="hidden" name="call_type" id="call_type" value="online_call"> <!-- Hidden input -->
+                    </div>
 
-                    <input type="hidden" name="call_type" id="call_type" value="online_call"> <!-- Hidden input -->
-                </div>
-
-                <div class="col-md-4 mb-3" id="follow-up-date-wrapper" style="display: none;">
-                    <label for="follow_up_date" class="form-label">Follow Up Date</label>
-                    <input type="date" id="follow_up_date" name="follow_up_date" class="form-control">
-                </div>
+                    <div class="col-md-4 mb-3" id="follow-up-date-wrapper" style="display: none;">
+                        <label for="follow_up_date" class="form-label">Follow Up Date</label>
+                        <input type="date" id="follow_up_date" name="follow_up_date" class="form-control">
+                    </div>
 
 
 
-                <div class="col-md-4 mb-3">
-                    <label for="staff_id" class="form-label">Executive (Assign To)</label>
-                    <select id="staff_id" name="staff_id" class="form-control select2">
-                        @foreach($users as $user)
-                        <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="staff_id" class="form-label">Executive (Assign To)</label>
+                        <select id="staff_id" name="staff_id" class="form-control select2">
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $user->id == $staffId ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
-                    <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
-                        <option value="">Select Nature of Issue</option>
-                        @foreach($issues as $issue)
-                        <option value="{{ $issue->id }}">{{ $issue->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="nature_of_issue_id" class="form-label">Nature of Issue</label>
+                        <select id="nature_of_issue_id" name="nature_of_issue_id" class="form-control select2" tabindex="6">
+                            <option value="">Select Nature of Issue</option>
+                            @foreach($issues as $issue)
+                            <option value="{{ $issue->id }}">{{ $issue->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('nature_of_issue_id') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="service_charges" class="form-label">Service Charges</label>
-                    <input type="number" id="service_charges" name="service_charges" class="form-control">
-                    @error('service_charges') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="service_charges" class="form-label">Service Charges</label>
+                        <input type="number" id="service_charges" name="service_charges" class="form-control">
+                        @error('service_charges') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
 
 
 
-                <div class="col-md-4 mb-3">
-                    <label for="remarks" class="form-label">Remarks</label>
-                    <textarea id="remarks" name="remarks" class="form-control"></textarea>
-                    @error('remarks') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="remarks" class="form-label">Remarks</label>
+                        <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        @error('remarks') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
 
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Create Online Calls</button>
-                </div>
-        </div>
-        </form>
-    </div>
-</div>
-
-<!-- Modal for Adding New Customer -->
-<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="addCustomerForm">
-                @csrf
-                <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-xxl-12">
-                            <div>
-                                <label for="customer_name" class="form-label">Customer Name</label>
-                                <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter customer name" required>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-xxl-12">
-                            <div>
-                                <label for="tally_serial_no" class="form-label">Tally Serial No</label>
-                                <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number">
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Customer</button>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Create Online Calls</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
-</div>
 
-<!-- Modal for Adding New Contact Person -->
-<div class="modal fade" id="addContactPersonModal" tabindex="-1" aria-labelledby="addContactPersonModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addContactPersonModalLabel">Add New Contact Person</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal for Adding New Customer -->
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addCustomerForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="customer_name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter customer name" required>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="tally_serial_no" class="form-label">Tally Serial No</label>
+                                    <input type="text" class="form-control" id="tally_serial_no" name="tally_serial_no" placeholder="Enter tally serial number">
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Customer</button>
+                    </div>
+                </form>
             </div>
-            <form id="addContactPersonForm">
-                @csrf
-                <input type="hidden" id="modal_customer_id" name="customer_id">
-                <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-xxl-12">
-                            <label for="customer_type_id" class="form-label">Customer Type</label>
-                            <select id="customer_type_id" name="customer_type_id" class="form-control">
-
-                            </select>
-                        </div>
-                        <div class="col-xxl-12">
-                            <div>
-                                <label for="contact_person" class="form-label">Contact Person Name</label>
-                                <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Enter contact person name" required>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-xxl-12">
-                            <div>
-                                <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
-                                <input type="text" class="form-control" id="contact_person_mobile" name="contact_person_mobile[]" placeholder="Enter mobile number" required>
-
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Contact Person</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
+
+    <!-- Modal for Adding New Contact Person -->
+    <div class="modal fade" id="addContactPersonModal" tabindex="-1" aria-labelledby="addContactPersonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactPersonModalLabel">Add New Contact Person</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addContactPersonForm">
+                    @csrf
+                    <input type="hidden" id="modal_customer_id" name="customer_id">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-12">
+                                <label for="customer_type_id" class="form-label">Customer Type</label>
+                                <select id="customer_type_id" name="customer_type_id" class="form-control">
+
+                                </select>
+                            </div>
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="contact_person" class="form-label">Contact Person Name</label>
+                                    <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Enter contact person name" required>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="contact_person_mobile" class="form-label">Contact Person Mobile</label>
+                                    <input type="text" class="form-control" id="contact_person_mobile" name="contact_person_mobile[]" placeholder="Enter mobile number" required>
+
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Contact Person</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 </div>
@@ -322,15 +322,18 @@
                         mobilesContainer.empty(); // Clear existing content
 
                         if (data.mobile_no && data.mobile_no.length > 0) {
-                            var selectHtml = '<select class="form-control" name="contact_person_mobile">';
-                            selectHtml += '<option value="">Select Mobile Number</option>';
+                            var selectHtml = '<div class="input-group">' +
+                                '<select class="form-select" aria-label="Select mobile number">';
+                            selectHtml += '<option value="">Select</option>';
                             data.mobile_no.forEach(function(mobileNumber) {
                                 selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
                             });
-                            selectHtml += '</select>';
+                            selectHtml += '</select>' +
+                                '<button class="btn btn-outline-secondary shadow-none" type="button">Button</button>' +
+                                '</div>';
                             mobilesContainer.append(selectHtml);
                         } else {
-                            mobilesContainer.append('<input type="text" class="form-control mt-2" value="No mobile number available" readonly>');
+                            mobilesContainer.append('<p>No mobile number available</p>');
                         }
                         $('#contact-person-mobile-wrapper').show();
 
