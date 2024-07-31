@@ -332,7 +332,7 @@
                         mobilesContainer.empty(); // Clear existing content
 
                         if (data.mobile_no && data.mobile_no.length > 0) {
-                            var selectHtml = '<select class="form-select" aria-label="Select mobile number">';
+                            var selectHtml = '<select name="contact_person_mobile" class="form-select" aria-label="Select mobile number">';
                             selectHtml += '<option value="">Select</option>';
                             data.mobile_no.forEach(function(mobileNumber) {
                                 selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
