@@ -33,20 +33,14 @@
                             <option value="online_call">Online Call</option>
                         </select>
                     </div>
-                    <div class="col-xxl-3 col-sm-4">
-                        <div x-data="{ open: false, date: @entangle('date') }">
-                            <input type="text" readonly x-model="date" @click="open = !open" class="form-control" />
-                            <div x-show="open" @click.away="open = false">
-                                <div class="date-picker">
-                                    <!-- Custom date picker or use a library that works with Alpine.js -->
-                                </div>
-                            </div>
-                        </div>
 
+                    <div class="col-xxl-3 col-sm-4">
+                        <input type="date" class="form-control form-control-sm" wire:model="startDate" placeholder="Start Date">
                     </div>
                     <div class="col-xxl-3 col-sm-4">
-                        <input type="text" class="form-control form-control-sm" id="endDate" wire:model="endDate" placeholder="End Date">
+                        <input type="date" class="form-control form-control-sm" wire:model="endDate" placeholder="End Date">
                     </div>
+
                 </div>
             </form>
         </div>
