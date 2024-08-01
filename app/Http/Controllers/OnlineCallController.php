@@ -71,7 +71,7 @@ class OnlineCallController extends Controller
 
         ServiceCall::create($serviceCallData);
 
-       
+
         if ($request->ajax()) {
             return response()->json(['success' => 'Online Call Created Successfully.']);
         }
@@ -89,7 +89,11 @@ class OnlineCallController extends Controller
         $users = User::all();
         $contactPersons = AddressBook::where('customer_id', $visit->customer_id)->get();
 
-        return view('online-calls.edit', compact('visit',  'issues', 'users', 'contactPersons', 'callDetails'));
+        // Fetch the mobile number from the MobileNumber model using the contact_person_mobile_id
+        $contactPersonMobile = MobileNumber::where('id', $visit->contact_person_mobile_id)->value('mobile_no');
+
+
+        return view('online-calls.edit', compact('visit',  'issues', 'users', 'contactPersons', 'callDetails','contactPersonMobile'));
     }
 
     public function update(Request $request, $id)
@@ -123,7 +127,7 @@ class OnlineCallController extends Controller
             $visit->customer->update(['tally_serial_no' => $request->tally_serial_no]);
         }
 
-   
+
 
         if ($request->status_of_call == 'completed') {
             // Get all email addresses for the current customer

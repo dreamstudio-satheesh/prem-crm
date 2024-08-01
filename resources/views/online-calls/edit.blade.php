@@ -196,7 +196,7 @@
                         var selectHtml = '<select class="form-control" name="contact_person_mobile">';
                         selectHtml += '<option value="">Select Mobile Number</option>';
                         data.mobile_no.forEach(function(mobileNumber) {
-                            selectHtml += `<option value="${mobileNumber}">${mobileNumber}</option>`;
+                            selectHtml += `<option value="${mobileNumber}" ${mobileNumber === '{{ $contactPersonMobile }}' ? 'selected' : ''}>${mobileNumber}</option>`;
                         });
                         selectHtml += '</select>';
                         mobilesContainer.append(selectHtml);
@@ -209,6 +209,13 @@
                 }
             });
         }
+
+        // Load contact person mobiles on page load if a contact person is selected
+        var initialContactPersonId = $('#contact_person_id').val();
+        if (initialContactPersonId) {
+            loadContactPersonMobiles(initialContactPersonId);
+        }
+
 
 
         // Load contact person mobiles on page load if a contact person is selected
