@@ -35,7 +35,7 @@ class CompletedCallList extends Component
     public function render()
     {
         $query = ServiceCall::whereIn('status_of_call', ['cancelled', 'completed'])
-            ->with(['customer', 'contactPerson.mobileNumbers', 'serviceCallLogs']);
+            ->with(['customer', 'contactPerson','contactPersonMobile', 'serviceCallLogs']);
 
         if ($this->callType) {
             $query->where('call_type', $this->callType); // Corrected column name

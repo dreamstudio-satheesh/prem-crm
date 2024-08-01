@@ -88,7 +88,7 @@
                             <td>{{ $visit->customer->customer_name }}</td>
                             <td>{{ $visit->customer->tally_serial_no }}</td>
                             <td>{{ $visit->contactPerson->contact_person }}</td>
-                            <td>{!! implode('<br>', $visit->contactPerson->mobileNumbers->pluck('mobile_no')->toArray()) !!}</td>
+                            <td>{{ $visit->contactPersonMobile->mobile_no }}</td>
                             <td>{{ $visit->type_of_call }}</td>
                             <td>{{ \Carbon\Carbon::parse($visit->call_booking_time)->format('d M h:i:s A') }}</td>
                             <td>
