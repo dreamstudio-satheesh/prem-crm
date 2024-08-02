@@ -9,6 +9,7 @@ use Livewire\WithFileUploads;
 use App\Imports\CustomerTypesImport;
 use App\Exports\CustomerTypesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerTypeMaster extends Component
 {
@@ -56,6 +57,8 @@ class CustomerTypeMaster extends Component
 
     public function store()
     {
+        $this->authorizeAdmin();
+
         $this->validate();
 
         CustomerType::updateOrCreate(['id' => $this->customer_type_id], [
@@ -70,6 +73,8 @@ class CustomerTypeMaster extends Component
 
     public function edit($id)
     {
+        $this->authorizeAdmin();
+
         $customerType = CustomerType::findOrFail($id);
         $this->customer_type_id = $customerType->id;
         $this->name = $customerType->name;
@@ -78,6 +83,8 @@ class CustomerTypeMaster extends Component
 
     public function delete($id)
     {
+        $this->authorizeAdmin();
+
         $customerType = CustomerType::find($id);
 
         if ($customerType) {
@@ -96,6 +103,8 @@ class CustomerTypeMaster extends Component
 
     public function import()
     {
+        $this->authorizeAdmin();
+
         $this->validate([
             'upload_file' => 'required|mimes:xlsx,csv,txt',
         ]);
@@ -110,6 +119,15 @@ class CustomerTypeMaster extends Component
 
     public function export()
     {
+        $this->authorizeAdmin();
+
         return Excel::download(new CustomerTypesExport, 'customer_types.xlsx');
+    }
+
+    private function authorizeAdmin()
+    {
+        if (auth()->user()->role != 'Admin') {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
