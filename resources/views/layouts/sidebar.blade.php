@@ -68,12 +68,14 @@
                                     <li class="nav-item">
                                         <a href="{{ url('product') }}" class="nav-link" data-key="t-master">Tally Product</a>
                                     </li>
+                                    @if(auth()->user()->role->name == 'Admin')
                                     <li class="nav-item">
                                         <a href="{{ url('role') }}" class="nav-link" data-key="t-master">Staff Role</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ url('user') }}" class="nav-link" data-key="t-master">Executive</a>
                                     </li>
+                                    @endif
                                     <li class="nav-item">
                                         <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">Industry</a>
                                     </li>
