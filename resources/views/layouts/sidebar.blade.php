@@ -47,7 +47,7 @@
                         </li> <!-- end Dashboard Menu -->
 
                         <!-- Master Menu -->
-                        @if(auth()->user()->role->name == 'Admin')
+                      
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Master" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Master">
                                 <i class="mdi mdi-view-grid-plus-outline"></i> <span data-key="t-master">Master</span>
@@ -86,32 +86,7 @@
                                 </ul>
                             </div>
                         </li>
-                        @elseif(in_array(auth()->user()->role->name, ['Sales', 'Support']))
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#Master" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Master">
-                                <i class="mdi mdi-view-grid-plus-outline"></i> <span data-key="t-master">Master</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="Master">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link menu-link" accesskey="T" title="ALT+T" href="{{ url('/master/customers') }}">
-                                            <i class="mdi mdi-sticker-text-outline"></i> <span>Customer List</span>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="{{ url('industry') }}" class="nav-link" data-key="t-master">Industry</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('location') }}" class="nav-link" data-key="t-master">Area</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </li>
-
-                        @endif
-
+                      
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#Services" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="Services">
