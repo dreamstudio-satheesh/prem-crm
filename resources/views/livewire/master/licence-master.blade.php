@@ -9,13 +9,14 @@
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
-                            <button wire:click="export" class="btn btn-sm btn-success ml-2"><i class="ri-file-upload-line align-bottom me-1"></i> Export</button>
+                            @if(auth()->user()->role == 'Admin')
+                                <button wire:click="export" class="btn btn-sm btn-success ml-2"><i class="ri-file-upload-line align-bottom me-1"></i> Export</button>
+                            @endif
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
                             <input wire:model.debounce.300ms="search" id="search-box" type="text" class="form-control" placeholder="Search Licence..">
                         </div>
-
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,7 +39,9 @@
                                     <td>{{ $licence->description }}</td>
                                     <td>
                                         <button wire:click="edit({{ $licence->id }})" class="btn btn-primary btn-sm">Edit</button>
-                                        <button x-data="{ licenceId: {{ $licence->id }} }" @click="confirmDeletion(licenceId)" class="btn btn-danger btn-sm">Delete</button>
+                                        @if(auth()->user()->role == 'Admin')
+                                            <button x-data="{ licenceId: {{ $licence->id }} }" @click="confirmDeletion(licenceId)" class="btn btn-danger btn-sm">Delete</button>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -64,7 +67,9 @@
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
                     <h5>{{ $licence_id ? 'Edit Licence' : 'Create Licence' }}</h5>
-                    <button type="button" class="btn btn-sm btn-info ml-2" data-bs-toggle="modal" data-bs-target="#importModal"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                    @if(auth()->user()->role == 'Admin')
+                        <button type="button" class="btn btn-sm btn-info ml-2" data-bs-toggle="modal" data-bs-target="#importModal"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                    @endif
                 </div> 
                 <div class="card-body" style="padding-top: 10px">
                     <form wire:submit.prevent="store">
@@ -85,7 +90,6 @@
                         <div class="form-group gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" wire:click="create" class="btn btn-secondary">Cancel</button>
-                           
                         </div>
                     </form>
                 </div>
@@ -93,30 +97,32 @@
         </div>
     </div>
 
-    <!-- Import Modal -->
-    <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import Licences</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="importForm" wire:submit.prevent="import" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="file">Upload CSV File</label>
-                            <input type="file" class="form-control" id="file" wire:model="upload_file">
-                            @error('upload_file')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Import</button>
-                    </form>
+    @if(auth()->user()->role == 'Admin')
+        <!-- Import Modal -->
+        <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="importModalLabel">Import Licences</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="importForm" wire:submit.prevent="import" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="file">Upload CSV File</label>
+                                <input type="file" class="form-control" id="file" wire:model="upload_file">
+                                @error('upload_file')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Import</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     @push('scripts')
     <script>
@@ -141,7 +147,6 @@
             var modal = $('#importModal');
             modal.modal('hide');
         });
-
 
         document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('show-toastr', event => {

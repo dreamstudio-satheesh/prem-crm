@@ -9,6 +9,7 @@ use App\Models\Licence;
 use App\Imports\LicencesImport;
 use App\Exports\LicencesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class LicenceMaster extends Component
 {
@@ -63,9 +64,10 @@ class LicenceMaster extends Component
         $this->description = $licence->description;
     }
 
-
     public function delete($id)
     {
+        $this->authorizeAdmin();
+        
         $licence = Licence::find($id);
 
         if ($licence) {
@@ -77,7 +79,6 @@ class LicenceMaster extends Component
         $this->dispatch('$refresh');
     }
 
-
     public function create()
     {
         $this->resetInputFields();
@@ -85,6 +86,8 @@ class LicenceMaster extends Component
 
     public function import()
     {
+        $this->authorizeAdmin();
+
         $this->validate([
             'upload_file' => 'required|mimes:xlsx,csv,txt',
         ]);
@@ -99,6 +102,15 @@ class LicenceMaster extends Component
 
     public function export()
     {
+        $this->authorizeAdmin();
+        
         return Excel::download(new LicencesExport, 'licences.xlsx');
+    }
+
+    private function authorizeAdmin()
+    {
+        if (auth()->user()->role != 'Admin') {
+            abort(403);
+        }
     }
 }
