@@ -9,7 +9,7 @@
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
-                            @if(auth()->user()->role == 'Admin')
+                            @if(auth()->user()->role->name == 'Admin')
                                 <button wire:click="export" class="btn btn-sm btn-success ml-2"><i class="ri-file-upload-line align-bottom me-1"></i> Export</button>
                             @endif
                         </div>
@@ -38,7 +38,7 @@
                                     <td>{{ $licence->name }}</td>
                                     <td>{{ $licence->description }}</td>
                                     <td>
-                                        @if(auth()->user()->role == 'Admin')
+                                        @if(auth()->user()->role->name == 'Admin')
                                             <button wire:click="edit({{ $licence->id }})" class="btn btn-primary btn-sm">Edit</button>
                                             <button x-data="{ licenceId: {{ $licence->id }} }" @click="confirmDeletion(licenceId)" class="btn btn-danger btn-sm">Delete</button>
                                         @endif
@@ -67,7 +67,7 @@
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
                     <h5>{{ $licence_id ? 'Edit Licence' : 'Create Licence' }}</h5>
-                    @if(auth()->user()->role == 'Admin')
+                    @if(auth()->user()->role->name == 'Admin')
                         <button type="button" class="btn btn-sm btn-info ml-2" data-bs-toggle="modal" data-bs-target="#importModal"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
                     @endif
                 </div> 
@@ -97,7 +97,7 @@
         </div>
     </div>
 
-    @if(auth()->user()->role == 'Admin')
+    @if(auth()->user()->role->name == 'Admin')
         <!-- Import Modal -->
         <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
