@@ -33,8 +33,10 @@
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>
-                                        <button wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Edit</button>
-                                        <button x-data="{ unitId: {{ $product->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
+                                        @if(auth()->user()->role == 'Admin')
+                                            <button wire:click="edit({{ $product->id }})" class="btn btn-primary btn-sm">Edit</button>
+                                            <button x-data="{ unitId: {{ $product->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

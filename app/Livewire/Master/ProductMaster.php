@@ -5,6 +5,7 @@ namespace App\Livewire\Master;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductMaster extends Component
 {
@@ -17,7 +18,6 @@ class ProductMaster extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $rules = [
-     
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'price' => 'nullable|numeric',
@@ -42,6 +42,8 @@ class ProductMaster extends Component
 
     public function store()
     {
+        $this->authorizeAdmin();
+
         $this->validate();
 
         Product::updateOrCreate(['id' => $this->product_id], [
@@ -56,6 +58,8 @@ class ProductMaster extends Component
 
     public function edit($id)
     {
+        $this->authorizeAdmin();
+
         $product = Product::findOrFail($id);
         $this->product_id = $product->id;
         $this->name = $product->name;
@@ -65,12 +69,22 @@ class ProductMaster extends Component
 
     public function delete($id)
     {
+        $this->authorizeAdmin();
+
         Product::findOrFail($id)->delete();
         session()->flash('success', 'Product Deleted Successfully.');
+        $this->dispatch('$refresh');
     }
 
     public function create()
     {
         $this->resetInputFields();
+    }
+
+    private function authorizeAdmin()
+    {
+        if (auth()->user()->role != 'Admin') {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
