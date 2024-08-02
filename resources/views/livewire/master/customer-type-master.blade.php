@@ -9,7 +9,7 @@
                         </div>
 
                         <div class="col-md-4 d-flex justify-content-end">
-                            @if(auth()->user()->role == 'Admin')
+                            @if(auth()->user()->role->name == 'Admin')
                                 <button wire:click="export" class="btn btn-sm btn-success ml-2"><i class="ri-file-upload-line align-bottom me-1"></i> Export</button>
                             @endif
                         </div>
@@ -39,7 +39,7 @@
                                     <td>{{ $customerType->name }}</td>
                                     <td>{{ $customerType->description }}</td>
                                     <td>
-                                        @if(auth()->user()->role == 'Admin')
+                                        @if(auth()->user()->role->name == 'Admin')
                                             <button wire:click="edit({{ $customerType->id }})" class="btn btn-primary btn-sm">Edit</button>
                                             <button x-data="{ unitId: {{ $customerType->id }} }" @click="confirmDeletion(unitId)" class="btn btn-danger btn-sm">Delete</button>
                                         @endif
@@ -69,7 +69,7 @@
             <div class="card" style="height: 80vh; overflow-y: auto;">
                 <div class="card-header card-header-border-bottom d-flex justify-content-between">
                     <h5>{{ $customer_type_id ? 'Edit Desigination' : 'Create Desigination' }}</h5>
-                    @if(auth()->user()->role == 'Admin')
+                    @if(auth()->user()->role->name == 'Admin')
                         <button type="button" class="btn btn-sm btn-info ml-2" data-bs-toggle="modal" data-bs-target="#importModal"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
                     @endif
                 </div>
@@ -100,7 +100,7 @@
     </div>
 
     <!-- Import Modal -->
-    @if(auth()->user()->role == 'Admin')
+    @if(auth()->user()->role->name == 'Admin')
         <div class="modal fade" wire:ignore.self id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

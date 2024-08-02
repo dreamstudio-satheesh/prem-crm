@@ -126,7 +126,7 @@ class CustomerTypeMaster extends Component
 
     private function authorizeAdmin()
     {
-        if (auth()->user()->role != 'Admin') {
+        if (auth()->user()->role->name != 'Admin') {
             abort(403, 'Unauthorized action.');
         }
     }
