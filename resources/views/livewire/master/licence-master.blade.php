@@ -38,8 +38,8 @@
                                     <td>{{ $licence->name }}</td>
                                     <td>{{ $licence->description }}</td>
                                     <td>
-                                        <button wire:click="edit({{ $licence->id }})" class="btn btn-primary btn-sm">Edit</button>
                                         @if(auth()->user()->role == 'Admin')
+                                            <button wire:click="edit({{ $licence->id }})" class="btn btn-primary btn-sm">Edit</button>
                                             <button x-data="{ licenceId: {{ $licence->id }} }" @click="confirmDeletion(licenceId)" class="btn btn-danger btn-sm">Delete</button>
                                         @endif
                                     </td>
